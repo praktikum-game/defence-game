@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --open --hot",
-    "buid": "webpack --mode production",
+    "prod": "webpack --mode production",
+    "build": "webpack",
+    "lint:ts": "eslint src/**/*.{ts,tsx}",
+    "lint:style": "stylelint src/**/*.css",
+    "check-types": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
