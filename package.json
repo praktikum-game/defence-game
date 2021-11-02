@@ -1,5 +1,5 @@
 {
-  "name": "ya-praktikum-deffence-game",
+  "name": "ya-praktikum-defence-game",
   "version": "1.0.0",
   "description": "Игра по защите хороших от плохих",
   "main": "index.js",
@@ -18,7 +18,7 @@
   },
   "keywords": [
     "game",
-    "tower-deffence",
+    "tower-defence",
     "ya",
     "parkticum",
     "rocket"
