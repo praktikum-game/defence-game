@@ -7,8 +7,10 @@
   },
   "scripts": {
     "start": "webpack serve --config webpack.dev.js",
-    "prod": "webpack --config webpack.prod.js",
-    "build": "webpack --config webpack.dev.js",
+    "prod:w": "webpack --config webpack.prod.js",
+    "prod": "npm-run-all lint prod:w",
+    "build:w": "webpack --config webpack.dev.js",
+    "build": "npm-run-all lint build:w",
     "lint:p": "prettier --write './src/**/*.{js,jsx,ts,tsx,test.tsx,test.ts,json}'",
     "lint:ts": "eslint src/**/*.{ts,tsx} --fix",
     "lint:style": "stylelint src/**/*.css --fix",
@@ -40,6 +42,7 @@
     "css-loader": "^6.5.0",
     "eslint": "^7.32.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^7.0.4",
     "npm-run-all": "^4.1.5",
     "path": "^0.12.7",
     "postcss": "^8.3.11",
@@ -68,5 +71,10 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "stylelint-order": "^5.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm-run-all lint"
+    }
   }
 }
