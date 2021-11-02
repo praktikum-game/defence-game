@@ -10,26 +10,17 @@
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
-    "no-underscore-dangle": "off",
-    "linebreak-style": "off",
     "no-console": "off",
-    "no-alert": "off",
-    "no-continue": "off",
+    "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
     "class-methods-use-this": "off",
-    "func-names": "off",
-    "no-restricted-syntax": "off",
+    "no-underscore-dangle": "off",
+    "no-param-reassign": ["error", { "props": false }],
     "import/prefer-default-export": "off",
-    "object-curly-newline": "off",
-    "no-param-reassign": "off",
-    "operator-linebreak": "off",
-    "implicit-arrow-linebreak": "off",
-    "import/extensions": "off",
-    "import/no-cycle": [
-      "off",
-      {
-        "maxDepth": 10,
-        "ignoreExternal": true
-      }
-    ]
+    "no-alert": "off",
+    "spaced-comment": "off",
+    "import/extensions": "off"
+
+    // Предлагаю остальные правила не отключать. Они же не такие плохие, разве, нет?
+    // Но если будут сильно надоедать, то можем штучно исключать.
   }
 }

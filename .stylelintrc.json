@@ -1,0 +1,23 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "color-hex-case": "lower",
+    "indentation": 2,
+    "no-missing-end-of-source-newline": false,
+    "no-empty-source": null,
+
+    "block-closing-brace-newline-after": "always",
+    "block-closing-brace-empty-line-before": "never",
+    "block-closing-brace-space-before": "always-single-line",
+    "block-opening-brace-space-after": "always-single-line",
+    "block-opening-brace-space-before": "always",
+    "block-closing-brace-newline-before": "always-multi-line",
+    "block-opening-brace-newline-after": "always-multi-line",
+
+    "value-list-comma-space-before": "always",
+    "value-list-comma-space-after": "always",
+    "declaration-colon-space-after": "always"
+  },
+  "ignoreFiles": ["dist/*", "node_modules/*", ".cache/"],
+  "plugins": ["stylelint-prettier"]
+}

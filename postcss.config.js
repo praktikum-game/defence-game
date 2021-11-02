@@ -1,10 +1,11 @@
-module.exports = {
-  plugins: [
-    [
-      'postcss-preset-env',
-      {
-        // Options
-      },
-    ],
-  ],
-};
+{
+  "modules": true,
+  "plugins": {
+    "autoprefixer": {
+      "grid": true
+    },
+    "postcss-advanced-variables": {
+      "variables": {}
+    }
+  }
+}
