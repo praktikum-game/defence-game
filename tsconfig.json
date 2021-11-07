@@ -13,8 +13,6 @@
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "declaration": false,
-
-    // Разве есть причина sourceMap отключать?
     "sourceMap": true,
     "baseUrl": ".",
     "outDir": "./dist",

@@ -1,0 +1,28 @@
+.button {
+  color: #f0fff0;
+  border-radius: 30px;
+  padding: 10px;
+  border: none;
+  width: 250px;
+  transition: transform 0.1s linear;
+}
+
+.button--primary {
+  background-color: #fe9520;
+}
+
+.button--default {
+  background-color: gray;
+}
+
+.button:disabled {
+  background-color: rgb(128, 128, 128);
+  transform: none !important;
+  translate: none !important;
+  cursor: default !important;
+}
+
+.button:hover {
+  cursor: pointer;
+  transform: translateY(-3px);
+}
