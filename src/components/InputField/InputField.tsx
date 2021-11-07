@@ -43,7 +43,7 @@ const InputField: FC<Props> = ({
   return (
     <div className={`input-field ${flex && 'input-field--flex'}`}>
       {rest.label && (
-        <label className="input-field__label " htmlFor="">
+        <label className="input-field__label ">
           {rest.label}
         </label>
       )}

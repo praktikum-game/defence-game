@@ -1,5 +1,7 @@
+@import '../../common/styles/vars.css';
+
 .button {
-  color: #f0fff0;
+  color: var(--text-color);
   border-radius: 30px;
   padding: 10px;
   border: none;
@@ -8,15 +10,15 @@
 }
 
 .button--primary {
-  background-color: #fe9520;
+  background-color: var(--primary-background);
 }
 
 .button--default {
-  background-color: gray;
+  background-color: var(--default-background);
 }
 
 .button:disabled {
-  background-color: rgb(128, 128, 128);
+  background-color:var(--disabled-background);
   transform: none !important;
   translate: none !important;
   cursor: default !important;
