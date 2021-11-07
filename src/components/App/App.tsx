@@ -18,7 +18,7 @@ const App: FC = () => (
         { checkFunction: InputValidators.email(), message: 'Это не email' },
       ]}
     />
-    <Button onClick={() => alert('ho')} text="hoho" view="primary" ></Button>
+    <Button onClick={() => alert('ho')} text="hoho" view="primary"></Button>
   </div>
 );
 
