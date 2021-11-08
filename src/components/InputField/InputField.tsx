@@ -1,5 +1,4 @@
-import React, { FC, useState } from 'react';
-import { validate, ValidationResult } from '../../utilites/validator';
+import React, { FC } from 'react';
 import { InputFieldProps } from '.';
 import './input-field.css';
 
@@ -7,26 +6,13 @@ export const InputField: FC<InputFieldProps> = ({
   flex = true,
   type = 'text',
   disabled = false,
+  isValid = true,
+  errorText = null,
   ...rest
 }) => {
-  const [error, setError] = useState<ValidationResult>({ valid: true, message: null });
-
-  const checkInputField = (value: string) => {
-    if (rest.validators) {
-      const validationResult = validate(rest.validators, value);
-      setError(validationResult);
-    }
-  };
-
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.target;
-    checkInputField(value);
     rest.onChange(value);
-  };
-
-  const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
-    const { value } = e.target;
-    checkInputField(value);
   };
 
   return (
@@ -34,13 +20,12 @@ export const InputField: FC<InputFieldProps> = ({
       {rest.label && <label className="input-field__label ">{rest.label}</label>}
       <input
         className="input-field__input"
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder={rest.placeholder}
         type={type}
         disabled={disabled}
+        {...rest}
+        onChange={handleChange}
       />
-      {<span className="input-field__error-text">{(!error.valid && error.message) || ' '}</span>}
+      {!isValid && <span className="input-field__error-text">{errorText}</span>}
     </div>
   );
 };
