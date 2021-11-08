@@ -1,36 +1,22 @@
 import React, { FC } from 'react';
+import { ButtonProps } from '.';
 
 import './button.css';
 
-type Props = {
-  text?: string;
-  onClick: () => void;
-  disabled?: boolean;
-  view?: 'default' | 'primary' | 'secondary';
-  size?: 'small' | 'medium' | 'large';
-  loading?: boolean;
-};
-
 const viewTypes = {
-  default: 'button--default',
-  primary: 'button--primary',
-  secondary: 'button--secondary',
+  default: 'button_default',
+  primary: 'button_primary',
+  secondary: 'button_secondary',
 };
 
-const Button: FC<Props> = ({
+export const Button: FC<ButtonProps> = ({
   text = 'Button',
   disabled = false,
   view = 'default',
   loading = false,
   ...rest
 }) => (
-  <button
-    className={`button ${viewTypes[view]}`}
-    onClick={rest.onClick}
-    disabled={loading || disabled}
-  >
-    {(loading && <i className="fas fa-spinner fa-spin"></i>) || text}
+  <button className={`button ${viewTypes[view]}`} disabled={loading || disabled} {...rest}>
+    {(loading && 'Загрузка...') || text}
   </button>
 );
-
-export default Button;

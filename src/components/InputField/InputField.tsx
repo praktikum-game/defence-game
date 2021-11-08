@@ -1,23 +1,12 @@
 import React, { FC, useState } from 'react';
-import { validate, ValidationResult, ValidatorItem } from '../../utilites/InputValidator';
+import { validate, ValidationResult } from '../../utilites/validator';
+import { InputFieldProps } from '.';
 import './input-field.css';
 
-type Props = {
-  type: 'number' | 'text' | 'email' | 'hidden' | 'password';
-  label?: string;
-  flex?: boolean;
-  placeholder?: string;
-  required?: boolean;
-  validators?: Array<ValidatorItem>;
-  disabled?: boolean;
-  onChange: (value: string) => void;
-};
-
-const InputField: FC<Props> = ({
+export const InputField: FC<InputFieldProps> = ({
   flex = true,
   type = 'text',
   disabled = false,
-  required = true,
   ...rest
 }) => {
   const [error, setError] = useState<ValidationResult>({ valid: true, message: null });
@@ -41,12 +30,8 @@ const InputField: FC<Props> = ({
   };
 
   return (
-    <div className={`input-field ${flex && 'input-field--flex'}`}>
-      {rest.label && (
-        <label className="input-field__label ">
-          {rest.label}
-        </label>
-      )}
+    <div className={`input-field ${flex && 'input-field_flex'}`}>
+      {rest.label && <label className="input-field__label ">{rest.label}</label>}
       <input
         className="input-field__input"
         onChange={handleChange}
@@ -54,11 +39,8 @@ const InputField: FC<Props> = ({
         placeholder={rest.placeholder}
         type={type}
         disabled={disabled}
-        required={required}
       />
-      {<span className="input-field__error">{(!error.valid && error.message) || ' '}</span>}
+      {<span className="input-field__error-text">{(!error.valid && error.message) || ' '}</span>}
     </div>
   );
 };
-
-export default InputField;

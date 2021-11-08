@@ -1,6 +1,7 @@
 :root {
   --primary-background: #fe9520;
   --default-background: #808080;
+  --secondary-background: rgb(163, 54, 241);
   --disabled-background: rgb(128, 128, 128);
   --text-color: #f0fff0;
   --error-text-color: #ff2f2f;

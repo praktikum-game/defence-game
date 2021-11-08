@@ -2,7 +2,7 @@
   padding: 5px;
 }
 
-.input-field--flex {
+.input-field_flex {
   display: flex;
   flex-direction: column;
 }
@@ -21,7 +21,7 @@
   user-select: none;
 }
 
-.input-field__error {
+.input-field__error-text {
   font-size: 12px;
   color: var(--error-text-color);
   line-height: 14px;

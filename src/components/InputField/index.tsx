@@ -1,3 +1,2 @@
-import TextInput from './InputField';
-
-export default TextInput;
+export { InputField } from './InputField';
+export { InputFieldProps } from './types';

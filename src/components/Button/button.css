@@ -9,16 +9,20 @@
   transition: transform 0.1s linear;
 }
 
-.button--primary {
+.button_primary {
   background-color: var(--primary-background);
 }
 
-.button--default {
+.button_default {
   background-color: var(--default-background);
 }
 
+.button_secondary {
+  background-color: var(--secondary-background);
+}
+
 .button:disabled {
-  background-color:var(--disabled-background);
+  background-color: var(--disabled-background);
   transform: none !important;
   translate: none !important;
   cursor: default !important;
