@@ -1,4 +1,4 @@
-import { ValidateFunction, ValidationResult, ValidatorItem } from '.';
+import { ValidateFunction, ValidationResult, ValidatorItem } from './types';
 
 const valid = (): ValidationResult => ({ valid: true, message: null });
 const invalid = (message: string | null): ValidationResult => ({ valid: false, message });

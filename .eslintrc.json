@@ -19,7 +19,9 @@
     "no-alert": "off",
     "spaced-comment": "off",
     "import/extensions": "off",
-    "@typescript-eslint/no-explicit-any": "error"
+    "@typescript-eslint/no-explicit-any": "error",
+
+    "max-classes-per-file": "off"
 
     // Предлагаю остальные правила не отключать. Они же не такие плохие, разве, нет?
     // Но если будут сильно надоедать, то можем штучно исключать.
