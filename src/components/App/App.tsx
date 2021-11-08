@@ -25,6 +25,7 @@ const App: FC = () => {
   const handleInput = useCallback((value: string) => {
     setInputValue(value);
   }, []);
+
   useEffect(() => {
     checkInputField(inputValue);
   }, [inputValue]);
