@@ -3,6 +3,7 @@ import { email, required, validate, ValidationResult } from '../../utilites/vali
 import { InputField } from '../InputField';
 import { Button } from '../Button';
 import './App.css';
+import { WindowContainer } from '../WindowContainer';
 
 const inputValidators = [
   { checkFunction: required(), message: 'Это обязательное поле' },
@@ -44,6 +45,9 @@ const App: FC = () => {
       />
 
       <Button onClick={handleButtonClick} text="MyButton" view="primary"></Button>
+      <WindowContainer size="narrow">
+        <p>Обернуто контейнером</p>
+      </WindowContainer>
     </div>
   );
 };
