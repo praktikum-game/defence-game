@@ -37,7 +37,7 @@ const App: FC = () => {
         value={inputValue}
         type="email"
         label="MyText Field"
-        onChange={handleInput}
+        valueChangeCallback={handleInput}
         placeholder="Введите значение поля"
         isValid={inputError.valid}
         errorText={inputError.message}
