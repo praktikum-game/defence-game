@@ -1,9 +1,10 @@
 import { ButtonHTMLAttributes } from 'react';
+import { ViewType } from 'utilities/types';
 
 export type ButtonOwnProps = {
   text?: string;
   disabled?: boolean;
-  view?: 'default' | 'primary' | 'secondary';
+  view?: keyof ViewType;
   loading?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
