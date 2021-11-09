@@ -62,7 +62,10 @@ class Game {
     this.enemiesArray.forEach((e) => {
       e.update(delay).draw(this.ctx);
     });
-    this.defenderArray.forEach((d) => d.draw(this.ctx));
+    this.defenderArray.forEach((d) => {
+      d.update(delay);
+      d.draw(this.ctx);
+    });
     this.gameField.draw(this.ctx);
   }
 
