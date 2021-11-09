@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { email, required, validate, ValidationResult } from '../../utilites/validator';
+import { email, required, validate, ValidationResult } from '../../utilities/validator';
 import { InputField } from '../InputField';
 import { Button } from '../Button';
 import './App.css';
