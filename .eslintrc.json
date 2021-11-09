@@ -8,7 +8,7 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "react-hooks"],
   "rules": {
     "no-console": "off",
     "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
@@ -21,9 +21,9 @@
     "import/extensions": "off",
     "@typescript-eslint/no-explicit-any": "error",
 
-    "max-classes-per-file": "off"
-
     // Предлагаю остальные правила не отключать. Они же не такие плохие, разве, нет?
     // Но если будут сильно надоедать, то можем штучно исключать.
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
   }
 }

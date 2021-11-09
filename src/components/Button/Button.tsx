@@ -17,6 +17,6 @@ export const Button: FC<ButtonProps> = ({
   ...rest
 }) => (
   <button className={`button ${viewTypes[view]}`} disabled={loading || disabled} {...rest}>
-    {(loading && 'Загрузка...') || text}
+    {loading ? 'Загрузка...' : text}
   </button>
 );
