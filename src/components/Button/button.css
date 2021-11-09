@@ -1,0 +1,34 @@
+@import '../../common/styles/vars.css';
+
+.button {
+  color: var(--text-color);
+  border-radius: 30px;
+  padding: 10px;
+  border: none;
+  width: 250px;
+  transition: transform 0.1s linear;
+}
+
+.button_primary {
+  background-color: var(--primary-background);
+}
+
+.button_default {
+  background-color: var(--default-background);
+}
+
+.button_secondary {
+  background-color: var(--secondary-background);
+}
+
+.button:disabled {
+  background-color: var(--disabled-background);
+  transform: none !important;
+  translate: none !important;
+  cursor: default !important;
+}
+
+.button:hover {
+  cursor: pointer;
+  transform: translateY(-3px);
+}
