@@ -1,0 +1,11 @@
+.window-container {
+  max-width: 300px;
+}
+
+.window-container_narrow {
+  max-width: 100px;
+}
+
+.window-container_wide {
+  max-width: 1100px;
+}
