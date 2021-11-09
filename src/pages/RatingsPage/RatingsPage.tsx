@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React from 'react';
 
-export const BoardPage: FC = () => (
+export const RatingsPage = (): JSX.Element => (
   <>
     <h1>Таблица достижений игроков</h1>
     <p>таблица</p>

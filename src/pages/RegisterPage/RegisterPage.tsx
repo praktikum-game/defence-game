@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React from 'react';
 
-export const RegisterPage: FC = () => (
+export const RegisterPage = (): JSX.Element => (
   <>
     <h1>Регистрация</h1>
     <p>Контент страницы</p>

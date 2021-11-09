@@ -1,8 +1,10 @@
-import React, { FC } from 'react';
+import React from 'react';
 
-export const ForumPage: FC = () => (
-  <>
-    <h1>Форум</h1>
-    <p>контент форума</p>
-  </>
-);
+export const ForumPage = (): JSX.Element => {
+  return (
+    <>
+      <h1>Форум</h1>
+      <p>контент форума</p>
+    </>
+  );
+};

@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React from 'react';
 
-export const LoginPage: FC = () => (
+export const LoginPage = (): JSX.Element => (
   <>
     <h1>Войти</h1>
     <p>Контент страницы</p>

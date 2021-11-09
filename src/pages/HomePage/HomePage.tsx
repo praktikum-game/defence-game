@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { email, required, validate, ValidationResult } from '../../utilites/validator';
 import { InputField } from '../../components/InputField';
@@ -9,7 +9,7 @@ const inputValidators = [
   { checkFunction: email(), message: 'Это не email' },
 ];
 
-export const HomePage: FC = () => {
+export const HomePage = (): JSX.Element => {
   const [inputValue, setInputValue] = useState<string>('');
   const [inputError, setInputError] = useState<ValidationResult>({ valid: true, message: null });
 
@@ -48,7 +48,7 @@ export const HomePage: FC = () => {
             <Link to={'/game'}>Игра</Link>
           </li>
           <li>
-            <Link to={'/board'}>Таблица игроков</Link>
+            <Link to={'/ratings'}>Таблица игроков</Link>
           </li>
           <li>
             <Link to={'/forum'}>Форум</Link>
