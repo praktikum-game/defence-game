@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { ButtonProps } from '.';
+import { ButtonProps } from './types';
 
 import './button.css';
 
