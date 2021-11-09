@@ -10,10 +10,24 @@ export class BaseDefender extends BaseGameObject {
 
   private _it: number;
 
+  private _damage: number;
+
   private _bullets: Array<BaseBullet>;
 
   public get health() {
     return this._health;
+  }
+
+  public get damage() {
+    return this._damage;
+  }
+
+  public get bullets() {
+    return this._bullets;
+  }
+
+  public set bullets(value: Array<BaseBullet>) {
+    this._bullets = [...value];
   }
 
   constructor() {
@@ -22,6 +36,7 @@ export class BaseDefender extends BaseGameObject {
     // this.weapon = new BaseWeapon(0.2, 2);
     this._bullets = [];
     this._it = 0;
+    this._damage = 100;
   }
 
   public getDamage(damage: number) {
@@ -35,6 +50,7 @@ export class BaseDefender extends BaseGameObject {
       this._bullets.push(
         new BaseBullet(
           0.2,
+          10,
           this._x + this._width / 2,
           this._y + (100 / 2 - bulletSize / 2),
           bulletSize,
@@ -57,6 +73,11 @@ export class BaseDefender extends BaseGameObject {
 
   public update(delay: number) {
     this.fire(delay);
+    for (const bullet of this.bullets) {
+      if (bullet.x > 1200) {
+        this.bullets = this.bullets.filter((b) => b.uuid !== bullet.uuid);
+      }
+    }
     this._bullets.forEach((bullet) => bullet.update(delay));
   }
 }
