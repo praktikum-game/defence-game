@@ -4,40 +4,51 @@ import { BaseGameObject } from './BaseGameObject';
 import { getRandomInt } from './helpers';
 
 export class BaseDefender extends BaseGameObject {
-  private health: number;
+  private _health: number;
 
   // private weapon: BaseWeapon;
 
-  private it: number;
+  private _it: number;
 
-  private bullets: Array<BaseBullet>;
+  private _bullets: Array<BaseBullet>;
 
-  public get Health() {
-    return this.health;
+  public get health() {
+    return this._health;
   }
 
   constructor() {
     super(getRandomInt(0, 5) * 100, getRandomInt(0, 5) * 100, 100, 100);
-    this.health = 100;
+    this._health = 100;
     // this.weapon = new BaseWeapon(0.2, 2);
-    this.bullets = [];
-    this.it = 0;
+    this._bullets = [];
+    this._it = 0;
   }
 
   public getDamage(damage: number) {
-    this.health -= damage;
+    this._health -= damage;
   }
 
   public fire(delay: number) {
-    if (this.it % 100 === 0) {
-      this.bullets.push(new BaseBullet(0.2, this.x + this.width / 2, this.y + 50, 20, 20));
+    const bulletSize = 20;
+
+    if (this._it % 100 === 0) {
+      this._bullets.push(
+        new BaseBullet(
+          0.2,
+          this._x + this._width / 2,
+          this._y + (100 / 2 - bulletSize / 2),
+          bulletSize,
+          bulletSize,
+        ),
+      );
     }
 
-    this.it += 1;
+    this._it += 1;
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
-    this.bullets.forEach((b) => b.draw(ctx));
+    this._bullets.forEach((bullet) => bullet.draw(ctx));
+
     ctx.save();
     ctx.fillStyle = 'green';
     ctx.fillRect(this.x, this.y, this.height, this.width);
@@ -46,6 +57,6 @@ export class BaseDefender extends BaseGameObject {
 
   public update(delay: number) {
     this.fire(delay);
-    this.bullets.forEach((b) => b.update(delay));
+    this._bullets.forEach((bullet) => bullet.update(delay));
   }
 }

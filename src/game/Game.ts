@@ -20,7 +20,7 @@ class Game {
     this.gameField = new GameField();
     this.gameField.makeField();
 
-    for (let i = 0; i < 10; i += 1) {
+    for (let i = 0; i < 20; i += 1) {
       this.enemiesArray.push(new BaseEnemy());
     }
 
@@ -45,25 +45,31 @@ class Game {
     for (const enemy of this.enemiesArray) {
       for (const defender of this.defenderArray) {
         if (this.checkCollision(defender, enemy)) {
-          enemy.IsMove = false;
-          defender.getDamage(enemy.Damage);
+          enemy.isMove = false;
+          defender.getDamage(enemy.damage);
 
           // если кончились очки здоровья, то обновляем значения массива защитников
-          if (defender.Health < 0) {
+          if (defender.health < 0) {
             this.defenderArray = this.defenderArray.filter((d) => d.uuid !== defender.uuid);
-            enemy.IsMove = true;
+            // запускаем движение для всех врагов по линии, когда защитник погиб
+            this.enemiesArray
+              .filter((e) => e.y === defender.y)
+              .forEach((e) => {
+                e.isMove = true;
+              });
           }
         }
       }
     }
     this.ctx.clearRect(0, 0, 1200, 500);
-    this.enemiesArray.forEach((e) => {
-      e.update(delay).draw(this.ctx);
-    });
+
+    this.enemiesArray.forEach((enemy) => enemy.update(delay).draw(this.ctx));
+
     this.defenderArray.forEach((d) => {
       d.update(delay);
       d.draw(this.ctx);
     });
+
     this.gameField.draw(this.ctx);
   }
 

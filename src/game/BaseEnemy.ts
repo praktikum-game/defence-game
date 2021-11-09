@@ -3,29 +3,27 @@ import { getRandomInt } from './helpers';
 import { Drawable, Updateable } from './interfaces';
 
 export class BaseEnemy extends BaseGameObject implements Drawable, Updateable {
-  private directionMove: number;
-
-  private isMove: boolean;
+  private _isMove: boolean;
 
   private speed: number;
 
-  private damage: number;
+  private _damage: number;
 
-  public get Damage() {
-    return this.damage;
+  public get damage() {
+    return this._damage;
   }
 
-  public set IsMove(value: boolean) {
-    this.isMove = value;
+  public set isMove(value: boolean) {
+    this._isMove = value;
   }
 
   constructor() {
-    super(1200, getRandomInt(1, 5) * 100, 100, 100);
+    const yPos = getRandomInt(1, 5) * 100;
+    super(1200, yPos, 100, 100);
 
-    this.speed = Math.random() - 0.2;
-    this.directionMove = -1;
-    this.isMove = true;
-    this.damage = 1;
+    this.speed = Math.random() - 0.1;
+    this._isMove = true;
+    this._damage = 1;
   }
 
   draw(ctx: CanvasRenderingContext2D) {
@@ -33,12 +31,12 @@ export class BaseEnemy extends BaseGameObject implements Drawable, Updateable {
   }
 
   update(delay: number) {
-    if (!this.isMove) return this;
-    const dx = this.speed * delay * this.directionMove;
-    if (this.x < 1) {
+    if (!this._isMove) return this;
+    const dx = this.speed * delay;
+    if (this._x < 0) {
       this._x = 1200;
     } else {
-      this._x += dx;
+      this._x -= Math.abs(dx);
     }
     return this;
   }
