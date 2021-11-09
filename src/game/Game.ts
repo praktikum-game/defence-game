@@ -20,7 +20,7 @@ class Game {
     this.gameField = new GameField();
     this.gameField.makeField();
 
-    for (let i = 0; i < 20; i += 1) {
+    for (let i = 0; i < 10; i += 1) {
       this.enemiesArray.push(new BaseEnemy());
     }
 
