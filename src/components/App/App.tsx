@@ -1,49 +1,28 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
-import { email, required, validate, ValidationResult } from '../../utilites/validator';
-import { InputField } from '../InputField';
-import { Button } from '../Button';
+import React, { FC } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ProfilePage } from '../../pages/ProfilePage';
+import { LoginPage } from '../../pages/LoginPage';
+import { HomePage } from '../../pages/HomePage';
 import './App.css';
-
-const inputValidators = [
-  { checkFunction: required(), message: 'Это обязательное поле' },
-  { checkFunction: email(), message: 'Это не email' },
-];
+import { RegisterPage } from '../../pages/RegisterPage';
+import { GamePage } from '../../pages/GamePage';
+import { BoardPage } from '../../pages/BoardPage';
+import { ForumPage } from '../../pages/ForumPage';
 
 const App: FC = () => {
-  const [inputValue, setInputValue] = useState<string>('');
-  const [inputError, setInputError] = useState<ValidationResult>({ valid: true, message: null });
-
-  const checkInputField = (value: string) => {
-    const validationResult = validate(inputValidators, value);
-    setInputError(validationResult);
-  };
-
-  const handleButtonClick = useCallback(() => {
-    alert('Clicked event');
-  }, []);
-
-  const handleInput = useCallback((value: string) => {
-    setInputValue(value);
-  }, []);
-
-  useEffect(() => {
-    checkInputField(inputValue);
-  }, [inputValue]);
-
   return (
-    <div className="title">
-      <h1>Мое супер приложение</h1>
-      <InputField
-        value={inputValue}
-        type="email"
-        label="MyText Field"
-        onChange={handleInput}
-        placeholder="Введите значение поля"
-        isValid={inputError.valid}
-        errorText={inputError.message}
-      />
-
-      <Button onClick={handleButtonClick} text="MyButton" view="primary"></Button>
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/game" element={<GamePage />} />
+          <Route path="/board" element={<BoardPage />} />
+          <Route path="/forum" element={<ForumPage />} />
+        </Routes>
+      </Router>
     </div>
   );
 };
