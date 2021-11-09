@@ -36,9 +36,9 @@ export class BaseEnemy extends BaseGameObject implements Drawable, Updateable {
     if (!this.isMove) return this;
     const dx = this.speed * delay * this.directionMove;
     if (this.x < 1) {
-      this.x = 1200;
+      this._x = 1200;
     } else {
-      this.x += dx;
+      this._x += dx;
     }
     return this;
   }

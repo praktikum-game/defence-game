@@ -1,41 +1,41 @@
 import { nanoid } from 'nanoid';
 
 export class BaseGameObject {
+  protected _x: number;
+
+  protected _y: number;
+
+  protected _width: number;
+
+  protected _height: number;
+
+  protected _uuid: string;
+
   constructor(x: number, y: number, width: number, height: number) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-    this.uuid = nanoid();
+    this._x = x;
+    this._y = y;
+    this._width = width;
+    this._height = height;
+    this._uuid = nanoid();
   }
 
-  protected x: number;
-
-  protected y: number;
-
-  protected width: number;
-
-  protected height: number;
-
-  protected uuid: string;
-
-  public get Uuid() {
-    return this.uuid;
+  public get uuid() {
+    return this._uuid;
   }
 
-  public get X() {
-    return this.x;
+  public get x() {
+    return this._x;
   }
 
-  public get Y() {
-    return this.y;
+  public get y() {
+    return this._y;
   }
 
-  public get Width() {
-    return this.width;
+  public get width() {
+    return this._width;
   }
 
-  public get Height() {
-    return this.height;
+  public get height() {
+    return this._height;
   }
 }

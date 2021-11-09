@@ -30,9 +30,9 @@ export class BaseDefender extends BaseGameObject {
 
   public fire(delay: number) {
     if (this.it % 100 === 0) {
-      this.bullets.push(new BaseBullet(0.2, this.x, this.y - 50, 20, 20));
+      this.bullets.push(new BaseBullet(0.2, this.x + this.width / 2, this.y + 50, 20, 20));
     }
-    
+
     this.it += 1;
   }
 

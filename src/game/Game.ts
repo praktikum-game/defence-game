@@ -50,11 +50,9 @@ class Game {
 
           // если кончились очки здоровья, то обновляем значения массива защитников
           if (defender.Health < 0) {
-            this.defenderArray = this.defenderArray.filter((d) => d.Uuid !== defender.Uuid);
+            this.defenderArray = this.defenderArray.filter((d) => d.uuid !== defender.uuid);
             enemy.IsMove = true;
           }
-        } else {
-          enemy.IsMove = true;
         }
       }
     }
@@ -70,7 +68,7 @@ class Game {
   }
 
   private checkCollision(obj1: BaseGameObject, obj2: BaseGameObject): boolean {
-    if (obj1.X + obj1.Height > obj2.X && obj1.Y === obj2.Y) {
+    if (obj1.x + obj1.height >= obj2.x && obj1.y === obj2.y) {
       return true;
     }
     return false;

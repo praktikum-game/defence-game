@@ -16,9 +16,9 @@ export class BaseBullet extends BaseGameObject implements Drawable, Updateable {
   public update(delay: number) {
     const dx = this.speed * delay;
     if (this.x > 1200) {
-      this.x = 1200;
+      this._x = 1200;
     } else {
-      this.x += dx;
+      this._x += dx;
     }
     return this;
   }
