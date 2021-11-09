@@ -1,15 +1,15 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { InputFieldProps } from '.';
 import './input-field.css';
 
-export const InputField: FC<InputFieldProps> = ({
+export const InputField = ({
   flex = true,
   type = 'text',
   disabled = false,
   isValid = true,
   errorText = null,
   ...rest
-}) => {
+}: InputFieldProps): JSX.Element => {
   const { valueChangeCallback, ...otherProps } = rest;
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
