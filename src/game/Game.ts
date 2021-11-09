@@ -41,15 +41,20 @@ class Game {
   };
 
   private redraw(delay: number) {
+    // проверяем на столкновения защитников и атакующих
     for (const enemy of this.enemiesArray) {
       for (const defender of this.defenderArray) {
         if (this.checkCollision(defender, enemy)) {
           enemy.IsMove = false;
           defender.getDamage(enemy.Damage);
+
+          // если кончились очки здоровья, то обновляем значения массива защитников
           if (defender.Health < 0) {
             this.defenderArray = this.defenderArray.filter((d) => d.Uuid !== defender.Uuid);
             enemy.IsMove = true;
           }
+        } else {
+          enemy.IsMove = true;
         }
       }
     }
