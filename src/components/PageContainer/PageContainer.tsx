@@ -4,16 +4,10 @@ import './page-container.css';
 
 export const PageContainer = ({
   children,
-  size = 'default',
+  size = 'm',
   ...otherProps
-}: PageContainerProps): JSX.Element => {
-  let className = 'page-container';
-  if (size !== 'default') {
-    className += ` page-container_${size}`;
-  }
-  return (
-    <div className={className} {...otherProps}>
-      {children}
-    </div>
-  );
-};
+}: PageContainerProps): JSX.Element => (
+  <div className={`page-container page-container_${size}`} {...otherProps}>
+    {children}
+  </div>
+);

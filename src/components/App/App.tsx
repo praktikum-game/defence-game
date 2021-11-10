@@ -45,7 +45,7 @@ const App: FC = () => {
       />
 
       <Button onClick={handleButtonClick} text="MyButton" view="primary"></Button>
-      <PageContainer size="narrow">
+      <PageContainer size="s">
         <p>Обернуто контейнером</p>
       </PageContainer>
     </div>

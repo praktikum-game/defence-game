@@ -2,10 +2,14 @@
   max-width: 300px;
 }
 
-.page-container_narrow {
+.page-container_s {
   max-width: 100px;
 }
 
-.page-container_wide {
+.page-container_m {
+  max-width: 100px;
+}
+
+.page-container_l {
   max-width: 1100px;
 }
