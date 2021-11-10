@@ -1,0 +1,9 @@
+@import '../../common/styles/vars.css';
+
+.profile-page {
+  background: linear-gradient(
+    180deg,
+    var(--page-background-dark) 0%,
+    var(--page-background-light) 100%
+  );
+}
