@@ -2,6 +2,7 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 import { email, required, validate, ValidationResult } from '../../utilites/validator';
 import { InputField } from '../InputField';
 import { Button } from '../Button';
+import { Title } from '../Title';
 import './App.css';
 
 const inputValidators = [
@@ -31,7 +32,7 @@ const App: FC = () => {
   }, [inputValue]);
 
   return (
-    <div className="title">
+    <div className="app">
       <h1>Мое супер приложение</h1>
       <InputField
         value={inputValue}
@@ -42,8 +43,9 @@ const App: FC = () => {
         isValid={inputError.valid}
         errorText={inputError.message}
       />
-
       <Button onClick={handleButtonClick} text="MyButton" view="primary"></Button>
+      <Title headingLevel={1}>Заголовок 1</Title>
+      <Title headingLevel={5}>Заголовок 5</Title>
     </div>
   );
 };
