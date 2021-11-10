@@ -1,3 +1,19 @@
 .title {
   background-color: purple;
 }
+
+.title_left {
+  text-align: left;
+  margin-right: auto;
+}
+
+.title_center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.title_right {
+  text-align: right;
+  margin-left: auto;
+}

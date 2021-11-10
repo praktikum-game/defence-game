@@ -45,7 +45,7 @@ const App: FC = () => {
       />
       <Button onClick={handleButtonClick} text="MyButton" view="primary"></Button>
       <Title headingLevel={1}>Заголовок 1</Title>
-      <Title headingLevel={5}>Заголовок 5</Title>
+      <Title headingLevel={5} align="right">Заголовок 5</Title>
     </div>
   );
 };
