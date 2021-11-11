@@ -7,6 +7,6 @@ export const Title = ({
   align = 'center',
   ...otherProps
 }: TitleProps): JSX.Element => {
-  const CustomHeading = `h${headingLevel}`;
-  return <CustomHeading className={`title title_${align}`} {...otherProps}></CustomHeading>;
+  const Component = `h${headingLevel}`;
+  return <Component className={`title title_${align}`} {...otherProps}></Component>;
 };
