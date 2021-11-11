@@ -1,7 +1,7 @@
 import React, { HTMLAttributes } from 'react';
 
-export type ContainerHeaderOwnProps = {
+export type HeaderOwnProps = {
   children?: React.ReactNode;
 } & HTMLAttributes<HTMLElement>;
 
-export type ContainerHeaderProps = ContainerHeaderOwnProps;
+export type HeaderProps = HeaderOwnProps;

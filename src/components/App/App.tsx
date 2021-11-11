@@ -3,7 +3,7 @@ import { email, required, validate, ValidationResult } from '../../utilites/vali
 import { InputField } from '../InputField';
 import { Button } from '../Button';
 import './App.css';
-import { ContainerHeader } from '../ContainerHeader';
+import { Header } from '../Header';
 
 const inputValidators = [
   { checkFunction: required(), message: 'Это обязательное поле' },
@@ -45,9 +45,9 @@ const App: FC = () => {
       />
 
       <Button onClick={handleButtonClick} text="MyButton" view="primary"></Button>
-      <ContainerHeader>
+      <Header>
         <p>Test container Header</p>
-      </ContainerHeader>
+      </Header>
     </div>
   );
 };
