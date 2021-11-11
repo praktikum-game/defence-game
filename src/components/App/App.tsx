@@ -45,7 +45,7 @@ const App: FC = () => {
       />
 
       <Button onClick={handleButtonClick} text="MyButton" view="primary"></Button>
-      <Avatar src="default-avatar.png"></Avatar>
+      <Avatar></Avatar>
     </div>
   );
 };
