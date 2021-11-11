@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { block } from 'bem-cn';
 import './index.css';
 
-
 const b = block('lead-table');
 
 export const LbTable = ({ data, columns }: LeaderboardTableProps) => {
