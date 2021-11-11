@@ -3,7 +3,7 @@ import './title.css';
 import { TitleProps } from './types';
 
 export const Title = ({
-  headingLevel = 1,
+  headingLevel = 5,
   align = 'center',
   ...otherProps
 }: TitleProps): JSX.Element => {
