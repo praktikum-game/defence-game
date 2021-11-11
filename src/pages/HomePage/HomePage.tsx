@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { AppNavigation } from '../../components/AppNaviagation';
 import { email, required, validate, ValidationResult } from '../../utilites/validator';
 import { InputField } from '../../components/InputField';
 import { Button } from '../../components/Button';
@@ -33,28 +33,7 @@ export const HomePage = (): JSX.Element => {
   return (
     <div className="homePage">
       <h1>Мое супер приложение</h1>
-      <nav>
-        <ul>
-          <li>
-            <Link to={'/profile'}>Профиль</Link>
-          </li>
-          <li>
-            <Link to={'/login'}>Логин</Link>
-          </li>
-          <li>
-            <Link to={'/register'}>Регистрация</Link>
-          </li>
-          <li>
-            <Link to={'/game'}>Игра</Link>
-          </li>
-          <li>
-            <Link to={'/ratings'}>Таблица игроков</Link>
-          </li>
-          <li>
-            <Link to={'/forum'}>Форум</Link>
-          </li>
-        </ul>
-      </nav>
+      <AppNavigation />
       <InputField
         value={inputValue}
         type="email"

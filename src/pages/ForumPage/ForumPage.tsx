@@ -1,10 +1,9 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-export const ForumPage = (): JSX.Element => {
-  return (
-    <>
-      <h1>Форум</h1>
-      <p>контент форума</p>
-    </>
-  );
-};
+export const ForumPage = (): JSX.Element => (
+  <>
+    <h1>Форум</h1>
+    <Outlet />
+  </>
+);
