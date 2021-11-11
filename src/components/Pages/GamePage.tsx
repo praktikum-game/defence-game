@@ -10,7 +10,9 @@ const GamePage: FC = () => {
       game.run();
     }
   }, []);
-  return <canvas ref={canvasRef} height={500} width={1200}></canvas>;
+  return (
+    <canvas ref={canvasRef} style={{ backgroundColor: 'gray' }} height={500} width={1200}></canvas>
+  );
 };
 
 export default GamePage;

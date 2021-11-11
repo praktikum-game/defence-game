@@ -49,7 +49,7 @@ export class BaseDefender extends BaseGameObject {
     if (this._it % 100 === 0) {
       this._bullets.push(
         new BaseBullet(
-          0.2,
+          0.05,
           10,
           this._x + this._width / 2,
           this._y + (100 / 2 - bulletSize / 2),

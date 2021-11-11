@@ -4,6 +4,9 @@ import { Drawable, Updateable } from './interfaces';
 
 import virus from './assets/corona_red.png';
 
+const img = new Image();
+img.src = virus;
+
 export class BaseEnemy extends BaseGameObject implements Drawable, Updateable {
   private _isMove: boolean;
 
@@ -41,7 +44,7 @@ export class BaseEnemy extends BaseGameObject implements Drawable, Updateable {
 
   draw(ctx: CanvasRenderingContext2D) {
     console.log(virus);
-    ctx.drawImage(virus, 100, 100);
+    ctx.drawImage(img, this.x, this.y, 100, 100);
     // ctx.fillRect(this.x, this.y, this.height, this.width);
   }
 
