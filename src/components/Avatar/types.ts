@@ -1,7 +1,7 @@
 import { ImgHTMLAttributes } from 'react';
 
 export type AvatarOwnProps = {
-  additionalClasses?: string[];
+  className?: string;
 } & ImgHTMLAttributes<HTMLImageElement>;
 
 export type AvatarProps = AvatarOwnProps;

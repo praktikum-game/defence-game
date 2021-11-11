@@ -5,8 +5,8 @@ import defaultAvatar from './static/default-avatar.png';
 
 export const Avatar = ({
   src = defaultAvatar,
-  additionalClasses = [''],
+  className = '',
   ...otherProps
 }: AvatarProps): JSX.Element => (
-  <img className={`avatar ${additionalClasses.join(' ')}`} src={src} {...otherProps}></img>
+  <img className={`avatar ${className}`} src={src} {...otherProps}></img>
 );
