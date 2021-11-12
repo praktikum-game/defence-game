@@ -7,3 +7,4 @@ export const App = () => (
     <AppRoutes />
   </div>
 );
+

@@ -9,21 +9,21 @@
 
 .input-field__input {
   border: none;
-  border-bottom: solid 1px var(--input-border-color);
+  border-bottom: solid 1px $input-border-color;
   margin-bottom: 3px;
   padding: 5px;
-  color: var(--input-text-color);
+  color: $input-text-color;
 }
 
 .input-field__label {
   font-size: 14px;
-  color: var(--input-label-color);
+  color: $input-label-color;
   user-select: none;
 }
 
 .input-field__error-text {
   font-size: 12px;
-  color: var(--error-text-color);
+  color: $error-text-color;
   line-height: 14px;
   height: 14px;
 }
