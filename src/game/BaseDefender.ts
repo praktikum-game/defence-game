@@ -1,7 +1,5 @@
 import { BaseBullet } from './BaseBullet';
 import { BaseGameObject } from './BaseGameObject';
-// import { getRandomInt } from './helpers';
-// import { BaseWeapon } from './BaseWeapon';
 
 import doctorImg from './assets/doctor.jpg';
 

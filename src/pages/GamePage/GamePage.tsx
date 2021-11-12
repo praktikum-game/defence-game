@@ -11,7 +11,6 @@ export const GamePage: FC = () => {
   useEffect(() => {
     if (canvasRef.current) {
       const g = new Game(canvasRef.current);
-
       setGame(g);
     }
   }, []);
