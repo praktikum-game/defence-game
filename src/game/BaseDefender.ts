@@ -1,7 +1,6 @@
 import { BaseBullet } from './BaseBullet';
 import { BaseGameObject } from './BaseGameObject';
 // import { BaseWeapon } from './BaseWeapon';
-import { getRandomInt } from './helpers';
 
 export class BaseDefender extends BaseGameObject {
   private health: number;
@@ -16,10 +15,9 @@ export class BaseDefender extends BaseGameObject {
     return this.health;
   }
 
-  constructor() {
-    super(getRandomInt(0, 5) * 100, getRandomInt(0, 5) * 100, 100, 100);
+  constructor(x: number, y: number) {
+    super(x, y, 100, 100);
     this.health = 100;
-    // this.weapon = new BaseWeapon(0.2, 2);
     this.bullets = [];
     this.it = 0;
   }

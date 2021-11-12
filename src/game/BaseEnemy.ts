@@ -22,7 +22,7 @@ export class BaseEnemy extends BaseGameObject implements Drawable, Updateable {
   constructor() {
     super(1200, getRandomInt(1, 5) * 100, 100, 100);
 
-    this.speed = Math.random() - 0.2;
+    this.speed = Math.random() - 0.9;
     this.directionMove = -1;
     this.isMove = true;
     this.damage = 1;
