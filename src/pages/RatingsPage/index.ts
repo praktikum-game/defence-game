@@ -1,0 +1,1 @@
+export { RatingsPage } from './RatingsPage';
