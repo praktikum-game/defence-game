@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { AppNavigation } from '../../components/AppNaviagation';
-import { email, required, validate, ValidationResult } from '../../utilites/validator';
+import { AppNavigation } from '../../components/AppNavigation';
+import { email, required, validate, ValidationResult } from '../../utilities/validators';
 import { InputField } from '../../components/InputField';
 import { Button } from '../../components/Button';
 
@@ -38,7 +38,7 @@ export const HomePage = (): JSX.Element => {
         value={inputValue}
         type="email"
         label="MyText Field"
-        onChange={handleInput}
+        valueChangeCallback={handleInput}
         placeholder="Введите значение поля"
         isValid={inputError.valid}
         errorText={inputError.message}
