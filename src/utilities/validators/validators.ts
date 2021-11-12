@@ -1,4 +1,4 @@
-import { ValidateFunction, ValidationResult, ValidatorItem } from './types';
+import { ValidateFunction, ValidationResult, ValidatorItem, ValidateItemParams } from './types';
 
 const valid = (): ValidationResult => ({ valid: true, message: null });
 const invalid = (message: string | null): ValidationResult => ({ valid: false, message });
@@ -37,6 +37,27 @@ export const email: ValidateFunction =
     return re.test(value) ? valid() : invalid(message);
   };
 
+export const onlyAlphabeticOrDigits: ValidateFunction =
+  () =>
+  ({ value, message }) => {
+    const re = /^[A-Za-z0-9]*$/;
+    return re.test(value) ? valid() : invalid(message);
+  };
+
+export const atLeastOneDigit: ValidateFunction =
+  () =>
+  ({ value, message }) => {
+    const re = /^[A-Za-z0-9]*$/;
+    return re.test(value) ? valid() : invalid(message);
+  };
+
+// export const atLeastNU: ValidateFunction =
+//   () =>
+//   ({ value, message }) => {
+//     const re = /^[A-Za-z0-9]*$/;
+//     return re.test(value) ? valid() : invalid(message);
+//   };
+
 export const validate = (validators: Array<ValidatorItem>, value: string): ValidationResult => {
   if (validators && validators.length > 0) {
     for (const { checkFunction, message } of validators) {
@@ -48,3 +69,39 @@ export const validate = (validators: Array<ValidatorItem>, value: string): Valid
   }
   return { valid: true, message: null };
 };
+
+export function loginValidator(value: string): ValidationResult {
+  const validators: ValidatorItem[] = [
+    {
+      checkFunction: (params: ValidateItemParams) => required()({ ...params }),
+      message: 'Логин не может быть пустым',
+    },
+    {
+      checkFunction: (params: ValidateItemParams) => longerThan(2)({ ...params }),
+      message: 'Логин должен быть больше 2 символов',
+    },
+    {
+      checkFunction: (params: ValidateItemParams) => onlyAlphabeticOrDigits()({ ...params }),
+      message: 'Логин может состоять только из латиницы и/или цифр',
+    },
+  ];
+  return validate(validators, value);
+}
+
+export function passwordValidator(value: string): ValidationResult {
+  const validators: ValidatorItem[] = [
+    {
+      checkFunction: (params: ValidateItemParams) => required()({ ...params }),
+      message: 'Пароль не может быть пустым',
+    },
+    {
+      checkFunction: (params: ValidateItemParams) => longerThan(7)({ ...params }),
+      message: 'Пароль должен быть больше 7 символов',
+    },
+    {
+      checkFunction: (params: ValidateItemParams) => onlyAlphabeticOrDigits()({ ...params }),
+      message: 'Пароль может состоять только из латиницы и/или цифр',
+    },
+  ];
+  return validate(validators, value);
+}
