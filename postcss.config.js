@@ -5,6 +5,18 @@ module.exports = {
     [
       'postcss-simple-vars',
       {
+        // Options
+      },
+    ],
+    [
+      'autoprefixer',
+      {
+        grid: true,
+      },
+    ],
+    [
+      'postcss-advanced-variables',
+      {
         variables: {
           'primary-background': '#fe9520',
           'default-background': '#808080',

@@ -22,3 +22,7 @@ body {
 a {
   color: $primary-color;
 }
+
+.app {
+  margin: auto;
+}

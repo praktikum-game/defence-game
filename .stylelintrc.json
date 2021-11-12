@@ -3,7 +3,13 @@
     "stylelint-config-standard",
     "stylelint-config-prettier"
   ],
+  "plugins": [
+    "stylelint-prettier",
+    "stylelint-order"
+  ],
   "rules": {
+    "selector-class-pattern": null,
+    "string-quotes": "single",
     "color-hex-case": "lower",
     "indentation": 2,
     "no-missing-end-of-source-newline": null,
@@ -31,9 +37,5 @@
     "dist/*",
     "node_modules/*",
     ".cache/"
-  ],
-  "plugins": [
-    "stylelint-order",
-    "stylelint-prettier"
   ]
 }
