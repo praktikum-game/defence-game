@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { AppNavigation } from '../../components/AppNaviagation';
-import { email, required, validate, ValidationResult } from '../../utilites/validator';
+import { email, required, validate, ValidationResult } from '../../utilities/validators';
 import { InputField } from '../../components/InputField';
 import { Button } from '../../components/Button';
 
@@ -22,8 +22,8 @@ export const HomePage = (): JSX.Element => {
     alert('Clicked event');
   }, []);
 
-  const handleInput = useCallback((value: string) => {
-    setInputValue(value);
+  const handleInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
   }, []);
 
   useEffect(() => {
