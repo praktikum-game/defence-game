@@ -47,8 +47,9 @@ export class BaseDefender extends BaseGameObject {
 
   public fire(delay: number) {
     const bulletSize = 20;
-    if (this._it % 300 === 0) {
-      console.log('fire', this._bullets.length);
+
+    // каждые 200 фреймов стреляем
+    if (this._it % 200 === 0) {
       this._bullets.push(
         new BaseBullet(
           0.05,

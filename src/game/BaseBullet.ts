@@ -1,7 +1,7 @@
 import { BaseGameObject } from './BaseGameObject';
 import { Drawable, Updateable } from './interfaces';
 
-import fireball1 from './assets/fireball.png';
+import fireball1 from './assets/pills.jpg';
 
 const img = new Image();
 img.src = fireball1;
@@ -22,7 +22,7 @@ export class BaseBullet extends BaseGameObject implements Drawable, Updateable {
   }
 
   public draw(context: CanvasRenderingContext2D) {
-    context.drawImage(img, 63, 58, 68, 60, this.x, this.y, 25, 25);
+    context.drawImage(img, 8, 82, 240, 86, this.x, this.y, 44, 16);
   }
 
   public update(delay: number) {

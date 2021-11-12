@@ -3,6 +3,7 @@ import { BaseDefender } from './BaseDefender';
 import { BaseEnemy } from './BaseEnemy';
 import { BaseGameObject } from './BaseGameObject';
 import { GameField } from './GameField';
+import { getRandomInt } from './helpers';
 
 class Game {
   private canvasElement: HTMLCanvasElement;
@@ -17,24 +18,6 @@ class Game {
 
   private _gameField: GameField;
 
-  constructor(canvasEl: any) {
-    this.canvasElement = canvasEl;
-
-    this.canvasElement.addEventListener('click', ({ offsetX, offsetY }: MouseEvent) =>
-      this.manualAddDefender(offsetX, offsetY),
-    );
-
-    this.ctx = this.canvasElement.getContext('2d')!;
-
-    this.last = performance.now();
-    this._gameField = new GameField(1200, 500);
-
-    for (let i = 0; i < 3; i += 1) {
-      this._enemies.push(new BaseEnemy());
-    }
-    this._gameField.draw(this.ctx);
-  }
-
   public get enemies() {
     return this._enemies;
   }
@@ -43,7 +26,28 @@ class Game {
     return this._defenders;
   }
 
+  constructor(canvasEl: any) {
+    this.last = 0;
+    this.canvasElement = canvasEl;
+
+    this.canvasElement.addEventListener('click', ({ offsetX, offsetY }: MouseEvent) =>
+      this.manualAddDefender(offsetX, offsetY),
+    );
+
+    this.ctx = this.canvasElement.getContext('2d')!;
+
+    this._gameField = new GameField(1200, 500);
+
+    this._gameField.draw(this.ctx);
+  }
+
   public run() {
+    this.last = performance.now();
+    for (let i = 0; i < 3; i += 1) {
+      const enemy = new BaseEnemy(1000, getRandomInt(1, 5) * 100);
+      this._enemies.push(enemy);
+      enemy.draw(this.ctx);
+    }
     this.animation(performance.now());
   }
 
@@ -96,7 +100,6 @@ class Game {
       for (const defender of this.defenders) {
         for (const bullet of defender.bullets) {
           if (this.checkBulletCollision(bullet, enemy)) {
-            console.log('bullet collision');
             enemy.setDamage(defender.damage);
             defender.bullets = defender.bullets.filter((b) => b.uuid !== bullet.uuid);
             if (enemy.health < 0) {

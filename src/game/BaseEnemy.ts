@@ -1,5 +1,4 @@
 import { BaseGameObject } from './BaseGameObject';
-import { getRandomInt } from './helpers';
 import { Drawable, Updateable } from './interfaces';
 
 import virus from './assets/corona_red.png';
@@ -16,6 +15,8 @@ export class BaseEnemy extends BaseGameObject implements Drawable, Updateable {
 
   private _health: number;
 
+  private _startPosition: number;
+
   public get damage() {
     return this._damage;
   }
@@ -28,11 +29,11 @@ export class BaseEnemy extends BaseGameObject implements Drawable, Updateable {
     this._isMove = value;
   }
 
-  constructor() {
-    const yPos = getRandomInt(1, 5) * 100;
-    super(1200, yPos, 100, 100);
+  constructor(x: number, y: number) {
+    super(x, y, 100, 100);
+    this._startPosition = x;
 
-    this._speed = Math.random() - 0.1;
+    this._speed = Math.random() - 0.2;
     this._isMove = true;
     this._damage = 1;
     this._health = 10;
@@ -43,15 +44,15 @@ export class BaseEnemy extends BaseGameObject implements Drawable, Updateable {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    console.log(virus);
     ctx.drawImage(img, this.x, this.y + 5, 90, 90);
   }
 
   update(delay: number) {
     if (!this._isMove) return this;
+    
     const dx = this._speed * delay;
     if (this._x < 0) {
-      this._x = 1200;
+      this._x = this._startPosition;
     } else {
       this._x -= Math.abs(dx);
     }
