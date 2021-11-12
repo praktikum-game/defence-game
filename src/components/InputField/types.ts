@@ -1,13 +1,12 @@
-// import { ValidatorItem } from '../../utilites/validator';
+import { InputHTMLAttributes } from 'react';
 
-export type InputFieldProps = {
-  value: string;
-  type: 'number' | 'text' | 'email' | 'hidden' | 'password';
+export type InputFieldOwnProps = {
   label?: string;
   flex?: boolean;
-  placeholder?: string;
   isValid?: boolean;
   errorText: string | null;
   disabled?: boolean;
-  onChange: (value: string) => void;
-};
+  valueChangeCallback?: (value: string) => void;
+} & InputHTMLAttributes<HTMLInputElement>;
+
+export type InputFieldProps = InputFieldOwnProps;
