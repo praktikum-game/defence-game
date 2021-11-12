@@ -7,7 +7,7 @@ import './logo.css';
 export const Logo = (props: LogoProps) => (
   <Link to="/home">
     <div className="logo" {...props}>
-      <img src={logo} alt="Logo" />
+      <img src={logo} alt="Doctors Vs Viruses" />
     </div>
   </Link>
 );
