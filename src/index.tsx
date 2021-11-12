@@ -1,6 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import App from './components/App';
-import GamePage from './components/Pages/GamePage';
+import { BrowserRouter } from 'react-router-dom';
 
-ReactDOM.render(<GamePage />, document.querySelector('#root'));
+import { App } from './components/App';
+
+ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.querySelector('#root'),
+);
