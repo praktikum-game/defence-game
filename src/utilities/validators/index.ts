@@ -6,4 +6,4 @@ export {
   ValidatorItem,
 } from './types';
 
-export { required, email, longerThan, shorterThan, validate } from './input-validator';
+export { required, email, longerThan, shorterThan, validate } from './validators';
