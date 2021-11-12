@@ -22,6 +22,7 @@
     "block-closing-brace-newline-before": "always-multi-line",
     "block-opening-brace-newline-after": "always-multi-line",
     "value-list-comma-space-after": "always",
+    "declaration-colon-space-after": "always",
     "order/properties-order": [
       "position",
       "z-index",
