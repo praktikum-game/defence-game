@@ -1,0 +1,6 @@
+.page-layout {
+  background: linear-gradient(180deg, $page-background-dark 0%, $page-background-light 100%);
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px;
+}
