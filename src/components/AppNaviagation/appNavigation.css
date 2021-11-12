@@ -1,0 +1,15 @@
+.app-navigation {
+  margin: 10px 0;
+
+  ul li {
+    display: inline;
+    margin-right: 10px;
+  }
+
+  &__item {
+    &_active {
+      text-decoration: none;
+      color: red;
+    }
+  }
+}
