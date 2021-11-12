@@ -1,0 +1,1 @@
+export { ForumThreadPage } from './ForumThreadPage';
