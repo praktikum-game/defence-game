@@ -5,6 +5,7 @@ import './form.css';
 export const Form = ({
   children,
   validationResults = [],
+  className_ = '',
   ...otherProps
 }: FormProps): JSX.Element => {
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
@@ -23,9 +24,10 @@ export const Form = ({
     }
     form.reset();
   };
+  const className = className_ === '' ? '' : ` ${className_}`;
 
   return (
-    <form className="form" {...otherProps} onSubmit={submitHandler}>
+    <form className={`form ${className}`} {...otherProps} onSubmit={submitHandler}>
       {children}
     </form>
   );

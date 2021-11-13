@@ -11,6 +11,7 @@ export const InputField = ({
   ...rest
 }: InputFieldProps): JSX.Element => {
   const { valueChangeCallback, ...otherProps } = rest;
+  const { id } = otherProps;
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.target;
@@ -21,7 +22,6 @@ export const InputField = ({
 
   return (
     <div className={`input-field ${flex && 'input-field_flex'}`}>
-      {rest.label && <label className="input-field__label ">{rest.label}</label>}
       <input
         className="input-field__input"
         type={type}
@@ -29,7 +29,12 @@ export const InputField = ({
         {...otherProps}
         onChange={handleChange}
       />
-      {!isValid && <span className="input-field__error-text">{errorText}</span>}
+      {rest.label && (
+        <label htmlFor={id} className="input-field__label ">
+          {rest.label}
+        </label>
+      )}
+      {!isValid && <span className="error-text input-field__error-text">{errorText}</span>}
     </div>
   );
 };

@@ -4,7 +4,7 @@ export type InputFieldOwnProps = {
   label?: string;
   flex?: boolean;
   isValid?: boolean;
-  errorText: string | null;
+  errorText?: string | null;
   disabled?: boolean;
   valueChangeCallback?: (value: string, lastValue?: string) => void;
 } & InputHTMLAttributes<HTMLInputElement>;

@@ -1,12 +1,16 @@
 .page-container {
+  background: #fff;
+  border-radius: 0 0 15px 15px;
+  padding: 40px 110px;
+
   &_s {
     max-width: 350px;
     width: 350px;
   }
 
   &_m {
-    max-width: 700;
-    width: 700px;
+    max-width: 731px;
+    width: 731px;
   }
 
   &_l {

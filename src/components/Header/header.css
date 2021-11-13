@@ -2,4 +2,18 @@
   background-color: $primary-color;
   max-height: 90px;
   height: 70px;
+  border-radius: 15px 15px 0 0;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  &_s {
+    min-height: 70px;
+  }
+
+  &_l {
+    min-height: 90px;
+  }
 }
