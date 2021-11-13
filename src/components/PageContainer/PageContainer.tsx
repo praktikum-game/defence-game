@@ -7,7 +7,7 @@ export const PageContainer = ({
   size = 'm',
   ...otherProps
 }: PageContainerProps): JSX.Element => (
-  <div className={`page-container page-container_${size}`} {...otherProps}>
+  <div className={`page-container page-container_${size} centered-horizontal`} {...otherProps}>
     {children}
   </div>
 );
