@@ -59,6 +59,7 @@ export const LoginPage = (): JSX.Element => {
             text="Авторизоваться"
             type="submit"
             disabled={!(loginValidationResult.valid && passwordValidationResult.valid)}
+            className="centered-horizontal"
           />
         </Form>
         <Link to="/register">
