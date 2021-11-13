@@ -47,7 +47,7 @@ export const onlyAlphabeticOrDigits: ValidateFunction =
 export const atLeastOneDigit: ValidateFunction =
   () =>
   ({ value, message }) => {
-    const re = /^[A-Za-z0-9]*$/;
+    const re = /^(?=\D*\d).*$/;
     return re.test(value) ? valid() : invalid(message);
   };
 
