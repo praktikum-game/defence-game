@@ -1,14 +1,15 @@
 .button {
   color: $text-color;
-  border-radius: 30px;
+  border-radius: 10px;
   padding: 10px;
   border: none;
-  width: 250px;
+  width: 280px;
   transition: transform 0.1s linear;
 }
 
 .button_primary {
   background-color: $primary-background;
+  color: #fff;
 }
 
 .button_default {
@@ -16,7 +17,9 @@
 }
 
 .button_secondary {
-  background-color: $secondary-background;
+  border: 1px solid $primary-color;
+  background: $secondary-background;
+  color: $primary-color;
 }
 
 .button:disabled {
@@ -28,5 +31,5 @@
 
 .button:hover {
   cursor: pointer;
-  transform: translateY(-3px);
+  transform: translateY(3px);
 }
