@@ -1,18 +1,22 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { InputFieldProps } from '.';
 import './input-field.css';
 
-export const InputField: FC<InputFieldProps> = ({
+export const InputField = ({
   flex = true,
   type = 'text',
   disabled = false,
   isValid = true,
   errorText = null,
   ...rest
-}) => {
+}: InputFieldProps): JSX.Element => {
+  const { valueChangeCallback, ...otherProps } = rest;
+
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.target;
-    rest.onChange(value);
+    if (valueChangeCallback !== undefined) {
+      valueChangeCallback(value);
+    }
   };
 
   return (
@@ -22,7 +26,7 @@ export const InputField: FC<InputFieldProps> = ({
         className="input-field__input"
         type={type}
         disabled={disabled}
-        {...rest}
+        {...otherProps}
         onChange={handleChange}
       />
       {!isValid && <span className="input-field__error-text">{errorText}</span>}
