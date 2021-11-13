@@ -18,6 +18,8 @@ class Game {
 
   private _gameField: GameField;
 
+  private _onLoose: Function;
+
   public get enemies() {
     return this._enemies;
   }
@@ -26,10 +28,10 @@ class Game {
     return this._defenders;
   }
 
-  constructor(canvasEl: any) {
+  constructor(canvasEl: HTMLCanvasElement, cb: Function) {
     this.last = 0;
     this.canvasElement = canvasEl;
-
+    this._onLoose = cb;
     this.canvasElement.addEventListener('click', ({ offsetX, offsetY }: MouseEvent) =>
       this.manualAddDefender(offsetX, offsetY),
     );
@@ -43,11 +45,14 @@ class Game {
 
   public run() {
     this.last = performance.now();
-    for (let i = 0; i < 3; i += 1) {
+    for (let i = 0; i < 10; i += 1) {
       const enemy = new BaseEnemy(1000, getRandomInt(1, 5) * 100);
       this._enemies.push(enemy);
       enemy.draw(this.ctx);
     }
+    this._defenders.forEach((d) => {
+      d.isFire = true;
+    });
     this.animation(performance.now());
   }
 
@@ -74,9 +79,19 @@ class Game {
     requestAnimationFrame(this.animation);
   };
 
+  private loseGame() {
+    this._enemies = [];
+    this._defenders = [];
+    this._onLoose();
+  }
+
   private redraw(delay: number) {
     // проверяем на столкновения защитников и атакующих
     for (const enemy of this.enemies) {
+      if (enemy.x < 0) {
+        this.loseGame();
+        break;
+      }
       for (const defender of this.defenders) {
         if (this.checkCollision(defender, enemy)) {
           enemy.isMove = false;

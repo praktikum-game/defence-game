@@ -19,7 +19,7 @@
     "no-alert": "off",
     "spaced-comment": "off",
     "import/extensions": "off",
-    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-explicit-any": "error",
 
     // Предлагаю остальные правила не отключать. Они же не такие плохие, разве, нет?
     // Но если будут сильно надоедать, то можем штучно исключать.

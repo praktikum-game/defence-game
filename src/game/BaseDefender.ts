@@ -9,6 +9,7 @@ img.src = doctorImg;
 export class BaseDefender extends BaseGameObject {
   private _health: number;
 
+  private _isFire: boolean;
   // private weapon: BaseWeapon;
 
   private _it: number;
@@ -29,12 +30,21 @@ export class BaseDefender extends BaseGameObject {
     return this._bullets;
   }
 
+  public get isFIre() {
+    return this._isFire;
+  }
+
+  public set isFire(value: boolean) {
+    this._isFire = value;
+  }
+
   public set bullets(value: Array<BaseBullet>) {
     this._bullets = [...value];
   }
 
   constructor(x: number, y: number) {
     super(x, y, 100, 100);
+    this._isFire = false;
     this._health = 100;
     this._bullets = [];
     this._it = 0;
@@ -46,10 +56,12 @@ export class BaseDefender extends BaseGameObject {
   }
 
   public fire(delay: number) {
+    if (!this.isFIre) return;
+
     const bulletSize = 20;
 
     // каждые 200 фреймов стреляем
-    if (this._it % 200 === 0) {
+    if (delay && this._it % 200 === 0) {
       this._bullets.push(
         new BaseBullet(
           0.05,
