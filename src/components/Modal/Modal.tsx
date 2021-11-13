@@ -1,13 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ModalProps } from './types';
 import './modal.css';
 
-type Props = {
-  children?: React.ReactNode;
-  visible: boolean;
-};
-
-export const Modal = ({ children, visible }: Props): JSX.Element => {
+export const Modal = ({ children, visible }: ModalProps): JSX.Element => {
   if (!visible) {
     return <></>;
   }
