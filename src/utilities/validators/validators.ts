@@ -99,8 +99,12 @@ export function passwordValidator(value: string): ValidationResult {
       message: 'Пароль должен быть больше 7 символов',
     },
     {
-      checkFunction: (params: ValidateItemParams) => onlyAlphabeticOrDigits()({ ...params }),
-      message: 'Пароль может состоять только из латиницы и/или цифр',
+      checkFunction: (params: ValidateItemParams) => atLeastOneDigit()({ ...params }),
+      message: 'Пароль должен содержать, как минимум, одну цифру',
+    },
+    {
+      checkFunction: (params: ValidateItemParams) => atLeastOneUpperCaseLetter()({ ...params }),
+      message: 'Пароль должен содержать, как минимум, одну заглавную букву английского алфавита',
     },
   ];
   return validate(validators, value);
