@@ -1,0 +1,11 @@
+.centered-horizontal {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.centered-vertical {
+  display: block;
+  margin-top: auto;
+  margin-down: auto;
+}
