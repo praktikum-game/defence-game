@@ -10,3 +10,8 @@ export function getViewTypes(name: string): ViewType {
     warning: `${name}_warning`,
   };
 }
+
+// Bind arguments starting with argument number "n".
+export function bindArgsFromN(fn: Function, n: number, ...bound_args: unknown[]) {
+  return (...args: unknown[]) => fn(...args.slice(0, n - 1), ...bound_args);
+}
