@@ -44,6 +44,7 @@ export const LoginPage = (): JSX.Element => {
             value={passwordValue}
             name="password"
             label="Пароль"
+            type="password"
             errorText={passwordValidationResult.message}
             isValid={passwordValidationResult.valid}
             valueChangeCallback={inputValueUpdaterFactory(

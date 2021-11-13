@@ -71,6 +71,7 @@ export const RegisterPage = (): JSX.Element => {
             value={emailValue}
             name="email"
             label="Email"
+            type="email"
             errorText={emailValidationResult.message}
             isValid={emailValidationResult.valid}
             valueChangeCallback={inputValueUpdaterFactory(
@@ -83,6 +84,7 @@ export const RegisterPage = (): JSX.Element => {
             value={passwordValue}
             name="password"
             label="Пароль"
+            type="password"
             errorText={passwordValidationResult.message}
             isValid={passwordValidationResult.valid}
             valueChangeCallback={inputValueUpdaterFactory(
@@ -95,6 +97,7 @@ export const RegisterPage = (): JSX.Element => {
             value={repeatPasswordValue}
             name="repeatPassword"
             label="Пароль (еще раз)"
+            type="password"
             errorText={repeatPasswordValidationResult.message}
             isValid={repeatPasswordValidationResult.valid}
             valueChangeCallback={inputValueUpdaterFactory(
