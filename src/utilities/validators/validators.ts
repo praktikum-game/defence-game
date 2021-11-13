@@ -107,5 +107,16 @@ export function passwordValidator(value: string): ValidationResult {
       message: 'Пароль должен содержать, как минимум, одну заглавную букву английского алфавита',
     },
   ];
+export function emailValidator(value: string): ValidationResult {
+  const validators: ValidatorItem[] = [
+    {
+      checkFunction: (params: ValidateItemParams) => required()({ ...params }),
+      message: 'Почта не может быть пустой',
+    },
+    {
+      checkFunction: (params: ValidateItemParams) => email()({ ...params }),
+      message: 'Почта должна соответствовать форме email@example.com',
+    },
+  ];
   return validate(validators, value);
 }
