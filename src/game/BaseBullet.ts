@@ -2,6 +2,7 @@ import { BaseGameObject } from './BaseGameObject';
 import { Drawable, Updateable } from './interfaces';
 
 import fireball1 from './assets/pills.jpg';
+import { GameField } from './GameField';
 
 const img = new Image();
 img.src = fireball1;
@@ -27,8 +28,8 @@ export class BaseBullet extends BaseGameObject implements Drawable, Updateable {
 
   public update(delay: number) {
     const dx = this._speed * delay;
-    if (this.x > 1200) {
-      this._x = 1200;
+    if (this.x > GameField.gameFieldWidth) {
+      this._x = GameField.gameFieldWidth;
     } else {
       this._x += dx;
     }

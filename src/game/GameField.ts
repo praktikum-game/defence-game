@@ -2,6 +2,10 @@ import { FieldGridItem } from './FieldGridItem';
 import { Drawable, Updateable } from './interfaces';
 
 export class GameField implements Drawable, Updateable {
+  public static gameFieldWidth = 0;
+  
+  public static gameFieldHeight = 0;
+
   private _gameGrid: Array<FieldGridItem>;
 
   public get gameGrid() {

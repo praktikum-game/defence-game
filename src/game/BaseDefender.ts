@@ -2,6 +2,7 @@ import { BaseBullet } from './BaseBullet';
 import { BaseGameObject } from './BaseGameObject';
 
 import doctorImg from './assets/doctor.jpg';
+import { GameField } from './GameField';
 
 const img = new Image();
 img.src = doctorImg;
@@ -85,7 +86,7 @@ export class BaseDefender extends BaseGameObject {
   public update(delay: number) {
     this.fire(delay);
     for (const bullet of this.bullets) {
-      if (bullet.x > 1200) {
+      if (bullet.x > GameField.gameFieldWidth) {
         this.bullets = this.bullets.filter((b) => b.uuid !== bullet.uuid);
       }
     }

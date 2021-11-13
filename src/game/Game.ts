@@ -6,11 +6,13 @@ import { GameField } from './GameField';
 import { getRandomInt } from './helpers';
 
 class Game {
-  private canvasElement: HTMLCanvasElement;
+  private _canvasElement: HTMLCanvasElement;
 
-  private ctx: CanvasRenderingContext2D;
+  private _ctx: CanvasRenderingContext2D;
 
-  private last: number;
+  private _last: number;
+
+  private _isRunning: boolean;
 
   private _enemies: Array<BaseEnemy> = [];
 
@@ -20,6 +22,8 @@ class Game {
 
   private _onLoose: Function;
 
+  private _onWin: Function;
+
   public get enemies() {
     return this._enemies;
   }
@@ -28,33 +32,45 @@ class Game {
     return this._defenders;
   }
 
-  constructor(canvasEl: HTMLCanvasElement, cb: Function) {
-    this.last = 0;
-    this.canvasElement = canvasEl;
-    this._onLoose = cb;
-    this.canvasElement.addEventListener('click', ({ offsetX, offsetY }: MouseEvent) =>
+  constructor(canvasEl: HTMLCanvasElement, onLose: Function, onWin: Function) {
+    this._last = 0;
+    this._isRunning = false;
+
+    GameField.gameFieldWidth = canvasEl.width;
+    GameField.gameFieldHeight = canvasEl.height;
+
+    this._canvasElement = canvasEl;
+
+    this._onLoose = onLose;
+    this._onWin = onWin;
+
+    this._canvasElement.addEventListener('click', ({ offsetX, offsetY }: MouseEvent) =>
       this.manualAddDefender(offsetX, offsetY),
     );
 
-    this.ctx = this.canvasElement.getContext('2d')!;
+    this._ctx = this._canvasElement.getContext('2d')!;
 
-    this._gameField = new GameField(1200, 500);
+    this._gameField = new GameField(GameField.gameFieldWidth, GameField.gameFieldHeight);
 
-    this._gameField.draw(this.ctx);
+    this._gameField.draw(this._ctx);
   }
 
   public run() {
-    this.last = performance.now();
+    this._last = performance.now();
     for (let i = 0; i < 10; i += 1) {
       const enemy = new BaseEnemy(1000, getRandomInt(1, 5) * 100);
       this._enemies.push(enemy);
-      enemy.draw(this.ctx);
+      enemy.draw(this._ctx);
     }
     this._defenders.forEach((d) => {
       d.isFire = true;
     });
+
+    this._isRunning = true;
     this.animation(performance.now());
   }
+
+  // private stop() {}
 
   private manualAddDefender(x: number, y: number) {
     this._gameField.gameGrid.forEach((cell) => {
@@ -67,31 +83,46 @@ class Game {
         }
         const defender = new BaseDefender(cell.x, cell.y);
         this._defenders.push(defender);
-        defender.draw(this.ctx);
+        defender.draw(this._ctx);
       }
     });
   }
 
   private animation = (now: number) => {
-    const delay = now - this.last;
-    this.last = now;
+    const delay = now - this._last;
+    this._last = now;
     this.redraw(delay);
     requestAnimationFrame(this.animation);
   };
 
-  private loseGame() {
+  private lose() {
     this._enemies = [];
     this._defenders = [];
+    this._isRunning = false;
     this._onLoose();
   }
 
+  private win() {
+    this._enemies = [];
+    this._defenders = [];
+    this._gameField.draw(this._ctx);
+    this._isRunning = false;
+    this._onWin();
+  }
+
   private redraw(delay: number) {
+    if (!this._isRunning) return;
+    if (this._enemies.length < 1) {
+      this.win();
+      return;
+    }
     // проверяем на столкновения защитников и атакующих
     for (const enemy of this.enemies) {
       if (enemy.x < 0) {
-        this.loseGame();
+        this.lose();
         break;
       }
+
       for (const defender of this.defenders) {
         if (this.checkCollision(defender, enemy)) {
           enemy.isMove = false;
@@ -125,15 +156,15 @@ class Game {
       }
     }
 
-    this.ctx.clearRect(0, 0, 1200, 500);
-    this.enemies.forEach((enemy) => enemy.update(delay).draw(this.ctx));
+    this._ctx.clearRect(0, 0, GameField.gameFieldWidth, GameField.gameFieldHeight);
+    this.enemies.forEach((enemy) => enemy.update(delay).draw(this._ctx));
 
     this.defenders.forEach((d) => {
       d.update(delay);
-      d.draw(this.ctx);
+      d.draw(this._ctx);
     });
 
-    this._gameField.draw(this.ctx);
+    this._gameField.draw(this._ctx);
   }
 
   private checkCollision(obj1: BaseGameObject, obj2: BaseGameObject): boolean {

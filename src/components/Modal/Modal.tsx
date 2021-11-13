@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import './modal.css';
 
 type Props = {
@@ -6,12 +7,18 @@ type Props = {
   visible: boolean;
 };
 
-export const Modal = (props: Props): JSX.Element => (
-  <Fragment>
-    {props.visible && (
-      <div>
-        <div>{props.children}</div>
+export const Modal = ({ children, visible }: Props): JSX.Element => {
+  if (!visible) {
+    return <></>;
+  }
+
+  return ReactDOM.createPortal(
+    <>
+      <div className="overlay"></div>
+      <div className="modal">
+        <div>{children}</div>
       </div>
-    )}
-  </Fragment>
-);
+    </>,
+    document.querySelector('#portal')!,
+  );
+};
