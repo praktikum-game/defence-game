@@ -50,7 +50,7 @@ export const GamePage = (): JSX.Element => {
 
   const handleRedirectToHomeClick = useCallback(() => {
     navigate('/');
-  }, []);
+  }, [navigate]);
 
   return (
     <Fragment>
