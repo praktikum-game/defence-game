@@ -88,7 +88,7 @@ export function loginValidator(value: string): ValidationResult {
   return validate(validators, value);
 }
 
-export function passwordValidator(value: string): ValidationResult {
+export function passwordValidator(value: string, lastValue?: string): ValidationResult {
   const validators: ValidatorItem[] = [
     {
       checkFunction: (params: ValidateItemParams) => required()({ ...params }),
@@ -107,6 +107,13 @@ export function passwordValidator(value: string): ValidationResult {
       message: 'Пароль должен содержать, как минимум, одну заглавную букву английского алфавита',
     },
   ];
+  if (lastValue !== undefined && value !== lastValue) {
+    return invalid('Пароль должен совпадать с предыдущим');
+  }
+
+  return validate(validators, value);
+}
+
 export function emailValidator(value: string): ValidationResult {
   const validators: ValidatorItem[] = [
     {
