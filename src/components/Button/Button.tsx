@@ -10,9 +10,15 @@ export const Button = ({
   disabled = false,
   view = 'primary',
   loading = false,
+  className = '',
   ...rest
 }: ButtonProps): JSX.Element => (
-  <button className={`button ${viewTypes[view]}`} disabled={loading || disabled} {...rest}>
+  <button
+    // eslint-disable-next-line
+    className={`button ${viewTypes[view]}${className === '' ? className : ' ' + className}`}
+    disabled={loading || disabled}
+    {...rest}
+  >
     {loading ? 'Загрузка...' : text}
   </button>
 );
