@@ -14,4 +14,5 @@ export {
   validate,
   loginValidator,
   passwordValidator,
+  emailValidator,
 } from './validators';
