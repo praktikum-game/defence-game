@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AppNavigation } from '../../components/AppNavigation';
 import { email, required, validate, ValidationResult } from '../../utilities/validators';
 import { InputField } from '../../components/InputField';
@@ -22,8 +22,8 @@ export const HomePage = (): JSX.Element => {
     alert('Clicked event');
   }, []);
 
-  const handleInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+  const handleInput = useCallback((value: string) => {
+    setInputValue(value);
   }, []);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export const HomePage = (): JSX.Element => {
         value={inputValue}
         type="email"
         label="MyText Field"
-        onChange={handleInput}
+        valueChangeCallback={handleInput}
         placeholder="Введите значение поля"
         isValid={inputError.valid}
         errorText={inputError.message}
