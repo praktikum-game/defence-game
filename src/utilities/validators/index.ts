@@ -13,4 +13,5 @@ export {
   onlyAlphabeticOrDigits,
   validate,
   loginValidator,
+  passwordValidator,
 } from './validators';
