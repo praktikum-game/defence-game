@@ -34,7 +34,7 @@ export const LoginPage = (): JSX.Element => {
 
   return (
     <>
-      <PageContainer>
+      <PageContainer size="s">
         <Header>
           <Title>Входи, защитник</Title>
         </Header>
