@@ -9,6 +9,7 @@ export const Form = ({
 }: FormProps): JSX.Element => {
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
     console.log('Submitted!');
     for (const result of validationResults) {
       if (!result.valid) {
@@ -16,10 +17,11 @@ export const Form = ({
         return;
       }
     }
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData(form);
     for (const [key, value] of formData.entries()) {
       console.log({ key, value });
     }
+    form.reset();
   };
 
   return (
