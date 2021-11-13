@@ -51,12 +51,12 @@ export const atLeastOneDigit: ValidateFunction =
     return re.test(value) ? valid() : invalid(message);
   };
 
-// export const atLeastNU: ValidateFunction =
-//   () =>
-//   ({ value, message }) => {
-//     const re = /^[A-Za-z0-9]*$/;
-//     return re.test(value) ? valid() : invalid(message);
-//   };
+export const atLeastOneUpperCaseLetter: ValidateFunction =
+  () =>
+  ({ value, message }) => {
+    const re = /^(?=.*[A-Z]).*$/;
+    return re.test(value) ? valid() : invalid(message);
+  };
 
 export const validate = (validators: Array<ValidatorItem>, value: string): ValidationResult => {
   if (validators && validators.length > 0) {
