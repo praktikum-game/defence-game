@@ -1,9 +1,11 @@
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { Modal } from '../../components/Modal';
 import Game from '../../game/Game';
 
 export const GamePage = (): JSX.Element => {
+  const navigate = useNavigate();
   const [game, setGame] = useState<Game | undefined>();
   const [runButtonIsDiabled, setRunButtonIsDiabled] = useState<boolean>(false);
   const [infoModalIsVisible, setInfoModalIsVisible] = useState<boolean>(true);
@@ -47,7 +49,7 @@ export const GamePage = (): JSX.Element => {
   }, []);
 
   const handleRedirectToHomeClick = useCallback(() => {
-    alert('redirect');
+    navigate('/');
   }, []);
 
   return (
