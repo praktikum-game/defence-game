@@ -7,6 +7,7 @@ import { InputField } from '../../components/InputField';
 import { Button } from '../../components/Button';
 import { Title } from '../../components/Title';
 import { loginValidator, passwordValidator, ValidationResult } from '../../utilities/validators';
+import { inputValueUpdaterFactory } from '../utilities/utilities';
 
 export const LoginPage = (): JSX.Element => {
   const [loginValue, setLoginValue] = useState('');
@@ -20,23 +21,11 @@ export const LoginPage = (): JSX.Element => {
     valid: false,
   });
 
-  const updateLogin = (value: string) => {
-    const validationResult = loginValidator(value);
-    setLoginValidationResult(validationResult);
-    setLoginValue(value);
-  };
-
-  const updatePassword = (value: string) => {
-    const validationResult = passwordValidator(value);
-    setPasswordValidationResult(validationResult);
-    setPasswordValue(value);
-  };
-
   return (
     <>
       <PageContainer size="s">
         <Header>
-          <Title>Входи, защитник</Title>
+          <Title align="center">Входи, защитник</Title>
         </Header>
         <Form validationResults={[loginValidationResult, passwordValidationResult]}>
           <InputField
@@ -45,7 +34,11 @@ export const LoginPage = (): JSX.Element => {
             label="Логин"
             errorText={loginValidationResult.message}
             isValid={loginValidationResult.valid}
-            valueChangeCallback={updateLogin}
+            valueChangeCallback={inputValueUpdaterFactory(
+              loginValidator,
+              setLoginValidationResult,
+              setLoginValue,
+            )}
           />
           <InputField
             value={passwordValue}
@@ -53,13 +46,17 @@ export const LoginPage = (): JSX.Element => {
             label="Пароль"
             errorText={passwordValidationResult.message}
             isValid={passwordValidationResult.valid}
-            valueChangeCallback={updatePassword}
+            valueChangeCallback={inputValueUpdaterFactory(
+              passwordValidator,
+              setPasswordValidationResult,
+              setPasswordValue,
+            )}
           />
           <Button
             text="Авторизоваться"
             type="submit"
             disabled={!(loginValidationResult.valid && passwordValidationResult.valid)}
-            className="centered-horizontal"
+            className="center-horizontal"
           />
         </Form>
         <Link to="/register">
