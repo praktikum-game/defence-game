@@ -32,3 +32,12 @@
     color: $secondary-color;
   }
 }
+
+h3 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 16px;
+  text-align: center;
+  color: #004643;
+}
