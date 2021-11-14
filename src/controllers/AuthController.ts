@@ -9,7 +9,7 @@ class AuthController {
     this.api = AuthAPI;
   }
 
-  async login(formData: FormData) {
+  async login(formData: FormData): Promise<boolean> {
     try {
       const data: ILoginRequest = {
         login: String(formData.get('login')),
@@ -17,10 +17,10 @@ class AuthController {
       };
       await this.api.login(data);
       await this.userRead();
-
-      window.history.pushState({}, '', '/');
+      return true;
     } catch (e) {
       console.log(e);
+      return false;
     }
   }
 
@@ -29,9 +29,10 @@ class AuthController {
       await this.api.logout();
       await this.userRead();
 
-      window.history.pushState({}, '', '/');
+      return true;
     } catch (e) {
       await this.userRead();
+      return false;
     }
   }
 
@@ -48,9 +49,10 @@ class AuthController {
       await this.api.register(data);
       await this.userRead();
 
-      window.history.pushState({}, '', '/');
+      return true;
     } catch (e) {
       console.log(e);
+      return false;
     }
   }
 
