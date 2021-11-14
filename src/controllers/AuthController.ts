@@ -10,15 +10,18 @@ class AuthController {
   }
 
   async login(formData: FormData) {
-    const data: ILoginRequest = {
-      login: String(formData.get('login')),
-      password: String(formData.get('password')),
-    };
-    await this.api.login(data);
-    await this.userRead();
+    try {
+      const data: ILoginRequest = {
+        login: String(formData.get('login')),
+        password: String(formData.get('password')),
+      };
+      await this.api.login(data);
+      await this.userRead();
 
-    window.history.pushState({}, '', '/');
-    return undefined;
+      window.history.pushState({}, '', '/');
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async logout() {
