@@ -26,6 +26,7 @@ module.exports = {
           'page-background-light': '#01ad79',
           'text-color': '#004643',
           'primary-color': '#6BC732',
+          'secondary-color': '#004643',
           'error-text-color': '#ff2f2f',
           'input-label-color': '#999999',
           'input-label-color-dark': '#004643',

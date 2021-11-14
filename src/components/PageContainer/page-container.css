@@ -1,20 +1,22 @@
 .page-container {
   background: #fff;
   border-radius: 0 0 15px 15px;
-  padding: 40px 110px;
 
   &_s {
     max-width: 350px;
     width: 350px;
+    padding: 30px;
   }
 
   &_m {
     max-width: 731px;
     width: 731px;
+    padding: 40px 110px;
   }
 
   &_l {
     max-width: 1100px;
     width: 1100px;
+    padding: 40px 110px;
   }
 }

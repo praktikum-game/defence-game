@@ -5,17 +5,20 @@
   height: 70px;
   border-radius: 15px 15px 0 0;
   margin-top: 40px;
-  padding: 0 110px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 
   &_s {
+    padding: 0 30px;
     min-height: 70px;
+    max-width: 350px;
+    width: 350px;
   }
 
   &_l {
+    padding: 0 110px;
     min-height: 90px;
   }
 
