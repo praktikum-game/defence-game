@@ -1,13 +1,13 @@
-import { BaseAPI } from "./BaseAPI"
-import { ILoginRequest, IRegisterRequest } from "./types"
+import { BaseAPI } from './BaseAPI';
+import { ILoginRequest, IRegisterRequest } from './types';
 
 class AuthAPI extends BaseAPI {
   constructor() {
-    super("/auth")
+    super('/auth');
   }
 
   login(data: ILoginRequest) {
-    return this.http.post("/signin", data)
+    return this.http.post('/signin', data);
   }
 
   register(data: IRegisterRequest) {
@@ -23,4 +23,4 @@ class AuthAPI extends BaseAPI {
   }
 }
 
-export default new AuthAPI()
+export default new AuthAPI();
