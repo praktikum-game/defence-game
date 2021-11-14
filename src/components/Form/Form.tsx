@@ -12,6 +12,7 @@ export const Form = ({
   isResetForm = true,
   controllerCallback = () => Promise.resolve(),
   resetValuesCallback = () => {},
+  setSubmitResult = () => {},
   ...props
 }: FormProps) => {
   const submitHandler = useCallback(
@@ -25,15 +26,18 @@ export const Form = ({
           return;
         }
       }
-      const formData = new FormData(form);
 
-      controllerCallback(formData).then(() => {
+      const formData = new FormData(form);
+      controllerCallback(formData).then((result) => {
+        if (typeof result === 'boolean') {
+          setSubmitResult(result);
+        }
         if (isResetForm) {
           resetValuesCallback();
         }
       });
     },
-    [validationResults, isResetForm, controllerCallback, resetValuesCallback],
+    [validationResults, isResetForm, controllerCallback, resetValuesCallback, setSubmitResult],
   );
 
   return (

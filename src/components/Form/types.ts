@@ -6,6 +6,7 @@ export type FormOwnProps = {
   validationResults?: ValidationResult[];
   controllerCallback?: (data: FormData) => Promise<unknown>;
   resetValuesCallback?: () => void;
+  setSubmitResult?: (value: boolean) => void;
   isResetForm?: boolean;
   className?: string;
 } & FormHTMLAttributes<HTMLFormElement>;
