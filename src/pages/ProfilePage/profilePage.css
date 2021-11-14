@@ -23,4 +23,24 @@
       color: $input-label-color-dark;
     }
   }
+
+  &__page-container {
+    padding-top: 90px;
+  }
+
+  .header {
+    .logout-button {
+      &__button {
+        display: flex;
+        background: none;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      &__icon {
+        margin-left: 10px;
+      }
+    }
+  }
 }

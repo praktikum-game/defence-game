@@ -1,9 +1,11 @@
 .header {
+  position: relative;
   background-color: $primary-color;
   max-height: 90px;
   height: 70px;
   border-radius: 15px 15px 0 0;
   margin-top: 40px;
+  padding: 0 110px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -15,5 +17,22 @@
 
   &_l {
     min-height: 90px;
+  }
+
+  &__back-button {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .avatar {
+    position: absolute;
+    top: 19px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

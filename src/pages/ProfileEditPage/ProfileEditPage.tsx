@@ -4,7 +4,6 @@ import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
 import { Header } from '../../components/Header';
 import { PageContainer } from '../../components/PageContainer';
-import { Title } from '../../components/Title';
 import { Form } from '../../components/Form';
 import {
   email,
@@ -17,7 +16,8 @@ import {
 
 import './profileEditPage.css';
 
-import EditIcon from './edit.svg';
+import EditIcon from './static/edit.svg';
+import { Avatar } from '../../components/Avatar';
 
 const nameInputValidators = [
   { checkFunction: required(), message: 'Это обязательное поле' },
@@ -95,13 +95,11 @@ export const ProfileEditPage = () => {
 
   return (
     <div className="profile-edit-page">
-      <Header>
-        <div>1</div>
+      <Header backButton={true}>
+        <Avatar />
+        <div />
       </Header>
-      <PageContainer size="m">
-        <Title headingLevel={3} align="center">
-          Иван
-        </Title>
+      <PageContainer className="profile-edit-page__page-container" size="m">
         <Form className="profile-edit-page__form">
           <InputField
             id="first_name"
