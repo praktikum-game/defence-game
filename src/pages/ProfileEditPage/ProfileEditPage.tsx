@@ -13,11 +13,11 @@ import {
   shorterThan,
   ValidationResult,
 } from '../../utilities/validators';
-
-import './profileEditPage.css';
-
 import EditIcon from './static/edit.svg';
 import { Avatar } from '../../components/Avatar';
+import { Footer } from '../../components/PageContainer/Footer/Footer';
+
+import './profileEditPage.css';
 
 const nameInputValidators = [
   { checkFunction: required(), message: 'Это обязательное поле' },
@@ -156,7 +156,7 @@ export const ProfileEditPage = () => {
               </Link>
             </div>
           </div>
-          <div className="profile-edit-page__footer">
+          <Footer className="profile-edit-page__footer">
             <Button
               type="submit"
               className="profile-edit-page__button"
@@ -171,7 +171,7 @@ export const ProfileEditPage = () => {
                 view="secondary"
               ></Button>
             </Link>
-          </div>
+          </Footer>
         </Form>
       </PageContainer>
     </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Footer } from '../../components/PageContainer/Footer/Footer';
 import { PageContainer } from '../../components/PageContainer';
 import { Header } from '../../components/Header';
 import { Form } from '../../components/Form';
@@ -8,6 +9,8 @@ import { Button } from '../../components/Button';
 import { Title } from '../../components/Title';
 import { loginValidator, passwordValidator, ValidationResult } from '../../utilities/validators';
 import { inputValueUpdaterFactory } from '../utilities/utilities';
+
+import './loginPage.css';
 
 export const LoginPage = (): JSX.Element => {
   const [loginValue, setLoginValue] = useState('');
@@ -22,13 +25,16 @@ export const LoginPage = (): JSX.Element => {
   });
 
   return (
-    <>
+    <div className="login-page">
+      <Header size="s">
+        <Title headingLevel={2} align="center">
+          Входи, защитник
+        </Title>
+      </Header>
       <PageContainer size="s">
-        <Header>
-          <Title align="center">Входи, защитник</Title>
-        </Header>
         <Form validationResults={[loginValidationResult, passwordValidationResult]}>
           <InputField
+            view="labeled"
             value={loginValue}
             name="login"
             label="Логин"
@@ -41,6 +47,7 @@ export const LoginPage = (): JSX.Element => {
             )}
           />
           <InputField
+            view="labeled"
             value={passwordValue}
             name="password"
             label="Пароль"
@@ -53,17 +60,21 @@ export const LoginPage = (): JSX.Element => {
               setPasswordValue,
             )}
           />
-          <Button
-            text="Авторизоваться"
-            type="submit"
-            disabled={!(loginValidationResult.valid && passwordValidationResult.valid)}
-            className="center-horizontal"
-          />
+
+          <Footer className="login-page__footer">
+            <Button
+              text="Авторизоваться"
+              type="submit"
+              disabled={!(loginValidationResult.valid && passwordValidationResult.valid)}
+              className="center-horizontal"
+            />
+
+            <Link className="footer__link" to="/register">
+              Нет аккаунта?
+            </Link>
+          </Footer>
         </Form>
-        <Link to="/register">
-          <Title>Нет аккаунта?</Title>
-        </Link>
       </PageContainer>
-    </>
+    </div>
   );
 };

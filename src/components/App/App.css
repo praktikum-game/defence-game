@@ -23,10 +23,6 @@ a {
   color: $primary-color;
 }
 
-.app {
-  margin: auto;
-}
-
 .error-text {
   color: $error-text-color;
 }

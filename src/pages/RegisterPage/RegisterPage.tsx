@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Footer } from '../../components/PageContainer/Footer/Footer';
 import { PageContainer } from '../../components/PageContainer';
 import { Header } from '../../components/Header';
 import { Form } from '../../components/Form';
@@ -14,6 +15,8 @@ import {
 } from '../../utilities/validators';
 import { bindArgsFromN } from '../../utilities/utilities';
 import { inputValueUpdaterFactory } from '../utilities/utilities';
+
+import './registerPage.css';
 
 export const RegisterPage = (): JSX.Element => {
   const [loginValue, setLoginValue] = useState('');
@@ -50,6 +53,7 @@ export const RegisterPage = (): JSX.Element => {
       </Header>
       <PageContainer size="s">
         <Form
+          className="register-page__form"
           validationResults={[
             loginValidationResult,
             emailValidationResult,
@@ -58,6 +62,7 @@ export const RegisterPage = (): JSX.Element => {
           ]}
         >
           <InputField
+            view="labeled"
             value={loginValue}
             name="login"
             label="Логин"
@@ -70,6 +75,7 @@ export const RegisterPage = (): JSX.Element => {
             )}
           />
           <InputField
+            view="labeled"
             value={emailValue}
             name="email"
             label="Email"
@@ -83,6 +89,7 @@ export const RegisterPage = (): JSX.Element => {
             )}
           />
           <InputField
+            view="labeled"
             value={passwordValue}
             name="password"
             label="Пароль"
@@ -96,6 +103,7 @@ export const RegisterPage = (): JSX.Element => {
             )}
           />
           <InputField
+            view="labeled"
             value={repeatPasswordValue}
             name="repeatPassword"
             label="Пароль (еще раз)"
@@ -108,23 +116,25 @@ export const RegisterPage = (): JSX.Element => {
               setRepeatPasswordValue,
             )}
           />
-          <Button
-            text="Зарегистрироваться"
-            type="submit"
-            disabled={
-              !(
-                loginValidationResult.valid &&
-                emailValidationResult.valid &&
-                passwordValidationResult.valid &&
-                repeatPasswordValidationResult.valid
-              )
-            }
-            className="center-horizontal"
-          />
+          <Footer className="register-page__footer">
+            <Button
+              text="Зарегистрироваться"
+              type="submit"
+              disabled={
+                !(
+                  loginValidationResult.valid &&
+                  emailValidationResult.valid &&
+                  passwordValidationResult.valid &&
+                  repeatPasswordValidationResult.valid
+                )
+              }
+              className="center-horizontal"
+            />
+            <Link className="footer__link" to="/login">
+              Уже зарегистрированы?
+            </Link>
+          </Footer>
         </Form>
-        <Link to="/login">
-          <Title>Уже зарегистрированы?</Title>
-        </Link>
       </PageContainer>
     </div>
   );
