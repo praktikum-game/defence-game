@@ -42,11 +42,13 @@ export const RegisterPage = (): JSX.Element => {
     });
 
   return (
-    <>
+    <div className="register-page">
+      <Header size="s">
+        <Title headingLevel={2} align="center">
+          Регистрация
+        </Title>
+      </Header>
       <PageContainer size="s">
-        <Header>
-          <Title align="center">Регистрация</Title>
-        </Header>
         <Form
           validationResults={[
             loginValidationResult,
@@ -124,6 +126,6 @@ export const RegisterPage = (): JSX.Element => {
           <Title>Уже зарегистрированы?</Title>
         </Link>
       </PageContainer>
-    </>
+    </div>
   );
 };
