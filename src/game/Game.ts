@@ -5,7 +5,7 @@ import { BaseGameObject } from './BaseGameObject';
 import { GameField } from './GameField';
 import { getRandomInt } from './helpers';
 
-class Game {
+export class Game {
   private _canvasElement: HTMLCanvasElement;
 
   private _ctx: CanvasRenderingContext2D;
@@ -187,4 +187,4 @@ class Game {
   }
 }
 
-export default Game;
+

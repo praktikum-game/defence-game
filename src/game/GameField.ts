@@ -1,9 +1,9 @@
 import { FieldGridItem } from './FieldGridItem';
-import { Drawable, Updateable } from './interfaces';
+import { Drawable } from './interfaces';
 
-export class GameField implements Drawable, Updateable {
+export class GameField implements Drawable {
   public static gameFieldWidth = 0;
-  
+
   public static gameFieldHeight = 0;
 
   private _gameGrid: Array<FieldGridItem>;
@@ -24,6 +24,4 @@ export class GameField implements Drawable, Updateable {
   draw(cxt: CanvasRenderingContext2D) {
     this.gameGrid.forEach((g) => g.draw(cxt));
   }
-
-  update() {}
 }

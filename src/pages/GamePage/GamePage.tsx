@@ -2,12 +2,12 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { Modal } from '../../components/Modal';
-import Game from '../../game/Game';
+import { Game } from '../../game/Game';
 
 export const GamePage = (): JSX.Element => {
   const navigate = useNavigate();
   const [game, setGame] = useState<Game | undefined>();
-  const [runButtonIsDiabled, setRunButtonIsDiabled] = useState<boolean>(false);
+  const [runButtonIsDisabled, setRunButtonIsDisabled] = useState<boolean>(false);
   const [infoModalIsVisible, setInfoModalIsVisible] = useState<boolean>(true);
   const [loseModalIsVisible, setLoseModalIsVisible] = useState<boolean>(false);
   const [winModalIsVisible, setWinModalIsVisible] = useState<boolean>(false);
@@ -16,12 +16,12 @@ export const GamePage = (): JSX.Element => {
 
   const handleLose = useCallback(() => {
     setLoseModalIsVisible(true);
-    setRunButtonIsDiabled(false);
+    setRunButtonIsDisabled(false);
   }, []);
 
   const handleWin = useCallback(() => {
     setWinModalIsVisible(true);
-    setRunButtonIsDiabled(false);
+    setRunButtonIsDisabled(false);
   }, []);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export const GamePage = (): JSX.Element => {
   const handleStartGame = useCallback(() => {
     if (game) {
       game.run();
-      setRunButtonIsDiabled(true);
+      setRunButtonIsDisabled(true);
     }
   }, [game]);
 
@@ -75,7 +75,7 @@ export const GamePage = (): JSX.Element => {
         onClick={handleStartGame}
         text="Начать игру"
         view="primary"
-        disabled={runButtonIsDiabled}
+        disabled={runButtonIsDisabled}
       />
 
       <canvas ref={canvasRef} height={500} width={1200}></canvas>

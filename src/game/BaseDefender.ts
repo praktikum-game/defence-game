@@ -31,7 +31,7 @@ export class BaseDefender extends BaseGameObject {
     return this._bullets;
   }
 
-  public get isFIre() {
+  public get isFire() {
     return this._isFire;
   }
 
@@ -57,7 +57,7 @@ export class BaseDefender extends BaseGameObject {
   }
 
   public fire(delay: number) {
-    if (!this.isFIre) return;
+    if (!this.isFire) return;
 
     const bulletSize = 20;
 
