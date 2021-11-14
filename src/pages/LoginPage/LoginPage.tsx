@@ -9,6 +9,8 @@ import { Button } from '../../components/Button';
 import { Title } from '../../components/Title';
 import { loginValidator, passwordValidator, ValidationResult } from '../../utilities/validators';
 import { inputValueUpdaterFactory, InputNames } from '../utilities';
+import { AuthController } from '../../controllers';
+
 import './loginPage.css';
 
 export const LoginPage = () => {
@@ -31,7 +33,10 @@ export const LoginPage = () => {
         </Title>
       </Header>
       <PageContainer size="s">
-        <Form validationResults={[loginValidationResult, passwordValidationResult]}>
+        <Form
+          validationResults={[loginValidationResult, passwordValidationResult]}
+          controllerCallback={AuthController.login.bind(AuthController)}
+        >
           <InputField
             view="labeled"
             value={loginValue}
