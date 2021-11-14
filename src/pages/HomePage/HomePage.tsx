@@ -3,6 +3,7 @@ import { AppNavigation } from '../../components/AppNavigation';
 import { email, required, validate, ValidationResult } from '../../utilities/validators';
 import { InputField } from '../../components/InputField';
 import { Button } from '../../components/Button';
+import { AuthController } from '../../controllers';
 
 const inputValidators = [
   { checkFunction: required(), message: 'Это обязательное поле' },
@@ -44,7 +45,12 @@ export const HomePage = () => {
         errorText={inputError.message}
       />
 
-      <Button onClick={handleButtonClick} text="MyButton" view="primary"></Button>
+      <Button onClick={handleButtonClick} text="MyButton" view="primary" />
+      <Button
+        onClick={AuthController.logout.bind(AuthController)}
+        text="Разлогиниться"
+        view="primary"
+      />
     </div>
   );
 };
