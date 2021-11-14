@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Footer } from '../../components/Footer';
 import { PageContainer } from '../../components/PageContainer';
 import { Header } from '../../components/Header';
@@ -13,7 +13,11 @@ import { AuthController } from '../../controllers';
 
 import './loginPage.css';
 
-export const LoginPage = () => {
+export const LoginPage = (): JSX.Element => {
+  const navigate = useNavigate();
+
+  const [loginResult, setLoginResult] = useState(false);
+
   const [loginValue, setLoginValue] = useState('');
   const [loginValidationResult, setLoginValidationResult] = useState<ValidationResult>({
     message: '',
@@ -30,6 +34,12 @@ export const LoginPage = () => {
     setPasswordValue('');
   };
 
+  useEffect(() => {
+    if (loginResult) {
+      navigate('/', { replace: true });
+    }
+  }, [loginResult, navigate]);
+
   return (
     <div className="login-page">
       <Header size="s">
@@ -42,6 +52,7 @@ export const LoginPage = () => {
           validationResults={[loginValidationResult, passwordValidationResult]}
           controllerCallback={AuthController.login.bind(AuthController)}
           resetValuesCallback={resetInputValues}
+          setSubmitResult={setLoginResult}
         >
           <InputField
             view="labeled"

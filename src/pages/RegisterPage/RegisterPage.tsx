@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Footer } from '../../components/Footer';
 import { PageContainer } from '../../components/PageContainer';
 import { Header } from '../../components/Header';
@@ -21,7 +21,11 @@ import { AuthController } from '../../controllers';
 
 import './registerPage.css';
 
-export const RegisterPage = () => {
+export const RegisterPage = (): JSX.Element => {
+  const navigate = useNavigate();
+
+  const [registerResult, setRegisterResult] = useState(false);
+
   const [loginValue, setLoginValue] = useState('');
   const [loginValidationResult, setLoginValidationResult] = useState<ValidationResult>({
     message: '',
@@ -75,6 +79,12 @@ export const RegisterPage = () => {
     setRepeatPasswordValue('');
   };
 
+  useEffect(() => {
+    if (registerResult) {
+      navigate('/', { replace: true });
+    }
+  }, [registerResult, navigate]);
+
   return (
     <div className="register-page">
       <Header size="s">
@@ -93,6 +103,7 @@ export const RegisterPage = () => {
           ]}
           controllerCallback={AuthController.register.bind(AuthController)}
           resetValuesCallback={resetInputValues}
+          setSubmitResult={setRegisterResult}
         >
           <InputField
             view="labeled"
