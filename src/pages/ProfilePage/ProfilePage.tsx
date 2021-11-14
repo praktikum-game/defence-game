@@ -6,15 +6,18 @@ import { Header } from '../../components/Header';
 import { PageContainer } from '../../components/PageContainer';
 import { Title } from '../../components/Title';
 import { Form } from '../../components/Form';
+import { Avatar } from '../../components/Avatar';
 
 import './profilePage.css';
+import { LogoutButton } from './LogoutButton';
 
 export const ProfilePage = () => (
   <div className="profile-page">
-    <Header>
-      <div>1</div>
+    <Header backButton={true}>
+      <Avatar />
+      <LogoutButton />
     </Header>
-    <PageContainer size="m">
+    <PageContainer className="profile-page__page-container" size="m">
       <Title headingLevel={3} align="center">
         Иван
       </Title>

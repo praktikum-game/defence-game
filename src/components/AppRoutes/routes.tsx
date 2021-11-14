@@ -13,6 +13,7 @@ import { ForumIndexPage } from '../../pages/ForumPage/components/ForumIndexPage'
 import { ErrorPage404 } from '../../pages/ErrorPage404';
 import { ErrorPage500 } from '../../pages/ErrorPage500';
 import { PageLayout } from '../PageLayout';
+import { PasswordEditPage } from '../../pages/PasswordEditPage';
 
 export const routes: RouteObject[] = [
   {
@@ -27,6 +28,10 @@ export const routes: RouteObject[] = [
       {
         path: '/profile-edit',
         element: <ProfileEditPage />,
+      },
+      {
+        path: '/password-edit',
+        element: <PasswordEditPage />,
       },
       {
         path: '/login',

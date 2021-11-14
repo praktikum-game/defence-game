@@ -1,7 +1,7 @@
 import React from 'react';
 import { AvatarProps } from './types';
 import './avatar.css';
-import defaultAvatar from './static/default-avatar.png';
+import defaultAvatar from './static/default-avatar.svg';
 
 export const Avatar = ({
   src = defaultAvatar,
