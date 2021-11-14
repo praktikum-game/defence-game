@@ -9,8 +9,9 @@ export const Form = ({
   children,
   validationResults = [],
   className,
-  isResetForm = false,
+  isResetForm = true,
   controllerCallback = () => Promise.resolve(),
+  resetValuesCallback = () => {},
   ...props
 }: FormProps) => {
   const submitHandler = useCallback(
@@ -26,13 +27,13 @@ export const Form = ({
       }
       const formData = new FormData(form);
 
-      await controllerCallback(formData);
-
-      if (isResetForm) {
-        form.reset();
-      }
+      controllerCallback(formData).then(() => {
+        if (isResetForm) {
+          resetValuesCallback();
+        }
+      });
     },
-    [validationResults],
+    [validationResults, isResetForm, controllerCallback, resetValuesCallback],
   );
 
   return (

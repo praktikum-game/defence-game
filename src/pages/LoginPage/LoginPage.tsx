@@ -25,6 +25,11 @@ export const LoginPage = () => {
     valid: false,
   });
 
+  const resetInputValues = () => {
+    setLoginValue('');
+    setPasswordValue('');
+  };
+
   return (
     <div className="login-page">
       <Header size="s">
@@ -36,6 +41,7 @@ export const LoginPage = () => {
         <Form
           validationResults={[loginValidationResult, passwordValidationResult]}
           controllerCallback={AuthController.login.bind(AuthController)}
+          resetValuesCallback={resetInputValues}
         >
           <InputField
             view="labeled"

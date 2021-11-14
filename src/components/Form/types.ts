@@ -5,6 +5,7 @@ export type FormOwnProps = {
   children?: React.ReactNode;
   validationResults?: ValidationResult[];
   controllerCallback?: (data: FormData) => Promise<unknown>;
+  resetValuesCallback?: () => void;
   isResetForm?: boolean;
   className?: string;
 } & FormHTMLAttributes<HTMLFormElement>;

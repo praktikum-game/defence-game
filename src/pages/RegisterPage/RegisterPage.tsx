@@ -65,6 +65,16 @@ export const RegisterPage = () => {
       valid: false,
     });
 
+  const resetInputValues = () => {
+    setLoginValue('');
+    setPhoneValue('');
+    setFirstNameValue('');
+    setSecondNameValue('');
+    setEmailValue('');
+    setPasswordValue('');
+    setRepeatPasswordValue('');
+  };
+
   return (
     <div className="register-page">
       <Header size="s">
@@ -82,6 +92,7 @@ export const RegisterPage = () => {
             repeatPasswordValidationResult,
           ]}
           controllerCallback={AuthController.register.bind(AuthController)}
+          resetValuesCallback={resetInputValues}
         >
           <InputField
             view="labeled"
