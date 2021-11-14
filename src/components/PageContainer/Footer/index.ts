@@ -1,2 +1,2 @@
-export { Button } from './Button';
-export { ButtonProps, ButtonOwnProps } from './types';
+export { Footer } from './Footer';
+export { FooterProps, FooterOwnProps } from './types';
