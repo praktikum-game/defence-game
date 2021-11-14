@@ -21,7 +21,7 @@ module.exports = {
           'primary-background': '#6BC732;',
           'default-background': '#FF8A00',
           'secondary-background': '#ffffff',
-          'disabled-background': 'rgb(128, 128, 128)',
+          'disabled-background': '#DEDEDE',
           'page-background-dark': '#004643',
           'page-background-light': '#01ad79',
           'text-color': '#004643',

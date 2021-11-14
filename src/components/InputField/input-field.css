@@ -31,4 +31,19 @@
     display: block;
     text-align: center;
   }
+
+  &_labeled {
+    min-height: 62px;
+
+    .input-field__input {
+      text-align: left;
+      height: 25px;
+    }
+
+    .input-field__label {
+      position: relative;
+      bottom: auto;
+      font-size: 12px;
+    }
+  }
 }

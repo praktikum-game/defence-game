@@ -5,31 +5,31 @@
   border: none;
   width: 280px;
   transition: transform 0.1s linear;
-}
 
-.button_primary {
-  background-color: $primary-background;
-  color: #fff;
-}
+  &_primary {
+    background-color: $primary-background;
+    color: #fff;
+  }
 
-.button_default {
-  background-color: $default-background;
-}
+  &_default {
+    background-color: $default-background;
+  }
 
-.button_secondary {
-  border: 1px solid $primary-color;
-  background: $secondary-background;
-  color: $primary-color;
-}
+  &_secondary {
+    border: 1px solid $primary-color;
+    background: $secondary-background;
+    color: $primary-color;
+  }
 
-.button:disabled {
-  background-color: $disabled-background;
-  transform: none !important;
-  translate: none !important;
-  cursor: default !important;
-}
+  &:disabled {
+    background-color: $disabled-background;
+    transform: none !important;
+    translate: none !important;
+    cursor: default !important;
+  }
 
-.button:hover {
-  cursor: pointer;
-  transform: translateY(3px);
+  &:hover {
+    cursor: pointer;
+    transform: translateY(3px);
+  }
 }

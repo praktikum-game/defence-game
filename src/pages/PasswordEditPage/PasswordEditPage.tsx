@@ -6,9 +6,10 @@ import { Header } from '../../components/Header';
 import { PageContainer } from '../../components/PageContainer';
 import { Form } from '../../components/Form';
 import { passwordValidator, ValidationResult } from '../../utilities/validators';
+import { Avatar } from '../../components/Avatar';
+import { Footer } from '../../components/PageContainer/Footer/Footer';
 
 import './passwordEditPage.css';
-import { Avatar } from '../../components/Avatar';
 
 export const PasswordEditPage = () => {
   const [oldInputValue, setOldInputValue] = useState<string>('');
@@ -96,7 +97,7 @@ export const PasswordEditPage = () => {
             isValid={repeatInputError.valid}
             errorText={repeatInputError.message}
           />
-          <div className="password-edit-page__footer">
+          <Footer className="password-edit-page__footer">
             <Button
               type="submit"
               className="password-edit-page__button"
@@ -111,7 +112,7 @@ export const PasswordEditPage = () => {
                 view="secondary"
               ></Button>
             </Link>
-          </div>
+          </Footer>
         </Form>
       </PageContainer>
     </div>

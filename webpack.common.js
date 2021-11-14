@@ -11,22 +11,17 @@ module.exports = {
     publicPath: '/',
   },
   resolve: {
-    // Имеет ли смысл сюда .json пихать?
     extensions: ['.ts', '.tsx', '.js', '.json'],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: 'index.html', // название выходного файла
-      template: path.resolve(__dirname, './public/index.html'), // шаблон
+      filename: 'index.html',
+      template: path.resolve(__dirname, './public/index.html'),
     }),
     new CleanWebpackPlugin(),
   ],
   module: {
     rules: [
-      // {
-      //   test: /\.(png|svg|jpg|jpeg|gif)$/i,
-      //   type: 'asset/resource',
-      // },
       {
         test: /\.(png|jpe?g|gif|jp2|gif|webp|svg)$/,
         loader: 'file-loader',

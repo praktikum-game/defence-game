@@ -4,6 +4,7 @@ import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
 import { Header } from '../../components/Header';
 import { PageContainer } from '../../components/PageContainer';
+import { Footer } from '../../components/PageContainer/Footer/Footer';
 import { Title } from '../../components/Title';
 import { Form } from '../../components/Form';
 import { Avatar } from '../../components/Avatar';
@@ -28,7 +29,7 @@ export const ProfilePage = () => (
         <InputField id="display_name" value="simon" type="text" label="Никнейм" />
         <InputField id="phone" value="+7 (916) 473-65-83" type="tel" label="Телефон" />
         <InputField id="password" value="***********" type="password" label="Пароль" />
-        <div className="profile-page__footer">
+        <Footer className="profile-page__footer">
           <Link to="/profile-edit">
             <Button
               type="button"
@@ -37,7 +38,7 @@ export const ProfilePage = () => (
               view="secondary"
             ></Button>
           </Link>
-        </div>
+        </Footer>
       </Form>
     </PageContainer>
   </div>

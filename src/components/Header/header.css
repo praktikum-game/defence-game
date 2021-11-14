@@ -2,7 +2,7 @@
   position: relative;
   background-color: $primary-color;
   max-height: 90px;
-  height: 70px;
+  height: 60px;
   border-radius: 15px 15px 0 0;
   margin-top: 40px;
   display: flex;
@@ -12,7 +12,7 @@
 
   &_s {
     padding: 0 30px;
-    min-height: 70px;
+    min-height: 60px;
     max-width: 350px;
     width: 350px;
   }
