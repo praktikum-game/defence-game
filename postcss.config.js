@@ -32,6 +32,7 @@ module.exports = {
           'input-label-color-dark': '#004643',
           'input-text-color': '#999999',
           'input-border-color': '#0198A4',
+          'error-page-accent-color': '#fff501',
         },
       },
     ],
