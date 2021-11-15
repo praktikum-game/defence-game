@@ -4,6 +4,7 @@ import { BaseEnemy } from './BaseEnemy';
 import { BaseGameObject } from './BaseGameObject';
 import { GameField } from './GameField';
 import { getRandomInt } from './helpers';
+import { Callback } from './types';
 
 export class Game {
   private _canvasElement: HTMLCanvasElement;
@@ -20,9 +21,9 @@ export class Game {
 
   private _gameField: GameField;
 
-  private _onLoose: Function;
+  private _onLose: Callback;
 
-  private _onWin: Function;
+  private _onWin: Callback;
 
   public get enemies() {
     return this._enemies;
@@ -32,7 +33,7 @@ export class Game {
     return this._defenders;
   }
 
-  constructor(canvasEl: HTMLCanvasElement, onLose: Function, onWin: Function) {
+  constructor(canvasEl: HTMLCanvasElement, onLose: Callback, onWin: Callback) {
     this._last = 0;
     this._isRunning = false;
 
@@ -41,7 +42,7 @@ export class Game {
 
     this._canvasElement = canvasEl;
 
-    this._onLoose = onLose;
+    this._onLose = onLose;
     this._onWin = onWin;
 
     this._canvasElement.addEventListener('click', ({ offsetX, offsetY }: MouseEvent) =>
@@ -99,7 +100,7 @@ export class Game {
     this._enemies = [];
     this._defenders = [];
     this._isRunning = false;
-    this._onLoose();
+    this._onLose();
   }
 
   private win() {
@@ -186,5 +187,3 @@ export class Game {
     return false;
   }
 }
-
-
