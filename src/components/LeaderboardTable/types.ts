@@ -13,4 +13,5 @@ export type LeaderboardTableColumn = {
 export type LeaderboardTableProps = {
   columns: Array<LeaderboardTableColumn>;
   data: Array<LeaderboardItem>;
+  className?: string;
 };
