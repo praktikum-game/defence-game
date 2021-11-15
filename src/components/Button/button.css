@@ -21,6 +21,12 @@
     color: $primary-color;
   }
 
+  &_error {
+    background: transparent;
+    border: 1px solid $error-page-accent-color;
+    color: $error-page-accent-color;
+  }
+
   &:disabled {
     background-color: $disabled-background;
     transform: none !important;
@@ -31,5 +37,9 @@
   &:hover {
     cursor: pointer;
     transform: translateY(3px);
+  }
+
+  &__link {
+    text-decoration: none;
   }
 }
