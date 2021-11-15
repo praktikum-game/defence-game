@@ -31,6 +31,10 @@ export const HomePage = () => {
     checkInputField(inputValue);
   }, [inputValue]);
 
+  const logoutCallback = useCallback(() => {
+    authController.logout();
+  }, []);
+
   return (
     <div className="homePage">
       <h1>Мое супер приложение</h1>
@@ -46,11 +50,7 @@ export const HomePage = () => {
       />
 
       <Button onClick={handleButtonClick} text="MyButton" view="primary" />
-      <Button
-        onClick={authController.logout.bind(authController)}
-        text="Разлогиниться"
-        view="primary"
-      />
+      <Button onClick={logoutCallback} text="Разлогиниться" view="primary" />
     </div>
   );
 };
