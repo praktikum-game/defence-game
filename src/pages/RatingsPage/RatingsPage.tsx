@@ -5,7 +5,7 @@ const tableData: LeaderboardTableProps = {
   columns: [
     { dataId: 'username', title: 'Имя пользователя' },
     { dataId: 'login', title: 'Логин' },
-    { dataId: 'score', title: 'Колиество очков' },
+    { dataId: 'score', title: 'Количество очков' },
   ],
 
   data: [
@@ -19,6 +19,6 @@ const tableData: LeaderboardTableProps = {
 export const RatingsPage = (): JSX.Element => (
   <>
     <h1>Таблица достижений игроков</h1>
-    <LeaderboardTable {...tableData} className="hoho" />
+    <LeaderboardTable {...tableData} />
   </>
 );
