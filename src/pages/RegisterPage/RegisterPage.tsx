@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Footer } from '../../components/PageContainer/Footer/Footer';
+import { Footer } from '../../components/Footer';
 import { PageContainer } from '../../components/PageContainer';
 import { Header } from '../../components/Header';
 import { Form } from '../../components/Form';
