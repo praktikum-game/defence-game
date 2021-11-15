@@ -5,7 +5,7 @@ ENV APPDIR app
 ENV HOMEDIR /home/${USERNAME}/
 WORKDIR ${HOMEDIR}${APPDIR}
 
-RUN apt-get update && apt-get install -y npm
+RUN apt-get update
 
 COPY --chown=${USER} ./package-lock.json .
 COPY --chown=${USER} ./package.json .
@@ -23,7 +23,7 @@ ENV HOMEDIR /home/${USERNAME}/
 RUN useradd --create-home ${USERNAME} && chown -R ${USERNAME} /home/${USERNAME}/
 WORKDIR ${HOMEDIR}${APPDIR}
 
-RUN apt-get update && apt-get -y install netcat locales nano apt-utils npm
+RUN apt-get update && apt-get -y install netcat locales nano apt-utils
 
 COPY --chown=${USER} ./package-lock.json .
 COPY --chown=${USER} ./package.json .
