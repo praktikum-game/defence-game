@@ -1,2 +1,2 @@
-export { default as UsersController } from './UsersController';
-export { default as AuthController } from './AuthController';
+export { usersController } from './UsersController';
+export { authController } from './AuthController';

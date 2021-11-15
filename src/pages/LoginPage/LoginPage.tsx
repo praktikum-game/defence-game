@@ -9,7 +9,7 @@ import { Button } from '../../components/Button';
 import { Title } from '../../components/Title';
 import { loginValidator, passwordValidator, ValidationResult } from '../../utilities/validators';
 import { inputValueUpdaterFactory, InputNames } from '../utilities';
-import { AuthController } from '../../controllers';
+import { authController } from '../../controllers';
 
 import './loginPage.css';
 
@@ -50,7 +50,7 @@ export const LoginPage = (): JSX.Element => {
       <PageContainer size="s">
         <Form
           validationResults={[loginValidationResult, passwordValidationResult]}
-          controllerCallback={AuthController.login.bind(AuthController)}
+          controllerCallback={authController.login.bind(authController)}
           resetValuesCallback={resetInputValues}
           setSubmitResult={setLoginResult}
         >

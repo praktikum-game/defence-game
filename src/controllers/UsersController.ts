@@ -1,11 +1,11 @@
-import { UsersAPI, IProfilePasswordUpdateRequest, IProfileUpdateRequest } from '../api';
+import { usersAPI, IProfilePasswordUpdateRequest, IProfileUpdateRequest } from '../api';
 import { store } from '../store';
 
 class UsersController {
-  private api: typeof UsersAPI;
+  private api: typeof usersAPI;
 
   constructor() {
-    this.api = UsersAPI;
+    this.api = usersAPI;
   }
 
   async updateProfile(formData: FormData) {
@@ -47,4 +47,4 @@ class UsersController {
   }
 }
 
-export default new UsersController();
+export const usersController = new UsersController();

@@ -1,12 +1,12 @@
-import { AuthAPI, ILoginRequest, IRegisterRequest } from '../api';
+import { authAPI, ILoginRequest, IRegisterRequest } from '../api';
 
 import { store } from '../store';
 
 class AuthController {
-  private api: typeof AuthAPI;
+  private api: typeof authAPI;
 
   constructor() {
-    this.api = AuthAPI;
+    this.api = authAPI;
   }
 
   async login(formData: FormData): Promise<boolean> {
@@ -68,4 +68,4 @@ class AuthController {
   }
 }
 
-export default new AuthController();
+export const authController = new AuthController();

@@ -1,5 +1,5 @@
-export { default as AuthAPI } from './AuthAPI';
-export { default as UsersAPI } from './UsersAPI';
+export { authAPI } from './AuthAPI';
+export { usersAPI } from './UsersAPI';
 
 export {
   IBadRequest,

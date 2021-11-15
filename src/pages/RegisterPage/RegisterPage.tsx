@@ -17,7 +17,7 @@ import {
 } from '../../utilities/validators';
 import { bindArgsFromN } from '../../utilities/utilities';
 import { inputValueUpdaterFactory, InputNames } from '../utilities';
-import { AuthController } from '../../controllers';
+import { authController } from '../../controllers';
 
 import './registerPage.css';
 
@@ -101,7 +101,7 @@ export const RegisterPage = (): JSX.Element => {
             passwordValidationResult,
             repeatPasswordValidationResult,
           ]}
-          controllerCallback={AuthController.register.bind(AuthController)}
+          controllerCallback={authController.register.bind(authController)}
           resetValuesCallback={resetInputValues}
           setSubmitResult={setRegisterResult}
         >

@@ -23,4 +23,4 @@ class UsersAPI extends BaseAPI {
   }
 }
 
-export default new UsersAPI();
+export const usersAPI = new UsersAPI();
