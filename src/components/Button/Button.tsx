@@ -1,21 +1,17 @@
-import React, { FC } from 'react';
-import { ButtonProps } from '.';
-
+import React from 'react';
+import { ButtonProps } from './types';
+import { getViewTypes } from '../../utilities/utilities';
 import './button.css';
 
-const viewTypes = {
-  default: 'button_default',
-  primary: 'button_primary',
-  secondary: 'button_secondary',
-};
+const viewTypes = getViewTypes('button');
 
-export const Button: FC<ButtonProps> = ({
+export const Button = ({
   text = 'Button',
   disabled = false,
-  view = 'default',
+  view = 'primary',
   loading = false,
   ...rest
-}) => (
+}: ButtonProps): JSX.Element => (
   <button className={`button ${viewTypes[view]}`} disabled={loading || disabled} {...rest}>
     {loading ? 'Загрузка...' : text}
   </button>

@@ -1,9 +1,9 @@
 {
-  "extends": [
-    "stylelint-config-standard",
-    "stylelint-config-prettier"
-  ],
+  "extends": ["stylelint-config-standard", "stylelint-config-prettier"],
+  "plugins": ["stylelint-prettier", "stylelint-order"],
   "rules": {
+    "selector-class-pattern": null,
+    "string-quotes": "single",
     "color-hex-case": "lower",
     "indentation": 2,
     "no-missing-end-of-source-newline": null,
@@ -18,22 +18,7 @@
     "value-list-comma-space-before": "always",
     "value-list-comma-space-after": "always",
     "declaration-colon-space-after": "always",
-    "order/properties-order": [
-      "position",
-      "z-index",
-      "top",
-      "right",
-      "bottom",
-      "left"
-    ]
+    "order/properties-order": ["position", "z-index", "top", "right", "bottom", "left"]
   },
-  "ignoreFiles": [
-    "dist/*",
-    "node_modules/*",
-    ".cache/"
-  ],
-  "plugins": [
-    "stylelint-order",
-    "stylelint-prettier"
-  ]
+  "ignoreFiles": ["dist/*", "node_modules/*", ".cache/"]
 }

@@ -1,7 +1,5 @@
-@import '../../common/styles/vars.css';
-
 .button {
-  color: var(--text-color);
+  color: $text-color;
   border-radius: 30px;
   padding: 10px;
   border: none;
@@ -10,19 +8,19 @@
 }
 
 .button_primary {
-  background-color: var(--primary-background);
+  background-color: $primary-background;
 }
 
 .button_default {
-  background-color: var(--default-background);
+  background-color: $default-background;
 }
 
 .button_secondary {
-  background-color: var(--secondary-background);
+  background-color: $secondary-background;
 }
 
 .button:disabled {
-  background-color: var(--disabled-background);
+  background-color: $disabled-background;
   transform: none !important;
   translate: none !important;
   cursor: default !important;
