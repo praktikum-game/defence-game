@@ -7,7 +7,7 @@ import '../../utilities/common.css';
 export const App = () => {
   useEffect(() => {
     authController.userRead().then(() => {});
-  });
+  }, []);
 
   return (
     <div className="App">
