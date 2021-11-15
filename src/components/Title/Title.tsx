@@ -1,14 +1,16 @@
+import block from 'bem-cn';
 import React from 'react';
 import './title.css';
 import { TitleProps } from './types';
 
+const b = block('title');
+
 export const Title = ({
   headingLevel = 5,
   align = 'center',
-  className_ = '',
-  ...otherProps
+  className_,
+  ...props
 }: TitleProps): JSX.Element => {
   const Component = `h${headingLevel}`;
-  const className = className_ === '' ? '' : ` ${className_}`;
-  return <Component className={`title title_${align}${className}`} {...otherProps}></Component>;
+  return <Component className={b({ [align]: true }).mix(className_)} {...props}></Component>;
 };

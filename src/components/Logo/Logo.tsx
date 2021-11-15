@@ -1,12 +1,15 @@
 import React from 'react';
+import block from 'bem-cn';
 import { Link } from 'react-router-dom';
 import { LogoProps } from './types';
 import logo from './logo.svg';
 import './logo.css';
 
-export const Logo = (props: LogoProps) => (
+const b = block('logo');
+
+export const Logo = ({ className, ...props }: LogoProps) => (
   <Link to="/">
-    <div className="logo" {...props}>
+    <div className={b.mix(className)} {...props}>
       <img src={logo} alt="Doctors Vs Viruses" />
     </div>
   </Link>

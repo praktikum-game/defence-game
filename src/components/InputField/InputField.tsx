@@ -1,6 +1,9 @@
 import React from 'react';
+import block from 'bem-cn';
 import { InputFieldProps } from '.';
 import './input-field.css';
+
+const b = block('input-field');
 
 export const InputField = ({
   flex = true,
@@ -9,9 +12,9 @@ export const InputField = ({
   isValid = true,
   errorText = null,
   view = 'default',
-  ...rest
+  ...props
 }: InputFieldProps): JSX.Element => {
-  const { valueChangeCallback, ...otherProps } = rest;
+  const { valueChangeCallback, ...otherProps } = props;
   const { id, name } = otherProps;
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -22,20 +25,21 @@ export const InputField = ({
   };
 
   return (
-    <div className={`input-field input-field_${view} ${flex && 'input-field_flex'}`}>
-      {rest.label && (
-        <label htmlFor={id ?? name} className="input-field__label ">
-          {rest.label}
+    <div className={b({ [view]: true, flex })}>
+      {props.label && (
+        <label htmlFor={id ?? name} className={b('label')}>
+          {props.label}
         </label>
       )}
       <input
-        className="input-field__input"
+        id={id ?? name}
+        className={b('input')}
         type={type}
         disabled={disabled}
         {...otherProps}
         onChange={handleChange}
       />
-      {!isValid && <span className="error-text input-field__error-text">{errorText}</span>}
+      {!isValid && <span className={b('error-text')}>{errorText}</span>}
     </div>
   );
 };

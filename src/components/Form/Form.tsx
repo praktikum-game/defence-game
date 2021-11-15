@@ -1,12 +1,15 @@
 import React, { FormEvent } from 'react';
+import block from 'bem-cn';
 import { FormProps } from './types';
 import './form.css';
+
+const b = block('form');
 
 export const Form = ({
   children,
   validationResults = [],
-  className = '',
-  ...otherProps
+  className,
+  ...props
 }: FormProps): JSX.Element => {
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,11 +29,7 @@ export const Form = ({
   };
 
   return (
-    <form
-      className={`form ${className === '' ? className : ` ${className}`}`}
-      {...otherProps}
-      onSubmit={submitHandler}
-    >
+    <form className={b.mix(className)} {...props} onSubmit={submitHandler}>
       {children}
     </form>
   );

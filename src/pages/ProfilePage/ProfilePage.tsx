@@ -8,9 +8,9 @@ import { Footer } from '../../components/Footer';
 import { Title } from '../../components/Title';
 import { Form } from '../../components/Form';
 import { Avatar } from '../../components/Avatar';
-
-import './profilePage.css';
 import { LogoutButton } from './LogoutButton';
+import { InputNames } from '../utilities';
+import './profilePage.css';
 
 export const ProfilePage = () => (
   <div className="profile-page">
@@ -23,12 +23,24 @@ export const ProfilePage = () => (
         Иван
       </Title>
       <Form className="profile-page__form">
-        <InputField id="first_name" value="Екатерина" type="text" label="Имя" disabled />
-        <InputField id="second_name" value="Симонова" type="text" label="Фамилия" />
-        <InputField id="email" value="mail@mail.ru" type="E-mail" label="E-mail" disabled />
-        <InputField id="display_name" value="simon" type="text" label="Никнейм" />
-        <InputField id="phone" value="+7 (916) 473-65-83" type="tel" label="Телефон" />
-        <InputField id="password" value="***********" type="password" label="Пароль" />
+        <InputField
+          name={InputNames.FIRST_NAME}
+          value="Екатерина"
+          type="text"
+          label="Имя"
+          disabled
+        />
+        <InputField name={InputNames.SECOND_NAME} value="Симонова" type="text" label="Фамилия" />
+        <InputField
+          name={InputNames.EMAIL}
+          value="mail@mail.ru"
+          type="E-mail"
+          label="E-mail"
+          disabled
+        />
+        <InputField name={InputNames.DISPLAY_NAME} value="simon" type="text" label="Никнейм" />
+        <InputField name={InputNames.PHONE} value="+7 (916) 473-65-83" type="tel" label="Телефон" />
+        <InputField name={InputNames.PASSWORD} value="***********" type="password" label="Пароль" />
         <Footer className="profile-page__footer">
           <Link to="/profile-edit">
             <Button

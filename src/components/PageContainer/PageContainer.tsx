@@ -1,18 +1,21 @@
 import React from 'react';
+import block from 'bem-cn';
 import { PageContainerProps } from './types';
 import './page-container.css';
+
+const b = block('page-container');
 
 export const PageContainer = ({
   children,
   size = 'm',
-  className = '',
-  ...otherProps
+  className,
+  ...props
 }: PageContainerProps): JSX.Element => (
   <div
-    className={`page-container page-container_${size} center-horizontal${
-      className === '' ? className : ` ${className}`
-    }`}
-    {...otherProps}
+    className={b({ [size]: true })
+      .mix(className)
+      .mix('center-horizontal')}
+    {...props}
   >
     {children}
   </div>

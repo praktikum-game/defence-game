@@ -1,20 +1,19 @@
 import React from 'react';
+import block from 'bem-cn';
 import { HeaderProps } from './types';
 import './header.css';
 import { BackButton } from './BackButton';
+
+const b = block('header');
 
 export const Header = ({
   children,
   size = 'l',
   backButton = false,
-  className = '',
-  ...otherProps
+  className,
+  ...props
 }: HeaderProps): JSX.Element => (
-  <header
-    // eslint-disable-next-line
-    className={`header header_${size} ${className === '' ? className : ' ' + className}`}
-    {...otherProps}
-  >
+  <header className={b({ [size]: true }).mix(className)} {...props}>
     {backButton ? <BackButton /> : ''}
     {children}
   </header>

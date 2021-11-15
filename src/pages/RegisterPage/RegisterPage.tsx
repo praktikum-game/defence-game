@@ -14,7 +14,7 @@ import {
   ValidationResult,
 } from '../../utilities/validators';
 import { bindArgsFromN } from '../../utilities/utilities';
-import { inputValueUpdaterFactory } from '../utilities/utilities';
+import { inputValueUpdaterFactory, InputNames } from '../utilities';
 
 import './registerPage.css';
 
@@ -64,7 +64,7 @@ export const RegisterPage = (): JSX.Element => {
           <InputField
             view="labeled"
             value={loginValue}
-            name="login"
+            name={InputNames.LOGIN}
             label="Логин"
             errorText={loginValidationResult.message}
             isValid={loginValidationResult.valid}
@@ -77,7 +77,7 @@ export const RegisterPage = (): JSX.Element => {
           <InputField
             view="labeled"
             value={emailValue}
-            name="email"
+            name={InputNames.EMAIL}
             label="Email"
             type="email"
             errorText={emailValidationResult.message}
@@ -91,7 +91,7 @@ export const RegisterPage = (): JSX.Element => {
           <InputField
             view="labeled"
             value={passwordValue}
-            name="password"
+            name={InputNames.PASSWORD}
             label="Пароль"
             type="password"
             errorText={passwordValidationResult.message}
@@ -105,7 +105,7 @@ export const RegisterPage = (): JSX.Element => {
           <InputField
             view="labeled"
             value={repeatPasswordValue}
-            name="repeatPassword"
+            name={InputNames.REPEAT_PASSWORD}
             label="Пароль (еще раз)"
             type="password"
             errorText={repeatPasswordValidationResult.message}

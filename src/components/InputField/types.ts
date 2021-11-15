@@ -1,6 +1,8 @@
 import { InputHTMLAttributes } from 'react';
 
 export type InputFieldOwnProps = {
+  name?: string;
+  id?: string;
   label?: string;
   flex?: boolean;
   isValid?: boolean;

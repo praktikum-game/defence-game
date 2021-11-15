@@ -1,12 +1,11 @@
 import React from 'react';
+import block from 'bem-cn';
 import { AvatarProps } from './types';
 import './avatar.css';
 import defaultAvatar from './static/default-avatar.svg';
 
-export const Avatar = ({
-  src = defaultAvatar,
-  className = '',
-  ...otherProps
-}: AvatarProps): JSX.Element => (
-  <img className={`avatar ${className}`} src={src} {...otherProps}></img>
+const b = block('avatar');
+
+export const Avatar = ({ src = defaultAvatar, className, ...props }: AvatarProps): JSX.Element => (
+  <img className={b.mix(className)} src={src} {...props}></img>
 );

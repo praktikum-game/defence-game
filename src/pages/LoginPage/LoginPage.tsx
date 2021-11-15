@@ -8,8 +8,7 @@ import { InputField } from '../../components/InputField';
 import { Button } from '../../components/Button';
 import { Title } from '../../components/Title';
 import { loginValidator, passwordValidator, ValidationResult } from '../../utilities/validators';
-import { inputValueUpdaterFactory } from '../utilities/utilities';
-
+import { inputValueUpdaterFactory, InputNames } from '../utilities';
 import './loginPage.css';
 
 export const LoginPage = (): JSX.Element => {
@@ -36,7 +35,7 @@ export const LoginPage = (): JSX.Element => {
           <InputField
             view="labeled"
             value={loginValue}
-            name="login"
+            name={InputNames.LOGIN}
             label="Логин"
             errorText={loginValidationResult.message}
             isValid={loginValidationResult.valid}
@@ -49,7 +48,7 @@ export const LoginPage = (): JSX.Element => {
           <InputField
             view="labeled"
             value={passwordValue}
-            name="password"
+            name={InputNames.PASSWORD}
             label="Пароль"
             type="password"
             errorText={passwordValidationResult.message}
