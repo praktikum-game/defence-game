@@ -7,7 +7,7 @@ import { PageContainer } from '../../components/PageContainer';
 import { Form } from '../../components/Form';
 import { passwordValidator, ValidationResult } from '../../utilities/validators';
 import { Avatar } from '../../components/Avatar';
-import { Footer } from '../../components/PageContainer/Footer/Footer';
+import { Footer } from '../../components/Footer';
 
 import './passwordEditPage.css';
 

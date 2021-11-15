@@ -15,7 +15,7 @@ import {
 } from '../../utilities/validators';
 import EditIcon from './static/edit.svg';
 import { Avatar } from '../../components/Avatar';
-import { Footer } from '../../components/PageContainer/Footer/Footer';
+import { Footer } from '../../components/Footer';
 
 import './profileEditPage.css';
 
