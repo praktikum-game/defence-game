@@ -12,7 +12,7 @@
     "prod": "npm-run-all lint prod:w",
     "build:w": "webpack --config webpack.dev.js",
     "build": "npm-run-all lint build:w",
-    "lint:p": "prettier --write './src/**/*.{js,jsx,ts,tsx,test.tsx,test.ts,json}'",
+    "lint:p": "prettier --write src/**/*.{js,jsx,ts,tsx,test.tsx,test.ts,json}",
     "lint:ts": "eslint src/**/*.{ts,tsx}",
     "lint:style": "stylelint src/**/*.css",
     "lint": "npm-run-all lint:p lint:ts lint:style",
@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/praktikum-game/defence-game#readme",
   "devDependencies": {
+    "@types/react-router-dom": "^5.3.2",
     "@typescript-eslint/eslint-plugin": "^5.3.0",
     "@typescript-eslint/parser": "^5.3.0",
     "clean-webpack-plugin": "^4.0.0",
@@ -44,7 +45,10 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^7.0.4",
+    "image-webpack-loader": "^8.0.1",
     "npm-run-all": "^4.1.5",
     "path": "^0.12.7",
     "postcss": "^8.3.11",
@@ -73,6 +77,7 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-react": "^7.27.0",
     "express": "^4.17.1",
     "postcss-advanced-variables": "^3.0.1",
     "postcss-modules": "^4.2.2",
@@ -80,6 +85,7 @@
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.0.2",
     "stylelint-order": "^5.0.0",
-    "ts-node": "^10.4.0"
+    "ts-node": "^10.4.0",
+    "tslib": "^2.3.1"
   }
 }

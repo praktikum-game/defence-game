@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-export const ForumThreadPage = (): JSX.Element => {
+export const ForumThreadPage = () => {
   const { forumId } = useParams();
 
   return (

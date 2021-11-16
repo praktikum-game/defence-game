@@ -1,32 +1,45 @@
 .button {
   color: $text-color;
-  border-radius: 30px;
+  border-radius: 10px;
   padding: 10px;
   border: none;
-  width: 250px;
+  width: 280px;
   transition: transform 0.1s linear;
-}
 
-.button_primary {
-  background-color: $primary-background;
-}
+  &_primary {
+    background-color: $primary-background;
+    color: #fff;
+  }
 
-.button_default {
-  background-color: $default-background;
-}
+  &_default {
+    background-color: $default-background;
+  }
 
-.button_secondary {
-  background-color: $secondary-background;
-}
+  &_secondary {
+    border: 1px solid $primary-color;
+    background: $secondary-background;
+    color: $primary-color;
+  }
 
-.button:disabled {
-  background-color: $disabled-background;
-  transform: none !important;
-  translate: none !important;
-  cursor: default !important;
-}
+  &_error {
+    background: transparent;
+    border: 1px solid $error-page-accent-color;
+    color: $error-page-accent-color;
+  }
 
-.button:hover {
-  cursor: pointer;
-  transform: translateY(-3px);
+  &:disabled {
+    background-color: $disabled-background;
+    transform: none !important;
+    translate: none !important;
+    cursor: default !important;
+  }
+
+  &:hover {
+    cursor: pointer;
+    transform: translateY(3px);
+  }
+
+  &__link {
+    text-decoration: none;
+  }
 }
