@@ -17,8 +17,7 @@
     "lint:style": "stylelint src/**/*.css",
     "lint": "npm-run-all lint:p lint:ts lint:style",
     "ts": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky install"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
