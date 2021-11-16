@@ -11,7 +11,6 @@ import { Avatar } from '../../components/Avatar';
 import { LogoutButton } from './LogoutButton';
 import { InputNames } from '../utilities';
 import './profilePage.css';
-import { LogoutButton } from './LogoutButton';
 
 export const ProfilePage = () => (
   <div className="profile-page">
