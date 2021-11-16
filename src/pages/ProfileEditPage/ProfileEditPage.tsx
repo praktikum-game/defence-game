@@ -14,8 +14,7 @@ import './profileEditPage.css';
 export const ProfileEditPage = () => (
   <div className="profile-edit-page">
     <Header backButton={true}>
-      <Avatar />
-      <div />
+      <Avatar className="profile-edit-page__avatar" />
     </Header>
     <PageContainer className="profile-edit-page__page-container" size="m">
       <Form className="profile-edit-page__form">

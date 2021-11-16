@@ -36,7 +36,6 @@ export const PasswordEditPage = () => {
     <div className="profile-edit-page">
       <Header backButton={true}>
         <Avatar />
-        <div />
       </Header>
       <PageContainer size="m">
         <Form
