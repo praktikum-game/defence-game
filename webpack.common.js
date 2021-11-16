@@ -23,11 +23,13 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(png|jpe?g|gif|jp2|gif|webp|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: 'images/[name].[ext]',
-        },
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          'file-loader?name=images/[name].[ext]',
+          {
+            loader: 'image-webpack-loader',
+          },
+        ],
       },
       {
         test: /\.tsx?$/,
