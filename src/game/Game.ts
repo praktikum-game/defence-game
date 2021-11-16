@@ -4,7 +4,8 @@ import { BaseEnemy } from './BaseEnemy';
 import { BaseGameObject } from './BaseGameObject';
 import { GameField } from './GameField';
 import { getRandomInt } from './helpers';
-import { Callback } from './types';
+import { ResourceLoader } from './ResourceLoader';
+import { EndGameCallback } from './types';
 
 export class Game {
   private _canvasElement: HTMLCanvasElement;
@@ -21,9 +22,7 @@ export class Game {
 
   private _gameField: GameField;
 
-  private _onLose: Callback;
-
-  private _onWin: Callback;
+  private _onGameEnd: EndGameCallback;
 
   public get enemies() {
     return this._enemies;
@@ -33,7 +32,7 @@ export class Game {
     return this._defenders;
   }
 
-  constructor(canvasEl: HTMLCanvasElement, onLose: Callback, onWin: Callback) {
+  constructor(canvasEl: HTMLCanvasElement, onGameEnd: EndGameCallback) {
     this._last = 0;
     this._isRunning = false;
 
@@ -42,9 +41,8 @@ export class Game {
 
     this._canvasElement = canvasEl;
 
-    this._onLose = onLose;
-    this._onWin = onWin;
-
+    this._onGameEnd = onGameEnd;
+    ResourceLoader.init();
     this._canvasElement.addEventListener('click', ({ offsetX, offsetY }: MouseEvent) =>
       this.manualAddDefender(offsetX, offsetY),
     );
@@ -70,8 +68,6 @@ export class Game {
     this._isRunning = true;
     this.animation(performance.now());
   }
-
-  // private stop() {}
 
   private manualAddDefender(x: number, y: number) {
     this._gameField.gameGrid.forEach((cell) => {
@@ -100,7 +96,7 @@ export class Game {
     this._enemies = [];
     this._defenders = [];
     this._isRunning = false;
-    this._onLose();
+    this._onGameEnd('lose');
   }
 
   private win() {
@@ -108,7 +104,7 @@ export class Game {
     this._defenders = [];
     this._gameField.draw(this._ctx);
     this._isRunning = false;
-    this._onWin();
+    this._onGameEnd('win');
   }
 
   private redraw(delay: number) {

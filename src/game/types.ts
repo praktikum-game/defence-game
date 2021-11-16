@@ -1,1 +1,2 @@
-export type Callback = () => void;
+export type EndGameStatus = 'win' | 'lose';
+export type EndGameCallback = (typeEnd: EndGameStatus) => void;

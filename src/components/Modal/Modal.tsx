@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import { ModalProps } from './types';
 import './modal.css';
 
-export const Modal = ({ children, visible }: ModalProps): JSX.Element => {
+export const Modal = ({ children, visible }: ModalProps): JSX.Element | null => {
   if (!visible) {
-    return <></>;
+    return null;
   }
 
   return ReactDOM.createPortal(

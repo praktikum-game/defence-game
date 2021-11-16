@@ -11,6 +11,7 @@ export class BaseGameObject {
 
   protected _uuid: string;
 
+
   constructor(x: number, y: number, width: number, height: number) {
     this._x = x;
     this._y = y;
@@ -18,6 +19,7 @@ export class BaseGameObject {
     this._height = height;
     this._uuid = nanoid();
   }
+
 
   public get uuid() {
     return this._uuid;

@@ -1,42 +1,51 @@
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { EndGameStatus } from 'game/types';
+import { FIELD_HEIGHT, FIELD_WIDTH } from '../../game/consts';
 import { Button } from '../../components/Button';
 import { Modal } from '../../components/Modal';
 import { Game } from '../../game/Game';
 
 export const GamePage = (): JSX.Element => {
   const navigate = useNavigate();
-  const [game, setGame] = useState<Game | undefined>();
   const [runButtonIsDisabled, setRunButtonIsDisabled] = useState<boolean>(false);
   const [infoModalIsVisible, setInfoModalIsVisible] = useState<boolean>(true);
   const [loseModalIsVisible, setLoseModalIsVisible] = useState<boolean>(false);
   const [winModalIsVisible, setWinModalIsVisible] = useState<boolean>(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const gameRef = useRef<Game>(null);
 
-  const handleLose = useCallback(() => {
-    setLoseModalIsVisible(true);
-    setRunButtonIsDisabled(false);
-  }, []);
+  const handleGameEnd = useCallback((status: EndGameStatus) => {
+    switch (status) {
+      case 'lose':
+        setLoseModalIsVisible(true);
+        break;
 
-  const handleWin = useCallback(() => {
-    setWinModalIsVisible(true);
+      case 'win':
+        setWinModalIsVisible(true);
+        break;
+
+      default:
+        break;
+    }
+
     setRunButtonIsDisabled(false);
   }, []);
 
   useEffect(() => {
     if (canvasRef.current) {
-      const g = new Game(canvasRef.current, handleLose, handleWin);
-      setGame(g);
+      // @ts-ignore
+      gameRef.current = new Game(canvasRef.current, handleGameEnd);
     }
-  }, [handleLose, handleWin]);
+  }, [handleGameEnd]);
 
   const handleStartGame = useCallback(() => {
-    if (game) {
-      game.run();
+    if (gameRef.current) {
+      gameRef.current.run();
       setRunButtonIsDisabled(true);
     }
-  }, [game]);
+  }, []);
 
   const handleCloseInfoModal = useCallback(() => {
     setInfoModalIsVisible(false);
@@ -78,7 +87,7 @@ export const GamePage = (): JSX.Element => {
         disabled={runButtonIsDisabled}
       />
 
-      <canvas ref={canvasRef} height={500} width={1200}></canvas>
+      <canvas ref={canvasRef} height={FIELD_HEIGHT} width={FIELD_WIDTH}></canvas>
     </Fragment>
   );
 };

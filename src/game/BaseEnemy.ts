@@ -1,12 +1,9 @@
 import { BaseGameObject } from './BaseGameObject';
 import { Drawable, Updateable } from './interfaces';
 
-import virus from './assets/corona_red.png';
-
-const img = new Image();
-img.src = virus;
-
 export class BaseEnemy extends BaseGameObject implements Drawable, Updateable {
+  public static image: HTMLImageElement;
+
   private _isMove: boolean;
 
   private _speed: number;
@@ -44,12 +41,12 @@ export class BaseEnemy extends BaseGameObject implements Drawable, Updateable {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    ctx.drawImage(img, this.x, this.y + 5, 90, 90);
+    ctx.drawImage(BaseEnemy.image, this.x, this.y + 5, 90, 90);
   }
 
   update(delay: number) {
     if (!this._isMove) return this;
-    
+
     const dx = this._speed * delay;
     if (this._x < 0) {
       this._x = this._startPosition;

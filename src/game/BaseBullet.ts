@@ -1,13 +1,11 @@
 import { BaseGameObject } from './BaseGameObject';
 import { Drawable, Updateable } from './interfaces';
 
-import fireball1 from './assets/pills.jpg';
 import { GameField } from './GameField';
 
-const img = new Image();
-img.src = fireball1;
-
 export class BaseBullet extends BaseGameObject implements Drawable, Updateable {
+  public static image: HTMLImageElement;
+
   private _speed: number;
 
   private _size: number;
@@ -23,7 +21,7 @@ export class BaseBullet extends BaseGameObject implements Drawable, Updateable {
   }
 
   public draw(context: CanvasRenderingContext2D) {
-    context.drawImage(img, 8, 82, 240, 86, this.x, this.y, 44, 16);
+    context.drawImage(BaseBullet.image, 3, 20, 58, 24, this.x, this.y, 44, 16);
   }
 
   public update(delay: number) {
