@@ -10,7 +10,7 @@ export const PageContainer = ({
   size = 'm',
   className,
   ...props
-}: PageContainerProps): JSX.Element => (
+}: PageContainerProps) => (
   <div
     className={b({ [size]: true })
       .mix(className)

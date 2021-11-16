@@ -5,7 +5,7 @@ import { Title } from '../../components/Title';
 
 import './errorPage404.css';
 
-export const ErrorPage404 = (): JSX.Element => (
+export const ErrorPage404 = () => (
   <div className="error-page-404">
     <Title headingLevel={1} align="center">
       404

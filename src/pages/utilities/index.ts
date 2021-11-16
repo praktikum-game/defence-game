@@ -1,4 +1,2 @@
-import { InputNames } from './InputNames';
-import { inputValueUpdaterFactory } from './utilities';
-
-export { InputNames, inputValueUpdaterFactory };
+export { InputNames } from './InputNames';
+export { inputValueUpdaterFactory } from './utilities';

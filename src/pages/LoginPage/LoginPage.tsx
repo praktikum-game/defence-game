@@ -11,7 +11,7 @@ import { loginValidator, passwordValidator, ValidationResult } from '../../utili
 import { inputValueUpdaterFactory, InputNames } from '../utilities';
 import './loginPage.css';
 
-export const LoginPage = (): JSX.Element => {
+export const LoginPage = () => {
   const [loginValue, setLoginValue] = useState('');
   const [loginValidationResult, setLoginValidationResult] = useState<ValidationResult>({
     message: '',

@@ -13,8 +13,6 @@ import { inputValueUpdaterFactory, InputNames } from '../utilities';
 import './passwordEditPage.css';
 
 export const PasswordEditPage = () => {
-  const [passwordValue] = useState('OldPass123*');
-
   const [oldPasswordValue, setOldPasswordValue] = useState('');
   const [oldPasswordValidationResult, setOldPasswordValidationResult] = useState<ValidationResult>({
     message: '',
@@ -57,7 +55,7 @@ export const PasswordEditPage = () => {
             errorText={oldPasswordValidationResult.message}
             isValid={oldPasswordValidationResult.valid}
             valueChangeCallback={inputValueUpdaterFactory(
-              bindArgsFromN(passwordValidator, 2, passwordValue),
+              passwordValidator,
               setOldPasswordValidationResult,
               setOldPasswordValue,
             )}

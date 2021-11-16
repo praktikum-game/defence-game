@@ -5,7 +5,7 @@ import './footer.css';
 
 const b = block('footer');
 
-export const Footer = ({ children, className, ...props }: FooterProps): JSX.Element => (
+export const Footer = ({ children, className, ...props }: FooterProps) => (
   <div className={b.mix(className)} {...props}>
     {children}
   </div>

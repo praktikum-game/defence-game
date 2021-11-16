@@ -13,7 +13,7 @@ export const InputField = ({
   errorText = null,
   view = 'default',
   ...props
-}: InputFieldProps): JSX.Element => {
+}: InputFieldProps) => {
   const { valueChangeCallback, ...otherProps } = props;
   const { id, name } = otherProps;
 

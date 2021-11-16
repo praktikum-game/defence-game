@@ -18,7 +18,7 @@ import { inputValueUpdaterFactory, InputNames } from '../utilities';
 
 import './registerPage.css';
 
-export const RegisterPage = (): JSX.Element => {
+export const RegisterPage = () => {
   const [loginValue, setLoginValue] = useState('');
   const [loginValidationResult, setLoginValidationResult] = useState<ValidationResult>({
     message: '',

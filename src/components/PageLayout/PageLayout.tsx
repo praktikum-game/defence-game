@@ -7,7 +7,7 @@ import { PageLayoutProps } from './types';
 
 const b = block('page-layout');
 
-export const PageLayout = ({ className }: PageLayoutProps): JSX.Element => (
+export const PageLayout = ({ className }: PageLayoutProps) => (
   <div className={b.mix(className)}>
     <Logo />
     <Outlet />

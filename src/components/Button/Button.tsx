@@ -14,7 +14,7 @@ export const Button = ({
   loading = false,
   className,
   ...props
-}: ButtonProps): JSX.Element => (
+}: ButtonProps) => (
   <button
     className={b.mix(viewTypes[view]).mix(className)}
     disabled={loading || disabled}

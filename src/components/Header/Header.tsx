@@ -12,7 +12,7 @@ export const Header = ({
   backButton = false,
   className,
   ...props
-}: HeaderProps): JSX.Element => (
+}: HeaderProps) => (
   <header className={b({ [size]: true }).mix(className)} {...props}>
     {backButton ? <BackButton /> : ''}
     {children}

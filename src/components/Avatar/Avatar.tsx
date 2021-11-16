@@ -6,6 +6,6 @@ import defaultAvatar from './static/default-avatar.svg';
 
 const b = block('avatar');
 
-export const Avatar = ({ src = defaultAvatar, className, ...props }: AvatarProps): JSX.Element => (
+export const Avatar = ({ src = defaultAvatar, className, ...props }: AvatarProps) => (
   <img className={b.mix(className)} src={src} {...props}></img>
 );

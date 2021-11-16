@@ -3,7 +3,7 @@ import { Title } from '../../components/Title';
 
 import './errorPage.css';
 
-export const ErrorPage500 = (): JSX.Element => (
+export const ErrorPage500 = () => (
   <div className="error-page-500">
     <Title headingLevel={1} align="center">
       500
