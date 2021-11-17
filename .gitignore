@@ -3,4 +3,5 @@ node_modules
 .vscode
 sensitive/
 .env
+src/game/assets/original
 .cache/
