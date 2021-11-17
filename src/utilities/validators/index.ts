@@ -5,5 +5,14 @@ export {
   ValidateFunction,
   ValidatorItem,
 } from './types';
-
-export { required, email, longerThan, shorterThan, validate } from './validators';
+export {
+  required,
+  email,
+  longerThan,
+  shorterThan,
+  onlyAlphabeticOrDigits,
+  validate,
+  loginValidator,
+  passwordValidator,
+  emailValidator,
+} from './validators';

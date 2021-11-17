@@ -1,0 +1,5 @@
+.login-page {
+  &__form {
+    margin-top: 8px;
+  }
+}

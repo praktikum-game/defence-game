@@ -9,7 +9,7 @@ const inputValidators = [
   { checkFunction: email(), message: 'Это не email' },
 ];
 
-export const HomePage = (): JSX.Element => {
+export const HomePage = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const [inputError, setInputError] = useState<ValidationResult>({ valid: true, message: null });
 

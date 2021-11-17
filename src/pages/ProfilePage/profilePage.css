@@ -1,0 +1,46 @@
+.profile-page {
+  &__form {
+    margin-top: 20px;
+  }
+
+  &__footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__button {
+    margin: 20px 10px;
+  }
+
+  .input-field {
+    &__input {
+      text-align: right;
+      color: $input-text-color;
+    }
+
+    &__label {
+      color: $input-label-color-dark;
+    }
+  }
+
+  &__page-container {
+    padding-top: 90px;
+  }
+
+  .header {
+    .logout-button {
+      &__button {
+        display: flex;
+        background: none;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      &__icon {
+        margin-left: 10px;
+      }
+    }
+  }
+}
