@@ -1,57 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
 import { Header } from '../../components/Header';
 import { PageContainer } from '../../components/PageContainer';
 import { Form } from '../../components/Form';
-import { passwordValidator, ValidationResult } from '../../utilities/validators';
+import { passwordValidator } from '../../utilities/validators';
 // import { bindArgsFromN } from '../../utilities/utilities';
 import { Avatar } from '../../components/Avatar';
 import { Footer } from '../../components/Footer';
 import { InputNames } from '../utilities';
 import './passwordEditPage.css';
-
-type FormInputObject = {
-  value: string;
-  errorMessage: string | null;
-  isValid: boolean;
-};
-
-type ValidatorFunction = (value: string) => ValidationResult;
-
-const useFormInput = (
-  validator: ValidatorFunction,
-  initialObject: FormInputObject = {
-    value: '',
-    errorMessage: null,
-    isValid: false,
-  },
-) => {
-  const [value, setValue] = useState(initialObject.value);
-  const [validationResult, setValidationResult] = useState<ValidationResult>({
-    message: initialObject.errorMessage,
-    valid: initialObject.isValid,
-  });
-
-  const changeValidationResult = (val: string) => {
-    const result = validator(val);
-    setValidationResult(result);
-  };
-
-  const changeValue = (val: string) => {
-    setValue(val);
-    changeValidationResult(val);
-  };
-
-  const resultObject: FormInputObject = {
-    value,
-    errorMessage: validationResult.message,
-    isValid: validationResult.valid,
-  };
-
-  return { resultObject, changeValue };
-};
+import { useFormInput } from '../../components/Form/hooks';
 
 export const PasswordEditPage = () => {
   const { resultObject: oldPassword, changeValue: setOldPassword } =
