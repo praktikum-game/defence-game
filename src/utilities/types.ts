@@ -6,12 +6,3 @@ export type ViewType = {
   info: string;
   warning: string;
 };
-
-export type DatetimeObject = {
-  year: string;
-  month: string;
-  dayOfMonth: string;
-  hours: string;
-  minutes: string;
-  seconds: string;
-};
