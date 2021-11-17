@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { Footer } from '../../components/Footer';
 import { PageContainer } from '../../components/PageContainer';
 import { Header } from '../../components/Header';
@@ -11,6 +11,7 @@ import { loginValidator, passwordValidator, ValidationResult } from '../../utili
 import { inputValueUpdaterFactory } from '../utilities';
 import { authController } from '../../controllers';
 import { InputNames } from '../../consts';
+import { store } from '../../store';
 
 import './loginPage.css';
 
@@ -40,6 +41,10 @@ export const LoginPage = (): JSX.Element => {
       navigate('/', { replace: true });
     }
   }, [loginResult, navigate]);
+
+  if (store.user !== null) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="login-page">

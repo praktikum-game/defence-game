@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { Footer } from '../../components/Footer';
 import { PageContainer } from '../../components/PageContainer';
 import { Header } from '../../components/Header';
@@ -19,6 +19,7 @@ import { bindArgsFromN } from '../../utilities/utilities';
 import { inputValueUpdaterFactory } from '../utilities';
 import { InputNames } from '../../consts';
 import { authController } from '../../controllers';
+import { store } from '../../store';
 
 import './registerPage.css';
 
@@ -85,6 +86,10 @@ export const RegisterPage = (): JSX.Element => {
       navigate('/', { replace: true });
     }
   }, [registerResult, navigate]);
+
+  if (store.user !== null) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="register-page">

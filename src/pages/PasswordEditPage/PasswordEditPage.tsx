@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
 import { Header } from '../../components/Header';
@@ -11,6 +11,7 @@ import { Avatar } from '../../components/Avatar';
 import { Footer } from '../../components/Footer';
 import { inputValueUpdaterFactory } from '../utilities';
 import { InputNames } from '../../consts';
+import { store } from '../../store';
 
 import './passwordEditPage.css';
 
@@ -33,6 +34,10 @@ export const PasswordEditPage = () => {
       message: '',
       valid: false,
     });
+
+  if (store.user === null) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div className="profile-edit-page">
