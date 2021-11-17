@@ -32,9 +32,9 @@ export const PasswordEditPage = () => {
         <Form
           className="password-edit-page__form"
           // validationResults={[
-          //   oldPasswordValidationResult,
-          //   newPasswordValidationResult,
-          //   repeatPasswordValidationResult,
+          //   { valid: oldPassword.isValid, message: oldPassword.errorMessage },
+          //   { valid: oldPassword.isValid, message: oldPassword.errorMessage },
+          //   { valid: oldPassword.isValid, message: oldPassword.errorMessage },
           // ]}
         >
           <InputField
@@ -60,12 +60,7 @@ export const PasswordEditPage = () => {
             label="Повторите новый пароль"
             errorText={repeatPassword.errorMessage}
             isValid={repeatPassword.isValid}
-            // valueChangeCallback={inputValueUpdaterFactory(
-            //   bindArgsFromN(passwordValidator, 2, newPasswordValue),
-            //   setRepeatPasswordValidationResult,
-            //   setRepeatPasswordValue,
-            // )}
-            valueChangeCallback={setRepeatPassword}
+            valueChangeCallback={(value) => setRepeatPassword(value, newPassword.value)}
           />
           <Footer className="password-edit-page__footer">
             <Button

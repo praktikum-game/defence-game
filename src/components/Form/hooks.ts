@@ -7,7 +7,7 @@ export type FormInputObject = {
   isValid: boolean;
 };
 
-export type ValidatorFunction = (value: string) => ValidationResult;
+export type ValidatorFunction = (value: string, equal?: string) => ValidationResult;
 
 export const useFormInput = (
   validator: ValidatorFunction,
@@ -23,14 +23,14 @@ export const useFormInput = (
     valid: initialObject.isValid,
   });
 
-  const changeValidationResult = (val: string) => {
-    const result = validator(val);
+  const changeValidationResult = (val: string, equal?: string) => {
+    const result = validator(val, equal!);
     setValidationResult(result);
   };
 
-  const changeValue = (val: string) => {
+  const changeValue = (val: string, equal?: string) => {
     setValue(val);
-    changeValidationResult(val);
+    changeValidationResult(val, equal!);
   };
 
   const resultObject: FormInputObject = {
