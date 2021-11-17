@@ -3,7 +3,6 @@ import { AppNavigation } from '../../components/AppNavigation';
 import { email, required, validate, ValidationResult } from '../../utilities/validators';
 import { InputField } from '../../components/InputField';
 import { Button } from '../../components/Button';
-import { authController } from '../../controllers';
 
 const inputValidators = [
   { checkFunction: required(), message: 'Это обязательное поле' },
@@ -31,10 +30,6 @@ export const HomePage = () => {
     checkInputField(inputValue);
   }, [inputValue]);
 
-  const logoutCallback = useCallback(() => {
-    authController.logout();
-  }, []);
-
   return (
     <div className="homePage">
       <h1>Мое супер приложение</h1>
@@ -50,7 +45,6 @@ export const HomePage = () => {
       />
 
       <Button onClick={handleButtonClick} text="MyButton" view="primary" />
-      <Button onClick={logoutCallback} text="Разлогиниться" view="primary" />
     </div>
   );
 };

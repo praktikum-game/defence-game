@@ -104,6 +104,9 @@ export const RegisterPage = (): JSX.Element => {
           validationResults={[
             loginValidationResult,
             emailValidationResult,
+            phoneValidationResult,
+            firstNameValidationResult,
+            secondNameValidationResult,
             passwordValidationResult,
             repeatPasswordValidationResult,
           ]}

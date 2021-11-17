@@ -54,13 +54,21 @@ export const ProfilePage = () => {
             value={store.user.display_name}
             type="text"
             label="Никнейм"
+            disabled
           />
-          <InputField name={InputNames.PHONE} value={store.user.phone} type="tel" label="Телефон" />
+          <InputField
+            name={InputNames.PHONE}
+            value={store.user.phone}
+            type="tel"
+            label="Телефон"
+            disabled
+          />
           <InputField
             name={InputNames.PASSWORD}
             value="*******"
             type="password"
             label="Пароль"
+            disabled
           />
           <Footer className="profile-page__footer">
             <Link to="/profile-edit">
