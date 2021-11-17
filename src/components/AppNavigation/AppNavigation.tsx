@@ -1,23 +1,22 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { block } from 'bem-cn';
 import { defaultNavigation } from './defaultNavigation';
 import './appNavigation.css';
 
+const b = block('app-navigation');
+
 export const AppNavigation = () => {
-  const className = 'app-navigation__item';
-  const linkItems = defaultNavigation.map((item, i) => (
+  const linkItems = defaultNavigation.map(({ path, name }, i) => (
     <li key={i}>
-      <NavLink
-        className={({ isActive }) => (isActive ? `${className} ${className}_active` : '')}
-        to={item.path}
-      >
-        {item.name}
+      <NavLink className={({ isActive }) => b('item', { active: isActive })} to={path}>
+        {name}
       </NavLink>
     </li>
   ));
 
   return (
-    <nav className="app-navigation">
+    <nav className={b()}>
       <ul>{linkItems}</ul>
     </nav>
   );

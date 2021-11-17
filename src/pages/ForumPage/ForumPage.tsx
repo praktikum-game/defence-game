@@ -1,9 +1,10 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
+import './forum-page.css';
+
 export const ForumPage = () => (
-  <>
-    <h1>Форум</h1>
+  <div className="forum-layout-container">
     <Outlet />
-  </>
+  </div>
 );

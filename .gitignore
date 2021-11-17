@@ -4,3 +4,4 @@ node_modules
 sensitive/
 .env
 .cache/
+src/game/assets/original
