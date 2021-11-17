@@ -14,7 +14,7 @@ export const Header = ({
   ...props
 }: HeaderProps) => (
   <header className={b({ [size]: true }).mix(className)} {...props}>
-    {backButton ? <BackButton /> : ''}
+    {backButton ? <BackButton /> : null}
     {children}
   </header>
 );
