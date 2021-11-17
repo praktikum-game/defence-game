@@ -5,12 +5,18 @@ import { Title } from '../../../../../components/Title';
 
 import './thread-list-item.css';
 import { ThreadListItemProps } from '.';
-import { formatDateTime, getDatetimeObject } from '../../../../../utilities/utilities';
 import { Avatar } from '../../../../../components/Avatar';
 
 const b = block('thread-list-item');
 
-const formatDate = (date: Date) => formatDateTime(getDatetimeObject(date));
+const formatter = new Intl.DateTimeFormat('ru-RU', {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+  hour12: false,
+});
 
 export const Item = ({ className, dataItem }: ThreadListItemProps): JSX.Element => {
   const { headerText, createdDate, createdUser, threadId, messagesCount, lastChange } = dataItem;
@@ -27,9 +33,9 @@ export const Item = ({ className, dataItem }: ThreadListItemProps): JSX.Element 
             </Title>
           </Link>
           <div>
-            Создана пользователем: {createdUser} {formatDate(createdDate)}
+            Создана пользователем: {createdUser} {formatter.format(createdDate)}
           </div>
-          <div>Последние изменения: {formatDate(lastChange)}</div>
+          <div>Последние изменения: {formatter.format(lastChange)}</div>
         </div>
       </div>
 
