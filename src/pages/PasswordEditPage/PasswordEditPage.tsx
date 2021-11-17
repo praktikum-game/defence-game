@@ -6,31 +6,62 @@ import { Header } from '../../components/Header';
 import { PageContainer } from '../../components/PageContainer';
 import { Form } from '../../components/Form';
 import { passwordValidator, ValidationResult } from '../../utilities/validators';
-import { bindArgsFromN } from '../../utilities/utilities';
+// import { bindArgsFromN } from '../../utilities/utilities';
 import { Avatar } from '../../components/Avatar';
 import { Footer } from '../../components/Footer';
-import { inputValueUpdaterFactory, InputNames } from '../utilities';
+import { InputNames } from '../utilities';
 import './passwordEditPage.css';
 
+type FormInputObject = {
+  value: string;
+  errorMessage: string | null;
+  isValid: boolean;
+};
+
+type ValidatorFunction = (value: string) => ValidationResult;
+
+const useFormInput = (
+  validator: ValidatorFunction,
+  initialObject: FormInputObject = {
+    value: '',
+    errorMessage: null,
+    isValid: false,
+  },
+) => {
+  const [value, setValue] = useState(initialObject.value);
+  const [validationResult, setValidationResult] = useState<ValidationResult>({
+    message: initialObject.errorMessage,
+    valid: initialObject.isValid,
+  });
+
+  const changeValidationResult = (val: string) => {
+    const result = validator(val);
+    setValidationResult(result);
+  };
+
+  const changeValue = (val: string) => {
+    setValue(val);
+    changeValidationResult(val);
+  };
+
+  const resultObject: FormInputObject = {
+    value,
+    errorMessage: validationResult.message,
+    isValid: validationResult.valid,
+  };
+
+  return { resultObject, changeValue };
+};
+
 export const PasswordEditPage = () => {
-  const [oldPasswordValue, setOldPasswordValue] = useState('');
-  const [oldPasswordValidationResult, setOldPasswordValidationResult] = useState<ValidationResult>({
-    message: '',
-    valid: false,
-  });
+  const { resultObject: oldPassword, changeValue: setOldPassword } =
+    useFormInput(passwordValidator);
 
-  const [newPasswordValue, setNewPasswordValue] = useState('');
-  const [newPasswordValidationResult, setNewPasswordValidationResult] = useState<ValidationResult>({
-    message: '',
-    valid: false,
-  });
+  const { resultObject: newPassword, changeValue: setNewPassword } =
+    useFormInput(passwordValidator);
 
-  const [repeatPasswordValue, setRepeatPasswordValue] = useState('');
-  const [repeatPasswordValidationResult, setRepeatPasswordValidationResult] =
-    useState<ValidationResult>({
-      message: '',
-      valid: false,
-    });
+  const { resultObject: repeatPassword, changeValue: setRepeatPassword } =
+    useFormInput(passwordValidator);
 
   return (
     <div className="profile-edit-page">
@@ -40,48 +71,41 @@ export const PasswordEditPage = () => {
       <PageContainer size="m">
         <Form
           className="password-edit-page__form"
-          validationResults={[
-            oldPasswordValidationResult,
-            newPasswordValidationResult,
-            repeatPasswordValidationResult,
-          ]}
+          // validationResults={[
+          //   oldPasswordValidationResult,
+          //   newPasswordValidationResult,
+          //   repeatPasswordValidationResult,
+          // ]}
         >
           <InputField
             name={InputNames.OLD_PASSWORD}
-            value={oldPasswordValue}
+            value={oldPassword.value}
             type="password"
             label="Старый пароль"
-            errorText={oldPasswordValidationResult.message}
-            isValid={oldPasswordValidationResult.valid}
-            valueChangeCallback={inputValueUpdaterFactory(
-              passwordValidator,
-              setOldPasswordValidationResult,
-              setOldPasswordValue,
-            )}
+            errorText={oldPassword.errorMessage}
+            isValid={oldPassword.isValid}
+            valueChangeCallback={setOldPassword}
           />
           <InputField
             name={InputNames.NEW_PASSWORD}
-            value={newPasswordValue}
+            value={newPassword.value}
             type="password"
             label="Введите новый пароль"
-            valueChangeCallback={inputValueUpdaterFactory(
-              passwordValidator,
-              setNewPasswordValidationResult,
-              setNewPasswordValue,
-            )}
+            valueChangeCallback={setNewPassword}
           />
           <InputField
             name={InputNames.REPEAT_PASSWORD}
-            value={repeatPasswordValue}
+            value={repeatPassword.value}
             type="password"
             label="Повторите новый пароль"
-            errorText={repeatPasswordValidationResult.message}
-            isValid={repeatPasswordValidationResult.valid}
-            valueChangeCallback={inputValueUpdaterFactory(
-              bindArgsFromN(passwordValidator, 2, newPasswordValue),
-              setRepeatPasswordValidationResult,
-              setRepeatPasswordValue,
-            )}
+            errorText={repeatPassword.errorMessage}
+            isValid={repeatPassword.isValid}
+            // valueChangeCallback={inputValueUpdaterFactory(
+            //   bindArgsFromN(passwordValidator, 2, newPasswordValue),
+            //   setRepeatPasswordValidationResult,
+            //   setRepeatPasswordValue,
+            // )}
+            valueChangeCallback={setRepeatPassword}
           />
           <Footer className="password-edit-page__footer">
             <Button
@@ -89,13 +113,7 @@ export const PasswordEditPage = () => {
               className="password-edit-page__button"
               text="Сохранить"
               view="primary"
-              disabled={
-                !(
-                  oldPasswordValidationResult.valid &&
-                  newPasswordValidationResult.valid &&
-                  repeatPasswordValidationResult.valid
-                )
-              }
+              disabled={!(oldPassword.isValid && newPassword.isValid && repeatPassword.isValid)}
             ></Button>
             <Link to="/profile-edit">
               <Button
