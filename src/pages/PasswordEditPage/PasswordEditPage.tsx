@@ -9,7 +9,9 @@ import { passwordValidator, ValidationResult } from '../../utilities/validators'
 import { bindArgsFromN } from '../../utilities/utilities';
 import { Avatar } from '../../components/Avatar';
 import { Footer } from '../../components/Footer';
-import { inputValueUpdaterFactory, InputNames } from '../utilities';
+import { inputValueUpdaterFactory } from '../utilities';
+import { InputNames } from '../../consts';
+
 import './passwordEditPage.css';
 
 export const PasswordEditPage = () => {

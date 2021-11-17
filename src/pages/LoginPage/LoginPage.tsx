@@ -8,8 +8,9 @@ import { InputField } from '../../components/InputField';
 import { Button } from '../../components/Button';
 import { Title } from '../../components/Title';
 import { loginValidator, passwordValidator, ValidationResult } from '../../utilities/validators';
-import { inputValueUpdaterFactory, InputNames } from '../utilities';
+import { inputValueUpdaterFactory } from '../utilities';
 import { authController } from '../../controllers';
+import { InputNames } from '../../consts';
 
 import './loginPage.css';
 

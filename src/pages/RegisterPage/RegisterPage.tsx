@@ -16,7 +16,8 @@ import {
   ValidationResult,
 } from '../../utilities/validators';
 import { bindArgsFromN } from '../../utilities/utilities';
-import { inputValueUpdaterFactory, InputNames } from '../utilities';
+import { inputValueUpdaterFactory } from '../utilities';
+import { InputNames } from '../../consts';
 import { authController } from '../../controllers';
 
 import './registerPage.css';

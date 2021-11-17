@@ -8,7 +8,8 @@ import { Form } from '../../components/Form';
 import EditIcon from './static/edit.svg';
 import { Avatar } from '../../components/Avatar';
 import { Footer } from '../../components/Footer';
-import { InputNames } from '../utilities';
+import { InputNames } from '../../consts';
+
 import './profileEditPage.css';
 
 export const ProfileEditPage = () => (

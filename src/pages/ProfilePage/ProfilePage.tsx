@@ -9,7 +9,7 @@ import { Title } from '../../components/Title';
 import { Form } from '../../components/Form';
 import { Avatar } from '../../components/Avatar';
 import { LogoutButton } from './LogoutButton';
-import { InputNames } from '../utilities';
+import { InputNames } from '../../consts';
 import './profilePage.css';
 
 export const ProfilePage = () => (
