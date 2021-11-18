@@ -6,7 +6,7 @@ import '../../utilities/common.css';
 
 export const App = () => {
   useEffect(() => {
-    authController.userRead().then(() => {});
+    authController.userRead();
   }, []);
 
   return (
