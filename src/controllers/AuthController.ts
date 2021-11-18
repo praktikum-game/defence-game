@@ -19,7 +19,6 @@ class AuthController {
       await this.userRead();
       return true;
     } catch (e) {
-      console.log(e);
       return false;
     }
   }
@@ -51,7 +50,6 @@ class AuthController {
 
       return true;
     } catch (e) {
-      console.log(e);
       return false;
     }
   }
@@ -59,10 +57,8 @@ class AuthController {
   async userRead() {
     try {
       const response = await this.api.userRead();
-      console.log(response);
       store.user = response.data;
     } catch (e) {
-      console.log(e);
       store.user = null;
     }
   }

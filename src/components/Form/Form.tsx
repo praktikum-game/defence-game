@@ -22,7 +22,6 @@ export const Form = ({
 
       for (const result of validationResults) {
         if (!result.valid) {
-          console.log(result.message);
           return;
         }
       }

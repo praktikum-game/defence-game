@@ -20,18 +20,18 @@ class UsersController {
       };
       const response = await this.api.updateProfile(data);
       store.user = response.data;
-    } catch (e) {
-      console.log(e);
-    }
+
+      // eslint-disable-next-line
+    } catch {}
   }
 
   async updateAvatar(formData: FormData) {
     try {
       const response = await this.api.updateAvatar(formData);
       store.user = response.data;
-    } catch (e) {
-      console.log(e);
-    }
+
+      // eslint-disable-next-line
+    } catch {}
   }
 
   async updatePassword(formData: FormData) {
@@ -41,9 +41,9 @@ class UsersController {
         newPassword: String(formData.get('newPassword')),
       };
       await this.api.updatePassword(data);
-    } catch (e) {
-      console.log(e);
-    }
+
+      // eslint-disable-next-line
+    } catch {}
   }
 }
 
