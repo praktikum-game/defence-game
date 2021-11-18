@@ -11,5 +11,5 @@ const thunkExtraArgument: ThunkExtraArgument = {
 
 export const store = createStore(
   rootReducer,
-  applyMiddleware(thunk.withExtraArgument(thunkExtraArgument)),
+  applyMiddleware(thunk.withExtraArgument(thunkExtraArgument))
 );

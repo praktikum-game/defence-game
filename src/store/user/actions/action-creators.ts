@@ -1,27 +1,30 @@
+import { UserActionCreator, UserThunkDispatch } from '../types';
 import {
-  Action,
-  UserActionCreator,
   UserActions,
   UserFaliedFetch,
   UserStartFetch,
   UserSuccessFetch,
-  UserThunkDispatch,
-} from '../types';
-import {
-  USER_FAILED_FETCH_DATA,
-  USER_START_FETCH_DATA,
-  USER_SUCCESS_FETCH_DATA,
-} from './action-types';
+} from './action-creators-types';
+import { USER_FAILED_FETCH_DATA, USER_START_FETCH_DATA, USER_SUCCESS_FETCH_DATA } from './actions';
 
-export function createAction<T extends string, P>(type: T, payload: P): Action<T, P> {
-  return { type, payload };
-}
+// export function createAction<T extends string, P>(type: T, payload: P): Action<T, P> {
+//   return { type, payload };
+// }
 
-export const userStartFetch = (): UserStartFetch => createAction(USER_START_FETCH_DATA, null);
-export const userSuccessFetch = (data: string): UserSuccessFetch =>
-  createAction(USER_SUCCESS_FETCH_DATA, data);
-export const userFailedFetch = (): UserFaliedFetch => createAction(USER_FAILED_FETCH_DATA, null);
+// export const userStartFetch = (): UserStartFetch => createAction(USER_START_FETCH_DATA, null);
+// export const userSuccessFetch = (data: string): UserSuccessFetch =>
+//   createAction(USER_SUCCESS_FETCH_DATA, data);
+// export const userFailedFetch = (): UserFaliedFetch => createAction(USER_FAILED_FETCH_DATA, null);
 
+// Action creators
+export const userStartFetch = (): UserStartFetch => ({ type: USER_START_FETCH_DATA });
+export const userSuccessFetch = (data: string): UserSuccessFetch => ({
+  type: USER_SUCCESS_FETCH_DATA,
+  payload: data,
+});
+export const userFailedFetch = (): UserFaliedFetch => ({ type: USER_FAILED_FETCH_DATA });
+
+// async action creators
 export const fetchUserData: UserActionCreator =
   () =>
   async (dispatch: UserThunkDispatch): Promise<UserActions | void> => {

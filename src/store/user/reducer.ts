@@ -1,9 +1,10 @@
+import { UserActions } from './actions/action-creators-types';
 import {
   USER_START_FETCH_DATA,
   USER_SUCCESS_FETCH_DATA,
   USER_FAILED_FETCH_DATA,
-} from './actions/action-types';
-import { UserActions, UserState } from './types';
+} from './actions/actions';
+import { UserState } from './types';
 
 const initialState: UserState = {
   data: '',
@@ -15,7 +16,7 @@ export function reducer(state = initialState, action: UserActions): UserState {
     case USER_START_FETCH_DATA:
       return { ...state, loading: true };
     case USER_SUCCESS_FETCH_DATA:
-      return { ...state, loading: false, data: action.payload! };
+      return { ...state, loading: false, data: action.payload };
     case USER_FAILED_FETCH_DATA:
       return { ...state, loading: false };
 
