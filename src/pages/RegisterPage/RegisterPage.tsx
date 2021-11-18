@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { Footer } from '../../components/Footer';
 import { PageContainer } from '../../components/PageContainer';
@@ -71,7 +71,7 @@ export const RegisterPage = (): JSX.Element => {
       valid: false,
     });
 
-  const resetInputValues = () => {
+  const resetInputValues = useCallback(() => {
     setLoginValue('');
     setPhoneValue('');
     setFirstNameValue('');
@@ -79,13 +79,23 @@ export const RegisterPage = (): JSX.Element => {
     setEmailValue('');
     setPasswordValue('');
     setRepeatPasswordValue('');
-  };
+  }, [
+    setLoginValue,
+    setPhoneValue,
+    setFirstNameValue,
+    setSecondNameValue,
+    setEmailValue,
+    setPasswordValue,
+    setRepeatPasswordValue,
+  ]);
 
   useEffect(() => {
     if (registerResult) {
       navigate('/', { replace: true });
     }
   }, [registerResult, navigate]);
+
+  const registerCallback = useCallback(async (data: FormData) => authController.register(data), []);
 
   if (store.user !== null) {
     return <Navigate to="/" />;
@@ -110,7 +120,7 @@ export const RegisterPage = (): JSX.Element => {
             passwordValidationResult,
             repeatPasswordValidationResult,
           ]}
-          controllerCallback={authController.register.bind(authController)}
+          controllerCallback={registerCallback}
           resetValuesCallback={resetInputValues}
           setSubmitResult={setRegisterResult}
         >

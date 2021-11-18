@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
@@ -46,6 +46,11 @@ export const PasswordEditPage = () => {
     }
   }, [editResult, navigate]);
 
+  const updatePasswordCallback = useCallback(
+    async (data: FormData) => usersController.updatePassword(data),
+    [],
+  );
+
   if (store.user === null) {
     return <Navigate to="/login" />;
   }
@@ -63,7 +68,7 @@ export const PasswordEditPage = () => {
             newPasswordValidationResult,
             repeatPasswordValidationResult,
           ]}
-          controllerCallback={usersController.updatePassword.bind(usersController)}
+          controllerCallback={updatePasswordCallback}
           setSubmitResult={setEditResult}
         >
           <InputField

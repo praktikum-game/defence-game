@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { Footer } from '../../components/Footer';
 import { PageContainer } from '../../components/PageContainer';
@@ -31,16 +31,18 @@ export const LoginPage = (): JSX.Element => {
     valid: false,
   });
 
-  const resetInputValues = () => {
+  const resetInputValues = useCallback(() => {
     setLoginValue('');
     setPasswordValue('');
-  };
+  }, [setLoginValue, setPasswordValue]);
 
   useEffect(() => {
     if (loginResult) {
       navigate('/', { replace: true });
     }
   }, [loginResult, navigate]);
+
+  const loginCallback = useCallback(async (data: FormData) => authController.login(data), []);
 
   if (store.user !== null) {
     return <Navigate to="/" />;
@@ -56,7 +58,7 @@ export const LoginPage = (): JSX.Element => {
       <PageContainer size="s">
         <Form
           validationResults={[loginValidationResult, passwordValidationResult]}
-          controllerCallback={authController.login.bind(authController)}
+          controllerCallback={loginCallback}
           resetValuesCallback={resetInputValues}
           setSubmitResult={setLoginResult}
         >

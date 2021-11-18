@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
@@ -73,6 +73,11 @@ export const ProfileEditPage = () => {
     }
   }, [editResult, navigate]);
 
+  const updateProfileCallback = useCallback(
+    async (data: FormData) => usersController.updateProfile(data),
+    [],
+  );
+
   if (store.user === null) {
     return <Navigate to="/login" />;
   }
@@ -93,7 +98,7 @@ export const ProfileEditPage = () => {
             secondNameValidationResult,
             displayNameValidationResult,
           ]}
-          controllerCallback={usersController.updateProfile.bind(usersController)}
+          controllerCallback={updateProfileCallback}
           setSubmitResult={setEditResult}
         >
           <InputField
