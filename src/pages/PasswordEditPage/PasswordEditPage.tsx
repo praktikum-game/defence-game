@@ -6,7 +6,6 @@ import { Header } from '../../components/Header';
 import { PageContainer } from '../../components/PageContainer';
 import { Form } from '../../components/Form';
 import { passwordValidator } from '../../utilities/validators';
-// import { bindArgsFromN } from '../../utilities/utilities';
 import { Avatar } from '../../components/Avatar';
 import { Footer } from '../../components/Footer';
 import { InputNames } from '../utilities';
@@ -31,11 +30,11 @@ export const PasswordEditPage = () => {
       <PageContainer size="m">
         <Form
           className="password-edit-page__form"
-          // validationResults={[
-          //   { valid: oldPassword.isValid, message: oldPassword.errorMessage },
-          //   { valid: oldPassword.isValid, message: oldPassword.errorMessage },
-          //   { valid: oldPassword.isValid, message: oldPassword.errorMessage },
-          // ]}
+          validationResults={[
+            { valid: oldPassword.isValid, message: oldPassword.errorMessage },
+            { valid: oldPassword.isValid, message: oldPassword.errorMessage },
+            { valid: oldPassword.isValid, message: oldPassword.errorMessage },
+          ]}
         >
           <InputField
             name={InputNames.OLD_PASSWORD}
