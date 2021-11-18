@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
 import { Header } from '../../components/Header';
@@ -9,10 +9,18 @@ import { passwordValidator, ValidationResult } from '../../utilities/validators'
 import { bindArgsFromN } from '../../utilities/utilities';
 import { Avatar } from '../../components/Avatar';
 import { Footer } from '../../components/Footer';
-import { inputValueUpdaterFactory, InputNames } from '../utilities';
+import { inputValueUpdaterFactory } from '../utilities';
+import { InputNames } from '../../consts';
+import { usersController } from '../../controllers';
+import { store } from '../../store';
+
 import './passwordEditPage.css';
 
 export const PasswordEditPage = () => {
+  const navigate = useNavigate();
+
+  const [editResult, setEditResult] = useState(false);
+
   const [oldPasswordValue, setOldPasswordValue] = useState('');
   const [oldPasswordValidationResult, setOldPasswordValidationResult] = useState<ValidationResult>({
     message: '',
@@ -32,6 +40,21 @@ export const PasswordEditPage = () => {
       valid: false,
     });
 
+  useEffect(() => {
+    if (editResult) {
+      navigate('/password-edit', { replace: true });
+    }
+  }, [editResult, navigate]);
+
+  const updatePasswordCallback = useCallback(
+    async (data: FormData) => usersController.updatePassword(data),
+    [],
+  );
+
+  if (store.user === null) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <div className="profile-edit-page">
       <Header backButton={true}>
@@ -45,6 +68,8 @@ export const PasswordEditPage = () => {
             newPasswordValidationResult,
             repeatPasswordValidationResult,
           ]}
+          controllerCallback={updatePasswordCallback}
+          setSubmitResult={setEditResult}
         >
           <InputField
             name={InputNames.OLD_PASSWORD}

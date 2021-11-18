@@ -1,3 +1,5 @@
+export const backendStaticUrl = 'https://ya-praktikum.tech/api/v2/resources';
+
 export enum InputNames {
   FIRST_NAME = 'first_name',
   EMAIL = 'email',

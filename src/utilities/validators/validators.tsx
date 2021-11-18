@@ -37,6 +37,20 @@ export const email: ValidateFunction =
     return re.test(value) ? valid() : invalid(message);
   };
 
+export const phone: ValidateFunction =
+  () =>
+  ({ value, message }) => {
+    const re = /^[+]{0,1}[0-9]{11,13}$/;
+    return re.test(value) ? valid() : invalid(message);
+  };
+
+export const name: ValidateFunction =
+  () =>
+  ({ value, message }) => {
+    const re = /^[А-Я]{1}[А-Яа-я]{0,}$/;
+    return re.test(value) ? valid() : invalid(message);
+  };
+
 export const onlyAlphabeticOrDigits: ValidateFunction =
   () =>
   ({ value, message }) => {
@@ -123,6 +137,36 @@ export function emailValidator(value: string): ValidationResult {
     {
       checkFunction: (params: ValidateItemParams) => email()({ ...params }),
       message: 'Почта должна соответствовать форме email@example.com',
+    },
+  ];
+  return validate(validators, value);
+}
+
+export function phoneValidator(value: string): ValidationResult {
+  const validators: ValidatorItem[] = [
+    {
+      checkFunction: (params: ValidateItemParams) => required()({ ...params }),
+      message: 'Номер не может быть пустым',
+    },
+    {
+      checkFunction: (params: ValidateItemParams) => phone()({ ...params }),
+      message:
+        'Номер может состоять только из цифр. Может начинаться с цифры' +
+        ' или +. Не больше 13 цифр',
+    },
+  ];
+  return validate(validators, value);
+}
+
+export function nameValidator(value: string): ValidationResult {
+  const validators: ValidatorItem[] = [
+    {
+      checkFunction: (params: ValidateItemParams) => required()({ ...params }),
+      message: 'Имя не может быть пустым',
+    },
+    {
+      checkFunction: (params: ValidateItemParams) => name()({ ...params }),
+      message: 'Имя должно начинаться с заглавной буквы и содержать только кириллицу',
     },
   ];
   return validate(validators, value);

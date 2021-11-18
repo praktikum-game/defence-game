@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { Footer } from '../../components/Footer';
 import { PageContainer } from '../../components/PageContainer';
 import { Header } from '../../components/Header';
@@ -8,10 +8,18 @@ import { InputField } from '../../components/InputField';
 import { Button } from '../../components/Button';
 import { Title } from '../../components/Title';
 import { loginValidator, passwordValidator, ValidationResult } from '../../utilities/validators';
-import { inputValueUpdaterFactory, InputNames } from '../utilities';
+import { inputValueUpdaterFactory } from '../utilities';
+import { authController } from '../../controllers';
+import { InputNames } from '../../consts';
+import { store } from '../../store';
+
 import './loginPage.css';
 
-export const LoginPage = () => {
+export const LoginPage = (): JSX.Element => {
+  const navigate = useNavigate();
+
+  const [loginResult, setLoginResult] = useState(false);
+
   const [loginValue, setLoginValue] = useState('');
   const [loginValidationResult, setLoginValidationResult] = useState<ValidationResult>({
     message: '',
@@ -23,6 +31,23 @@ export const LoginPage = () => {
     valid: false,
   });
 
+  const resetInputValues = useCallback(() => {
+    setLoginValue('');
+    setPasswordValue('');
+  }, [setLoginValue, setPasswordValue]);
+
+  useEffect(() => {
+    if (loginResult) {
+      navigate('/', { replace: true });
+    }
+  }, [loginResult, navigate]);
+
+  const loginCallback = useCallback(async (data: FormData) => authController.login(data), []);
+
+  if (store.user !== null) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <div className="login-page">
       <Header size="s">
@@ -31,7 +56,12 @@ export const LoginPage = () => {
         </Title>
       </Header>
       <PageContainer size="s">
-        <Form validationResults={[loginValidationResult, passwordValidationResult]}>
+        <Form
+          validationResults={[loginValidationResult, passwordValidationResult]}
+          controllerCallback={loginCallback}
+          resetValuesCallback={resetInputValues}
+          setSubmitResult={setLoginResult}
+        >
           <InputField
             view="labeled"
             value={loginValue}
