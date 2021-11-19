@@ -20,7 +20,6 @@ const formatter = new Intl.DateTimeFormat('ru-RU', {
 
 export const Item = ({ className, dataItem }: ThreadListItemProps): JSX.Element => {
   const { headerText, createdDate, createdUser, threadId, messagesCount, lastChange } = dataItem;
-  useEffect(() => console.log('effect'), []);
   return (
     <div className={b.mix(className)}>
       <div className={b('item-content')}>

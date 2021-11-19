@@ -9,13 +9,11 @@ import { BaseEnemy } from './BaseEnemy';
 
 export class ResourceLoader {
   public static init() {
-    Promise.all([setImage(doctor), setImage(bullet), setImage(virus)])
-      .then((imgResources) => {
-        const [doctorImg, bulletImg, virusImg] = imgResources;
-        BaseDefender.image = doctorImg;
-        BaseBullet.image = bulletImg;
-        BaseEnemy.image = virusImg;
-      })
-      .then((img) => img);
+    Promise.all([setImage(doctor), setImage(bullet), setImage(virus)]).then((imgResources) => {
+      const [doctorImg, bulletImg, virusImg] = imgResources;
+      BaseDefender.image = doctorImg;
+      BaseBullet.image = bulletImg;
+      BaseEnemy.image = virusImg;
+    });
   }
 }
