@@ -15,3 +15,5 @@ export type ValidatorItem = {
   checkFunction: InnerValidationFunction;
   message: string;
 };
+
+export type CompositeValidateFunction = (value: string, equal?: string) => ValidationResult;
