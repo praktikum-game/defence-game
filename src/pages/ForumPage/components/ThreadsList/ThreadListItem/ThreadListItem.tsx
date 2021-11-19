@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { block } from 'bem-cn';
 import { Title } from '../../../../../components/Title';
