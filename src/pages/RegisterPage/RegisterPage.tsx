@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { Footer } from '../../components/Footer';
 import { PageContainer } from '../../components/PageContainer';
 import { Header } from '../../components/Header';
@@ -11,16 +11,43 @@ import {
   loginValidator,
   passwordValidator,
   emailValidator,
+  nameValidator,
+  phoneValidator,
   ValidationResult,
 } from '../../utilities/validators';
 import { bindArgsFromN } from '../../utilities/utilities';
-import { inputValueUpdaterFactory, InputNames } from '../utilities';
+import { inputValueUpdaterFactory } from '../utilities';
+import { InputNames } from '../../consts';
+import { authController } from '../../controllers';
+import { store } from '../../store';
 
 import './registerPage.css';
 
-export const RegisterPage = () => {
+export const RegisterPage = (): JSX.Element => {
+  const navigate = useNavigate();
+
+  const [registerResult, setRegisterResult] = useState(false);
+
   const [loginValue, setLoginValue] = useState('');
   const [loginValidationResult, setLoginValidationResult] = useState<ValidationResult>({
+    message: '',
+    valid: false,
+  });
+
+  const [phoneValue, setPhoneValue] = useState('');
+  const [phoneValidationResult, setPhoneValidationResult] = useState<ValidationResult>({
+    message: '',
+    valid: false,
+  });
+
+  const [firstNameValue, setFirstNameValue] = useState('');
+  const [firstNameValidationResult, setFirstNameValidationResult] = useState<ValidationResult>({
+    message: '',
+    valid: false,
+  });
+
+  const [secondNameValue, setSecondNameValue] = useState('');
+  const [secondNameValidationResult, setSecondNameValidationResult] = useState<ValidationResult>({
     message: '',
     valid: false,
   });
@@ -44,6 +71,36 @@ export const RegisterPage = () => {
       valid: false,
     });
 
+  const resetInputValues = useCallback(() => {
+    setLoginValue('');
+    setPhoneValue('');
+    setFirstNameValue('');
+    setSecondNameValue('');
+    setEmailValue('');
+    setPasswordValue('');
+    setRepeatPasswordValue('');
+  }, [
+    setLoginValue,
+    setPhoneValue,
+    setFirstNameValue,
+    setSecondNameValue,
+    setEmailValue,
+    setPasswordValue,
+    setRepeatPasswordValue,
+  ]);
+
+  useEffect(() => {
+    if (registerResult) {
+      navigate('/', { replace: true });
+    }
+  }, [registerResult, navigate]);
+
+  const registerCallback = useCallback(async (data: FormData) => authController.register(data), []);
+
+  if (store.user !== null) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <div className="register-page">
       <Header size="s">
@@ -57,9 +114,15 @@ export const RegisterPage = () => {
           validationResults={[
             loginValidationResult,
             emailValidationResult,
+            phoneValidationResult,
+            firstNameValidationResult,
+            secondNameValidationResult,
             passwordValidationResult,
             repeatPasswordValidationResult,
           ]}
+          controllerCallback={registerCallback}
+          resetValuesCallback={resetInputValues}
+          setSubmitResult={setRegisterResult}
         >
           <InputField
             view="labeled"
@@ -72,6 +135,45 @@ export const RegisterPage = () => {
               loginValidator,
               setLoginValidationResult,
               setLoginValue,
+            )}
+          />
+          <InputField
+            view="labeled"
+            value={phoneValue}
+            name="phone"
+            label="Телефон"
+            errorText={phoneValidationResult.message}
+            isValid={phoneValidationResult.valid}
+            valueChangeCallback={inputValueUpdaterFactory(
+              phoneValidator,
+              setPhoneValidationResult,
+              setPhoneValue,
+            )}
+          />
+          <InputField
+            view="labeled"
+            value={firstNameValue}
+            name="first_name"
+            label="Имя"
+            errorText={firstNameValidationResult.message}
+            isValid={firstNameValidationResult.valid}
+            valueChangeCallback={inputValueUpdaterFactory(
+              nameValidator,
+              setFirstNameValidationResult,
+              setFirstNameValue,
+            )}
+          />
+          <InputField
+            view="labeled"
+            value={secondNameValue}
+            name="second_name"
+            label="Фамилия"
+            errorText={secondNameValidationResult.message}
+            isValid={secondNameValidationResult.valid}
+            valueChangeCallback={inputValueUpdaterFactory(
+              nameValidator,
+              setSecondNameValidationResult,
+              setSecondNameValue,
             )}
           />
           <InputField

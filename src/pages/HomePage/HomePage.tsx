@@ -44,7 +44,7 @@ export const HomePage = () => {
         errorText={inputError.message}
       />
 
-      <Button onClick={handleButtonClick} text="MyButton" view="primary"></Button>
+      <Button onClick={handleButtonClick} text="MyButton" view="primary" />
     </div>
   );
 };

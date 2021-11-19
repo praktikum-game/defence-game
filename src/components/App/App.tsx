@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppRoutes } from '../AppRoutes';
+import { authController } from '../../controllers';
 import './App.css';
 import '../../utilities/common.css';
 
-export const App = () => (
-  <div className="App">
-    <AppRoutes />
-  </div>
-);
+export const App = () => {
+  useEffect(() => {
+    authController.userRead();
+  }, []);
+
+  return (
+    <div className="App">
+      <AppRoutes />
+    </div>
+  );
+};
