@@ -5,3 +5,4 @@ sensitive/
 .env
 src/game/assets/original
 .cache/
+src/game/assets/original

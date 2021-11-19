@@ -33,6 +33,7 @@ module.exports = {
           'input-text-color': '#999999',
           'input-border-color': '#0198A4',
           'error-page-accent-color': '#fff501',
+          'forum-thread-item-background-color': '#f5f5f5',
         },
       },
     ],
