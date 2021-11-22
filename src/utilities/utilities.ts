@@ -1,4 +1,4 @@
-import {  ViewType } from './types';
+import { ViewType } from './types';
 
 export function getViewTypes(name: string): ViewType {
   return {
@@ -15,4 +15,3 @@ export function getViewTypes(name: string): ViewType {
 export function bindArgsFromN(fn: Function, n: number, ...bound_args: unknown[]) {
   return (...args: unknown[]) => fn(...args.slice(0, n - 1), ...bound_args);
 }
-
