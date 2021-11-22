@@ -1,14 +1,15 @@
 {
-  "extends": ["airbnb-typescript/base", "prettier"],
+  "extends": ["airbnb-typescript/base", "prettier", "plugin:jest/all"],
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "jest/globals": true
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint", "react-hooks"],
+  "plugins": ["@typescript-eslint", "react-hooks", "jest"],
   "rules": {
     "no-console": "off",
     "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
@@ -20,10 +21,10 @@
     "spaced-comment": "off",
     "import/extensions": "off",
     "@typescript-eslint/no-explicit-any": "error",
-    "no-debugger":"off",
+    "no-debugger": "off",
 
-    // Предлагаю остальные правила не отключать. Они же не такие плохие, разве, нет?
-    // Но если будут сильно надоедать, то можем штучно исключать.
+    "jest/require-hook": "off",
+
     "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
     "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
   }
