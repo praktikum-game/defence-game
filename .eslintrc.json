@@ -28,5 +28,13 @@
 
     "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
     "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/*Worker.ts"],
+      "rules": {
+        "no-restricted-globals": [0]
+      }
+    }
+  ]
 }
