@@ -86,7 +86,7 @@ export const GamePage = () => {
         disabled={runButtonIsDisabled}
       />
 
-      <canvas ref={canvasRef} height="768" width="1024"></canvas>
+      <canvas ref={canvasRef} height="200" width="200"></canvas>
     </Fragment>
   );
 };

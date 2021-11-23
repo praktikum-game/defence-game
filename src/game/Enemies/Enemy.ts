@@ -1,8 +1,9 @@
+import GameResources from '../GameResources';
 import { BaseGameObject } from '../BaseGameObject';
 import { Drawable, Updateable } from '../interfaces';
 
-export class BaseEnemy extends BaseGameObject implements Drawable, Updateable {
-  public static image: HTMLImageElement;
+export class Enemy extends BaseGameObject implements Drawable, Updateable {
+  private _image: HTMLImageElement;
 
   private _isMove: boolean;
 
@@ -26,14 +27,15 @@ export class BaseEnemy extends BaseGameObject implements Drawable, Updateable {
     this._isMove = value;
   }
 
-  constructor(x: number, y: number) {
+  constructor(x: number, y: number, imageUrl: string) {
     super(x, y, 100, 100);
     this._startPosition = x;
 
-    this._speed = Math.random() - 0.2;
+    this._speed = 0.05;
     this._isMove = true;
     this._damage = 1;
     this._health = 10;
+    this._image = GameResources.get(imageUrl);
   }
 
   public setDamage(damage: number) {
@@ -41,7 +43,7 @@ export class BaseEnemy extends BaseGameObject implements Drawable, Updateable {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    ctx.drawImage(BaseEnemy.image, this.x, this.y + 5, 90, 90);
+    ctx.drawImage(this._image, this.x, this.y + 5, 90, 90);
   }
 
   update(delay: number) {

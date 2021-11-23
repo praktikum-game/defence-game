@@ -9,7 +9,6 @@ export class TopPannelItem extends BaseGameObject implements Drawable {
 
   draw(context: CanvasRenderingContext2D) {
     context.strokeStyle = 'orange';
-    console.log(this.width);
     context.strokeRect(this.x, this.y, this.width, this.height);
   }
 }

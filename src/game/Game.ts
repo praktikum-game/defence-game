@@ -1,12 +1,9 @@
-// import { BaseBullet } from './Bullets/BaseBullet';
-// import { BaseDefender } from './Defenders/BaseDefender';
 import { SyringeBullet } from './Bullets/SyringeBullet';
 import { NurseDefender } from './Defenders/NurseDefender';
-import { BaseEnemy } from './Enemies/BaseEnemy';
 import { BaseGameObject } from './BaseGameObject';
 import { GameField } from './Grids/GameField';
-import { getRandomInt, getUrls } from './helpers';
-// import { ResourceLoader } from './ResourceLoader';
+// import { getRandomInt, getUrls } from './helpers';
+import { getUrls } from './helpers';
 import GameResources from './GameResources';
 import { EndGameCallback } from './types';
 import { DefendersPannel } from './Grids/DefendersPannel';
@@ -26,6 +23,9 @@ import {
 } from './consts';
 import { resources } from './resources';
 import { TopPannel } from './Grids/TopPannel';
+import { CoronaEnemy } from './Enemies/CoronaEnemy';
+import { Defender } from './Defenders/Defender';
+import { Constructable } from './interfaces';
 
 export class Game {
   private _canvasElement: HTMLCanvasElement;
@@ -36,9 +36,9 @@ export class Game {
 
   private _isRunning: boolean;
 
-  private _selectedDefender: BaseGameObject | null = null;
+  private _selectedDefender: Constructable<Defender> | null = null;
 
-  private _enemies: Array<BaseEnemy> = [];
+  private _enemies: Array<CoronaEnemy> = [];
 
   private _defenders: Array<NurseDefender> = [];
 
@@ -71,9 +71,6 @@ export class Game {
     DefendersPannel.pannelX = 0;
     DefendersPannel.pannelY = 0;
 
-    // GameField.gameFieldWidth = canvasEl.width - DEFPANNEL_CELL_WIDTH;
-    // GameField.gameFieldHeight = canvasEl.height - TOPPANNEL_HEIGHT;
-
     TopPannel.pannelWidth = TOPPANNEL_CELL_WIDTH * TOPPANNEL_CELL_COUNT;
     TopPannel.pannelHeight = TOPPANNEL_CELL_HEIGHT * TOPPANNEL_ROWS_COUNT;
     TopPannel.pannelX = DefendersPannel.pannelWidth + 1;
@@ -84,14 +81,16 @@ export class Game {
     GameField.gameFieldX = DefendersPannel.pannelWidth + 1;
     GameField.gameFieldY = TopPannel.pannelHeight + 1;
 
+    canvasEl.width = DefendersPannel.pannelWidth + 1 + GameField.gameFieldWidth;
+    canvasEl.height = TopPannel.pannelHeight + 1 + GameField.gameFieldHeight;
     this._canvasElement = canvasEl;
 
     this._onGameEnd = onGameEnd;
-    // ResourceLoader.init();
     GameResources.load(getUrls(resources) as string[]);
 
     this._canvasElement.addEventListener('click', ({ offsetX, offsetY }: MouseEvent) =>
-      this.manualAddDefender(offsetX, offsetY),
+      // this.manualAddDefender(offsetX, offsetY),
+      this._handleClick(offsetX, offsetY),
     );
 
     this._ctx = this._canvasElement.getContext('2d')!;
@@ -125,21 +124,73 @@ export class Game {
   }
 
   public run() {
+    this._selectedDefender = NurseDefender;
     this._last = performance.now();
-    for (let i = 0; i < 10; i += 1) {
-      const enemy = new BaseEnemy(1000, getRandomInt(1, 5) * 100);
-      this._enemies.push(enemy);
-      enemy.draw(this._ctx);
-    }
-    this._defenders.forEach((d) => {
-      d.isFire = true;
-    });
+    // for (let i = 0; i < 10; i += 1) {
+    //   const enemy = new CoronaEnemy(1000, getRandomInt(1, 5) * 100);
+    //   this._enemies.push(enemy);
+    //   enemy.draw(this._ctx);
+    // }
+    // this._defenders.forEach((d) => {
+    //   d.isFire = true;
+    // });
 
-    this._isRunning = true;
+    // this._isRunning = true;
     this.animation(performance.now());
   }
 
-  private manualAddDefender(x: number, y: number) {
+  private _handleClick = (x: number, y: number) => {
+    const area = this._checkArea(x, y);
+
+    switch (area) {
+      case 'GameField':
+        this._manualAddDefender(x, y);
+        break;
+
+      case 'DefendersPannel':
+        break;
+
+      case 'TopPannel':
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  // private _selectDefender = () => {};
+
+  // private _addDefender = (x, y) => {};
+
+  private _checkArea = (x: number, y: number) => {
+    if (
+      x > DefendersPannel.pannelX &&
+      x < DefendersPannel.pannelX + DefendersPannel.pannelWidth &&
+      y > DefendersPannel.pannelY &&
+      y < DefendersPannel.pannelY + DefendersPannel.pannelHeight
+    ) {
+      return 'DefendersPannel';
+    }
+    if (
+      x > TopPannel.pannelX &&
+      x < TopPannel.pannelX + TopPannel.pannelWidth &&
+      y > TopPannel.pannelY &&
+      y < TopPannel.pannelY + TopPannel.pannelHeight
+    ) {
+      return 'TopPannel';
+    }
+    if (
+      x > GameField.gameFieldX &&
+      x < GameField.gameFieldX + GameField.gameFieldWidth &&
+      y > GameField.gameFieldY &&
+      y < GameField.gameFieldY + GameField.gameFieldHeight
+    ) {
+      return 'GameField';
+    }
+    return null;
+  };
+
+  private _manualAddDefender(x: number, y: number) {
     this._gameField.gameGrid.forEach((cell) => {
       // определяем, входят ли координаты клика в периметр текущей ячейки
       if (cell.x < x && cell.x + cell.width > x && cell.y < y && cell.y + cell.width > y) {
@@ -242,7 +293,7 @@ export class Game {
     return false;
   }
 
-  private checkBulletCollision(obj1: SyringeBullet, obj2: BaseEnemy): boolean {
+  private checkBulletCollision(obj1: SyringeBullet, obj2: CoronaEnemy): boolean {
     if (
       obj1.x >= obj2.x &&
       obj1.x < obj2.x + obj2.width &&
