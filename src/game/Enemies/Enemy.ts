@@ -1,3 +1,4 @@
+import { FIELD_CELL_HEIGHT, FIELD_CELL_WIDTH } from '../consts';
 import GameResources from '../GameResources';
 import { BaseGameObject } from '../BaseGameObject';
 import { Drawable, Updateable } from '../interfaces';
@@ -28,7 +29,7 @@ export class Enemy extends BaseGameObject implements Drawable, Updateable {
   }
 
   constructor(x: number, y: number, imageUrl: string) {
-    super(x, y, 100, 100);
+    super(x, y, FIELD_CELL_WIDTH, FIELD_CELL_HEIGHT);
     this._startPosition = x;
 
     this._speed = 0.05;
@@ -43,7 +44,7 @@ export class Enemy extends BaseGameObject implements Drawable, Updateable {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    ctx.drawImage(this._image, this.x, this.y + 5, 90, 90);
+    ctx.drawImage(this._image, this.x, this.y, 80, 80);
   }
 
   update(delay: number) {

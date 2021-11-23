@@ -63,6 +63,7 @@ export class Game {
   }
 
   constructor(canvasEl: HTMLCanvasElement, onGameEnd: EndGameCallback) {
+    // constructor(canvasEl: HTMLCanvasElement) {
     this._last = 0;
     this._isRunning = false;
 
@@ -126,16 +127,34 @@ export class Game {
   public run() {
     this._selectedDefender = NurseDefender;
     this._last = performance.now();
-    // for (let i = 0; i < 10; i += 1) {
-    //   const enemy = new CoronaEnemy(1000, getRandomInt(1, 5) * 100);
-    //   this._enemies.push(enemy);
-    //   enemy.draw(this._ctx);
-    // }
-    // this._defenders.forEach((d) => {
-    //   d.isFire = true;
-    // });
 
-    // this._isRunning = true;
+    const enemyY = [];
+
+    for (
+      let i = GameField.gameFieldY;
+      i < GameField.gameFieldHeight + TopPannel.pannelHeight;
+      i += FIELD_CELL_HEIGHT
+    ) {
+      enemyY.push(i);
+    }
+
+    console.log(enemyY);
+
+    for (let i = 0; i < 5; i += 1) {
+      const enemy = new CoronaEnemy(
+        DefendersPannel.pannelWidth + GameField.gameFieldWidth + 50,
+        // enemyY[getRandomInt(0, 5)],
+        enemyY[i],
+      );
+      this._enemies.push(enemy);
+      enemy.draw(this._ctx);
+    }
+
+    this._defenders.forEach((d) => {
+      d.isFire = true;
+    });
+
+    this._isRunning = true;
     this.animation(performance.now());
   }
 
@@ -144,7 +163,7 @@ export class Game {
 
     switch (area) {
       case 'GameField':
-        this._manualAddDefender(x, y);
+        this._addDefender(x, y);
         break;
 
       case 'DefendersPannel':
@@ -157,10 +176,6 @@ export class Game {
         break;
     }
   };
-
-  // private _selectDefender = () => {};
-
-  // private _addDefender = (x, y) => {};
 
   private _checkArea = (x: number, y: number) => {
     if (
@@ -190,7 +205,7 @@ export class Game {
     return null;
   };
 
-  private _manualAddDefender(x: number, y: number) {
+  private _addDefender(x: number, y: number) {
     this._gameField.gameGrid.forEach((cell) => {
       // определяем, входят ли координаты клика в периметр текущей ячейки
       if (cell.x < x && cell.x + cell.width > x && cell.y < y && cell.y + cell.width > y) {
@@ -199,9 +214,11 @@ export class Game {
         if (elementsInThisCell.length > 0) {
           return;
         }
-        const defender = new NurseDefender(cell.x, cell.y);
-        this._defenders.push(defender);
-        defender.draw(this._ctx);
+        if (this._selectedDefender) {
+          const defender = new this._selectedDefender(cell.x, cell.y);
+          this._defenders.push(defender);
+          defender.draw(this._ctx);
+        }
       }
     });
   }
@@ -275,7 +292,12 @@ export class Game {
       }
     }
 
-    this._ctx.clearRect(0, 0, GameField.gameFieldWidth, GameField.gameFieldHeight);
+    this._ctx.clearRect(
+      GameField.gameFieldX,
+      GameField.gameFieldY,
+      GameField.gameFieldWidth,
+      GameField.gameFieldHeight,
+    );
     this.enemies.forEach((enemy) => enemy.update(delay).draw(this._ctx));
 
     this.defenders.forEach((d) => {

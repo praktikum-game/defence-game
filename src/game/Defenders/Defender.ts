@@ -69,7 +69,7 @@ export class Defender extends BaseGameObject {
     fireFrameInterval?: number,
   ) {
     super(x, y, FIELD_CELL_WIDTH, FIELD_CELL_HEIGHT);
-    this._isFire = false;
+    this._isFire = true;
     this._health = health ?? 100;
     this._bullet = bullet;
     this._bullets = [];
