@@ -7,10 +7,7 @@ export {
 } from './types';
 export {
   required,
-  email,
   longerThan,
-  shorterThan,
-  onlyAlphabeticOrDigits,
   validate,
   loginValidator,
   passwordValidator,

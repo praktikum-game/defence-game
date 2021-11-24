@@ -9,7 +9,7 @@ export type ValidateItemParams = {
 };
 
 export type InnerValidationFunction = (params: ValidateItemParams) => ValidationResult;
-export type ValidateFunction = (criteria?: number) => InnerValidationFunction;
+export type ValidateFunction = (param?: number | RegExp) => InnerValidationFunction;
 
 export type ValidatorItem = {
   checkFunction: InnerValidationFunction;
