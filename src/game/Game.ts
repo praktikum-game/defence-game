@@ -40,9 +40,9 @@ export class Game {
 
   private _selectedDefender: Constructable<Defender> | null = null;
 
-  private _enemies: Array<CoronaEnemy> = [];
+  private _enemies: Array<Enemy> = [];
 
-  private _defenders: Array<NurseDefender> = [];
+  private _defenders: Array<Defender> = [];
 
   private _gameField: GameField;
 
@@ -51,6 +51,8 @@ export class Game {
   private _topPannel: TopPannel;
 
   private _level: number;
+
+  private _timefromLastAtack: number = 0;
 
   private _atackTiming: AtackTimingType[] = [];
 
@@ -131,15 +133,20 @@ export class Game {
     this._gameField.draw(this._ctx);
   }
 
-  private _createEnemies = (enemies: Constructable<Enemy>[], coordsY: number[]) => {
-    enemies.forEach((enemyName) => {
-      const enemy = new (enemyName as Constructable<Enemy>)(
+  private _createEnemies = (items: Constructable<Enemy>[], coordsY: number[]) => {
+    const result: Enemy[] = [];
+
+    items.forEach((item) => {
+      const enemy = new (item as Constructable<Enemy>)(
         getRandomInt(GameField.gameFieldWidth, GameField.gameFieldWidth + FIELD_CELL_WIDTH),
         coordsY[getRandomInt(0, 5)],
       );
+      result.push(enemy);
       this._enemies.push(enemy);
       enemy.draw(this._ctx);
     });
+
+    return result;
   };
 
   private _generateEnemiesYCoords = () => {
@@ -156,19 +163,23 @@ export class Game {
     return result;
   };
 
-  private _startAtack = () => {
-    console.log(this._nextAtackInterval);
+  private _updateAtackInterval = () => {
+    this._nextAtackInterval = this._atackTiming[0]?.timeout;
   };
 
   private _createAtack = () => {
-    this._atackTiming = Levels.getLevelAtack(this._level)!;
-    this._nextAtackInterval = this._atackTiming[0].timeout;
+    const levelAtackTiming = Levels.getLevelAtack(this._level)!;
+
     const enemyY = this._generateEnemiesYCoords();
 
-    this._atackTiming?.forEach((atack) => {
-      this._createEnemies(atack.enemies, enemyY);
+    levelAtackTiming?.forEach((atack) => {
+      const enemies = this._createEnemies(atack.enemies, enemyY);
+      this._atackTiming.push({
+        timeout: atack.timeout * 1000,
+        enemies,
+      });
     });
-    this._startAtack();
+    this._updateAtackInterval();
   };
 
   public run() {
@@ -273,15 +284,34 @@ export class Game {
     this._onGameEnd('win');
   }
 
+  private _checkNextAtack = (delay: number) => {
+    this._timefromLastAtack += delay;
+    if (this._timefromLastAtack >= this._nextAtackInterval) {
+      this._startAtack();
+      this._timefromLastAtack = 0;
+      this._updateAtackInterval();
+    }
+  };
+
+  private _startAtack = () => {
+    const atackSсheme = this._atackTiming.shift();
+    atackSсheme?.enemies.forEach((enemy) => {
+      enemy.isMove = true;
+    });
+  };
+
   private redraw(delay: number) {
     if (!this._isRunning) return;
+
+    this._checkNextAtack(delay);
+
     if (this._enemies.length < 1) {
       this.win();
       return;
     }
     // проверяем на столкновения защитников и атакующих
     for (const enemy of this.enemies) {
-      if (enemy.x < 0) {
+      if (enemy.x < GameField.gameFieldX) {
         this.lose();
         break;
       }

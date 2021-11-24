@@ -9,6 +9,11 @@ import { Constructable } from './interfaces';
 
 export type AtackTimingType = {
   timeout: number;
+  enemies: Enemy[];
+};
+
+export type AtackSchemeType = {
+  timeout: number;
   enemies: Constructable<Enemy>[];
 };
 
@@ -17,7 +22,7 @@ export type LevelsType = {
     defenders: Constructable<Defender>[];
     enemies: Constructable<Enemy>[];
     bullets: Constructable<Bullet>[];
-    atack?: AtackTimingType[];
+    atack?: AtackSchemeType[];
   };
 };
 class Levels {
@@ -32,15 +37,15 @@ class Levels {
           enemies: [CoronaEnemy],
         },
         {
-          timeout: 5,
+          timeout: 7,
           enemies: [CoronaEnemy, CoronaEnemy],
         },
         {
-          timeout: 5,
+          timeout: 8,
           enemies: [CoronaEnemy, GreenVirusEnemy],
         },
         {
-          timeout: 5,
+          timeout: 15,
           enemies: [GreenVirusEnemy, GreenVirusEnemy, CoronaEnemy, CoronaEnemy, CoronaEnemy],
         },
       ],
