@@ -28,11 +28,11 @@ export class Enemy extends BaseGameObject implements Drawable, Updateable {
     this._isMove = value;
   }
 
-  constructor(x: number, y: number, imageUrl: string) {
+  constructor(x: number, y: number, imageUrl: string, speed?: number) {
     super(x, y, FIELD_CELL_WIDTH, FIELD_CELL_HEIGHT);
     this._startPosition = x;
 
-    this._speed = 0.05;
+    this._speed = speed ?? 0.05;
     this._isMove = true;
     this._damage = 1;
     this._health = 10;

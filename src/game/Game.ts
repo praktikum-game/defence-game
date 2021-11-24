@@ -2,8 +2,7 @@ import { SyringeBullet } from './Bullets/SyringeBullet';
 import { NurseDefender } from './Defenders/NurseDefender';
 import { BaseGameObject } from './BaseGameObject';
 import { GameField } from './Grids/GameField';
-// import { getRandomInt, getUrls } from './helpers';
-import { getUrls } from './helpers';
+import { getRandomInt, getUrls } from './helpers';
 import GameResources from './GameResources';
 import { EndGameCallback } from './types';
 import { DefendersPannel } from './Grids/DefendersPannel';
@@ -63,7 +62,6 @@ export class Game {
   }
 
   constructor(canvasEl: HTMLCanvasElement, onGameEnd: EndGameCallback) {
-    // constructor(canvasEl: HTMLCanvasElement) {
     this._last = 0;
     this._isRunning = false;
 
@@ -78,11 +76,12 @@ export class Game {
     TopPannel.pannelY = 0;
 
     GameField.gameFieldWidth = FIELD_CELL_WIDTH * FIELD_COLS;
+    console.log(GameField.gameFieldWidth);
     GameField.gameFieldHeight = FIELD_CELL_HEIGHT * FIELD_ROWS;
     GameField.gameFieldX = DefendersPannel.pannelWidth + 1;
     GameField.gameFieldY = TopPannel.pannelHeight + 1;
 
-    canvasEl.width = DefendersPannel.pannelWidth + 1 + GameField.gameFieldWidth;
+    canvasEl.width = DefendersPannel.pannelWidth + GameField.gameFieldWidth;
     canvasEl.height = TopPannel.pannelHeight + 1 + GameField.gameFieldHeight;
     this._canvasElement = canvasEl;
 
@@ -124,10 +123,7 @@ export class Game {
     this._gameField.draw(this._ctx);
   }
 
-  public run() {
-    this._selectedDefender = NurseDefender;
-    this._last = performance.now();
-
+  private _createEnemies = () => {
     const enemyY = [];
 
     for (
@@ -138,17 +134,18 @@ export class Game {
       enemyY.push(i);
     }
 
-    console.log(enemyY);
-
     for (let i = 0; i < 5; i += 1) {
-      const enemy = new CoronaEnemy(
-        DefendersPannel.pannelWidth + GameField.gameFieldWidth + 50,
-        // enemyY[getRandomInt(0, 5)],
-        enemyY[i],
-      );
+      const enemy = new CoronaEnemy(GameField.gameFieldWidth, enemyY[getRandomInt(0, 5)]);
       this._enemies.push(enemy);
       enemy.draw(this._ctx);
     }
+  };
+
+  public run() {
+    this._selectedDefender = NurseDefender;
+    this._last = performance.now();
+
+    this._createEnemies();
 
     this._defenders.forEach((d) => {
       d.isFire = true;

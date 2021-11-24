@@ -63,8 +63,8 @@ export const GamePage = () => {
   return (
     <Fragment>
       <Modal visible={infoModalIsVisible}>
-        <p>Для начала поставьте 3 банкомата</p>
-        <Button text="Вперед!" onClick={handleCloseInfoModal} />
+        <p>Освободи мир от вирусов! </p>
+        <Button text="Вперёд!" onClick={handleCloseInfoModal} />
       </Modal>
 
       <Modal visible={loseModalIsVisible}>
