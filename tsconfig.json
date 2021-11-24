@@ -15,14 +15,10 @@
     "skipLibCheck": true,
     "declaration": false,
     "sourceMap": true,
-    "baseUrl": ".",
     "outDir": "./dist",
-    "paths": {
-      "*": ["./src/*"]
-    },
     "forceConsistentCasingInFileNames": true,
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"]
   },
   "include": ["src", "typings/**/*.d.ts", "./node_modules/@types"],
-  "exclude": ["**/*.js", "./node_modules/"]
+  "exclude": ["**/*.js", "node_modules/"]
 }
