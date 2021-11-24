@@ -27,5 +27,8 @@ export const resources = {
     base: {
       image: 'corona_red.png',
     },
+    greenvirus: {
+      image: 'green_virus.png',
+    },
   },
 };

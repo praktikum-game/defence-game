@@ -3,9 +3,11 @@ import { resources } from '../resources';
 import { Defender } from './Defender';
 
 export class DoctorDefender extends Defender {
+  public static bullet = BluePillBullet;
+
   constructor(x: number, y: number) {
     super(
-      BluePillBullet,
+      DoctorDefender.bullet,
       x,
       y,
       80,

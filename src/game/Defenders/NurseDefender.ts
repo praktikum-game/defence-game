@@ -3,9 +3,11 @@ import { SyringeBullet } from '../Bullets/SyringeBullet';
 import { Defender } from './Defender';
 
 export class NurseDefender extends Defender {
+  public static bullet = SyringeBullet;
+
   constructor(x: number, y: number) {
     super(
-      SyringeBullet,
+      NurseDefender.bullet,
       x,
       y,
       80,

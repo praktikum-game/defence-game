@@ -25,6 +25,7 @@ import { TopPannel } from './Grids/TopPannel';
 import { CoronaEnemy } from './Enemies/CoronaEnemy';
 import { Defender } from './Defenders/Defender';
 import { Constructable } from './interfaces';
+import { GreenVirusEnemy } from './Enemies/GreenVirusEnemy';
 
 export class Game {
   private _canvasElement: HTMLCanvasElement;
@@ -89,7 +90,6 @@ export class Game {
     GameResources.load(getUrls(resources) as string[]);
 
     this._canvasElement.addEventListener('click', ({ offsetX, offsetY }: MouseEvent) =>
-      // this.manualAddDefender(offsetX, offsetY),
       this._handleClick(offsetX, offsetY),
     );
 
@@ -134,10 +134,13 @@ export class Game {
       enemyY.push(i);
     }
 
-    for (let i = 0; i < 5; i += 1) {
-      const enemy = new CoronaEnemy(GameField.gameFieldWidth, enemyY[getRandomInt(0, 5)]);
+    for (let i = 0; i < 3; i += 1) {
+      const enemy = new GreenVirusEnemy(GameField.gameFieldWidth, enemyY[getRandomInt(0, 5)]);
       this._enemies.push(enemy);
       enemy.draw(this._ctx);
+      const enemy2 = new CoronaEnemy(GameField.gameFieldWidth, enemyY[getRandomInt(0, 5)]);
+      this._enemies.push(enemy2);
+      enemy2.draw(this._ctx);
     }
   };
 
