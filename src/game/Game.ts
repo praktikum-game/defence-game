@@ -25,7 +25,9 @@ import { TopPannel } from './Grids/TopPannel';
 import { CoronaEnemy } from './Enemies/CoronaEnemy';
 import { Defender } from './Defenders/Defender';
 import { Constructable } from './interfaces';
-import { GreenVirusEnemy } from './Enemies/GreenVirusEnemy';
+// import { GreenVirusEnemy } from './Enemies/GreenVirusEnemy';
+import Levels, { AtackTimingType } from './Levels';
+import { Enemy } from './Enemies/Enemy';
 
 export class Game {
   private _canvasElement: HTMLCanvasElement;
@@ -48,6 +50,12 @@ export class Game {
 
   private _topPannel: TopPannel;
 
+  private _level: number;
+
+  private _atackTiming: AtackTimingType[] = [];
+
+  private _nextAtackInterval: number = 0;
+
   private _onGameEnd: EndGameCallback;
 
   public get enemies() {
@@ -65,6 +73,7 @@ export class Game {
   constructor(canvasEl: HTMLCanvasElement, onGameEnd: EndGameCallback) {
     this._last = 0;
     this._isRunning = false;
+    this._level = 1;
 
     DefendersPannel.pannelWidth = DEFPANNEL_CELL_WIDTH * DEFPANNEL_CELL_COUNT;
     DefendersPannel.pannelHeight = DEFPANNEL_CELL_HEIGHT * DEFPANNEL_ROWS_COUNT;
@@ -77,7 +86,6 @@ export class Game {
     TopPannel.pannelY = 0;
 
     GameField.gameFieldWidth = FIELD_CELL_WIDTH * FIELD_COLS;
-    console.log(GameField.gameFieldWidth);
     GameField.gameFieldHeight = FIELD_CELL_HEIGHT * FIELD_ROWS;
     GameField.gameFieldX = DefendersPannel.pannelWidth + 1;
     GameField.gameFieldY = TopPannel.pannelHeight + 1;
@@ -123,32 +131,51 @@ export class Game {
     this._gameField.draw(this._ctx);
   }
 
-  private _createEnemies = () => {
-    const enemyY = [];
+  private _createEnemies = (enemies: Constructable<Enemy>[], coordsY: number[]) => {
+    enemies.forEach((enemyName) => {
+      const enemy = new (enemyName as Constructable<Enemy>)(
+        getRandomInt(GameField.gameFieldWidth, GameField.gameFieldWidth + FIELD_CELL_WIDTH),
+        coordsY[getRandomInt(0, 5)],
+      );
+      this._enemies.push(enemy);
+      enemy.draw(this._ctx);
+    });
+  };
+
+  private _generateEnemiesYCoords = () => {
+    const result = [];
 
     for (
       let i = GameField.gameFieldY;
       i < GameField.gameFieldHeight + TopPannel.pannelHeight;
       i += FIELD_CELL_HEIGHT
     ) {
-      enemyY.push(i);
+      result.push(i);
     }
 
-    for (let i = 0; i < 3; i += 1) {
-      const enemy = new GreenVirusEnemy(GameField.gameFieldWidth, enemyY[getRandomInt(0, 5)]);
-      this._enemies.push(enemy);
-      enemy.draw(this._ctx);
-      const enemy2 = new CoronaEnemy(GameField.gameFieldWidth, enemyY[getRandomInt(0, 5)]);
-      this._enemies.push(enemy2);
-      enemy2.draw(this._ctx);
-    }
+    return result;
+  };
+
+  private _startAtack = () => {
+    console.log(this._nextAtackInterval);
+  };
+
+  private _createAtack = () => {
+    this._atackTiming = Levels.getLevelAtack(this._level)!;
+    this._nextAtackInterval = this._atackTiming[0].timeout;
+    const enemyY = this._generateEnemiesYCoords();
+
+    this._atackTiming?.forEach((atack) => {
+      this._createEnemies(atack.enemies, enemyY);
+    });
+    this._startAtack();
   };
 
   public run() {
     this._selectedDefender = NurseDefender;
     this._last = performance.now();
 
-    this._createEnemies();
+    this._createAtack();
 
     this._defenders.forEach((d) => {
       d.isFire = true;

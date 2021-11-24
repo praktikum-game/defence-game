@@ -14,9 +14,9 @@ export class DoctorDefender extends Defender {
       80,
       resources.defenders.doctor.image,
       resources.defenders.doctor.icon,
-      1300,
-      500,
-      1000,
+      150,
+      11,
+      140,
     );
   }
 }

@@ -14,9 +14,9 @@ export class NurseDefender extends Defender {
       80,
       resources.defenders.nurse.image,
       resources.defenders.nurse.icon,
-      1000,
-      500,
-      1000,
+      100,
+      9,
+      120,
     );
   }
 }
