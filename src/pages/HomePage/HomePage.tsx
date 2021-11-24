@@ -1,13 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { AppNavigation } from '../../components/AppNavigation';
-import { email, required, validate, ValidationResult } from '../../utilities/validators';
+import { required, validate, ValidationResult } from '../../utilities/validators';
 import { InputField } from '../../components/InputField';
 import { Button } from '../../components/Button';
 
-const inputValidators = [
-  { checkFunction: required(), message: 'Это обязательное поле' },
-  { checkFunction: email(), message: 'Это не email' },
-];
+const inputValidators = [{ checkFunction: required(), message: 'Это обязательное поле' }];
 
 export const HomePage = () => {
   const [inputValue, setInputValue] = useState<string>('');
