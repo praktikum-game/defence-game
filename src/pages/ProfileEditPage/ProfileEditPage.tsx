@@ -16,56 +16,38 @@ import {
   emailValidator,
   nameValidator,
   phoneValidator,
-  ValidationResult,
 } from '../../utilities/validators';
-import { inputValueUpdaterFactory } from '../utilities';
-
+import { useFormInput } from '../../components/Form/hooks/useFormInput';
 import './profileEditPage.css';
 
 export const ProfileEditPage = () => {
   const navigate = useNavigate();
-  const user =
-    store.user === null
-      ? { login: '', phone: '', first_name: '', second_name: '', display_name: '', email: '' }
-      : store.user;
 
   const [editResult, setEditResult] = useState(false);
 
-  const [loginValue, setLoginValue] = useState(user.login);
-  const [loginValidationResult, setLoginValidationResult] = useState<ValidationResult>({
-    message: '',
-    valid: true,
-  });
+  const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
+    useFormInput(loginValidator);
 
-  const [phoneValue, setPhoneValue] = useState(user.phone);
-  const [phoneValidationResult, setPhoneValidationResult] = useState<ValidationResult>({
-    message: '',
-    valid: true,
-  });
+  const [{ value: phoneValue, validationResult: phoneValidationResult }, setPhoneValue] =
+    useFormInput(phoneValidator);
 
-  const [firstNameValue, setFirstNameValue] = useState(user.first_name);
-  const [firstNameValidationResult, setFirstNameValidationResult] = useState<ValidationResult>({
-    message: '',
-    valid: true,
-  });
+  const [
+    { value: firstNameValue, validationResult: firstNameValidationResult },
+    setFirstNameValue,
+  ] = useFormInput(nameValidator);
 
-  const [secondNameValue, setSecondNameValue] = useState(user.second_name);
-  const [secondNameValidationResult, setSecondNameValidationResult] = useState<ValidationResult>({
-    message: '',
-    valid: true,
-  });
+  const [
+    { value: secondNameValue, validationResult: secondNameValidationResult },
+    setSecondNameValue,
+  ] = useFormInput(nameValidator);
 
-  const [displayNameValue, setDisplayNameValue] = useState(user.display_name);
-  const [displayNameValidationResult, setDisplayNameValidationResult] = useState<ValidationResult>({
-    message: '',
-    valid: true,
-  });
+  const [
+    { value: displayNameValue, validationResult: displayNameValidationResult },
+    setDisplayNameValue,
+  ] = useFormInput(nameValidator);
 
-  const [emailValue, setEmailValue] = useState(user.email);
-  const [emailValidationResult, setEmailValidationResult] = useState<ValidationResult>({
-    message: '',
-    valid: true,
-  });
+  const [{ value: emailValue, validationResult: emailValidationResult }, setEmailValue] =
+    useFormInput(emailValidator);
 
   useEffect(() => {
     if (editResult) {
@@ -107,11 +89,7 @@ export const ProfileEditPage = () => {
             label="Логин"
             errorText={loginValidationResult.message}
             isValid={loginValidationResult.valid}
-            valueChangeCallback={inputValueUpdaterFactory(
-              loginValidator,
-              setLoginValidationResult,
-              setLoginValue,
-            )}
+            valueChangeCallback={setLoginValue}
           />
           <InputField
             name={InputNames.FIRST_NAME}
@@ -120,11 +98,7 @@ export const ProfileEditPage = () => {
             label="Имя"
             errorText={firstNameValidationResult.message}
             isValid={loginValidationResult.valid}
-            valueChangeCallback={inputValueUpdaterFactory(
-              nameValidator,
-              setFirstNameValidationResult,
-              setFirstNameValue,
-            )}
+            valueChangeCallback={setFirstNameValue}
           />
           <InputField
             name={InputNames.EMAIL}
@@ -133,11 +107,7 @@ export const ProfileEditPage = () => {
             label="E-mail"
             errorText={emailValidationResult.message}
             isValid={loginValidationResult.valid}
-            valueChangeCallback={inputValueUpdaterFactory(
-              emailValidator,
-              setEmailValidationResult,
-              setEmailValue,
-            )}
+            valueChangeCallback={setEmailValue}
           />
           <InputField
             name={InputNames.SECOND_NAME}
@@ -146,11 +116,7 @@ export const ProfileEditPage = () => {
             label="Фамилия"
             errorText={secondNameValidationResult.message}
             isValid={loginValidationResult.valid}
-            valueChangeCallback={inputValueUpdaterFactory(
-              nameValidator,
-              setSecondNameValidationResult,
-              setSecondNameValue,
-            )}
+            valueChangeCallback={setSecondNameValue}
           />
           <InputField
             name={InputNames.DISPLAY_NAME}
@@ -159,11 +125,7 @@ export const ProfileEditPage = () => {
             label="Никнейм"
             errorText={displayNameValidationResult.message}
             isValid={loginValidationResult.valid}
-            valueChangeCallback={inputValueUpdaterFactory(
-              nameValidator,
-              setDisplayNameValidationResult,
-              setDisplayNameValue,
-            )}
+            valueChangeCallback={setDisplayNameValue}
           />
           <InputField
             name={InputNames.PHONE}
@@ -172,11 +134,7 @@ export const ProfileEditPage = () => {
             label="Телефон"
             errorText={phoneValidationResult.message}
             isValid={loginValidationResult.valid}
-            valueChangeCallback={inputValueUpdaterFactory(
-              phoneValidator,
-              setPhoneValidationResult,
-              setPhoneValue,
-            )}
+            valueChangeCallback={setPhoneValue}
           />
           <div className="password-edit">
             <InputField
