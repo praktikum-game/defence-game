@@ -66,15 +66,15 @@ export class DefendersPannel {
   };
 
   public onClick(x: number, y: number) {
-    let result: Constructable<Defender> | null = null;
+    let result = null;
 
     this._grid?.pannelGrid.forEach((cell) => {
       // определяем, входят ли координаты клика в периметр текущей ячейки
       if (cell.x < x && cell.x + cell.width > x && cell.y < y && cell.y + cell.width > y) {
-        console.log(cell.sprite?.onClick());
         result = cell.sprite!.onClick();
       }
-      return result;
     });
+
+    return result;
   }
 }

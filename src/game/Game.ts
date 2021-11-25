@@ -22,7 +22,6 @@ import { Defender } from './Defenders/Defender';
 import { Constructable } from './interfaces';
 import { levels, AtackTimingType } from './Levels';
 import { Enemy } from './Enemies/Enemy';
-import { DoctorDefender } from './Defenders/DoctorDefender';
 
 export class Game {
   private _gameLevel: number = 0;
@@ -171,7 +170,7 @@ export class Game {
     this._gameLevel = 1;
     this._defendersPannel.place(this._ctx, this._gameLevel);
 
-    this._selectedDefender = DoctorDefender;
+    // this._selectedDefender = DoctorDefender;
     this._last = performance.now();
 
     this._createAtack();
@@ -194,6 +193,7 @@ export class Game {
 
       case 'DefendersPannel':
         this._selectedDefender = this._defendersPannel.onClick(x, y)!;
+        console.log(this._defendersPannel.onClick(x, y));
         break;
 
       case 'TopPannel':
