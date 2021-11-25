@@ -42,7 +42,7 @@ export const validate = (validators: Array<ValidatorItem>, value: string): Valid
 };
 
 export function loginValidator(value: string): ValidationResult {
-  const loginPattern = /^(?!\d+$)[A-Za-z-_0-9]{3,20}$/;
+  const loginPattern = /^(?!\d+)[A-Za-z-_0-9]{3,20}$/;
 
   const validators: ValidatorItem[] = [
     {
@@ -131,7 +131,8 @@ export function nameValidator(value: string): ValidationResult {
     },
     {
       checkFunction: (params: ValidateItemParams) => regExpCheck(namePattern)({ ...params }),
-      message: 'Имя должно начинаться с заглавной буквы и содержать только кириллицу и/или латиницу',
+      message:
+        'Имя должно начинаться с заглавной буквы и содержать только кириллицу и/или латиницу',
     },
   ];
   return validate(validators, value);
