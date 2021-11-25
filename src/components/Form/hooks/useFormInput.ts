@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { ValidationResult } from '../../../utilities/validators';
 import { CompositeValidateFunction } from '../../../utilities/validators/types';
-import { FormInputObject } from './types';
+import { FormInputObject, FormInputHookResult } from './types';
 
 export const useFormInput = (
   validator: CompositeValidateFunction,
@@ -12,7 +12,7 @@ export const useFormInput = (
       valid: false,
     },
   },
-): [FormInputObject, (val: string, equal?: string | undefined) => void] => {
+): FormInputHookResult => {
   const [value, setValue] = useState(initialObject.value);
   const [validationResult, setValidationResult] = useState<ValidationResult>({
     message: initialObject.validationResult.message,
