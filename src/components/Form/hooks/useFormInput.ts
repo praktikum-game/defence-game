@@ -7,14 +7,16 @@ export const useFormInput = (
   validator: CompositeValidateFunction,
   initialObject: FormInputObject = {
     value: '',
-    errorMessage: null,
-    isValid: false,
+    validationResult: {
+      message: null,
+      valid: false,
+    },
   },
-) => {
+): [FormInputObject, (val: string, equal?: string | undefined) => void] => {
   const [value, setValue] = useState(initialObject.value);
   const [validationResult, setValidationResult] = useState<ValidationResult>({
-    message: initialObject.errorMessage,
-    valid: initialObject.isValid,
+    message: initialObject.validationResult.message,
+    valid: initialObject.validationResult.valid,
   });
 
   const changeValidationResult = useCallback(
@@ -36,11 +38,10 @@ export const useFormInput = (
   const resultObject: FormInputObject = useMemo(
     () => ({
       value,
-      errorMessage: validationResult.message,
-      isValid: validationResult.valid,
+      validationResult,
     }),
     [value, validationResult],
   );
 
-  return { resultObject, changeValue };
+  return [resultObject, changeValue];
 };
