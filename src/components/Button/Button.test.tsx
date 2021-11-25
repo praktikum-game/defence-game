@@ -1,45 +1,45 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { Button } from './Button';
 
-describe('test Button component', () => {
+describe('Button', () => {
   it('render with default props', () => {
     expect.assertions(1);
 
-    render(<Button />);
-    expect(screen.getByText('Button')).toHaveTextContent('Button');
+    const { getByRole } = render(<Button />);
+    expect(getByRole('button')).toHaveTextContent('Button');
   });
   it('render with different texts', () => {
     expect.assertions(2);
 
-    render(<Button text="Test" />);
-    expect(screen.getByText('Test')).toHaveTextContent('Test');
+    const { getByText: getByTextButtonTest } = render(<Button text="Test" />);
+    expect(() => getByTextButtonTest('Test')).not.toThrow();
 
-    render(<Button text="Test_1" />);
-    expect(screen.getByText('Test_1')).toHaveTextContent('Test_1');
+    const { getByText: getByTextButtonTest_1 } = render(<Button text="Test_1" />);
+    expect(() => getByTextButtonTest_1('Test_1')).not.toThrow();
   });
 
-  it('if disabled', () => {
+  it('render if disabled', () => {
     expect.assertions(1);
 
-    render(<Button disabled text="Test" />);
-    expect(screen.getByText('Test')).toBeDisabled();
+    const { getByRole } = render(<Button disabled text="Test" />);
+    expect(getByRole('button')).toBeDisabled();
   });
 
-  it('if loading', () => {
+  it('render if loading', () => {
     expect.assertions(1);
 
-    render(<Button loading />);
-    expect(screen.getByText('Загрузка...')).toHaveTextContent('Загрузка...');
+    const { getByRole } = render(<Button loading />);
+    expect(getByRole('button')).toHaveTextContent('Загрузка...');
   });
 
-  it('if clicked', () => {
+  it('render if clicked', () => {
     expect.assertions(1);
     const mockFn = jest.fn();
 
-    render(<Button onClick={mockFn} text="Test" />);
+    const { getByText } = render(<Button onClick={mockFn} text="Test" />);
 
-    fireEvent.click(screen.getByText('Test'));
+    fireEvent.click(getByText('Test'));
     expect(mockFn).toHaveBeenCalledTimes(1);
   });
 });

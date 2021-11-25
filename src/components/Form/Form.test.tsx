@@ -1,29 +1,29 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import { Form } from './Form';
 
-describe('test Form component', () => {
+describe('Form', () => {
   it('render with children', () => {
     expect.assertions(1);
-    render(
+    const { getByText } = render(
       <Form>
         <p>Test text</p>
       </Form>,
     );
-    expect(screen.getByText('Test text')).toHaveTextContent('Test text');
+    expect(() => getByText('Test text')).not.toThrow();
   });
 
   describe('submit', () => {
-    it('with invalid data', () => {
+    it('work with invalid data', () => {
       expect.assertions(1);
       const controllerCallback = jest.fn();
       const validationResults = [{ valid: false, message: '' }];
-      render(
+      const { getByText } = render(
         <Form controllerCallback={controllerCallback} validationResults={validationResults}>
           <button type="submit">Submit</button>
         </Form>,
       );
-      fireEvent.click(screen.getByText('Submit'));
+      fireEvent.click(getByText('Submit'));
 
       expect(controllerCallback).toHaveBeenCalledTimes(0);
     });
@@ -34,12 +34,12 @@ describe('test Form component', () => {
         const mockFn = jest.fn();
         const controllerCallback = async (data: FormData) => Promise.resolve(mockFn(data));
 
-        render(
+        const { getByText } = render(
           <Form controllerCallback={controllerCallback}>
             <button type="submit">Submit</button>
           </Form>,
         );
-        fireEvent.click(screen.getByText('Submit'));
+        fireEvent.click(getByText('Submit'));
 
         await waitFor(() => expect(mockFn).toHaveBeenCalledTimes(1));
       });
@@ -54,12 +54,12 @@ describe('test Form component', () => {
           return Promise.resolve(true);
         };
 
-        render(
+        const { getByText } = render(
           <Form controllerCallback={controllerCallback} setSubmitResult={setSubmitResultsMock}>
             <button type="submit">Submit</button>
           </Form>,
         );
-        fireEvent.click(screen.getByText('Submit'));
+        fireEvent.click(getByText('Submit'));
 
         await waitFor(() => expect(controllerMock).toHaveBeenCalledTimes(1));
         expect(setSubmitResultsMock).toHaveBeenCalledTimes(1);
@@ -75,7 +75,7 @@ describe('test Form component', () => {
           return Promise.resolve(true);
         };
 
-        render(
+        const { getByText } = render(
           <Form
             controllerCallback={controllerCallback}
             resetValuesCallback={resetResultsMock}
@@ -84,7 +84,7 @@ describe('test Form component', () => {
             <button type="submit">Submit</button>
           </Form>,
         );
-        fireEvent.click(screen.getByText('Submit'));
+        fireEvent.click(getByText('Submit'));
 
         await waitFor(() => expect(controllerMock).toHaveBeenCalledTimes(1));
         expect(resetResultsMock).toHaveBeenCalledTimes(1);
