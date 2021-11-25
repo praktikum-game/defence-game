@@ -1,27 +1,27 @@
 import { DEFPANNEL_CELL_HEIGHT, DEFPANNEL_CELL_WIDTH } from '../consts';
-import { DefendersPannelItem } from './DefendersPannelItem';
 import { Drawable } from '../interfaces';
+import { GridItem } from './GridItem';
 
-export class DefendersPannel implements Drawable {
-  public static pannelWidth = 0;
-
-  public static pannelHeight = 0;
-
-  public static pannelX = 0;
-
-  public static pannelY = 0;
-
-  private _pannelGrid: Array<DefendersPannelItem>;
+export class Grid implements Drawable {
+  private _pannelGrid: Array<GridItem>;
 
   public get pannelGrid() {
     return this._pannelGrid;
   }
 
-  constructor(pannelWidth: number, pannelHeight: number, pannelX: number, pannelY: number) {
+  constructor(
+    pannelWidth: number,
+    pannelHeight: number,
+    pannelX: number,
+    pannelY: number,
+    cellWidth: number,
+    cellHeight: number,
+    cellColor?: string,
+  ) {
     this._pannelGrid = [];
     for (let y = pannelY; y < pannelHeight; y += DEFPANNEL_CELL_HEIGHT) {
       for (let x = pannelX; x < pannelWidth; x += DEFPANNEL_CELL_WIDTH) {
-        this._pannelGrid.push(new DefendersPannelItem(x, y));
+        this._pannelGrid.push(new GridItem(x, y, cellWidth, cellHeight, cellColor));
       }
     }
   }

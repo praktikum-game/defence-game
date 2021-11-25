@@ -1,16 +1,11 @@
 import { SyringeBullet } from './Bullets/SyringeBullet';
-import { NurseDefender } from './Defenders/NurseDefender';
 import { BaseGameObject } from './BaseGameObject';
 import { GameField } from './Grids/GameField';
 import { getRandomInt, getUrls } from './helpers';
 import GameResources from './GameResources';
 import { EndGameCallback } from './types';
-import { DefendersPannel } from './Grids/DefendersPannel';
+import { DefendersPannel } from './DefendersPannel/index';
 import {
-  DEFPANNEL_CELL_COUNT,
-  DEFPANNEL_CELL_HEIGHT,
-  DEFPANNEL_CELL_WIDTH,
-  DEFPANNEL_ROWS_COUNT,
   FIELD_CELL_HEIGHT,
   FIELD_CELL_WIDTH,
   FIELD_COLS,
@@ -25,11 +20,13 @@ import { TopPannel } from './Grids/TopPannel';
 import { CoronaEnemy } from './Enemies/CoronaEnemy';
 import { Defender } from './Defenders/Defender';
 import { Constructable } from './interfaces';
-// import { GreenVirusEnemy } from './Enemies/GreenVirusEnemy';
-import Levels, { AtackTimingType } from './Levels';
+import { levels, AtackTimingType } from './Levels';
 import { Enemy } from './Enemies/Enemy';
+import { DoctorDefender } from './Defenders/DoctorDefender';
 
 export class Game {
+  private _gameLevel: number = 0;
+
   private _canvasElement: HTMLCanvasElement;
 
   private _ctx: CanvasRenderingContext2D;
@@ -49,8 +46,6 @@ export class Game {
   private _defendersPannel: DefendersPannel;
 
   private _topPannel: TopPannel;
-
-  private _level: number;
 
   private _timefromLastAtack: number = 0;
 
@@ -75,12 +70,9 @@ export class Game {
   constructor(canvasEl: HTMLCanvasElement, onGameEnd: EndGameCallback) {
     this._last = 0;
     this._isRunning = false;
-    this._level = 1;
 
-    DefendersPannel.pannelWidth = DEFPANNEL_CELL_WIDTH * DEFPANNEL_CELL_COUNT;
-    DefendersPannel.pannelHeight = DEFPANNEL_CELL_HEIGHT * DEFPANNEL_ROWS_COUNT;
-    DefendersPannel.pannelX = 0;
-    DefendersPannel.pannelY = 0;
+    this._defendersPannel = new DefendersPannel();
+    this._defendersPannel.init();
 
     TopPannel.pannelWidth = TOPPANNEL_CELL_WIDTH * TOPPANNEL_CELL_COUNT;
     TopPannel.pannelHeight = TOPPANNEL_CELL_HEIGHT * TOPPANNEL_ROWS_COUNT;
@@ -105,15 +97,6 @@ export class Game {
 
     this._ctx = this._canvasElement.getContext('2d')!;
 
-    this._defendersPannel = new DefendersPannel(
-      DefendersPannel.pannelWidth,
-      DefendersPannel.pannelHeight,
-      DefendersPannel.pannelX,
-      DefendersPannel.pannelY,
-    );
-
-    this._defendersPannel.draw(this._ctx);
-
     this._topPannel = new TopPannel(
       TopPannel.pannelWidth,
       TopPannel.pannelHeight,
@@ -122,6 +105,8 @@ export class Game {
     );
 
     this._topPannel.draw(this._ctx);
+
+    this._defendersPannel.draw(this._ctx);
 
     this._gameField = new GameField(
       GameField.gameFieldWidth,
@@ -168,7 +153,7 @@ export class Game {
   };
 
   private _createAtack = () => {
-    const levelAtackTiming = Levels.getLevelAtack(this._level)!;
+    const levelAtackTiming = levels.getLevelAtack(this._gameLevel)!;
 
     const enemyY = this._generateEnemiesYCoords();
 
@@ -183,7 +168,10 @@ export class Game {
   };
 
   public run() {
-    this._selectedDefender = NurseDefender;
+    this._gameLevel = 1;
+    this._defendersPannel.place(this._ctx, this._gameLevel);
+
+    this._selectedDefender = DoctorDefender;
     this._last = performance.now();
 
     this._createAtack();
@@ -205,6 +193,7 @@ export class Game {
         break;
 
       case 'DefendersPannel':
+        this._selectedDefender = this._defendersPannel.onClick(x, y)!;
         break;
 
       case 'TopPannel':
@@ -278,7 +267,7 @@ export class Game {
   private win() {
     this._enemies = [];
     this._defenders = [];
-    this._defendersPannel.draw(this._ctx);
+    this._defendersPannel!.draw(this._ctx);
     this._gameField.draw(this._ctx);
     this._isRunning = false;
     this._onGameEnd('win');

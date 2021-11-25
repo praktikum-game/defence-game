@@ -1,8 +1,8 @@
 export const resources = {
   defenders: {
     doctor: {
-      image: 'doctor_image.jpg',
-      icon: 'doctor_image.jpg',
+      image: 'doctor_image.png',
+      icon: 'doctor_icon.png',
     },
     nurse: {
       image: 'nurse_image.png',

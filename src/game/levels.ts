@@ -54,7 +54,9 @@ class Levels {
 
   public getLevel = (num: number) => this._settings[num];
 
-  public getLevelAtack = (num: number) => this._settings[num].atack;
+  public getLevelAtack = (num: number) => this._settings[num]?.atack;
+
+  public getLevelDefenders = (num: number) => this._settings[num]?.defenders;
 
   public getEnemiesCount = (num: number) => {
     const { atack } = this._settings[num];
@@ -62,4 +64,4 @@ class Levels {
   };
 }
 
-export default new Levels();
+export const levels = new Levels();

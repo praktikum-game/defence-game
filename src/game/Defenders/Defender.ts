@@ -8,8 +8,6 @@ import { BaseGameObject } from '../BaseGameObject';
 export class Defender extends BaseGameObject {
   protected _image: HTMLImageElement;
 
-  protected _icon: HTMLImageElement;
-
   protected _health: number;
 
   protected _isFire: boolean;
@@ -63,7 +61,6 @@ export class Defender extends BaseGameObject {
     width: number,
     height: number,
     imageUrl: string,
-    iconUrl: string,
     health?: number,
     damage?: number,
     fireFrameInterval?: number,
@@ -77,7 +74,6 @@ export class Defender extends BaseGameObject {
     this._damage = damage ?? 100;
     this._fireFrameInterval = fireFrameInterval ?? 200;
     this._image = GameResources.get(imageUrl) ?? null;
-    this._icon = GameResources.get(iconUrl) ?? null;
     this._width = width ?? FIELD_CELL_WIDTH;
     this._height = height ?? FIELD_CELL_HEIGHT;
   }
