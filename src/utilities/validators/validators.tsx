@@ -12,7 +12,7 @@ export const required: ValidateFunction =
     return valid();
   };
 
-export const longerThan: ValidateFunction =
+export const longerThan: ValidateFunction<number> =
   (criteria) =>
   ({ value, message }) => {
     if (criteria) {
@@ -21,13 +21,14 @@ export const longerThan: ValidateFunction =
     return valid();
   };
 
-export const regExpCheck: ValidateFunction = (pattern?: number | RegExp) => {
-  if (typeof pattern === 'number' || typeof pattern === 'undefined') {
-    throw new Error('Wrong parameter for regExpCheck');
-  }
-
-  return ({ value, message }) => (pattern.test(value) ? valid() : invalid(message));
-};
+export const regExpCheck: ValidateFunction<RegExp> =
+  (pattern) =>
+  ({ value, message }) => {
+    if (pattern !== undefined) {
+      return pattern.test(value) ? valid() : invalid(message);
+    }
+    return valid();
+  };
 
 export const validate = (validators: Array<ValidatorItem>, value: string): ValidationResult => {
   if (validators && validators.length > 0) {
