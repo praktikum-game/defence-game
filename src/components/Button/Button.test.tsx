@@ -15,8 +15,8 @@ describe('Button', () => {
     const { getByText: getByTextButtonTest } = render(<Button text="Test" />);
     expect(() => getByTextButtonTest('Test')).not.toThrow();
 
-    const { getByText: getByTextButtonTest_1 } = render(<Button text="Test_1" />);
-    expect(() => getByTextButtonTest_1('Test_1')).not.toThrow();
+    const { getByText: getByTextButtonTest1 } = render(<Button text="Test_1" />);
+    expect(() => getByTextButtonTest1('Test_1')).not.toThrow();
   });
 
   it('render if disabled', () => {

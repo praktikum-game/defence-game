@@ -9,8 +9,8 @@ describe('InputField', () => {
     const { getByText: getByTextInputTest } = render(<InputField label="Test" />);
     expect(() => getByTextInputTest('Test')).not.toThrow();
 
-    const { getByText: getByTextInputTest_1 } = render(<InputField label="Test_1" />);
-    expect(() => getByTextInputTest_1('Test_1')).not.toThrow();
+    const { getByText: getByTextInputTest1 } = render(<InputField label="Test_1" />);
+    expect(() => getByTextInputTest1('Test_1')).not.toThrow();
   });
 
   it('render error text', () => {

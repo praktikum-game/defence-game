@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -19,17 +20,34 @@ module.exports = {
       template: path.resolve(__dirname, 'public', 'index.html'),
     }),
     new CleanWebpackPlugin(),
+    new ImageMinimizerPlugin({
+      minimizerOptions: {
+        // Lossless optimization with custom option
+        // Feel free to experiment with options for better result for you
+        plugins: [
+          ['gifsicle', { interlaced: true }],
+          ['jpegtran', { progressive: true }],
+          ['optipng', { optimizationLevel: 5 }],
+          [
+            'svgo',
+            {
+              plugins: [
+                {
+                  name: 'removeViewBox',
+                  active: false,
+                },
+              ],
+            },
+          ],
+        ],
+      },
+    }),
   ],
   module: {
     rules: [
       {
-        test: /\.(gif|png|jpe?g|svg)$/i,
-        use: [
-          'file-loader?name=images/[name].[ext]',
-          {
-            loader: 'image-webpack-loader',
-          },
-        ],
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        use: ['file-loader?name=images/[name].[ext]'],
       },
       {
         test: /\.tsx?$/,
