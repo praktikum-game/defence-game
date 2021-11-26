@@ -4,7 +4,6 @@ import { FIELD_CELL_HEIGHT, FIELD_CELL_WIDTH } from '../consts';
 import { GameField } from '../Grids/GameField';
 import { Constructable } from '../interfaces';
 import { BaseGameObject } from '../BaseGameObject';
-// import { StaticFields } from './StaticFields';
 
 export abstract class Defender extends BaseGameObject {
   protected _image: HTMLImageElement;
