@@ -170,7 +170,6 @@ export class Game {
     this._gameLevel = 1;
     this._defendersPannel.place(this._ctx, this._gameLevel);
 
-    // this._selectedDefender = DoctorDefender;
     this._last = performance.now();
 
     this._createAtack();
@@ -193,7 +192,6 @@ export class Game {
 
       case 'DefendersPannel':
         this._selectedDefender = this._defendersPannel.onClick(x, y)!;
-        console.log(this._defendersPannel.onClick(x, y));
         break;
 
       case 'TopPannel':

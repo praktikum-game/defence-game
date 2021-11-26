@@ -58,7 +58,7 @@ export class DefendersPannel {
       if (i < levelDefenders.length) {
         const lvlDefender = levelDefenders[i];
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { iconUrl } = (lvlDefender as any)!;
+        const { iconUrl } = <any>lvlDefender;
         const icon = iconUrl;
         g.draw(ctx, new Sprite(g.x, g.y, g.width, g.height, icon, lvlDefender));
       }
@@ -71,7 +71,7 @@ export class DefendersPannel {
     this._grid?.pannelGrid.forEach((cell) => {
       // определяем, входят ли координаты клика в периметр текущей ячейки
       if (cell.x < x && cell.x + cell.width > x && cell.y < y && cell.y + cell.width > y) {
-        result = cell.sprite!.onClick();
+        if (cell.sprite) result = cell.sprite.onClick();
       }
     });
 
