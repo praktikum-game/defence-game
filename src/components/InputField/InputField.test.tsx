@@ -2,15 +2,15 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { InputField } from './InputField';
 
-describe('inputField', () => {
+describe('InputField', () => {
   it('render with different labels', () => {
     expect.assertions(2);
 
     const { getByText: getByTextInputTest } = render(<InputField label="Test" />);
     expect(() => getByTextInputTest('Test')).not.toThrow();
 
-    const { getByText: GetByTextInputTest1 } = render(<InputField label="Test_1" />);
-    expect(() => GetByTextInputTest1('Test_1')).not.toThrow();
+    const { getByText: getByTextInputTest1 } = render(<InputField label="Test_1" />);
+    expect(() => getByTextInputTest1('Test_1')).not.toThrow();
   });
 
   it('render error text', () => {

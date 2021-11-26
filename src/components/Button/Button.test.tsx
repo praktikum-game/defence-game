@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { Button } from './Button';
 
-describe('button', () => {
+describe('Button', () => {
   it('render with default props', () => {
     expect.assertions(1);
 
@@ -15,8 +15,8 @@ describe('button', () => {
     const { getByText: getByTextButtonTest } = render(<Button text="Test" />);
     expect(() => getByTextButtonTest('Test')).not.toThrow();
 
-    const { getByText: GetByTextButtonTest1 } = render(<Button text="Test_1" />);
-    expect(() => GetByTextButtonTest1('Test_1')).not.toThrow();
+    const { getByText: getByTextButtonTest1 } = render(<Button text="Test_1" />);
+    expect(() => getByTextButtonTest1('Test_1')).not.toThrow();
   });
 
   it('render if disabled', () => {
