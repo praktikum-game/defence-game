@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "es2017", "dom.iterable"],
+    "lib": ["dom", "es2017", "dom.iterable", "webworker"],
     "downlevelIteration": true,
     "module": "commonjs",
     "moduleResolution": "node",
