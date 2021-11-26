@@ -33,7 +33,8 @@ module.exports = {
             {
               plugins: [
                 {
-                  removeViewBox: false,
+                  name: 'removeViewBox',
+                  active: false,
                 },
               ],
             },
