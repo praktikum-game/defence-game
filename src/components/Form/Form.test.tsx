@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import { Form } from './Form';
 
-describe('Form', () => {
+describe('form', () => {
   it('render with children', () => {
     expect.assertions(1);
     const { getByText } = render(
