@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Игра по защите хороших от плохих",
   "engines": {
-    "node": "16.2.0"
+    "node": "14.18.1"
   },
   "scripts": {
     "dev": "webpack serve --config webpack.dev.js",
