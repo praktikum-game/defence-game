@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { EndGameStatus } from 'game/types';
+import { EndGameStatus } from '../../game/types';
 import { FIELD_HEIGHT, FIELD_WIDTH } from '../../game/consts';
 import { Button } from '../../components/Button';
 import { Modal } from '../../components/Modal';

@@ -13,63 +13,46 @@ import {
   emailValidator,
   nameValidator,
   phoneValidator,
-  ValidationResult,
 } from '../../utilities/validators';
 import { bindArgsFromN } from '../../utilities/utilities';
-import { inputValueUpdaterFactory } from '../utilities';
 import { InputNames } from '../../consts';
 import { authController } from '../../controllers';
 import { store } from '../../store';
 
 import './registerPage.css';
+import { useFormInput } from '../../components/Form/hooks/useFormInput';
 
 export const RegisterPage = (): JSX.Element => {
   const navigate = useNavigate();
 
   const [registerResult, setRegisterResult] = useState(false);
 
-  const [loginValue, setLoginValue] = useState('');
-  const [loginValidationResult, setLoginValidationResult] = useState<ValidationResult>({
-    message: '',
-    valid: false,
-  });
+  const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
+    useFormInput(loginValidator);
 
-  const [phoneValue, setPhoneValue] = useState('');
-  const [phoneValidationResult, setPhoneValidationResult] = useState<ValidationResult>({
-    message: '',
-    valid: false,
-  });
+  const [{ value: phoneValue, validationResult: phoneValidationResult }, setPhoneValue] =
+    useFormInput(phoneValidator);
 
-  const [firstNameValue, setFirstNameValue] = useState('');
-  const [firstNameValidationResult, setFirstNameValidationResult] = useState<ValidationResult>({
-    message: '',
-    valid: false,
-  });
+  const [
+    { value: firstNameValue, validationResult: firstNameValidationResult },
+    setFirstNameValue,
+  ] = useFormInput(nameValidator);
 
-  const [secondNameValue, setSecondNameValue] = useState('');
-  const [secondNameValidationResult, setSecondNameValidationResult] = useState<ValidationResult>({
-    message: '',
-    valid: false,
-  });
+  const [
+    { value: secondNameValue, validationResult: secondNameValidationResult },
+    setSecondNameValue,
+  ] = useFormInput(nameValidator);
 
-  const [emailValue, setEmailValue] = useState('');
-  const [emailValidationResult, setEmailValidationResult] = useState<ValidationResult>({
-    message: '',
-    valid: false,
-  });
+  const [{ value: emailValue, validationResult: emailValidationResult }, setEmailValue] =
+    useFormInput(emailValidator);
 
-  const [passwordValue, setPasswordValue] = useState('');
-  const [passwordValidationResult, setPasswordValidationResult] = useState<ValidationResult>({
-    message: '',
-    valid: false,
-  });
+  const [{ value: passwordValue, validationResult: passwordValidationResult }, setPasswordValue] =
+    useFormInput(passwordValidator);
 
-  const [repeatPasswordValue, setRepeatPasswordValue] = useState('');
-  const [repeatPasswordValidationResult, setRepeatPasswordValidationResult] =
-    useState<ValidationResult>({
-      message: '',
-      valid: false,
-    });
+  const [
+    { value: repeatPasswordValue, validationResult: repeatPasswordValidationResult },
+    setRepeatPasswordValue,
+  ] = useFormInput(passwordValidator);
 
   const resetInputValues = useCallback(() => {
     setLoginValue('');
@@ -131,11 +114,7 @@ export const RegisterPage = (): JSX.Element => {
             label="Логин"
             errorText={loginValidationResult.message}
             isValid={loginValidationResult.valid}
-            valueChangeCallback={inputValueUpdaterFactory(
-              loginValidator,
-              setLoginValidationResult,
-              setLoginValue,
-            )}
+            valueChangeCallback={setLoginValue}
           />
           <InputField
             view="labeled"
@@ -144,11 +123,7 @@ export const RegisterPage = (): JSX.Element => {
             label="Телефон"
             errorText={phoneValidationResult.message}
             isValid={phoneValidationResult.valid}
-            valueChangeCallback={inputValueUpdaterFactory(
-              phoneValidator,
-              setPhoneValidationResult,
-              setPhoneValue,
-            )}
+            valueChangeCallback={setPhoneValue}
           />
           <InputField
             view="labeled"
@@ -157,11 +132,7 @@ export const RegisterPage = (): JSX.Element => {
             label="Имя"
             errorText={firstNameValidationResult.message}
             isValid={firstNameValidationResult.valid}
-            valueChangeCallback={inputValueUpdaterFactory(
-              nameValidator,
-              setFirstNameValidationResult,
-              setFirstNameValue,
-            )}
+            valueChangeCallback={setFirstNameValue}
           />
           <InputField
             view="labeled"
@@ -170,11 +141,7 @@ export const RegisterPage = (): JSX.Element => {
             label="Фамилия"
             errorText={secondNameValidationResult.message}
             isValid={secondNameValidationResult.valid}
-            valueChangeCallback={inputValueUpdaterFactory(
-              nameValidator,
-              setSecondNameValidationResult,
-              setSecondNameValue,
-            )}
+            valueChangeCallback={setSecondNameValue}
           />
           <InputField
             view="labeled"
@@ -184,11 +151,7 @@ export const RegisterPage = (): JSX.Element => {
             type="email"
             errorText={emailValidationResult.message}
             isValid={emailValidationResult.valid}
-            valueChangeCallback={inputValueUpdaterFactory(
-              emailValidator,
-              setEmailValidationResult,
-              setEmailValue,
-            )}
+            valueChangeCallback={setEmailValue}
           />
           <InputField
             view="labeled"
@@ -198,11 +161,7 @@ export const RegisterPage = (): JSX.Element => {
             type="password"
             errorText={passwordValidationResult.message}
             isValid={passwordValidationResult.valid}
-            valueChangeCallback={inputValueUpdaterFactory(
-              passwordValidator,
-              setPasswordValidationResult,
-              setPasswordValue,
-            )}
+            valueChangeCallback={setPasswordValue}
           />
           <InputField
             view="labeled"
@@ -212,11 +171,7 @@ export const RegisterPage = (): JSX.Element => {
             type="password"
             errorText={repeatPasswordValidationResult.message}
             isValid={repeatPasswordValidationResult.valid}
-            valueChangeCallback={inputValueUpdaterFactory(
-              bindArgsFromN(passwordValidator, 2, passwordValue),
-              setRepeatPasswordValidationResult,
-              setRepeatPasswordValue,
-            )}
+            valueChangeCallback={bindArgsFromN(setRepeatPasswordValue, 2, passwordValue)}
           />
           <Footer className="register-page__footer">
             <Button

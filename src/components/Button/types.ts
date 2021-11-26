@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes } from 'react';
-import { ViewType } from 'utilities/types';
+import { ViewType } from '../../utilities/types';
 
 export type ButtonOwnProps = {
   className?: string;

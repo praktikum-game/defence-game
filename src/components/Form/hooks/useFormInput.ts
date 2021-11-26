@@ -1,20 +1,22 @@
 import { useCallback, useMemo, useState } from 'react';
 import { ValidationResult } from '../../../utilities/validators';
 import { CompositeValidateFunction } from '../../../utilities/validators/types';
-import { FormInputObject } from './types';
+import { FormInputObject, FormInputHookResult } from './types';
 
 export const useFormInput = (
   validator: CompositeValidateFunction,
   initialObject: FormInputObject = {
     value: '',
-    errorMessage: null,
-    isValid: false,
+    validationResult: {
+      message: null,
+      valid: false,
+    },
   },
-) => {
+): FormInputHookResult => {
   const [value, setValue] = useState(initialObject.value);
   const [validationResult, setValidationResult] = useState<ValidationResult>({
-    message: initialObject.errorMessage,
-    valid: initialObject.isValid,
+    message: initialObject.validationResult.message,
+    valid: initialObject.validationResult.valid,
   });
 
   const changeValidationResult = useCallback(
@@ -36,11 +38,10 @@ export const useFormInput = (
   const resultObject: FormInputObject = useMemo(
     () => ({
       value,
-      errorMessage: validationResult.message,
-      isValid: validationResult.valid,
+      validationResult,
     }),
     [value, validationResult],
   );
 
-  return { resultObject, changeValue };
+  return [resultObject, changeValue];
 };
