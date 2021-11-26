@@ -49,17 +49,6 @@ module.exports = {
         test: /\.(jpe?g|png|gif|svg)$/i,
         use: ['file-loader?name=images/[name].[ext]'],
       },
-      // {
-      //   test: /\.(jpe?g|png|gif|svg)$/i,
-      //   use: [
-      //     {
-      //       loader: ImageMinimizerPlugin.loader,
-      //       options: {
-      //         filename: '[path][name][ext]',
-      //       },
-      //     },
-      //   ],
-      // },
       {
         test: /\.tsx?$/,
         use: [
