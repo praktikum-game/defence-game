@@ -6,7 +6,7 @@ export type GameResoursesType = {
   [key: string]: HTMLImageElement;
 };
 
+export type ResObjectItemType = Record<string, { image?: string; icon?: string }>;
+
 // объект для хранения путей ко всем изображениям/ресурсам игры
-export type ResourcesObjectType = {
-  [key: string]: Record<string, { image?: string; icon?: string }>;
-};
+export type ResourcesObjectType = Record<string, ResObjectItemType | string>;
