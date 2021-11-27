@@ -9,8 +9,6 @@ import { ThunkExtraArgument } from './types';
 
 export const rootReducer = combineReducers({ user: userReducer, leaderboard: leaderboardReducer });
 
-export type RootReducer = typeof rootReducer;
-
 const thunkExtraArgument: ThunkExtraArgument = {
   api: {
     lb: leaderboarApi,
