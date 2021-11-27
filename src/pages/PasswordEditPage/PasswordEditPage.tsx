@@ -11,7 +11,7 @@ import { Avatar } from '../../components/Avatar';
 import { Footer } from '../../components/Footer';
 import { InputNames } from '../../consts';
 import { usersController } from '../../controllers';
-import { store } from '../../store';
+import { storeOld } from '../../store';
 
 import './passwordEditPage.css';
 import { useFormInput } from '../../components/Form/hooks/useFormInput';
@@ -47,7 +47,7 @@ export const PasswordEditPage = () => {
     [],
   );
 
-  if (store.user === null) {
+  if (storeOld.user === null) {
     return <Navigate to="/login" />;
   }
 

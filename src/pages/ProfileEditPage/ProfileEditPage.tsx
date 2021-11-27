@@ -9,7 +9,7 @@ import EditIcon from './static/edit.svg';
 import { Avatar } from '../../components/Avatar';
 import { Footer } from '../../components/Footer';
 import { InputNames } from '../../consts';
-import { store } from '../../store';
+import { storeOld } from '../../store';
 import { usersController } from '../../controllers';
 import {
   loginValidator,
@@ -60,7 +60,7 @@ export const ProfileEditPage = () => {
     [],
   );
 
-  if (store.user === null) {
+  if (storeOld.user === null) {
     return <Navigate to="/login" />;
   }
 

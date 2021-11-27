@@ -1,5 +1,5 @@
 import { usersAPI, IProfilePasswordUpdateRequest, IProfileUpdateRequest } from '../api';
-import { store } from '../store';
+import { storeOld } from '../store';
 
 class UsersController {
   private api: typeof usersAPI;
@@ -19,7 +19,7 @@ class UsersController {
         phone: String(formData.get('phone')),
       };
       const response = await this.api.updateProfile(data);
-      store.user = response.data;
+      storeOld.user = response.data;
 
       // eslint-disable-next-line
     } catch {}
@@ -28,7 +28,7 @@ class UsersController {
   async updateAvatar(formData: FormData) {
     try {
       const response = await this.api.updateAvatar(formData);
-      store.user = response.data;
+      storeOld.user = response.data;
 
       // eslint-disable-next-line
     } catch {}

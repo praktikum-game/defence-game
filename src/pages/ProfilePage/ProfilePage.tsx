@@ -10,11 +10,11 @@ import { Form } from '../../components/Form';
 import { Avatar } from '../../components/Avatar';
 import { LogoutButton } from './LogoutButton';
 import { InputNames } from '../../consts';
-import { store } from '../../store';
+import { storeOld } from '../../store';
 import './profilePage.css';
 
 export const ProfilePage = () => {
-  if (store.user === null) {
+  if (storeOld.user === null) {
     return <Navigate to="/login" />;
   }
 
@@ -26,39 +26,39 @@ export const ProfilePage = () => {
       </Header>
       <PageContainer className="profile-page__page-container" size="m">
         <Title headingLevel={3} align="center">
-          {store.user.first_name}
+          {storeOld.user.first_name}
         </Title>
         <Form className="profile-page__form">
           <InputField
             name={InputNames.FIRST_NAME}
-            value={store.user.first_name}
+            value={storeOld.user.first_name}
             type="text"
             label="Имя"
             disabled
           />
           <InputField
             name={InputNames.SECOND_NAME}
-            value={store.user.second_name}
+            value={storeOld.user.second_name}
             type="text"
             label="Фамилия"
           />
           <InputField
             name={InputNames.EMAIL}
-            value={store.user.email}
+            value={storeOld.user.email}
             type="E-mail"
             label="E-mail"
             disabled
           />
           <InputField
             name={InputNames.DISPLAY_NAME}
-            value={store.user.display_name}
+            value={storeOld.user.display_name}
             type="text"
             label="Никнейм"
             disabled
           />
           <InputField
             name={InputNames.PHONE}
-            value={store.user.phone}
+            value={storeOld.user.phone}
             type="tel"
             label="Телефон"
             disabled
