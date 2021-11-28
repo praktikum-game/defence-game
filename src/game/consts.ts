@@ -13,3 +13,7 @@ export const TOPPANNEL_CELL_HEIGHT = 60;
 export const TOPPANNEL_ROWS_COUNT = 1;
 export const TOPPANNEL_CELL_COUNT = 4;
 export const ASSETS_PATH = './assets/images/';
+
+export const CURRENCY_START_VALUE = 25;
+export const CURRENCY_RISE_VALUE = 25;
+export const CURRENCY_RISE_INTERVAL = 5;

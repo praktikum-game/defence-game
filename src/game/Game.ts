@@ -6,6 +6,9 @@ import { GameResources } from './GameResourses';
 import { AtackTimingType, EndGameCallback } from './types';
 import { DefendersPannel } from './DefendersPannel/index';
 import {
+  CURRENCY_RISE_INTERVAL,
+  CURRENCY_RISE_VALUE,
+  CURRENCY_START_VALUE,
   FIELD_CELL_HEIGHT,
   FIELD_CELL_WIDTH,
   FIELD_COLS,
@@ -22,11 +25,14 @@ import { Defender } from './Defenders/Defender';
 import { Constructable } from './interfaces';
 import { levels } from './Levels';
 import { Enemy } from './Enemies/Enemy';
+import { GameCurrency } from './GameCurrency';
 
 export class Game {
   private _gameLevel: number = 0;
 
   private _canvasElement: HTMLCanvasElement;
+
+  private _currency: GameCurrency;
 
   private _ctx: CanvasRenderingContext2D;
 
@@ -69,6 +75,11 @@ export class Game {
   constructor(canvasEl: HTMLCanvasElement, onGameEnd: EndGameCallback) {
     this._last = 0;
     this._isRunning = false;
+    this._currency = new GameCurrency(
+      CURRENCY_START_VALUE,
+      CURRENCY_RISE_VALUE,
+      CURRENCY_RISE_INTERVAL,
+    );
 
     this._defendersPannel = new DefendersPannel();
     this._defendersPannel.init();
@@ -173,6 +184,7 @@ export class Game {
     this._last = performance.now();
 
     this._createAtack();
+    this._putCurrency();
 
     this._defenders.forEach((d) => {
       d.isFire = true;
@@ -287,10 +299,20 @@ export class Game {
     });
   };
 
+  private _putCurrency = () => {
+    this._topPannel.pannelGrid[0].clear(this._ctx);
+    this._topPannel.pannelGrid[0].draw(this._ctx, this._currency.value.toString());
+  };
+
   private redraw(delay: number) {
     if (!this._isRunning) return;
 
     this._checkNextAtack(delay);
+    if (this._currency.autoRise(delay)) {
+      this._putCurrency();
+    }
+
+    // console.log(this._currency.value);
 
     if (this._enemies.length < 1) {
       this.win();
