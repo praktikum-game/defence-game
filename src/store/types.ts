@@ -1,4 +1,6 @@
 import { leaderboarApi } from '../api/leaderboard/LeadboardAPI';
+// eslint-disable-next-line import/no-cycle
+import { RootReducer } from './store';
 
 export type ThunkExtraArgument = {
   api: {
@@ -6,6 +8,4 @@ export type ThunkExtraArgument = {
   };
 };
 
-// export type AsyncActionCreator<T> = ActionCreator<
-//   ThunkAction<Promise<T | void>, AppState, ThunkExtraArgument, Action<T>>
-// >;
+export type AppState = ReturnType<RootReducer>;

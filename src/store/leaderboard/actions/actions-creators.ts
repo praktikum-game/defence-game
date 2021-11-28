@@ -40,8 +40,8 @@ export const fetchLeaderboardListData: LeadboardActionCreator =
         dispatch(leaderboardSuccesFetchList(sortedData));
       }
     } catch (e) {
-      leaderboardFailedFetchList();
+      dispatch(leaderboardFailedFetchList());
     } finally {
-      leaderboardFinisFetchList();
+      dispatch(leaderboardFinisFetchList());
     }
   };

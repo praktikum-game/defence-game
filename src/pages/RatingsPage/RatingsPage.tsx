@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'; // eslint-disable-line
 import { useSelector, useDispatch } from 'react-redux';
 import { LeaderboardTable, LeaderboardTableColumn } from '../../components/LeaderboardTable';
-import { AppState } from '../../store';
 import { fetchLeaderboardListData } from '../../store/leaderboard';
 import { LeaderboardThunkDispatch } from '../../store/leaderboard/types';
+import { AppState } from '../../store/types';
 
 const columns: LeaderboardTableColumn[] = [
   { dataId: 'username', title: 'Имя пользователя' },

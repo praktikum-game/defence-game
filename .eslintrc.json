@@ -20,7 +20,7 @@
     "no-alert": "off",
     "spaced-comment": "off",
     "import/extensions": "off",
-    "import/no-cycle": "warn",
+    "import/no-cycle": "error",
     "@typescript-eslint/no-explicit-any": "error",
     "no-debugger": "off",
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { block } from 'bem-cn';
-import { LeaderboardTableProps } from '.';
+import { LeaderboardTableProps } from './types';
 import './leaderboard-table.css';
 
 const b = block('lead-table');
