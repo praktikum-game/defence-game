@@ -1,5 +1,9 @@
 import { ASSETS_PATH } from './consts';
-import { GameResoursesType, ResourceObjectItemType, ResourcesObjectType } from './GameResourses';
+import {
+  GameResoursesType,
+  ResourceObjectItemType,
+  ResourcesObjectType,
+} from './GameResourses/types';
 
 export const getRandomInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min)) + min;
