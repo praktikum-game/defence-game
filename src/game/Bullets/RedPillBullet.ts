@@ -1,4 +1,4 @@
-import { resources } from '../resources';
+import { resources } from '../GameResourses';
 import { Bullet } from './Bullet';
 
 export class RedPillBullet extends Bullet {

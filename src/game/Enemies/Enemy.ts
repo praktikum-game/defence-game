@@ -1,5 +1,5 @@
 import { FIELD_CELL_HEIGHT, FIELD_CELL_WIDTH } from '../consts';
-import GameResources from '../GameResources';
+import { GameResources } from '../GameResourses';
 import { BaseGameObject } from '../BaseGameObject';
 import { Drawable, Updateable } from '../interfaces';
 

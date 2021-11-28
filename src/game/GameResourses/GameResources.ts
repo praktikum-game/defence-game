@@ -1,5 +1,7 @@
-import { setImage } from './helpers';
+import { setImage } from '../helpers';
 import { GameResoursesType } from './types';
+
+// Объект для хранения загруженных изображений: ключ - урл изображения, значение - Image
 
 class GameResources {
   private _resourceCache: GameResoursesType = {};
@@ -21,4 +23,4 @@ class GameResources {
   public get = (url: string) => this._resourceCache[url];
 }
 
-export default new GameResources();
+export const gameResourses = new GameResources();

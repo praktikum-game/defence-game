@@ -1,12 +1,26 @@
+import { Bullet } from './Bullets/Bullet';
+import { Defender } from './Defenders/Defender';
+import { Enemy } from './Enemies/Enemy';
+import { Constructable } from './interfaces';
+
 export type EndGameStatus = 'win' | 'lose';
 export type EndGameCallback = (typeEnd: EndGameStatus) => void;
 
-// Объект для хранения загруженных изображений: ключ - урл изображения, значение - Image
-export type GameResoursesType = {
-  [key: string]: HTMLImageElement;
+export type AtackTimingType = {
+  timeout: number;
+  enemies: Enemy[];
 };
 
-export type ResObjectItemType = Record<string, { image?: string; icon?: string }>;
+export type AtackSchemeType = {
+  timeout: number;
+  enemies: Constructable<Enemy>[];
+};
 
-// объект для хранения путей ко всем изображениям/ресурсам игры
-export type ResourcesObjectType = Record<string, ResObjectItemType | string>;
+export type LevelsType = {
+  [key: number]: {
+    defenders: Constructable<Defender>[];
+    enemies: Constructable<Enemy>[];
+    bullets: Constructable<Bullet>[];
+    atack?: AtackSchemeType[];
+  };
+};

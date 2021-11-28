@@ -1,4 +1,4 @@
-import { resources } from '../resources';
+import { resources } from '../GameResourses';
 import { SyringeBullet } from '../Bullets/SyringeBullet';
 import { Defender } from './Defender';
 

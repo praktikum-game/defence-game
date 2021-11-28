@@ -1,4 +1,4 @@
-import GameResources from '../GameResources';
+import { GameResources } from '../GameResourses';
 import { Defender } from '../Defenders/Defender';
 import { BaseGameObject } from '../BaseGameObject';
 import { Constructable } from '../interfaces';

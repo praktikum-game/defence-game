@@ -1,7 +1,7 @@
 import { BaseGameObject } from '../BaseGameObject';
 import { Drawable, Updateable } from '../interfaces';
 import { GameField } from '../Grids/GameField';
-import GameResources from '../GameResources';
+import { GameResources } from '../GameResourses';
 
 export class Bullet extends BaseGameObject implements Drawable, Updateable {
   protected _image: HTMLImageElement;

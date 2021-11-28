@@ -1,5 +1,5 @@
 import { BluePillBullet } from '../Bullets/BluePillBullet';
-import { resources } from '../resources';
+import { resources } from '../GameResourses';
 import { Defender } from './Defender';
 
 export class DoctorDefender extends Defender {

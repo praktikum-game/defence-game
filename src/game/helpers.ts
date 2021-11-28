@@ -1,5 +1,5 @@
 import { ASSETS_PATH } from './consts';
-import { GameResoursesType, ResObjectItemType, ResourcesObjectType } from './types';
+import { GameResoursesType, ResourceObjectItemType, ResourcesObjectType } from './GameResourses';
 
 export const getRandomInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min)) + min;
@@ -16,7 +16,7 @@ export const setImage = (source: string, resObject: GameResoursesType): Promise<
 
 // получить все (в дальнейшем все для текущего уровня) пути к ресурсам
 export const getUrls = (
-  resourcesObject: ResourcesObjectType | ResObjectItemType,
+  resourcesObject: ResourcesObjectType | ResourceObjectItemType,
   res: string[] = [],
 ) =>
   Object.values(resourcesObject).reduce((acc: string[], value) => {

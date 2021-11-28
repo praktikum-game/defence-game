@@ -7,7 +7,6 @@ import { Game } from '../../game/Game';
 
 export const GamePage = () => {
   const navigate = useNavigate();
-  const [runButtonIsDisabled, setRunButtonIsDisabled] = useState(false);
   const [infoModalIsVisible, setInfoModalIsVisible] = useState(true);
   const [loseModalIsVisible, setLoseModalIsVisible] = useState(false);
   const [winModalIsVisible, setWinModalIsVisible] = useState(false);
@@ -28,8 +27,6 @@ export const GamePage = () => {
       default:
         break;
     }
-
-    setRunButtonIsDisabled(false);
   }, []);
 
   useEffect(() => {
@@ -42,7 +39,6 @@ export const GamePage = () => {
   const handleStartGame = useCallback(() => {
     if (gameRef.current) {
       gameRef.current.run();
-      setRunButtonIsDisabled(true);
     }
   }, []);
 
@@ -64,7 +60,13 @@ export const GamePage = () => {
     <Fragment>
       <Modal visible={infoModalIsVisible}>
         <p>Освободи мир от вирусов! </p>
-        <Button text="Вперёд!" onClick={handleCloseInfoModal} />
+        <Button
+          text="Начать игру!"
+          onClick={() => {
+            handleCloseInfoModal();
+            handleStartGame();
+          }}
+        />
       </Modal>
 
       <Modal visible={loseModalIsVisible}>
@@ -78,13 +80,6 @@ export const GamePage = () => {
         <Button text="Еще разок" view="primary" onClick={handleReplayClick} />
         <Button text="Домой" view="secondary" onClick={handleRedirectToHomeClick} />
       </Modal>
-
-      <Button
-        onClick={handleStartGame}
-        text="Начать игру"
-        view="primary"
-        disabled={runButtonIsDisabled}
-      />
 
       <canvas ref={canvasRef} height="200" width="200"></canvas>
     </Fragment>

@@ -1,4 +1,4 @@
-import { resources } from '../resources';
+import { resources } from '../GameResourses';
 import { Enemy } from './Enemy';
 
 export class GreenVirusEnemy extends Enemy {

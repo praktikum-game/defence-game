@@ -1,4 +1,4 @@
-import GameResources from '../GameResources';
+import { GameResources } from '../GameResourses';
 import { Bullet } from '../Bullets/Bullet';
 import { FIELD_CELL_HEIGHT, FIELD_CELL_WIDTH } from '../consts';
 import { GameField } from '../Grids/GameField';

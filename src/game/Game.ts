@@ -2,8 +2,8 @@ import { SyringeBullet } from './Bullets/SyringeBullet';
 import { BaseGameObject } from './BaseGameObject';
 import { GameField } from './Grids/GameField';
 import { getRandomInt, getUrls } from './helpers';
-import GameResources from './GameResources';
-import { EndGameCallback } from './types';
+import { GameResources } from './GameResourses';
+import { AtackTimingType, EndGameCallback } from './types';
 import { DefendersPannel } from './DefendersPannel/index';
 import {
   FIELD_CELL_HEIGHT,
@@ -15,12 +15,12 @@ import {
   TOPPANNEL_CELL_WIDTH,
   TOPPANNEL_ROWS_COUNT,
 } from './consts';
-import { resources } from './resources';
+import { resources } from './GameResourses/resources';
 import { TopPannel } from './Grids/TopPannel';
 import { CoronaEnemy } from './Enemies/CoronaEnemy';
 import { Defender } from './Defenders/Defender';
 import { Constructable } from './interfaces';
-import { levels, AtackTimingType } from './Levels';
+import { levels } from './Levels';
 import { Enemy } from './Enemies/Enemy';
 
 export class Game {
