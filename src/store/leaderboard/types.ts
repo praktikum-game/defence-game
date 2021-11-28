@@ -15,5 +15,5 @@ export type LeaderboardThunkDispatch = ThunkDispatch<
 >;
 
 export type LeadboardActionCreator = ActionCreator<
-  ThunkAction<Promise<void>, AppState, ThunkExtraArgument, LeaderboardActions>
+  ThunkAction<Promise<LeaderboardActions | void>, AppState, ThunkExtraArgument, LeaderboardActions>
 >;
