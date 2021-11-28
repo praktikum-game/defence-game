@@ -1,7 +1,7 @@
-import { BaseGameObject } from './BaseGameObject';
-import { Drawable, Updateable } from './interfaces';
+import { BaseGameObject } from '../BaseGameObject';
+import { Drawable, Updateable } from '../interfaces';
 
-import { GameField } from './GameField';
+import { GameField } from '../Grids/GameField';
 
 export class BaseBullet extends BaseGameObject implements Drawable, Updateable {
   public static image: HTMLImageElement;

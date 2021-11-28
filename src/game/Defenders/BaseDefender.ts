@@ -1,8 +1,8 @@
-import { BaseBullet } from './BaseBullet';
-import { BaseGameObject } from './BaseGameObject';
+import { BaseBullet } from '../Bullets/BaseBullet';
+import { BaseGameObject } from '../BaseGameObject';
 
-import { GameField } from './GameField';
-import { FIELD_CELL_HEIGHT, FIELD_CELL_WIDTH } from './consts';
+import { GameField } from '../Grids/GameField';
+import { FIELD_CELL_HEIGHT, FIELD_CELL_WIDTH } from '../consts';
 
 export class BaseDefender extends BaseGameObject {
   public static image: HTMLImageElement;

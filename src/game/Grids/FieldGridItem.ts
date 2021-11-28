@@ -1,6 +1,6 @@
-import { BaseGameObject } from './BaseGameObject';
-import { FIELD_CELL_HEIGHT, FIELD_CELL_WIDTH } from './consts';
-import { Drawable } from './interfaces';
+import { BaseGameObject } from '../BaseGameObject';
+import { FIELD_CELL_HEIGHT, FIELD_CELL_WIDTH } from '../consts';
+import { Drawable } from '../interfaces';
 
 export class FieldGridItem extends BaseGameObject implements Drawable {
   constructor(x: number, y: number) {

@@ -1,17 +1,16 @@
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EndGameStatus } from '../../game/types';
-import { FIELD_HEIGHT, FIELD_WIDTH } from '../../game/consts';
 import { Button } from '../../components/Button';
 import { Modal } from '../../components/Modal';
 import { Game } from '../../game/Game';
 
-export const GamePage = (): JSX.Element => {
+export const GamePage = () => {
   const navigate = useNavigate();
-  const [runButtonIsDisabled, setRunButtonIsDisabled] = useState<boolean>(false);
-  const [infoModalIsVisible, setInfoModalIsVisible] = useState<boolean>(true);
-  const [loseModalIsVisible, setLoseModalIsVisible] = useState<boolean>(false);
-  const [winModalIsVisible, setWinModalIsVisible] = useState<boolean>(false);
+  const [runButtonIsDisabled, setRunButtonIsDisabled] = useState(false);
+  const [infoModalIsVisible, setInfoModalIsVisible] = useState(true);
+  const [loseModalIsVisible, setLoseModalIsVisible] = useState(false);
+  const [winModalIsVisible, setWinModalIsVisible] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const gameRef = useRef<Game>(null);
@@ -64,8 +63,8 @@ export const GamePage = (): JSX.Element => {
   return (
     <Fragment>
       <Modal visible={infoModalIsVisible}>
-        <p>Для начала игры расставьте защитников и нажмите "Начать игру"</p>
-        <Button text="Понятно" onClick={handleCloseInfoModal} />
+        <p>Для начала поставьте 3 банкомата</p>
+        <Button text="Вперед!" onClick={handleCloseInfoModal} />
       </Modal>
 
       <Modal visible={loseModalIsVisible}>
@@ -87,7 +86,7 @@ export const GamePage = (): JSX.Element => {
         disabled={runButtonIsDisabled}
       />
 
-      <canvas ref={canvasRef} height={FIELD_HEIGHT} width={FIELD_WIDTH}></canvas>
+      <canvas ref={canvasRef} height="768" width="1024"></canvas>
     </Fragment>
   );
 };

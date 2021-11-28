@@ -1,11 +1,31 @@
-import { BaseBullet } from './BaseBullet';
-import { BaseDefender } from './BaseDefender';
-import { BaseEnemy } from './BaseEnemy';
+// import { BaseBullet } from './Bullets/BaseBullet';
+// import { BaseDefender } from './Defenders/BaseDefender';
+import { SyringeBullet } from './Bullets/SyringeBullet';
+import { NurseDefender } from './Defenders/NurseDefender';
+import { BaseEnemy } from './Enemies/BaseEnemy';
 import { BaseGameObject } from './BaseGameObject';
-import { GameField } from './GameField';
-import { getRandomInt } from './helpers';
-import { ResourceLoader } from './ResourceLoader';
+import { GameField } from './Grids/GameField';
+import { getRandomInt, getUrls } from './helpers';
+// import { ResourceLoader } from './ResourceLoader';
+import GameResources from './GameResources';
 import { EndGameCallback } from './types';
+import { DefendersPannel } from './Grids/DefendersPannel';
+import {
+  DEFPANNEL_CELL_COUNT,
+  DEFPANNEL_CELL_HEIGHT,
+  DEFPANNEL_CELL_WIDTH,
+  DEFPANNEL_ROWS_COUNT,
+  FIELD_CELL_HEIGHT,
+  FIELD_CELL_WIDTH,
+  FIELD_COLS,
+  FIELD_ROWS,
+  TOPPANNEL_CELL_COUNT,
+  TOPPANNEL_CELL_HEIGHT,
+  TOPPANNEL_CELL_WIDTH,
+  TOPPANNEL_ROWS_COUNT,
+} from './consts';
+import { resources } from './resources';
+import { TopPannel } from './Grids/TopPannel';
 
 export class Game {
   private _canvasElement: HTMLCanvasElement;
@@ -16,11 +36,17 @@ export class Game {
 
   private _isRunning: boolean;
 
+  private _selectedDefender: BaseGameObject | null = null;
+
   private _enemies: Array<BaseEnemy> = [];
 
-  private _defenders: Array<BaseDefender> = [];
+  private _defenders: Array<NurseDefender> = [];
 
   private _gameField: GameField;
+
+  private _defendersPannel: DefendersPannel;
+
+  private _topPannel: TopPannel;
 
   private _onGameEnd: EndGameCallback;
 
@@ -32,24 +58,68 @@ export class Game {
     return this._defenders;
   }
 
+  public get selectedDefender() {
+    return this._selectedDefender;
+  }
+
   constructor(canvasEl: HTMLCanvasElement, onGameEnd: EndGameCallback) {
     this._last = 0;
     this._isRunning = false;
 
-    GameField.gameFieldWidth = canvasEl.width;
-    GameField.gameFieldHeight = canvasEl.height;
+    DefendersPannel.pannelWidth = DEFPANNEL_CELL_WIDTH * DEFPANNEL_CELL_COUNT;
+    DefendersPannel.pannelHeight = DEFPANNEL_CELL_HEIGHT * DEFPANNEL_ROWS_COUNT;
+    DefendersPannel.pannelX = 0;
+    DefendersPannel.pannelY = 0;
+
+    // GameField.gameFieldWidth = canvasEl.width - DEFPANNEL_CELL_WIDTH;
+    // GameField.gameFieldHeight = canvasEl.height - TOPPANNEL_HEIGHT;
+
+    TopPannel.pannelWidth = TOPPANNEL_CELL_WIDTH * TOPPANNEL_CELL_COUNT;
+    TopPannel.pannelHeight = TOPPANNEL_CELL_HEIGHT * TOPPANNEL_ROWS_COUNT;
+    TopPannel.pannelX = DefendersPannel.pannelWidth + 1;
+    TopPannel.pannelY = 0;
+
+    GameField.gameFieldWidth = FIELD_CELL_WIDTH * FIELD_COLS;
+    GameField.gameFieldHeight = FIELD_CELL_HEIGHT * FIELD_ROWS;
+    GameField.gameFieldX = DefendersPannel.pannelWidth + 1;
+    GameField.gameFieldY = TopPannel.pannelHeight + 1;
 
     this._canvasElement = canvasEl;
 
     this._onGameEnd = onGameEnd;
-    ResourceLoader.init();
+    // ResourceLoader.init();
+    GameResources.load(getUrls(resources) as string[]);
+
     this._canvasElement.addEventListener('click', ({ offsetX, offsetY }: MouseEvent) =>
       this.manualAddDefender(offsetX, offsetY),
     );
 
     this._ctx = this._canvasElement.getContext('2d')!;
 
-    this._gameField = new GameField(GameField.gameFieldWidth, GameField.gameFieldHeight);
+    this._defendersPannel = new DefendersPannel(
+      DefendersPannel.pannelWidth,
+      DefendersPannel.pannelHeight,
+      DefendersPannel.pannelX,
+      DefendersPannel.pannelY,
+    );
+
+    this._defendersPannel.draw(this._ctx);
+
+    this._topPannel = new TopPannel(
+      TopPannel.pannelWidth,
+      TopPannel.pannelHeight,
+      TopPannel.pannelX,
+      TopPannel.pannelY,
+    );
+
+    this._topPannel.draw(this._ctx);
+
+    this._gameField = new GameField(
+      GameField.gameFieldWidth,
+      GameField.gameFieldHeight,
+      GameField.gameFieldX,
+      GameField.gameFieldY,
+    );
 
     this._gameField.draw(this._ctx);
   }
@@ -78,7 +148,7 @@ export class Game {
         if (elementsInThisCell.length > 0) {
           return;
         }
-        const defender = new BaseDefender(cell.x, cell.y);
+        const defender = new NurseDefender(cell.x, cell.y);
         this._defenders.push(defender);
         defender.draw(this._ctx);
       }
@@ -102,6 +172,7 @@ export class Game {
   private win() {
     this._enemies = [];
     this._defenders = [];
+    this._defendersPannel.draw(this._ctx);
     this._gameField.draw(this._ctx);
     this._isRunning = false;
     this._onGameEnd('win');
@@ -171,7 +242,7 @@ export class Game {
     return false;
   }
 
-  private checkBulletCollision(obj1: BaseBullet, obj2: BaseEnemy): boolean {
+  private checkBulletCollision(obj1: SyringeBullet, obj2: BaseEnemy): boolean {
     if (
       obj1.x >= obj2.x &&
       obj1.x < obj2.x + obj2.width &&

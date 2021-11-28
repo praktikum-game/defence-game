@@ -1,8 +1,10 @@
-import { BaseGameObject } from './BaseGameObject';
-import { Drawable, Updateable } from './interfaces';
+import GameResources from '../GameResources';
+import { resources } from '../resources';
+import { BaseGameObject } from '../BaseGameObject';
+import { Drawable, Updateable } from '../interfaces';
 
 export class BaseEnemy extends BaseGameObject implements Drawable, Updateable {
-  public static image: HTMLImageElement;
+  private _image: HTMLImageElement = GameResources.get(resources.enemies.base.image);
 
   private _isMove: boolean;
 
@@ -41,7 +43,7 @@ export class BaseEnemy extends BaseGameObject implements Drawable, Updateable {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    ctx.drawImage(BaseEnemy.image, this.x, this.y + 5, 90, 90);
+    ctx.drawImage(this._image, this.x, this.y + 5, 90, 90);
   }
 
   update(delay: number) {
