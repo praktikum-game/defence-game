@@ -3,6 +3,13 @@ import { Enemy } from './Enemy';
 
 export class GreenVirusEnemy extends Enemy {
   constructor(x: number, y: number) {
-    super(x, y, resources.enemies.greenvirus.image, 0.01, 10, 90);
+    super({
+      imageUrl: resources.enemies.greenvirus.image,
+      x,
+      y,
+      speed: 0.01,
+      damage: 10,
+      health: 90,
+    });
   }
 }

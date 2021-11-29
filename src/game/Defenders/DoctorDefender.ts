@@ -10,6 +10,16 @@ export class DoctorDefender extends Defender {
   public static iconUrl = resources.defenders.doctor.icon;
 
   constructor(x: number, y: number) {
-    super(DoctorDefender.bullet, x, y, 80, 80, DoctorDefender.imageUrl, 150, 11, 140);
+    super({
+      bullet: DoctorDefender.bullet,
+      x,
+      y,
+      width: 80,
+      height: 80,
+      imageUrl: DoctorDefender.imageUrl,
+      health: 150,
+      damage: 11,
+      fireFrameInterval: 140,
+    });
   }
 }

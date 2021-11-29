@@ -86,16 +86,16 @@ export class Game {
 
     TopPannel.pannelWidth = TOPPANNEL_CELL_WIDTH * TOPPANNEL_CELL_COUNT;
     TopPannel.pannelHeight = TOPPANNEL_CELL_HEIGHT * TOPPANNEL_ROWS_COUNT;
-    TopPannel.pannelX = DefendersPannel.pannelWidth + 1;
+    TopPannel.pannelX = DefendersPannel.pannelWidth;
     TopPannel.pannelY = 0;
 
     GameField.gameFieldWidth = FIELD_CELL_WIDTH * FIELD_COLS;
     GameField.gameFieldHeight = FIELD_CELL_HEIGHT * FIELD_ROWS;
-    GameField.gameFieldX = DefendersPannel.pannelWidth + 1;
-    GameField.gameFieldY = TopPannel.pannelHeight + 1;
+    GameField.gameFieldX = DefendersPannel.pannelWidth;
+    GameField.gameFieldY = TopPannel.pannelHeight;
 
     canvasEl.width = DefendersPannel.pannelWidth + GameField.gameFieldWidth;
-    canvasEl.height = TopPannel.pannelHeight + 1 + GameField.gameFieldHeight;
+    canvasEl.height = TopPannel.pannelHeight + GameField.gameFieldHeight;
     this._canvasElement = canvasEl;
 
     this._onGameEnd = onGameEnd;

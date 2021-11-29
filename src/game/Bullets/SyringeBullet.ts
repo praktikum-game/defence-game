@@ -3,6 +3,6 @@ import { Bullet } from './Bullet';
 
 export class SyringeBullet extends Bullet {
   constructor(x: number, y: number) {
-    super(0.2, x, y, 88, 14, resources.bullets.syringe.image);
+    super({ speed: 0.2, x, y, width: 88, height: 14, imageUrl: resources.bullets.syringe.image });
   }
 }

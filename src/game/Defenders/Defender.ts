@@ -1,9 +1,16 @@
 import { GameResources } from '../GameResourses';
 import { Bullet } from '../Bullets/Bullet';
-import { FIELD_CELL_HEIGHT, FIELD_CELL_WIDTH } from '../consts';
+import {
+  DEFAULT_FIRE_INTERVAL,
+  DEFENDER_DEFAULT_DAMAGE,
+  DEFENDER_DEFAULT_HEALTH,
+  FIELD_CELL_HEIGHT,
+  FIELD_CELL_WIDTH,
+} from '../consts';
 import { GameField } from '../Grids/GameField';
 import { Constructable } from '../interfaces';
 import { BaseGameObject } from '../BaseGameObject';
+import { DefenderInitType } from './types';
 
 export abstract class Defender extends BaseGameObject {
   protected _image: HTMLImageElement;
@@ -54,25 +61,25 @@ export abstract class Defender extends BaseGameObject {
     this._bullets = [...value];
   }
 
-  constructor(
-    bullet: Constructable<Bullet>,
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    imageUrl: string,
-    health?: number,
-    damage?: number,
-    fireFrameInterval?: number,
-  ) {
+  constructor({
+    bullet,
+    x,
+    y,
+    width,
+    height,
+    imageUrl,
+    health,
+    damage,
+    fireFrameInterval,
+  }: DefenderInitType) {
     super(x, y, FIELD_CELL_WIDTH, FIELD_CELL_HEIGHT);
     this._isFire = true;
-    this._health = health ?? 100;
+    this._health = health ?? DEFENDER_DEFAULT_HEALTH;
     this._bullet = bullet;
     this._bullets = [];
     this._it = 0;
-    this._damage = damage ?? 100;
-    this._fireFrameInterval = fireFrameInterval ?? 200;
+    this._damage = damage ?? DEFENDER_DEFAULT_DAMAGE;
+    this._fireFrameInterval = fireFrameInterval ?? DEFAULT_FIRE_INTERVAL;
     this._image = GameResources.get(imageUrl) ?? null;
     this._width = width ?? FIELD_CELL_WIDTH;
     this._height = height ?? FIELD_CELL_HEIGHT;
@@ -97,7 +104,7 @@ export abstract class Defender extends BaseGameObject {
   public draw(ctx: CanvasRenderingContext2D) {
     this._bullets.forEach((bullet) => bullet.draw(ctx));
     if (this._image) {
-      ctx.drawImage(this._image, this.x, this.y, this.height - 1, this.width - 1);
+      ctx.drawImage(this._image, this._x, this.y, this._height, this._width);
     } else {
       ctx.fillRect(this._x, this._y, this._width, this._height);
     }

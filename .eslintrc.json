@@ -22,6 +22,7 @@
     "import/extensions": "off",
     "@typescript-eslint/no-explicit-any": "error",
     "no-debugger": "off",
+    // "no-magic-numbers": "warn", // Раскомментируйте, если нужно проверить на лишние числа
 
     "jest/require-hook": "off",
     "jest/no-hooks": "off",
