@@ -301,7 +301,11 @@ export class Game {
 
   private _putCurrency = () => {
     this._topPannel.pannelGrid[0].clear(this._ctx);
-    this._topPannel.pannelGrid[0].draw(this._ctx, this._currency.value.toString());
+    this._topPannel.pannelGrid[0].draw(
+      this._ctx,
+      this._currency.value.toString(),
+      GameResources.get(resources.toppannel.money.icon),
+    );
   };
 
   private redraw(delay: number) {
@@ -311,8 +315,6 @@ export class Game {
     if (this._currency.autoRise(delay)) {
       this._putCurrency();
     }
-
-    // console.log(this._currency.value);
 
     if (this._enemies.length < 1) {
       this.win();

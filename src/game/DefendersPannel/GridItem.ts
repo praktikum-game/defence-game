@@ -24,7 +24,7 @@ export class GridItem extends BaseGameObject implements Drawable {
     context.fillRect(this.x, this.y, this.width, this.height);
     context.strokeRect(this.x, this.y, this.width, this.height);
     if (this._sprite) {
-      this._sprite.draw(context, this.x, this.y, this.width, this.height);
+      this._sprite.draw();
     }
   }
 }

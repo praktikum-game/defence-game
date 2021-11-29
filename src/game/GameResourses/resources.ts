@@ -31,4 +31,9 @@ export const resources = {
       image: 'green_virus.png',
     },
   },
+  toppannel: {
+    money: {
+      icon: 'money_icon.png',
+    },
+  },
 };

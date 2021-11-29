@@ -5,6 +5,8 @@ import {
   DEFPANNEL_CELL_HEIGHT,
   DEFPANNEL_CELL_WIDTH,
   DEFPANNEL_ROWS_COUNT,
+  TOPPANNEL_CELL_HEIGHT,
+  TOPPANNEL_ROWS_COUNT,
 } from '../consts';
 import { Grid } from './Grid';
 import { levels } from '../Levels';
@@ -25,7 +27,7 @@ export class DefendersPannel {
     DefendersPannel.pannelWidth = DEFPANNEL_CELL_WIDTH * DEFPANNEL_CELL_COUNT;
     DefendersPannel.pannelHeight = DEFPANNEL_CELL_HEIGHT * DEFPANNEL_ROWS_COUNT;
     DefendersPannel.pannelX = 0;
-    DefendersPannel.pannelY = 0;
+    DefendersPannel.pannelY = TOPPANNEL_CELL_HEIGHT * TOPPANNEL_ROWS_COUNT + 1;
 
     this._createGrid();
   }
@@ -60,7 +62,7 @@ export class DefendersPannel {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const { iconUrl } = <any>lvlDefender;
         const icon = iconUrl;
-        g.draw(ctx, new Sprite(g.x, g.y, g.width, g.height, icon, lvlDefender));
+        g.draw(ctx, new Sprite(ctx, g.x, g.y, g.width, g.height, icon, lvlDefender));
       }
     });
   };
@@ -70,8 +72,11 @@ export class DefendersPannel {
 
     this._grid?.pannelGrid.forEach((cell) => {
       // определяем, входят ли координаты клика в периметр текущей ячейки
-      if (cell.x < x && cell.x + cell.width > x && cell.y < y && cell.y + cell.width > y) {
-        if (cell.sprite) result = cell.sprite.onClick();
+      if (cell.x < x && cell.x + cell.width > x && cell.y < y && cell.y + cell.height > y) {
+        if (cell.sprite && cell.sprite.isActive) result = cell.sprite.onClick();
+      } else if (cell.sprite) {
+        cell.sprite.isSelected = false;
+        cell.sprite.redraw();
       }
     });
 

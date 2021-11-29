@@ -8,8 +8,7 @@ export class FieldGridItem extends BaseGameObject implements Drawable {
   }
 
   draw(context: CanvasRenderingContext2D) {
-    context.strokeStyle = 'blue';
-
+    context.strokeStyle = 'white';
     context.strokeRect(this.x, this.y, this.width, this.height);
   }
 }
