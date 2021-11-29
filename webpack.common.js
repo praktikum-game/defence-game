@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -15,6 +16,9 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.json'],
   },
   plugins: [
+    new CopyPlugin({
+      patterns: [{ from: './src/game/assets/images/', to: './assets/images/' }],
+    }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: path.resolve(__dirname, 'public', 'index.html'),
