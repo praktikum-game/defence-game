@@ -8,6 +8,14 @@ export const resources = {
       image: 'nurse_image.png',
       icon: 'nurse_icon.png',
     },
+    shield: {
+      image: 'shield_image.png',
+      icon: 'shield_icon.png',
+    },
+    bankomat: {
+      image: 'bankomat_image.png',
+      icon: 'bankomat_icon.png',
+    },
   },
   bullets: {
     pill: {

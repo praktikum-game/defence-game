@@ -22,9 +22,13 @@ export const BULLET_DEFAULT_SPEED = 0.5;
 
 export const DEFENDER_DEFAULT_HEALTH = 100;
 export const DEFENDER_DEFAULT_DAMAGE = 100;
+export const DEFENDER_DEFAULT_COST = 50;
 
 export const DEFAULT_FIRE_INTERVAL = 200;
 
 export const ENEMY_DEFAULT_SPEED = 0.01;
 export const ENEMY_DEFAULT_DAMAGE = 8;
+export const ENEMY_DEFAULT_DAMAGE_INTERVAL = 3;
 export const ENEMY_DEFAULT_HEALTH = 100;
+
+export const BANKOMAT_CURRENCY = 25;

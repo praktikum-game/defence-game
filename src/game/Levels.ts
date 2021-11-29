@@ -1,5 +1,7 @@
+import { BankomatDefender } from './Defenders/BankomatDefender';
 import { DoctorDefender } from './Defenders/DoctorDefender';
 import { NurseDefender } from './Defenders/NurseDefender';
+import { ShieldDefender } from './Defenders/ShieldDefender';
 import { CoronaEnemy } from './Enemies/CoronaEnemy';
 import { GreenVirusEnemy } from './Enemies/GreenVirusEnemy';
 import { LevelsType } from './types';
@@ -7,7 +9,7 @@ import { LevelsType } from './types';
 class Levels {
   private _settings: LevelsType = {
     1: {
-      defenders: [NurseDefender, DoctorDefender],
+      defenders: [NurseDefender, BankomatDefender, ShieldDefender, DoctorDefender],
       enemies: [CoronaEnemy, GreenVirusEnemy],
       bullets: [NurseDefender.bullet, DoctorDefender.bullet],
       atack: [
@@ -16,15 +18,19 @@ class Levels {
           enemies: [CoronaEnemy],
         },
         {
-          timeout: 7,
-          enemies: [CoronaEnemy, CoronaEnemy],
-        },
-        {
-          timeout: 8,
-          enemies: [CoronaEnemy, GreenVirusEnemy],
+          timeout: 15,
+          enemies: [CoronaEnemy],
         },
         {
           timeout: 15,
+          enemies: [CoronaEnemy],
+        },
+        {
+          timeout: 15,
+          enemies: [CoronaEnemy, GreenVirusEnemy],
+        },
+        {
+          timeout: 30,
           enemies: [GreenVirusEnemy, GreenVirusEnemy, CoronaEnemy, CoronaEnemy, CoronaEnemy],
         },
       ],

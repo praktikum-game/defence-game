@@ -2,7 +2,7 @@ import { Bullet } from '../Bullets/Bullet';
 import { Constructable } from '../interfaces';
 
 export type DefenderInitType = {
-  bullet: Constructable<Bullet>;
+  bullet?: Constructable<Bullet>;
   x: number;
   y: number;
   width: number;
@@ -11,4 +11,5 @@ export type DefenderInitType = {
   health?: number;
   damage?: number;
   fireFrameInterval?: number;
+  cost?: number;
 };

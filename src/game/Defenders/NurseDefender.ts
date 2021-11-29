@@ -9,6 +9,8 @@ export class NurseDefender extends Defender {
 
   public static iconUrl = resources.defenders.nurse.icon;
 
+  public static cost = 100;
+
   constructor(x: number, y: number) {
     super({
       bullet: NurseDefender.bullet,
@@ -20,6 +22,7 @@ export class NurseDefender extends Defender {
       health: 100,
       damage: 9,
       fireFrameInterval: 120,
+      cost: NurseDefender.cost,
     });
   }
 }

@@ -9,6 +9,8 @@ export class DoctorDefender extends Defender {
 
   public static iconUrl = resources.defenders.doctor.icon;
 
+  public static cost = 175;
+
   constructor(x: number, y: number) {
     super({
       bullet: DoctorDefender.bullet,
@@ -17,9 +19,10 @@ export class DoctorDefender extends Defender {
       width: 80,
       height: 80,
       imageUrl: DoctorDefender.imageUrl,
-      health: 150,
-      damage: 11,
+      health: 250,
+      damage: 50,
       fireFrameInterval: 140,
+      cost: DoctorDefender.cost,
     });
   }
 }

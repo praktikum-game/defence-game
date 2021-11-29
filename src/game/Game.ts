@@ -1,4 +1,3 @@
-import { SyringeBullet } from './Bullets/SyringeBullet';
 import { BaseGameObject } from './BaseGameObject';
 import { GameField } from './Grids/GameField';
 import { getRandomInt, getUrls } from './helpers';
@@ -6,6 +5,7 @@ import { GameResources } from './GameResourses';
 import { AtackTimingType, EndGameCallback } from './types';
 import { DefendersPannel } from './DefendersPannel/index';
 import {
+  BANKOMAT_CURRENCY,
   CURRENCY_RISE_INTERVAL,
   CURRENCY_RISE_VALUE,
   CURRENCY_START_VALUE,
@@ -20,12 +20,13 @@ import {
 } from './consts';
 import { resources } from './GameResourses/resources';
 import { TopPannel } from './Grids/TopPannel';
-import { CoronaEnemy } from './Enemies/CoronaEnemy';
 import { Defender } from './Defenders/Defender';
 import { Constructable } from './interfaces';
 import { levels } from './Levels';
 import { Enemy } from './Enemies/Enemy';
 import { GameCurrency } from './GameCurrency';
+import { BankomatDefender } from './Defenders/BankomatDefender';
+import { Bullet } from './Bullets/Bullet';
 
 export class Game {
   private _gameLevel: number = 0;
@@ -251,10 +252,13 @@ export class Game {
         if (elementsInThisCell.length > 0) {
           return;
         }
-        if (this._selectedDefender) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if (this._selectedDefender && this._currency.value >= (<any>this._selectedDefender).cost) {
           const defender = new this._selectedDefender(cell.x, cell.y);
           this._defenders.push(defender);
           defender.draw(this._ctx);
+          this._currency.value -= defender.cost;
+          this._putCurrency();
         }
       }
     });
@@ -277,7 +281,6 @@ export class Game {
   private win() {
     this._enemies = [];
     this._defenders = [];
-    this._defendersPannel!.draw(this._ctx);
     this._gameField.draw(this._ctx);
     this._isRunning = false;
     this._onGameEnd('win');
@@ -308,6 +311,23 @@ export class Game {
     );
   };
 
+  private _checkActiveDefenders(currency: number) {
+    this._defendersPannel.grid?.pannelGrid.forEach((cell) => {
+      if (cell.sprite && cell.sprite.type) {
+        const { type: defender } = cell.sprite;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const defenderCost = (<any>defender).cost;
+        if (currency >= defenderCost) {
+          cell.sprite.isActive = true;
+          cell.sprite.redraw();
+        } else {
+          cell.sprite.isActive = false;
+          cell.sprite.redraw();
+        }
+      }
+    });
+  }
+
   private redraw(delay: number) {
     if (!this._isRunning) return;
 
@@ -315,6 +335,7 @@ export class Game {
     if (this._currency.autoRise(delay)) {
       this._putCurrency();
     }
+    this._checkActiveDefenders(this._currency.value);
 
     if (this._enemies.length < 1) {
       this.win();
@@ -330,7 +351,10 @@ export class Game {
       for (const defender of this.defenders) {
         if (this.checkCollision(defender, enemy)) {
           enemy.isMove = false;
-          defender.getDamage(enemy.damage);
+          if (enemy.isAtack(delay)) {
+            defender.getDamage(enemy.damage);
+            console.log(defender.health);
+          }
 
           // если кончились очки здоровья, то обновляем значения массива защитников
           if (defender.health < 0) {
@@ -369,7 +393,14 @@ export class Game {
     this.enemies.forEach((enemy) => enemy.update(delay).draw(this._ctx));
 
     this.defenders.forEach((d) => {
-      d.update(delay);
+      if (d instanceof BankomatDefender) {
+        if (d.isGetMoney(delay)) {
+          this._currency.value += BANKOMAT_CURRENCY;
+          this._putCurrency();
+        }
+      } else {
+        d.update(delay);
+      }
       d.draw(this._ctx);
     });
 
@@ -383,7 +414,7 @@ export class Game {
     return false;
   }
 
-  private checkBulletCollision(obj1: SyringeBullet, obj2: CoronaEnemy): boolean {
+  private checkBulletCollision(obj1: Bullet, obj2: Enemy): boolean {
     if (
       obj1.x >= obj2.x &&
       obj1.x < obj2.x + obj2.width &&

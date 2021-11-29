@@ -18,6 +18,10 @@ export class GameCurrency {
     return this._value;
   }
 
+  public set value(val: number) {
+    this._value = val;
+  }
+
   public autoRise = (delay: number) => {
     this._timefromLastUpdate += delay;
     if (this._timefromLastUpdate >= this._autoRiseInterval * 1000) {

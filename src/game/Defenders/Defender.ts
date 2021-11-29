@@ -2,6 +2,7 @@ import { GameResources } from '../GameResourses';
 import { Bullet } from '../Bullets/Bullet';
 import {
   DEFAULT_FIRE_INTERVAL,
+  DEFENDER_DEFAULT_COST,
   DEFENDER_DEFAULT_DAMAGE,
   DEFENDER_DEFAULT_HEALTH,
   FIELD_CELL_HEIGHT,
@@ -25,13 +26,15 @@ export abstract class Defender extends BaseGameObject {
 
   protected _damage: number;
 
-  protected _bullet: Constructable<Bullet>;
+  protected _bullet: Constructable<Bullet> | undefined;
 
   protected _bullets: Array<Bullet>;
 
   protected _width: number;
 
   protected _height: number;
+
+  protected _cost: number;
 
   public get health() {
     return this._health;
@@ -53,6 +56,10 @@ export abstract class Defender extends BaseGameObject {
     return this._fireFrameInterval;
   }
 
+  public get cost() {
+    return this._cost;
+  }
+
   public set isFire(value: boolean) {
     this._isFire = value;
   }
@@ -71,6 +78,7 @@ export abstract class Defender extends BaseGameObject {
     health,
     damage,
     fireFrameInterval,
+    cost,
   }: DefenderInitType) {
     super(x, y, FIELD_CELL_WIDTH, FIELD_CELL_HEIGHT);
     this._isFire = true;
@@ -83,6 +91,7 @@ export abstract class Defender extends BaseGameObject {
     this._image = GameResources.get(imageUrl) ?? null;
     this._width = width ?? FIELD_CELL_WIDTH;
     this._height = height ?? FIELD_CELL_HEIGHT;
+    this._cost = cost ?? DEFENDER_DEFAULT_COST;
   }
 
   public getDamage(damage: number) {
@@ -93,7 +102,7 @@ export abstract class Defender extends BaseGameObject {
     if (!this.isFire) return;
 
     // каждые 200 фреймов стреляем
-    if (delay && this._it % this._fireFrameInterval === 0) {
+    if (this._bullet && delay && this._it % this._fireFrameInterval === 0) {
       const bull = new this._bullet(this._x + this._width / 2, this._y + this._height / 2);
       this._bullets.push(bull);
       this._it = 1;

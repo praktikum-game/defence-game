@@ -29,7 +29,7 @@ export class Sprite extends BaseGameObject {
     this._image = GameResources.get(imageUrl);
     this._type = type ?? null;
     this._isSelected = false;
-    this._isActive = true;
+    this._isActive = false;
     this._ctx = ctx;
   }
 
@@ -39,6 +39,10 @@ export class Sprite extends BaseGameObject {
 
   public set isSelected(value: boolean) {
     this._isSelected = value;
+  }
+
+  public set isActive(value: boolean) {
+    this._isActive = value;
   }
 
   public draw() {
