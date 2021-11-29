@@ -12,8 +12,6 @@ export function reducer(state = initialState, actions: LeaderboardActions): Lead
       return { ...state, loading: true };
     case 'LB_SUCCESS_FETCH_LIST_DATA':
       return { ...state, usersList: actions.payload };
-    case 'LB_FAILED_FETCH_LIST_DATA':
-      return { ...state };
     case 'LB_FINISH_FETCH_LIST_DATA':
       return { ...state, loading: false };
     default:
