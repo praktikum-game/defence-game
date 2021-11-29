@@ -1,8 +1,7 @@
 import { setImage } from '../helpers';
 import { GameResoursesType } from './types';
 
-// Объект для хранения загруженных изображений: ключ - урл изображения, значение - Image
-
+/**Объект для хранения загруженных изображений: ключ - урл изображения, значение - Image */
 class GameResources {
   private _resourceCache: GameResoursesType = {};
 

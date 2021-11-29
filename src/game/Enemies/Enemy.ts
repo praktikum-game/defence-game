@@ -1,7 +1,14 @@
-import { FIELD_CELL_HEIGHT, FIELD_CELL_WIDTH } from '../consts';
+import {
+  ENEMY_DEFAULT_DAMAGE,
+  ENEMY_DEFAULT_HEALTH,
+  ENEMY_DEFAULT_SPEED,
+  FIELD_CELL_HEIGHT,
+  FIELD_CELL_WIDTH,
+} from '../consts';
 import { GameResources } from '../GameResourses';
 import { BaseGameObject } from '../BaseGameObject';
 import { Drawable, Updateable } from '../interfaces';
+import { EnemyInitType } from './types';
 
 export class Enemy extends BaseGameObject implements Drawable, Updateable {
   private _image: HTMLImageElement;
@@ -28,21 +35,14 @@ export class Enemy extends BaseGameObject implements Drawable, Updateable {
     this._isMove = value;
   }
 
-  constructor(
-    x: number,
-    y: number,
-    imageUrl: string,
-    speed?: number,
-    damage?: number,
-    health?: number,
-  ) {
+  constructor({ imageUrl, x, y, speed, damage, health }: EnemyInitType) {
     super(x, y, FIELD_CELL_WIDTH, FIELD_CELL_HEIGHT);
     this._startPosition = x;
 
-    this._speed = speed ?? 0.01;
+    this._speed = speed ?? ENEMY_DEFAULT_SPEED;
     this._isMove = false;
-    this._damage = damage ?? 8;
-    this._health = health ?? 100;
+    this._damage = damage ?? ENEMY_DEFAULT_DAMAGE;
+    this._health = health ?? ENEMY_DEFAULT_HEALTH;
     this._image = GameResources.get(imageUrl);
   }
 
@@ -51,7 +51,7 @@ export class Enemy extends BaseGameObject implements Drawable, Updateable {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    ctx.drawImage(this._image, this.x, this.y, 80, 80);
+    ctx.drawImage(this._image, this.x, this.y, FIELD_CELL_WIDTH, FIELD_CELL_HEIGHT);
   }
 
   update(delay: number) {

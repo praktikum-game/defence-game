@@ -10,6 +10,16 @@ export class NurseDefender extends Defender {
   public static iconUrl = resources.defenders.nurse.icon;
 
   constructor(x: number, y: number) {
-    super(NurseDefender.bullet, x, y, 80, 80, NurseDefender.imageUrl, 100, 9, 120);
+    super({
+      bullet: NurseDefender.bullet,
+      x,
+      y,
+      width: 80,
+      height: 80,
+      imageUrl: NurseDefender.imageUrl,
+      health: 100,
+      damage: 9,
+      fireFrameInterval: 120,
+    });
   }
 }
