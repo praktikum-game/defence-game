@@ -54,7 +54,7 @@ export const GamePage = (): JSX.Element => {
 
   const handleStartGame = useCallback(() => {
     if (gameRef.current) {
-      gameRef.current?.run();
+      gameRef.current.run();
       setRunButtonIsDisabled(true);
     }
   }, []);
