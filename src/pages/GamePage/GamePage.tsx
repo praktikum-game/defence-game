@@ -1,9 +1,11 @@
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EndGameStatus } from '../../game/types';
 import { Button } from '../../components/Button';
 import { Modal } from '../../components/Modal';
 import { Game } from '../../game/Game';
+import { useFullscreen } from '../../hooks/useFullscreen';
+import './game-page.css';
 
 export const GamePage = () => {
   const navigate = useNavigate();
@@ -11,8 +13,22 @@ export const GamePage = () => {
   const [loseModalIsVisible, setLoseModalIsVisible] = useState(false);
   const [winModalIsVisible, setWinModalIsVisible] = useState(false);
 
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const gameRef = useRef<Game>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const gameRef = useRef<Game | null>(null);
+  const gameContainerElementRef = useRef<HTMLDivElement | null>(null);
+
+  const handleFullscreenToggle = useCallback(() => {
+    if (!document.fullscreenElement) {
+      gameContainerElementRef.current?.requestFullscreen();
+    } else {
+      // eslint-disable-next-line no-lonely-if
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  }, []);
+
+  useFullscreen(handleFullscreenToggle);
 
   const handleGameEnd = useCallback((status: EndGameStatus) => {
     switch (status) {
@@ -31,7 +47,6 @@ export const GamePage = () => {
 
   useEffect(() => {
     if (canvasRef.current) {
-      // @ts-ignore
       gameRef.current = new Game(canvasRef.current, handleGameEnd);
     }
   }, [handleGameEnd]);
@@ -56,7 +71,7 @@ export const GamePage = () => {
   }, [navigate]);
 
   return (
-    <Fragment>
+    <>
       <Modal visible={infoModalIsVisible}>
         <p>Освободи мир от вирусов! </p>
         <Button
