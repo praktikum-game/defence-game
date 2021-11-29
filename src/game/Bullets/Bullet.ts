@@ -22,6 +22,7 @@ export class Bullet extends BaseGameObject implements Drawable, Updateable {
 
   public update(delay: number) {
     const dx = this._speed * delay;
+    // console.log(this._x, GameField.gameFieldWidth);
     if (this._x > GameField.gameFieldWidth) {
       this._x = GameField.gameFieldWidth;
     } else {

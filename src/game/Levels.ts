@@ -18,19 +18,19 @@ class Levels {
           enemies: [CoronaEnemy],
         },
         {
-          timeout: 15,
+          timeout: 5,
           enemies: [CoronaEnemy],
         },
         {
-          timeout: 15,
+          timeout: 5,
           enemies: [CoronaEnemy],
         },
         {
-          timeout: 15,
+          timeout: 10,
           enemies: [CoronaEnemy, GreenVirusEnemy],
         },
         {
-          timeout: 30,
+          timeout: 10,
           enemies: [GreenVirusEnemy, GreenVirusEnemy, CoronaEnemy, CoronaEnemy, CoronaEnemy],
         },
       ],

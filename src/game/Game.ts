@@ -95,8 +95,8 @@ export class Game {
     GameField.gameFieldX = DefendersPannel.pannelWidth;
     GameField.gameFieldY = TopPannel.pannelHeight;
 
-    canvasEl.width = DefendersPannel.pannelWidth + GameField.gameFieldWidth;
-    canvasEl.height = TopPannel.pannelHeight + GameField.gameFieldHeight;
+    canvasEl.width = DefendersPannel.pannelWidth + GameField.gameFieldWidth - FIELD_CELL_WIDTH + 1;
+    canvasEl.height = TopPannel.pannelHeight + GameField.gameFieldHeight + 1;
     this._canvasElement = canvasEl;
 
     this._onGameEnd = onGameEnd;
@@ -134,7 +134,7 @@ export class Game {
 
     items.forEach((item) => {
       const enemy = new (item as Constructable<Enemy>)(
-        getRandomInt(GameField.gameFieldWidth, GameField.gameFieldWidth + FIELD_CELL_WIDTH),
+        GameField.gameFieldWidth + FIELD_CELL_WIDTH,
         coordsY[getRandomInt(0, 5)],
       );
       result.push(enemy);
@@ -414,12 +414,11 @@ export class Game {
     return false;
   }
 
-  private checkBulletCollision(obj1: Bullet, obj2: Enemy): boolean {
+  private checkBulletCollision(bullet: Bullet, enemy: Enemy): boolean {
     if (
-      obj1.x >= obj2.x &&
-      obj1.x < obj2.x + obj2.width &&
-      obj1.y > obj2.y &&
-      obj1.y < obj2.y + obj2.height
+      bullet.x + bullet.width > enemy.x &&
+      bullet.y >= enemy.y &&
+      bullet.y <= enemy.y + enemy.height
     ) {
       return true;
     }

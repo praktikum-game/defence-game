@@ -27,7 +27,7 @@ export class DefendersPannel {
     DefendersPannel.pannelWidth = DEFPANNEL_CELL_WIDTH * DEFPANNEL_CELL_COUNT;
     DefendersPannel.pannelHeight = DEFPANNEL_CELL_HEIGHT * DEFPANNEL_ROWS_COUNT;
     DefendersPannel.pannelX = 0;
-    DefendersPannel.pannelY = TOPPANNEL_CELL_HEIGHT * TOPPANNEL_ROWS_COUNT + 1;
+    DefendersPannel.pannelY = TOPPANNEL_CELL_HEIGHT * TOPPANNEL_ROWS_COUNT;
 
     this._createGrid();
   }
