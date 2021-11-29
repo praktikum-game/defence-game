@@ -22,11 +22,8 @@ export const GamePage = (): JSX.Element => {
   const handleFullscreenToggle = useCallback(() => {
     if (!document.fullscreenElement) {
       gameContainerElementRef.current?.requestFullscreen();
-    } else {
-      // eslint-disable-next-line no-lonely-if
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      }
+    } else if (document.exitFullscreen) {
+      document.exitFullscreen();
     }
   }, []);
 
