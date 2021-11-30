@@ -1,10 +1,14 @@
-import { leaderboarApi } from '../api/leaderboard/LeadboardAPI';
+import { authAPI } from '../api/auth';
+import { leaderboarAPI } from '../api/leaderboard';
+import { usersAPI } from '../api/users';
 // eslint-disable-next-line import/no-cycle
 import { RootReducer } from './store';
 
 export type ThunkExtraArgument = {
   api: {
-    lb: typeof leaderboarApi;
+    leaderboard: typeof leaderboarAPI;
+    auth: typeof authAPI;
+    users: typeof usersAPI;
   };
 };
 

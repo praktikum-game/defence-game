@@ -1,12 +1,14 @@
-import { BaseAPI } from './BaseAPI';
-import { IProfilePasswordUpdateRequest, IProfileUpdateRequest } from './types';
+import { AxiosResponse } from 'axios';
+import { UserData } from '../auth';
+import { BaseAPI } from '../BaseAPI';
+import { ProfilePasswordUpdateRequest, ProfileUpdateRequest } from './types';
 
 class UsersAPI extends BaseAPI {
   constructor() {
     super('/user');
   }
 
-  updateProfile(data: IProfileUpdateRequest) {
+  updateProfile(data: ProfileUpdateRequest): Promise<AxiosResponse<UserData>> {
     return this.http.put('/profile', data);
   }
 
@@ -14,7 +16,7 @@ class UsersAPI extends BaseAPI {
     return this.http.put('/profile/avatar', data);
   }
 
-  updatePassword(data: IProfilePasswordUpdateRequest) {
+  updatePassword(data: ProfilePasswordUpdateRequest) {
     return this.http.put('/password', data);
   }
 

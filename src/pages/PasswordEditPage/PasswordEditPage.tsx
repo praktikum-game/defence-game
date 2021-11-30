@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
 import { Header } from '../../components/Header';
@@ -10,14 +11,15 @@ import { bindArgsFromN } from '../../utilities/utilities';
 import { Avatar } from '../../components/Avatar';
 import { Footer } from '../../components/Footer';
 import { InputNames } from '../../consts';
-import { usersController } from '../../controllers';
-import { storeOld } from '../../store';
+import { AppState } from '../../store';
+import { useFormInput } from '../../components/Form/hooks/useFormInput';
+import { ProfilePasswordUpdateRequest, usersAPI } from '../../api/users';
 
 import './passwordEditPage.css';
-import { useFormInput } from '../../components/Form/hooks/useFormInput';
 
 export const PasswordEditPage = () => {
   const navigate = useNavigate();
+  const userData = useSelector((state: AppState) => state.user.data);
 
   const [editResult, setEditResult] = useState(false);
 
@@ -42,14 +44,19 @@ export const PasswordEditPage = () => {
     }
   }, [editResult, navigate]);
 
-  const updatePasswordCallback = useCallback(
-    async (data: FormData) => usersController.updatePassword(data),
-    [],
-  );
+  useEffect(() => {
+    if (!userData) {
+      navigate('/');
+    }
+  }, []);
 
-  if (storeOld.user === null) {
-    return <Navigate to="/login" />;
-  }
+  const updatePasswordCallback = useCallback(async (data: FormData) => {
+    const passwordData: ProfilePasswordUpdateRequest = {
+      oldPassword: String(data.get('oldPassword')),
+      newPassword: String(data.get('newPassword')),
+    };
+    usersAPI.updatePassword(passwordData);
+  }, []);
 
   return (
     <div className="profile-edit-page">

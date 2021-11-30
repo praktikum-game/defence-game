@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import React, { useEffect, useCallback } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
 import { Header } from '../../components/Header';
@@ -9,8 +10,7 @@ import EditIcon from './static/edit.svg';
 import { Avatar } from '../../components/Avatar';
 import { Footer } from '../../components/Footer';
 import { InputNames } from '../../consts';
-import { storeOld } from '../../store';
-import { usersController } from '../../controllers';
+import { AppState } from '../../store';
 import {
   loginValidator,
   emailValidator,
@@ -18,12 +18,17 @@ import {
   phoneValidator,
 } from '../../utilities/validators';
 import { useFormInput } from '../../components/Form/hooks/useFormInput';
+import { ProfileUpdateRequest } from '../../api/users';
+import { userUpdateProfile } from '../../store/user/actions/action-creators';
+
 import './profileEditPage.css';
 
 export const ProfileEditPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userData = useSelector((state: AppState) => state.user.data);
 
-  const [editResult, setEditResult] = useState(false);
+  // const [editResult, setEditResult] = useState(false);
 
   const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
     useFormInput(loginValidator);
@@ -50,19 +55,32 @@ export const ProfileEditPage = () => {
     useFormInput(emailValidator);
 
   useEffect(() => {
-    if (editResult) {
-      navigate('/profile-edit', { replace: true });
+    if (!userData) {
+      navigate('/');
     }
-  }, [editResult, navigate]);
+  }, [userData, navigate]);
 
-  const updateProfileCallback = useCallback(
-    async (data: FormData) => usersController.updateProfile(data),
-    [],
-  );
+  const updateProfileCallback = useCallback(async (data: FormData) => {
+    const profileUpdateData: ProfileUpdateRequest = {
+      first_name: String(data.get('first_name')),
+      second_name: String(data.get('second_name')),
+      display_name: String(data.get('display_name')),
+      login: String(data.get('login')),
+      email: String(data.get('email')),
+      phone: String(data.get('phone')),
+    };
 
-  if (storeOld.user === null) {
-    return <Navigate to="/login" />;
-  }
+    dispatch(userUpdateProfile(profileUpdateData));
+  }, []);
+
+  // async updateAvatar(formData: FormData) {
+  //   try {
+  //     const response = await this.api.updateAvatar(formData);
+  //     storeOld.user = response.data;
+
+  //     // eslint-disable-next-line
+  //   } catch {}
+  // }
 
   return (
     <div className="profile-edit-page">
@@ -81,7 +99,7 @@ export const ProfileEditPage = () => {
             displayNameValidationResult,
           ]}
           controllerCallback={updateProfileCallback}
-          setSubmitResult={setEditResult}
+          // setSubmitResult={setEditResult}
         >
           <InputField
             name={InputNames.LOGIN}

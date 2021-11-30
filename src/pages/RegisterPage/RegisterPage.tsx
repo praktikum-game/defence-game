@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Link, useNavigate, Navigate } from 'react-router-dom';
+import React, { useEffect, useCallback } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Footer } from '../../components/Footer';
 import { PageContainer } from '../../components/PageContainer';
 import { Header } from '../../components/Header';
@@ -16,16 +18,17 @@ import {
 } from '../../utilities/validators';
 import { bindArgsFromN } from '../../utilities/utilities';
 import { InputNames } from '../../consts';
-import { authController } from '../../controllers';
-import { storeOld } from '../../store';
+import { useFormInput } from '../../components/Form/hooks/useFormInput';
+import { RegisterRequest } from '../../api/auth';
+import { userRegister } from '../../store/user/actions/action-creators';
 
 import './registerPage.css';
-import { useFormInput } from '../../components/Form/hooks/useFormInput';
+import { AppState } from '../../store';
 
 export const RegisterPage = (): JSX.Element => {
   const navigate = useNavigate();
-
-  const [registerResult, setRegisterResult] = useState(false);
+  const dispatch = useDispatch();
+  const userData = useSelector((state: AppState) => state.user.data);
 
   const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
     useFormInput(loginValidator);
@@ -73,16 +76,23 @@ export const RegisterPage = (): JSX.Element => {
   ]);
 
   useEffect(() => {
-    if (registerResult) {
+    if (userData) {
       navigate('/', { replace: true });
     }
-  }, [registerResult, navigate]);
+  }, [userData, navigate]);
 
-  const registerCallback = useCallback(async (data: FormData) => authController.register(data), []);
+  const registerCallback = useCallback(async (data: FormData) => {
+    const registerData: RegisterRequest = {
+      first_name: String(data.get('first_name')),
+      second_name: String(data.get('second_name')),
+      login: String(data.get('login')),
+      password: String(data.get('password')),
+      email: String(data.get('email')),
+      phone: String(data.get('phone')),
+    };
 
-  if (storeOld.user !== null) {
-    return <Navigate to="/" />;
-  }
+    dispatch(userRegister(registerData));
+  }, []);
 
   return (
     <div className="register-page">
@@ -105,7 +115,6 @@ export const RegisterPage = (): JSX.Element => {
           ]}
           controllerCallback={registerCallback}
           resetValuesCallback={resetInputValues}
-          setSubmitResult={setRegisterResult}
         >
           <InputField
             view="labeled"

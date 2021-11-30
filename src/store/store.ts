@@ -3,9 +3,11 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 
 import { userReducer } from './user';
 import { leaderboardReducer } from './leaderboard';
-import { leaderboarApi } from '../api/leaderboard/LeadboardAPI';
 // eslint-disable-next-line import/no-cycle
 import { ThunkExtraArgument } from './types';
+import { authAPI } from '../api/auth';
+import { leaderboarAPI } from '../api/leaderboard';
+import { usersAPI } from '../api/users';
 
 export const rootReducer = combineReducers({ user: userReducer, leaderboard: leaderboardReducer });
 
@@ -13,7 +15,9 @@ export type RootReducer = typeof rootReducer;
 
 const thunkExtraArgument: ThunkExtraArgument = {
   api: {
-    lb: leaderboarApi,
+    auth: authAPI,
+    leaderboard: leaderboarAPI,
+    users: usersAPI,
   },
 };
 

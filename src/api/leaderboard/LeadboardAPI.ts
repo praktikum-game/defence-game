@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { LeaderboardItem } from './type';
+import { LeaderboardItem } from './types';
 
 const MockAdapter = require('axios-mock-adapter');
 
@@ -17,4 +17,4 @@ class LeaderboardAPI {
   }
 }
 
-export const leaderboarApi = new LeaderboardAPI();
+export const leaderboarAPI = new LeaderboardAPI();
