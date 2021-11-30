@@ -17,7 +17,7 @@ import {
 import { bindArgsFromN } from '../../utilities/utilities';
 import { InputNames } from '../../consts';
 import { authController } from '../../controllers';
-import { store } from '../../store';
+import { storeOld } from '../../store';
 
 import './registerPage.css';
 import { useFormInput } from '../../components/Form/hooks/useFormInput';
@@ -80,7 +80,7 @@ export const RegisterPage = (): JSX.Element => {
 
   const registerCallback = useCallback(async (data: FormData) => authController.register(data), []);
 
-  if (store.user !== null) {
+  if (storeOld.user !== null) {
     return <Navigate to="/" />;
   }
 

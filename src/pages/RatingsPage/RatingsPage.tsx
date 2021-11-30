@@ -1,24 +1,27 @@
-import React from 'react';
-import { LeaderboardTable, LeaderboardTableProps } from '../../components/LeaderboardTable';
+import React, { useEffect } from 'react'; // eslint-disable-line
+import { useSelector, useDispatch } from 'react-redux';
+import { LeaderboardTable, LeaderboardTableColumn } from '../../components/LeaderboardTable';
+import { fetchLeaderboardListData } from '../../store/leaderboard';
+import { LeaderboardThunkDispatch } from '../../store/leaderboard/types';
+import { AppState } from '../../store/types';
 
-const tableData: LeaderboardTableProps = {
-  columns: [
-    { dataId: 'username', title: 'Имя пользователя' },
-    { dataId: 'login', title: 'Логин' },
-    { dataId: 'score', title: 'Количество очков' },
-  ],
+const columns: LeaderboardTableColumn[] = [
+  { dataId: 'username', title: 'Имя пользователя' },
+  { dataId: 'login', title: 'Логин' },
+  { dataId: 'score', title: 'Количество очков' },
+];
+export const RatingsPage = () => {
+  const dispatcher = useDispatch<LeaderboardThunkDispatch>();
+  const usersList = useSelector((state: AppState) => state.leaderboard.usersList);
 
-  data: [
-    { id: 'a123', login: 'vasya', username: 'Василий Алибабаевич', score: 168 },
-    { id: 'a124', login: 'kosoy', username: 'Косой', score: 202 },
-    { id: 'a125', login: 'hmyr', username: 'Хмырь', score: 386 },
-    { id: 'a126', login: 'docent', username: 'Доцент', score: 409 },
-  ],
+  useEffect(() => {
+    dispatcher(fetchLeaderboardListData());
+  }, []);
+
+  return (
+    <>
+      <h1>Таблица достижений игроков</h1>
+      <LeaderboardTable columns={columns} data={usersList} />
+    </>
+  );
 };
-
-export const RatingsPage = () => (
-  <>
-    <h1>Таблица достижений игроков</h1>
-    <LeaderboardTable {...tableData} />
-  </>
-);

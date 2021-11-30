@@ -1,6 +1,6 @@
 import { authAPI, ILoginRequest, IRegisterRequest } from '../api';
 
-import { store } from '../store';
+import { storeOld } from '../store';
 
 class AuthController {
   private api: typeof authAPI;
@@ -57,9 +57,9 @@ class AuthController {
   async userRead() {
     try {
       const response = await this.api.userRead();
-      store.user = response.data;
+      storeOld.user = response.data;
     } catch (e) {
-      store.user = null;
+      storeOld.user = null;
     }
   }
 }

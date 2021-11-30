@@ -1,11 +1,23 @@
-import { UserData } from '../api';
+import thunk from 'redux-thunk';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 
-class Store {
-  user: UserData | null;
+import { userReducer } from './user';
+import { leaderboardReducer } from './leaderboard';
+import { leaderboarApi } from '../api/leaderboard/LeadboardAPI';
+// eslint-disable-next-line import/no-cycle
+import { ThunkExtraArgument } from './types';
 
-  constructor() {
-    this.user = null;
-  }
-}
+export const rootReducer = combineReducers({ user: userReducer, leaderboard: leaderboardReducer });
 
-export const store = new Store();
+export type RootReducer = typeof rootReducer;
+
+const thunkExtraArgument: ThunkExtraArgument = {
+  api: {
+    lb: leaderboarApi,
+  },
+};
+
+export const store = createStore(
+  rootReducer,
+  applyMiddleware(thunk.withExtraArgument(thunkExtraArgument)),
+);

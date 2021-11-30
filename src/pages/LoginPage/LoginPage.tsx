@@ -10,7 +10,7 @@ import { Title } from '../../components/Title';
 import { loginValidator, passwordValidator } from '../../utilities/validators';
 import { authController } from '../../controllers';
 import { InputNames } from '../../consts';
-import { store } from '../../store';
+import { storeOld } from '../../store';
 
 import './loginPage.css';
 import { useFormInput } from '../../components/Form/hooks/useFormInput';
@@ -38,7 +38,7 @@ export const LoginPage = (): JSX.Element => {
 
   const loginCallback = useCallback(async (data: FormData) => authController.login(data), []);
 
-  if (store.user !== null) {
+  if (storeOld.user !== null) {
     return <Navigate to="/" />;
   }
 
