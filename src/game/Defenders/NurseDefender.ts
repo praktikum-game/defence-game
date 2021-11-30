@@ -9,7 +9,7 @@ export class NurseDefender extends Defender {
 
   public static iconUrl = resources.defenders.nurse.icon;
 
-  public static cost = 25;
+  public static cost = 100;
 
   constructor(x: number, y: number) {
     super({

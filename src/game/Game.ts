@@ -2,7 +2,7 @@ import { BaseGameObject } from './BaseGameObject';
 import { GameField } from './Grids/GameField';
 import { getRandomInt, getUrls } from './helpers';
 import { GameResources } from './GameResourses';
-import { AtackTimingType, EndGameCallback } from './types';
+import { AtackTimingType, EndGameCallback, LevelIndextype } from './types';
 import { DefendersPannel } from './DefendersPannel/index';
 import {
   BANKOMAT_CURRENCY,
@@ -29,7 +29,7 @@ import { BankomatDefender } from './Defenders/BankomatDefender';
 import { Bullet } from './Bullets/Bullet';
 
 export class Game {
-  private _gameLevel: number = 0;
+  private _gameLevel: number = 1;
 
   private _canvasElement: HTMLCanvasElement;
 
@@ -76,11 +76,7 @@ export class Game {
   constructor(canvasEl: HTMLCanvasElement, onGameEnd: EndGameCallback) {
     this._last = 0;
     this._isRunning = false;
-    this._currency = new GameCurrency(
-      CURRENCY_START_VALUE,
-      CURRENCY_RISE_VALUE,
-      CURRENCY_RISE_INTERVAL,
-    );
+    this._currency = new GameCurrency(0, CURRENCY_RISE_VALUE, CURRENCY_RISE_INTERVAL);
 
     this._defendersPannel = new DefendersPannel();
     this._defendersPannel.init();
@@ -178,13 +174,18 @@ export class Game {
     this._updateAtackInterval();
   };
 
-  public run() {
-    this._gameLevel = 1;
+  public run(gameLevel: LevelIndextype = 0) {
+    if (gameLevel === +1) {
+      this._gameLevel += gameLevel;
+    } else if (gameLevel !== 0) {
+      this._gameLevel = gameLevel;
+    }
     this._defendersPannel.place(this._ctx, this._gameLevel);
 
     this._last = performance.now();
 
     this._createAtack();
+    this._currency.value = CURRENCY_START_VALUE;
     this._putCurrency();
 
     this._defenders.forEach((d) => {
@@ -353,7 +354,6 @@ export class Game {
           enemy.isMove = false;
           if (enemy.isAtack(delay)) {
             defender.getDamage(enemy.damage);
-            console.log(defender.health);
           }
 
           // если кончились очки здоровья, то обновляем значения массива защитников

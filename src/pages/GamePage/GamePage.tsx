@@ -36,9 +36,9 @@ export const GamePage = () => {
     }
   }, [handleGameEnd]);
 
-  const handleStartGame = useCallback(() => {
+  const handleStartGame = useCallback((lvl?: number) => {
     if (gameRef.current) {
-      gameRef.current.run();
+      gameRef.current.run(lvl);
     }
   }, []);
 
@@ -46,9 +46,8 @@ export const GamePage = () => {
     setInfoModalIsVisible(false);
   }, []);
 
-  const handleReplayClick = useCallback(() => {
+  const handleCloseModals = useCallback(() => {
     setLoseModalIsVisible(false);
-    setWinModalIsVisible(false);
     setWinModalIsVisible(false);
   }, []);
 
@@ -71,13 +70,27 @@ export const GamePage = () => {
 
       <Modal visible={loseModalIsVisible}>
         <p>К сожалению, Вы проиграли. Повторить?</p>
-        <Button text="Это произошло случайно, в бой!" view="primary" onClick={handleReplayClick} />
+        <Button
+          text="Это произошло случайно, в бой!"
+          view="primary"
+          onClick={() => {
+            handleCloseModals();
+            handleStartGame();
+          }}
+        />
         <Button text="Домой" view="secondary" onClick={handleRedirectToHomeClick} />
       </Modal>
 
       <Modal visible={winModalIsVisible}>
         <p>Ура, победа!</p>
-        <Button text="Еще разок" view="primary" onClick={handleReplayClick} />
+        <Button
+          text="Вперёд на следующий уровень!"
+          view="primary"
+          onClick={() => {
+            handleCloseModals();
+            handleStartGame(+1);
+          }}
+        />
         <Button text="Домой" view="secondary" onClick={handleRedirectToHomeClick} />
       </Modal>
 

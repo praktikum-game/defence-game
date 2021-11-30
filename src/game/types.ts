@@ -24,3 +24,6 @@ export type LevelsType = {
     atack?: AtackSchemeType[];
   };
 };
+
+/** 0 - (текущий уровень) | +1 (следующий уровень) | номер уровня */
+export type LevelIndextype = number;

@@ -38,6 +38,9 @@ export const resources = {
     greenvirus: {
       image: 'green_virus.png',
     },
+    pinkvirus: {
+      image: 'pink_virus.png',
+    },
   },
   toppannel: {
     money: {
