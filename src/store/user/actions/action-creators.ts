@@ -23,6 +23,15 @@ export const userSuccessFetch = (data: UserData | null): UserSuccessFetch => ({
 export const userFailedFetch = (): UserFaliedFetch => ({ type: USER_FAILED_FETCH_DATA });
 export const userEndFetch = (): UserEndFetch => ({ type: USER_END_FETCH_DATA });
 
+export const getUserData: UserActionCreator =
+  () =>
+  async (dispatch: UserThunkDispatch, _1, { api }) => {
+    dispatch(userStartFetch());
+    const userData = await api.auth.userRead();
+    dispatch(userSuccessFetch(userData.data));
+    dispatch(userEndFetch());
+  };
+
 export const userAuth: UserActionCreator =
   (loginData: LoginRequest) =>
   async (dispatch: UserThunkDispatch, _1, { api }) => {

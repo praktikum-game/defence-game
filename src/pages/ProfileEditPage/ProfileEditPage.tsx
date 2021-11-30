@@ -22,37 +22,63 @@ import { ProfileUpdateRequest } from '../../api/users';
 import { userUpdateProfile } from '../../store/user/actions/action-creators';
 
 import './profileEditPage.css';
+import { FormInputObject } from '../../components/Form/hooks/types';
+import { UserData } from '../../api/auth';
+import { useAuth } from '../../hooks/useAuth';
+
+const defaultInputObject: FormInputObject = {
+  value: '',
+  validationResult: {
+    message: null,
+    valid: false,
+  },
+};
+
+function getKey(data: UserData | null, key: keyof UserData) {
+  if (data) {
+    return data[key];
+  }
+  return '';
+}
 
 export const ProfileEditPage = () => {
+  useAuth(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((state: AppState) => state.user.data);
 
-  // const [editResult, setEditResult] = useState(false);
-
   const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
-    useFormInput(loginValidator);
+    useFormInput(loginValidator, { ...defaultInputObject, value: getKey(userData, 'login') });
 
   const [{ value: phoneValue, validationResult: phoneValidationResult }, setPhoneValue] =
-    useFormInput(phoneValidator);
+    useFormInput(phoneValidator, { ...defaultInputObject, value: getKey(userData, 'phone') });
 
   const [
     { value: firstNameValue, validationResult: firstNameValidationResult },
     setFirstNameValue,
-  ] = useFormInput(nameValidator);
+  ] = useFormInput(nameValidator, { ...defaultInputObject, value: getKey(userData, 'first_name') });
 
   const [
     { value: secondNameValue, validationResult: secondNameValidationResult },
     setSecondNameValue,
-  ] = useFormInput(nameValidator);
+  ] = useFormInput(nameValidator, {
+    ...defaultInputObject,
+    value: getKey(userData, 'second_name'),
+  });
 
   const [
     { value: displayNameValue, validationResult: displayNameValidationResult },
     setDisplayNameValue,
-  ] = useFormInput(nameValidator);
+  ] = useFormInput(nameValidator, {
+    ...defaultInputObject,
+    value: getKey(userData, 'display_name'),
+  });
 
   const [{ value: emailValue, validationResult: emailValidationResult }, setEmailValue] =
-    useFormInput(emailValidator);
+    useFormInput(emailValidator, {
+      ...defaultInputObject,
+      value: getKey(userData, 'email'),
+    });
 
   useEffect(() => {
     if (!userData) {
@@ -72,15 +98,6 @@ export const ProfileEditPage = () => {
 
     dispatch(userUpdateProfile(profileUpdateData));
   }, []);
-
-  // async updateAvatar(formData: FormData) {
-  //   try {
-  //     const response = await this.api.updateAvatar(formData);
-  //     storeOld.user = response.data;
-
-  //     // eslint-disable-next-line
-  //   } catch {}
-  // }
 
   return (
     <div className="profile-edit-page">

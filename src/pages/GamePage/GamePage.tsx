@@ -7,8 +7,10 @@ import { Game } from '../../game/Game';
 import { useFullscreen } from '../../hooks/useFullscreen';
 
 import './game-page.css';
+import { useAuth } from '../../hooks/useAuth';
 
 export const GamePage = () => {
+  useAuth(false);
   const navigate = useNavigate();
   const [infoModalIsVisible, setInfoModalIsVisible] = useState(true);
   const [loseModalIsVisible, setLoseModalIsVisible] = useState(false);

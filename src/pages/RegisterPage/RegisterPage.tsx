@@ -1,6 +1,6 @@
-import React, { useEffect, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import { Footer } from '../../components/Footer';
 import { PageContainer } from '../../components/PageContainer';
@@ -21,14 +21,13 @@ import { InputNames } from '../../consts';
 import { useFormInput } from '../../components/Form/hooks/useFormInput';
 import { RegisterRequest } from '../../api/auth';
 import { userRegister } from '../../store/user/actions/action-creators';
+import { useAuth } from '../../hooks/useAuth';
 
 import './registerPage.css';
-import { AppState } from '../../store';
 
 export const RegisterPage = (): JSX.Element => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userData = useSelector((state: AppState) => state.user.data);
+  useAuth();
 
   const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
     useFormInput(loginValidator);
@@ -74,12 +73,6 @@ export const RegisterPage = (): JSX.Element => {
     setPasswordValue,
     setRepeatPasswordValue,
   ]);
-
-  useEffect(() => {
-    if (userData) {
-      navigate('/', { replace: true });
-    }
-  }, [userData, navigate]);
 
   const registerCallback = useCallback(async (data: FormData) => {
     const registerData: RegisterRequest = {
@@ -186,14 +179,14 @@ export const RegisterPage = (): JSX.Element => {
             <Button
               text="Зарегистрироваться"
               type="submit"
-              disabled={
-                !(
-                  loginValidationResult.valid &&
-                  emailValidationResult.valid &&
-                  passwordValidationResult.valid &&
-                  repeatPasswordValidationResult.valid
-                )
-              }
+              // disabled={
+              //   !(
+              //     loginValidationResult.valid &&
+              //     emailValidationResult.valid &&
+              //     passwordValidationResult.valid &&
+              //     repeatPasswordValidationResult.valid
+              //   )
+              // }
               className="center-horizontal"
             />
             <Link className="footer__link" to="/login">
