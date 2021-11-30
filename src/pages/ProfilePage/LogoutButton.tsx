@@ -1,18 +1,14 @@
 import React, { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { authController } from '../../controllers';
+import { useDispatch } from 'react-redux';
+import { userLogout } from '../../store/user/actions/action-creators';
 import LogoutButtonSrc from './static/logout.svg';
 
 export const LogoutButton = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogout = useCallback(() => {
-    authController.logout().then((result) => {
-      if (result) {
-        navigate('/');
-      }
-    });
-  }, [navigate]);
+    dispatch(userLogout());
+  }, [dispatch]);
 
   return (
     <div className="logout-button header__logout-button">

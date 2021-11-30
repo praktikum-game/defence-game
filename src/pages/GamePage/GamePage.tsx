@@ -4,8 +4,10 @@ import { EndGameStatus } from '../../game/types';
 import { Button } from '../../components/Button';
 import { Modal } from '../../components/Modal';
 import { Game } from '../../game/Game';
+import { useAuth } from '../../hooks/useAuth';
 
 export const GamePage = () => {
+  useAuth(false);
   const navigate = useNavigate();
   const [infoModalIsVisible, setInfoModalIsVisible] = useState(true);
   const [loseModalIsVisible, setLoseModalIsVisible] = useState(false);
