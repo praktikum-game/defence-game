@@ -1,10 +1,11 @@
 import { ActionCreator } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { UserData } from '../../api/auth';
 import { AppState, ThunkExtraArgument } from '../types';
 import { UserActions } from './actions/action-creators-types';
 
 export type UserState = {
-  data: string;
+  data: UserData | null;
   loading: boolean;
 };
 

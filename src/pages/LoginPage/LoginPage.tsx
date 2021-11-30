@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Link, useNavigate, Navigate } from 'react-router-dom';
+import React, { useEffect, useCallback } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Footer } from '../../components/Footer';
 import { PageContainer } from '../../components/PageContainer';
 import { Header } from '../../components/Header';
@@ -8,16 +9,18 @@ import { InputField } from '../../components/InputField';
 import { Button } from '../../components/Button';
 import { Title } from '../../components/Title';
 import { loginValidator, passwordValidator } from '../../utilities/validators';
-import { authController } from '../../controllers';
 import { InputNames } from '../../consts';
-import { storeOld } from '../../store';
 
 import './loginPage.css';
 import { useFormInput } from '../../components/Form/hooks/useFormInput';
+import { LoginRequest } from '../../api/auth';
+import { userAuth } from '../../store/user/actions/action-creators';
+import { AppState } from '../../store/types';
 
 export const LoginPage = (): JSX.Element => {
   const navigate = useNavigate();
-  const [loginResult, setLoginResult] = useState(false);
+  const dispatch = useDispatch();
+  const userData = useSelector((state: AppState) => state.user.data);
 
   const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
     useFormInput(loginValidator);
@@ -31,16 +34,18 @@ export const LoginPage = (): JSX.Element => {
   }, [setLoginValue, setPasswordValue]);
 
   useEffect(() => {
-    if (loginResult) {
+    if (userData) {
       navigate('/', { replace: true });
     }
-  }, [loginResult, navigate]);
+  }, [userData, navigate]);
 
-  const loginCallback = useCallback(async (data: FormData) => authController.login(data), []);
-
-  if (storeOld.user !== null) {
-    return <Navigate to="/" />;
-  }
+  const handleSubmitClick = useCallback(async (data: FormData) => {
+    const loginData: LoginRequest = {
+      login: String(data.get('login')),
+      password: String(data.get('password')),
+    };
+    dispatch(userAuth(loginData));
+  }, []);
 
   return (
     <div className="login-page">
@@ -52,9 +57,8 @@ export const LoginPage = (): JSX.Element => {
       <PageContainer size="s">
         <Form
           validationResults={[loginValidationResult, passwordValidationResult]}
-          controllerCallback={loginCallback}
+          controllerCallback={handleSubmitClick}
           resetValuesCallback={resetInputValues}
-          setSubmitResult={setLoginResult}
         >
           <InputField
             view="labeled"
