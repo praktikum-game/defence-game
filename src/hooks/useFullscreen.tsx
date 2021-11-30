@@ -3,7 +3,7 @@ import { useCallback, useEffect } from 'react';
 export const useFullscreen = (fullscreenHandler: () => void) => {
   const eventListener = useCallback((e: Event) => {
     const event: KeyboardEvent = e as KeyboardEvent;
-    if (event.key === 'f') {
+    if (event.key.toLocaleLowerCase() === 'f') {
       fullscreenHandler();
     }
   }, []);
