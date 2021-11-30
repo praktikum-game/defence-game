@@ -1,6 +1,7 @@
 import { DEFPANNEL_CELL_HEIGHT, DEFPANNEL_CELL_WIDTH } from '../consts';
 import { Drawable } from '../interfaces';
 import { GridItem } from './GridItem';
+import { GridInitType } from './types';
 
 export class Grid implements Drawable {
   private _pannelGrid: Array<GridItem>;
@@ -9,19 +10,23 @@ export class Grid implements Drawable {
     return this._pannelGrid;
   }
 
-  constructor(
-    pannelWidth: number,
-    pannelHeight: number,
-    pannelX: number,
-    pannelY: number,
-    cellWidth: number,
-    cellHeight: number,
-    cellColor?: string,
-  ) {
+  constructor({
+    gridWidth,
+    gridHeight,
+    gridX,
+    gridY,
+    cellWidth,
+    cellHeight,
+    cellBorderColor,
+    cellBgColor,
+  }: GridInitType) {
     this._pannelGrid = [];
-    for (let y = pannelY; y < pannelHeight; y += DEFPANNEL_CELL_HEIGHT) {
-      for (let x = pannelX; x < pannelWidth; x += DEFPANNEL_CELL_WIDTH) {
-        this._pannelGrid.push(new GridItem(x, y, cellWidth, cellHeight, cellColor));
+
+    for (let cellY = gridY; cellY < gridHeight; cellY += DEFPANNEL_CELL_HEIGHT) {
+      for (let cellX = gridX; cellX < gridWidth; cellX += DEFPANNEL_CELL_WIDTH) {
+        this._pannelGrid.push(
+          new GridItem(cellX, cellY, cellWidth, cellHeight, cellBorderColor, cellBgColor),
+        );
       }
     }
   }

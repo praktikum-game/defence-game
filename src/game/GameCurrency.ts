@@ -31,4 +31,11 @@ export class GameCurrency {
     }
     return false;
   };
+
+  public reset = (value: number = 0, autoRiseValue?: number, autoRiseInterval?: number) => {
+    this._value = value;
+    this._timefromLastUpdate = 0;
+    if (autoRiseValue) this._autoRiseValue = autoRiseValue;
+    if (autoRiseInterval) this._autoRiseInterval = autoRiseInterval;
+  };
 }

@@ -33,14 +33,14 @@ export class DefendersPannel {
   }
 
   private _createGrid() {
-    this._grid = new Grid(
-      DefendersPannel.pannelWidth,
-      DefendersPannel.pannelHeight,
-      DefendersPannel.pannelX,
-      DefendersPannel.pannelY,
-      DEFPANNEL_CELL_WIDTH,
-      DEFPANNEL_CELL_HEIGHT,
-    );
+    this._grid = new Grid({
+      gridWidth: DefendersPannel.pannelWidth,
+      gridHeight: DefendersPannel.pannelHeight,
+      gridX: DefendersPannel.pannelX,
+      gridY: DefendersPannel.pannelY,
+      cellWidth: DEFPANNEL_CELL_WIDTH,
+      cellHeight: DEFPANNEL_CELL_HEIGHT,
+    });
   }
 
   public get grid() {
@@ -54,7 +54,7 @@ export class DefendersPannel {
     this._grid!.draw(ctx);
   };
 
-  public place = (ctx: CanvasRenderingContext2D, gameLvl: number) => {
+  public placeSprites = (ctx: CanvasRenderingContext2D, gameLvl: number) => {
     const levelDefenders: Constructable<Defender>[] = levels.getLevelDefenders(gameLvl);
     this._grid!.pannelGrid.forEach((g, i) => {
       if (i < levelDefenders.length) {
@@ -62,6 +62,7 @@ export class DefendersPannel {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const { iconUrl } = <any>lvlDefender;
         const icon = iconUrl;
+        g.clear(ctx);
         g.draw(ctx, new Sprite(ctx, g.x, g.y, g.width, g.height, icon, lvlDefender));
       }
     });

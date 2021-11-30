@@ -160,6 +160,10 @@ export class Game {
   };
 
   private _createAtack = () => {
+    this._timefromLastAtack = 0;
+    this._nextAtackInterval = 0;
+    this._atackTiming = [];
+
     const levelAtackTiming = levels.getLevelAtack(this._gameLevel)!;
 
     const enemyY = this._generateEnemiesYCoords();
@@ -180,19 +184,14 @@ export class Game {
     } else if (gameLevel !== 0) {
       this._gameLevel = gameLevel;
     }
-    this._defendersPannel.place(this._ctx, this._gameLevel);
-
     this._last = performance.now();
-
-    this._createAtack();
-    this._currency.value = CURRENCY_START_VALUE;
+    this._isRunning = true;
+    this._currency.reset(CURRENCY_START_VALUE);
     this._putCurrency();
 
-    this._defenders.forEach((d) => {
-      d.isFire = true;
-    });
+    this._defendersPannel.placeSprites(this._ctx, this._gameLevel);
+    this._createAtack();
 
-    this._isRunning = true;
     this.animation(performance.now());
   }
 
@@ -258,12 +257,30 @@ export class Game {
           const defender = new this._selectedDefender(cell.x, cell.y);
           this._defenders.push(defender);
           defender.draw(this._ctx);
-          this._currency.value -= defender.cost;
-          this._putCurrency();
+          this._spentMoney(defender.cost);
         }
       }
     });
   }
+
+  private _putCurrency = () => {
+    this._topPannel.pannelGrid[0].clear(this._ctx);
+    this._topPannel.pannelGrid[0].draw(
+      this._ctx,
+      this._currency.value.toString(),
+      GameResources.get(resources.toppannel.money.icon),
+    );
+  };
+
+  private _spentMoney = (value: number) => {
+    this._currency.value -= value;
+    this._putCurrency();
+  };
+
+  private _getMoney = (value: number) => {
+    this._currency.value += value;
+    this._putCurrency();
+  };
 
   private animation = (now: number) => {
     const delay = now - this._last;
@@ -282,7 +299,6 @@ export class Game {
   private win() {
     this._enemies = [];
     this._defenders = [];
-    this._gameField.draw(this._ctx);
     this._isRunning = false;
     this._onGameEnd('win');
   }
@@ -303,15 +319,6 @@ export class Game {
     });
   };
 
-  private _putCurrency = () => {
-    this._topPannel.pannelGrid[0].clear(this._ctx);
-    this._topPannel.pannelGrid[0].draw(
-      this._ctx,
-      this._currency.value.toString(),
-      GameResources.get(resources.toppannel.money.icon),
-    );
-  };
-
   private _checkActiveDefenders(currency: number) {
     this._defendersPannel.grid?.pannelGrid.forEach((cell) => {
       if (cell.sprite && cell.sprite.type) {
@@ -320,11 +327,10 @@ export class Game {
         const defenderCost = (<any>defender).cost;
         if (currency >= defenderCost) {
           cell.sprite.isActive = true;
-          cell.sprite.redraw();
         } else {
           cell.sprite.isActive = false;
-          cell.sprite.redraw();
         }
+        cell.sprite.redraw();
       }
     });
   }
@@ -395,8 +401,7 @@ export class Game {
     this.defenders.forEach((d) => {
       if (d instanceof BankomatDefender) {
         if (d.isGetMoney(delay)) {
-          this._currency.value += BANKOMAT_CURRENCY;
-          this._putCurrency();
+          this._getMoney(BANKOMAT_CURRENCY);
         }
       } else {
         d.update(delay);

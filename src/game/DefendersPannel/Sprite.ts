@@ -7,6 +7,8 @@ import { gray } from '../filters';
 export class Sprite extends BaseGameObject {
   private _image: HTMLImageElement;
 
+  private _filtredImage: ImageData | null;
+
   private _type: Constructable<Defender> | null;
 
   private _isSelected: boolean;
@@ -31,6 +33,7 @@ export class Sprite extends BaseGameObject {
     this._isSelected = false;
     this._isActive = false;
     this._ctx = ctx;
+    this._filtredImage = null;
   }
 
   public get isActive() {
@@ -47,13 +50,13 @@ export class Sprite extends BaseGameObject {
 
   public draw() {
     this._ctx.drawImage(this._image, this._x, this._y, this._width, this._height);
+
     if (!this._isActive) {
-      // получаем объект, описывающий внутреннее состояние области контекста
-      const imageData = this._ctx.getImageData(this._x, this._y, this._width, this._height);
-      // фильтруем
-      const imageDataFiltered = gray(imageData);
-      // кладем результат фильтрации обратно в canvas
-      this._ctx.putImageData(imageDataFiltered, this._x, this._y);
+      if (this._filtredImage === null) {
+        const imageData = this._ctx.getImageData(this._x, this._y, this._width, this._height);
+        this._filtredImage = gray(imageData);
+      }
+      this._ctx.putImageData(this._filtredImage, this._x, this._y);
     }
     if (this._isSelected) {
       this._ctx.strokeStyle = '#6BC732';

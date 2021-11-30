@@ -100,14 +100,14 @@ export abstract class Defender extends BaseGameObject {
 
   public fire(delay: number) {
     if (!this.isFire) return;
-
-    // каждые 200 фреймов стреляем
-    if (this._bullet && delay && this._it % this._fireFrameInterval === 0) {
-      const bull = new this._bullet(this._x + this._width / 2, this._y + this._height / 2);
-      this._bullets.push(bull);
-      this._it = 1;
+    if (delay) {
+      if (this._bullet && this._it % this._fireFrameInterval === 0) {
+        const bull = new this._bullet(this._x + this._width / 2, this._y + this._height / 2);
+        this._bullets.push(bull);
+        this._it = 1;
+      }
+      this._it += 1;
     }
-    this._it += 1;
   }
 
   public draw(ctx: CanvasRenderingContext2D) {

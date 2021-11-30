@@ -15,7 +15,7 @@ class Levels {
       bullets: [NurseDefender.bullet],
       atack: [
         {
-          timeout: 10,
+          timeout: 5,
           enemies: [CoronaEnemy],
         },
         {
