@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Link, useNavigate, Navigate } from 'react-router-dom';
+import React, { useCallback } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 import { Footer } from '../../components/Footer';
 import { PageContainer } from '../../components/PageContainer';
 import { Header } from '../../components/Header';
@@ -16,16 +18,16 @@ import {
 } from '../../utilities/validators';
 import { bindArgsFromN } from '../../utilities/utilities';
 import { InputNames } from '../../consts';
-import { authController } from '../../controllers';
-import { storeOld } from '../../store';
+import { useFormInput } from '../../hooks/useFormInput/useFormInput';
+import { RegisterRequest } from '../../api/auth';
+import { userRegister } from '../../store/user/actions/action-creators';
 
 import './registerPage.css';
-import { useFormInput } from '../../components/Form/hooks/useFormInput';
+import { useAuth } from '../../hooks/useAuth';
 
 export const RegisterPage = (): JSX.Element => {
-  const navigate = useNavigate();
-
-  const [registerResult, setRegisterResult] = useState(false);
+  const dispatch = useDispatch();
+  useAuth();
 
   const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
     useFormInput(loginValidator);
@@ -72,17 +74,18 @@ export const RegisterPage = (): JSX.Element => {
     setRepeatPasswordValue,
   ]);
 
-  useEffect(() => {
-    if (registerResult) {
-      navigate('/', { replace: true });
-    }
-  }, [registerResult, navigate]);
+  const registerCallback = useCallback(async (data: FormData) => {
+    const registerData: RegisterRequest = {
+      first_name: String(data.get('first_name')),
+      second_name: String(data.get('second_name')),
+      login: String(data.get('login')),
+      password: String(data.get('password')),
+      email: String(data.get('email')),
+      phone: String(data.get('phone')),
+    };
 
-  const registerCallback = useCallback(async (data: FormData) => authController.register(data), []);
-
-  if (storeOld.user !== null) {
-    return <Navigate to="/" />;
-  }
+    dispatch(userRegister(registerData));
+  }, []);
 
   return (
     <div className="register-page">
@@ -105,7 +108,6 @@ export const RegisterPage = (): JSX.Element => {
           ]}
           controllerCallback={registerCallback}
           resetValuesCallback={resetInputValues}
-          setSubmitResult={setRegisterResult}
         >
           <InputField
             view="labeled"
@@ -177,14 +179,14 @@ export const RegisterPage = (): JSX.Element => {
             <Button
               text="Зарегистрироваться"
               type="submit"
-              disabled={
-                !(
-                  loginValidationResult.valid &&
-                  emailValidationResult.valid &&
-                  passwordValidationResult.valid &&
-                  repeatPasswordValidationResult.valid
-                )
-              }
+              // disabled={
+              //   !(
+              //     loginValidationResult.valid &&
+              //     emailValidationResult.valid &&
+              //     passwordValidationResult.valid &&
+              //     repeatPasswordValidationResult.valid
+              //   )
+              // }
               className="center-horizontal"
             />
             <Link className="footer__link" to="/login">

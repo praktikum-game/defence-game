@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import React, { useEffect, useCallback } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
 import { Header } from '../../components/Header';
@@ -9,60 +10,69 @@ import EditIcon from './static/edit.svg';
 import { Avatar } from '../../components/Avatar';
 import { Footer } from '../../components/Footer';
 import { InputNames } from '../../consts';
-import { storeOld } from '../../store';
-import { usersController } from '../../controllers';
+import { AppState } from '../../store';
 import {
   loginValidator,
   emailValidator,
   nameValidator,
   phoneValidator,
 } from '../../utilities/validators';
-import { useFormInput } from '../../components/Form/hooks/useFormInput';
+import { useFormInput } from '../../hooks/useFormInput/useFormInput';
+import { ProfileUpdateRequest } from '../../api/users';
+import { userUpdateProfile } from '../../store/user/actions/action-creators';
+
 import './profileEditPage.css';
+import { getValueByKey } from '../../utilities/utilities';
+import { useAuth } from '../../hooks/useAuth';
 
 export const ProfileEditPage = () => {
+  useAuth(false);
   const navigate = useNavigate();
-
-  const [editResult, setEditResult] = useState(false);
+  const dispatch = useDispatch();
+  const userData = useSelector((state: AppState) => state.user.data);
 
   const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
-    useFormInput(loginValidator);
+    useFormInput(loginValidator, getValueByKey(userData, 'login'));
 
   const [{ value: phoneValue, validationResult: phoneValidationResult }, setPhoneValue] =
-    useFormInput(phoneValidator);
+    useFormInput(phoneValidator, getValueByKey(userData, 'phone'));
 
   const [
     { value: firstNameValue, validationResult: firstNameValidationResult },
     setFirstNameValue,
-  ] = useFormInput(nameValidator);
+  ] = useFormInput(nameValidator, getValueByKey(userData, 'first_name'));
 
   const [
     { value: secondNameValue, validationResult: secondNameValidationResult },
     setSecondNameValue,
-  ] = useFormInput(nameValidator);
+  ] = useFormInput(nameValidator, getValueByKey(userData, 'second_name'));
 
   const [
     { value: displayNameValue, validationResult: displayNameValidationResult },
     setDisplayNameValue,
-  ] = useFormInput(nameValidator);
+  ] = useFormInput(nameValidator, getValueByKey(userData, 'display_name'));
 
   const [{ value: emailValue, validationResult: emailValidationResult }, setEmailValue] =
-    useFormInput(emailValidator);
+    useFormInput(emailValidator, getValueByKey(userData, 'email'));
 
   useEffect(() => {
-    if (editResult) {
-      navigate('/profile-edit', { replace: true });
+    if (!userData) {
+      navigate('/');
     }
-  }, [editResult, navigate]);
+  }, [userData, navigate]);
 
-  const updateProfileCallback = useCallback(
-    async (data: FormData) => usersController.updateProfile(data),
-    [],
-  );
+  const updateProfileCallback = useCallback(async (data: FormData) => {
+    const profileUpdateData: ProfileUpdateRequest = {
+      first_name: String(data.get('first_name')),
+      second_name: String(data.get('second_name')),
+      display_name: String(data.get('display_name')),
+      login: String(data.get('login')),
+      email: String(data.get('email')),
+      phone: String(data.get('phone')),
+    };
 
-  if (storeOld.user === null) {
-    return <Navigate to="/login" />;
-  }
+    dispatch(userUpdateProfile(profileUpdateData));
+  }, []);
 
   return (
     <div className="profile-edit-page">
@@ -81,7 +91,6 @@ export const ProfileEditPage = () => {
             displayNameValidationResult,
           ]}
           controllerCallback={updateProfileCallback}
-          setSubmitResult={setEditResult}
         >
           <InputField
             name={InputNames.LOGIN}

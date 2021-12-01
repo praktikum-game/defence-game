@@ -1,4 +1,4 @@
-import { LeaderboardItem } from '../../../api/leaderboard/type';
+import { LeaderboardItem } from '../../../api/leaderboard/types';
 import { LeadboardActionCreator, LeaderboardThunkDispatch } from '../types';
 import {
   LeaderboardFaliedFetchList,
@@ -31,7 +31,7 @@ export const fetchLeaderboardListData: LeadboardActionCreator =
   async (dispatch: LeaderboardThunkDispatch, _1, { api }) => {
     try {
       dispatch(leaderboardStartFetchList());
-      const { data, status } = await api.lb.fetchLeaderboardData();
+      const { data, status } = await api.leaderboard.fetchLeaderboardData();
       if (status < 300) {
         const sortedData = [...data].sort(
           (item: LeaderboardItem, anotherItem: LeaderboardItem) => anotherItem.score - item.score,
