@@ -10,7 +10,7 @@ export const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserData());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="App">
