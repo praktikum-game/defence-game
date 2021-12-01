@@ -1,4 +1,4 @@
-import { LeaderboardItem } from '../../../api/leaderboard/type';
+import { LeaderboardItem } from '../../../api/leaderboard/types';
 import {
   LB_PENDING_FETCH_LIST_DATA,
   LB_FAILED_FETCH_LIST_DATA,

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
 import { Header } from '../../components/Header';
@@ -10,13 +12,14 @@ import { Form } from '../../components/Form';
 import { Avatar } from '../../components/Avatar';
 import { LogoutButton } from './LogoutButton';
 import { InputNames } from '../../consts';
-import { storeOld } from '../../store';
+import { AppState } from '../../store';
+
 import './profilePage.css';
+import { useAuth } from '../../hooks/useAuth';
 
 export const ProfilePage = () => {
-  if (storeOld.user === null) {
-    return <Navigate to="/login" />;
-  }
+  useAuth(false);
+  const userData = useSelector((state: AppState) => state.user.data);
 
   return (
     <div className="profile-page">
@@ -26,39 +29,39 @@ export const ProfilePage = () => {
       </Header>
       <PageContainer className="profile-page__page-container" size="m">
         <Title headingLevel={3} align="center">
-          {storeOld.user.first_name}
+          {userData?.display_name}
         </Title>
         <Form className="profile-page__form">
           <InputField
             name={InputNames.FIRST_NAME}
-            value={storeOld.user.first_name}
+            value={userData?.first_name}
             type="text"
             label="Имя"
             disabled
           />
           <InputField
             name={InputNames.SECOND_NAME}
-            value={storeOld.user.second_name}
+            value={userData?.second_name}
             type="text"
             label="Фамилия"
           />
           <InputField
             name={InputNames.EMAIL}
-            value={storeOld.user.email}
+            value={userData?.email}
             type="E-mail"
             label="E-mail"
             disabled
           />
           <InputField
             name={InputNames.DISPLAY_NAME}
-            value={storeOld.user.display_name}
+            value={userData?.display_name}
             type="text"
             label="Никнейм"
             disabled
           />
           <InputField
             name={InputNames.PHONE}
-            value={storeOld.user.phone}
+            value={userData?.phone}
             type="tel"
             label="Телефон"
             disabled
