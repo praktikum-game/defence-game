@@ -15,5 +15,6 @@ export const ErrorPage500 = () => (
     <Title headingLevel={3} align="center">
       Но мы уже работаем над этой проблемой
     </Title>
+    <div className="error-page-500__lines"></div>
   </div>
 );

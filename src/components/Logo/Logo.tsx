@@ -8,9 +8,9 @@ import './logo.css';
 const b = block('logo');
 
 export const Logo = ({ className, ...props }: LogoProps) => (
-  <Link to="/">
-    <div className={b.mix(className)} {...props}>
+  <div className={b.mix(className)} {...props}>
+    <Link to="/">
       <img src={logo} alt="Doctors Vs Viruses" />
-    </div>
-  </Link>
+    </Link>
+  </div>
 );

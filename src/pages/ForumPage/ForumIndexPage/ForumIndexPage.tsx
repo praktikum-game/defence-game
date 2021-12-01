@@ -6,6 +6,7 @@ import { Button } from '../../../components/Button';
 import { ThreadListItemData } from '../components/ThreadsList/ThreadListItem';
 
 import './forum-index-page.css';
+import { PageContainer } from '../../../components/PageContainer';
 
 const mockData: Array<ThreadListItemData> = [
   {
@@ -66,11 +67,13 @@ export const ForumIndexPage = () => {
           onClick={handleCreateNewThreadButtonClick}
         />
       </Header>
-      <ThreadsList>
-        {list.map((el) => (
-          <ThreadsList.Item key={el.threadId} dataItem={el} />
-        ))}
-      </ThreadsList>
+      <PageContainer size="l">
+        <ThreadsList>
+          {list.map((el) => (
+            <ThreadsList.Item key={el.threadId} dataItem={el} />
+          ))}
+        </ThreadsList>
+      </PageContainer>
     </>
   );
 };
