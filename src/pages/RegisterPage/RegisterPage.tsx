@@ -179,14 +179,17 @@ export const RegisterPage = (): JSX.Element => {
             <Button
               text="Зарегистрироваться"
               type="submit"
-              // disabled={
-              //   !(
-              //     loginValidationResult.valid &&
-              //     emailValidationResult.valid &&
-              //     passwordValidationResult.valid &&
-              //     repeatPasswordValidationResult.valid
-              //   )
-              // }
+              disabled={
+                !(
+                  loginValidationResult.valid &&
+                  emailValidationResult.valid &&
+                  phoneValidationResult.valid &&
+                  firstNameValidationResult.valid &&
+                  secondNameValidationResult.valid &&
+                  passwordValidationResult.valid &&
+                  repeatPasswordValidationResult.valid
+                )
+              }
               className="center-horizontal"
             />
             <Link className="footer__link" to="/login">
