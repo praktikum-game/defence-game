@@ -1,8 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import block from 'bem-cn';
 import { AppNavigation } from '../../components/AppNavigation';
 import { required, validate, ValidationResult } from '../../utilities/validators';
 import { InputField } from '../../components/InputField';
 import { Button } from '../../components/Button';
+import './homePage.css';
+
+const b = block('home-page');
 
 const inputValidators = [{ checkFunction: required(), message: 'Это обязательное поле' }];
 
@@ -28,7 +32,8 @@ export const HomePage = () => {
   }, [inputValue]);
 
   return (
-    <div className="homePage">
+    <div className={b()}>
+      <div className={b('header')}>header</div>
       <h1>Мое супер приложение</h1>
       <AppNavigation />
       <InputField
