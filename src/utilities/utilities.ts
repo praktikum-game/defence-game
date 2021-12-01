@@ -22,7 +22,7 @@ export function getValueByKey<T, K extends keyof T>(obj: T | null, key: K): stri
   const value = obj[key];
 
   if (typeof value === 'number' || typeof value === 'string') {
-    return value as string;
+    return String(value);
   }
   return '';
 }
