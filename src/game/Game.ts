@@ -185,6 +185,7 @@ export class Game {
       this._gameLevel = gameLevel;
     }
     this._last = performance.now();
+    this._selectedDefender = null;
     this._isRunning = true;
     this._currency.reset(CURRENCY_START_VALUE);
     this._putCurrency();
