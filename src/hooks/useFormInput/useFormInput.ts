@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
-import { ValidationResult } from '../../../utilities/validators';
-import { CompositeValidateFunction } from '../../../utilities/validators/types';
+import { ValidationResult } from '../../utilities/validators';
+import { CompositeValidateFunction } from '../../utilities/validators/types';
 import { FormInputObject, FormInputHookResult, FormOutputObject } from './types';
 
 export const useFormInput = (

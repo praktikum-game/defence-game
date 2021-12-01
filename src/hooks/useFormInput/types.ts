@@ -1,4 +1,4 @@
-import { ValidationResult } from '../../../utilities/validators';
+import { ValidationResult } from '../../utilities/validators';
 
 export type FormInputObject = {
   validationResult: ValidationResult;

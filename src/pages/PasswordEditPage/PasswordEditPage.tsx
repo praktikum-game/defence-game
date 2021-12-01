@@ -12,7 +12,7 @@ import { Avatar } from '../../components/Avatar';
 import { Footer } from '../../components/Footer';
 import { InputNames } from '../../consts';
 import { AppState } from '../../store';
-import { useFormInput } from '../../components/Form/hooks/useFormInput';
+import { useFormInput } from '../../hooks/useFormInput/useFormInput';
 import { ProfilePasswordUpdateRequest, usersAPI } from '../../api/users';
 
 import './passwordEditPage.css';

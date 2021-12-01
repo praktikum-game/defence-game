@@ -18,12 +18,12 @@ import {
 } from '../../utilities/validators';
 import { bindArgsFromN } from '../../utilities/utilities';
 import { InputNames } from '../../consts';
-import { useFormInput } from '../../components/Form/hooks/useFormInput';
+import { useFormInput } from '../../hooks/useFormInput/useFormInput';
 import { RegisterRequest } from '../../api/auth';
 import { userRegister } from '../../store/user/actions/action-creators';
-import { useAuth } from '../../hooks/useAuth';
 
 import './registerPage.css';
+import { useAuth } from '../../hooks/useAuth';
 
 export const RegisterPage = (): JSX.Element => {
   const dispatch = useDispatch();
