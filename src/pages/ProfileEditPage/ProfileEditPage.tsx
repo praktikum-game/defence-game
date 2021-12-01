@@ -91,7 +91,6 @@ export const ProfileEditPage = () => {
             displayNameValidationResult,
           ]}
           controllerCallback={updateProfileCallback}
-          // setSubmitResult={setEditResult}
         >
           <InputField
             name={InputNames.LOGIN}
