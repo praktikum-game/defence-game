@@ -4,5 +4,6 @@ export type EnemyInitType = {
   imageUrl: string;
   speed?: number;
   damage?: number;
+  damageInterval?: number;
   health?: number;
 };

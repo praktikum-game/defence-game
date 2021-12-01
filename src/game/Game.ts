@@ -1,11 +1,14 @@
-import { SyringeBullet } from './Bullets/SyringeBullet';
 import { BaseGameObject } from './BaseGameObject';
 import { GameField } from './Grids/GameField';
 import { getRandomInt, getUrls } from './helpers';
 import { GameResources } from './GameResourses';
-import { AtackTimingType, EndGameCallback } from './types';
+import { AtackTimingType, EndGameCallback, LevelIndextype } from './types';
 import { DefendersPannel } from './DefendersPannel/index';
 import {
+  BANKOMAT_CURRENCY,
+  CURRENCY_RISE_INTERVAL,
+  CURRENCY_RISE_VALUE,
+  CURRENCY_START_VALUE,
   FIELD_CELL_HEIGHT,
   FIELD_CELL_WIDTH,
   FIELD_COLS,
@@ -17,16 +20,20 @@ import {
 } from './consts';
 import { resources } from './GameResourses/resources';
 import { TopPannel } from './Grids/TopPannel';
-import { CoronaEnemy } from './Enemies/CoronaEnemy';
 import { Defender } from './Defenders/Defender';
 import { Constructable } from './interfaces';
 import { levels } from './Levels';
 import { Enemy } from './Enemies/Enemy';
+import { GameCurrency } from './GameCurrency';
+import { BankomatDefender } from './Defenders/BankomatDefender';
+import { Bullet } from './Bullets/Bullet';
 
 export class Game {
-  private _gameLevel: number = 0;
+  private _gameLevel: number = 1;
 
   private _canvasElement: HTMLCanvasElement;
+
+  private _currency: GameCurrency;
 
   private _ctx: CanvasRenderingContext2D;
 
@@ -69,6 +76,7 @@ export class Game {
   constructor(canvasEl: HTMLCanvasElement, onGameEnd: EndGameCallback) {
     this._last = 0;
     this._isRunning = false;
+    this._currency = new GameCurrency(0, CURRENCY_RISE_VALUE, CURRENCY_RISE_INTERVAL);
 
     this._defendersPannel = new DefendersPannel();
     this._defendersPannel.init();
@@ -83,8 +91,8 @@ export class Game {
     GameField.gameFieldX = DefendersPannel.pannelWidth;
     GameField.gameFieldY = TopPannel.pannelHeight;
 
-    canvasEl.width = DefendersPannel.pannelWidth + GameField.gameFieldWidth;
-    canvasEl.height = TopPannel.pannelHeight + GameField.gameFieldHeight;
+    canvasEl.width = DefendersPannel.pannelWidth + GameField.gameFieldWidth - FIELD_CELL_WIDTH + 1;
+    canvasEl.height = TopPannel.pannelHeight + GameField.gameFieldHeight + 1;
     this._canvasElement = canvasEl;
 
     this._onGameEnd = onGameEnd;
@@ -122,7 +130,7 @@ export class Game {
 
     items.forEach((item) => {
       const enemy = new (item as Constructable<Enemy>)(
-        getRandomInt(GameField.gameFieldWidth, GameField.gameFieldWidth + FIELD_CELL_WIDTH),
+        GameField.gameFieldWidth + FIELD_CELL_WIDTH,
         coordsY[getRandomInt(0, 5)],
       );
       result.push(enemy);
@@ -152,6 +160,10 @@ export class Game {
   };
 
   private _createAtack = () => {
+    this._timefromLastAtack = 0;
+    this._nextAtackInterval = 0;
+    this._atackTiming = [];
+
     const levelAtackTiming = levels.getLevelAtack(this._gameLevel)!;
 
     const enemyY = this._generateEnemiesYCoords();
@@ -166,19 +178,20 @@ export class Game {
     this._updateAtackInterval();
   };
 
-  public run() {
-    this._gameLevel = 1;
-    this._defendersPannel.place(this._ctx, this._gameLevel);
-
+  public run(gameLevel: LevelIndextype = 0) {
+    if (gameLevel === +1) {
+      this._gameLevel += gameLevel;
+    } else if (gameLevel !== 0) {
+      this._gameLevel = gameLevel;
+    }
     this._last = performance.now();
+    this._isRunning = true;
+    this._currency.reset(CURRENCY_START_VALUE);
+    this._putCurrency();
 
+    this._defendersPannel.placeSprites(this._ctx, this._gameLevel);
     this._createAtack();
 
-    this._defenders.forEach((d) => {
-      d.isFire = true;
-    });
-
-    this._isRunning = true;
     this.animation(performance.now());
   }
 
@@ -239,14 +252,35 @@ export class Game {
         if (elementsInThisCell.length > 0) {
           return;
         }
-        if (this._selectedDefender) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if (this._selectedDefender && this._currency.value >= (<any>this._selectedDefender).cost) {
           const defender = new this._selectedDefender(cell.x, cell.y);
           this._defenders.push(defender);
           defender.draw(this._ctx);
+          this._spentMoney(defender.cost);
         }
       }
     });
   }
+
+  private _putCurrency = () => {
+    this._topPannel.pannelGrid[0].clear(this._ctx);
+    this._topPannel.pannelGrid[0].draw(
+      this._ctx,
+      this._currency.value.toString(),
+      GameResources.get(resources.toppannel.money.icon),
+    );
+  };
+
+  private _spentMoney = (value: number) => {
+    this._currency.value -= value;
+    this._putCurrency();
+  };
+
+  private _getMoney = (value: number) => {
+    this._currency.value += value;
+    this._putCurrency();
+  };
 
   private animation = (now: number) => {
     const delay = now - this._last;
@@ -265,8 +299,6 @@ export class Game {
   private win() {
     this._enemies = [];
     this._defenders = [];
-    this._defendersPannel!.draw(this._ctx);
-    this._gameField.draw(this._ctx);
     this._isRunning = false;
     this._onGameEnd('win');
   }
@@ -287,10 +319,30 @@ export class Game {
     });
   };
 
+  private _checkActiveDefenders(currency: number) {
+    this._defendersPannel.grid?.pannelGrid.forEach((cell) => {
+      if (cell.sprite && cell.sprite.type) {
+        const { type: defender } = cell.sprite;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const defenderCost = (<any>defender).cost;
+        if (currency >= defenderCost) {
+          cell.sprite.isActive = true;
+        } else {
+          cell.sprite.isActive = false;
+        }
+        cell.sprite.redraw();
+      }
+    });
+  }
+
   private redraw(delay: number) {
     if (!this._isRunning) return;
 
     this._checkNextAtack(delay);
+    if (this._currency.autoRise(delay)) {
+      this._putCurrency();
+    }
+    this._checkActiveDefenders(this._currency.value);
 
     if (this._enemies.length < 1) {
       this.win();
@@ -306,7 +358,9 @@ export class Game {
       for (const defender of this.defenders) {
         if (this.checkCollision(defender, enemy)) {
           enemy.isMove = false;
-          defender.getDamage(enemy.damage);
+          if (enemy.isAtack(delay)) {
+            defender.getDamage(enemy.damage);
+          }
 
           // если кончились очки здоровья, то обновляем значения массива защитников
           if (defender.health < 0) {
@@ -345,7 +399,13 @@ export class Game {
     this.enemies.forEach((enemy) => enemy.update(delay).draw(this._ctx));
 
     this.defenders.forEach((d) => {
-      d.update(delay);
+      if (d instanceof BankomatDefender) {
+        if (d.isGetMoney(delay)) {
+          this._getMoney(BANKOMAT_CURRENCY);
+        }
+      } else {
+        d.update(delay);
+      }
       d.draw(this._ctx);
     });
 
@@ -359,12 +419,11 @@ export class Game {
     return false;
   }
 
-  private checkBulletCollision(obj1: SyringeBullet, obj2: CoronaEnemy): boolean {
+  private checkBulletCollision(bullet: Bullet, enemy: Enemy): boolean {
     if (
-      obj1.x >= obj2.x &&
-      obj1.x < obj2.x + obj2.width &&
-      obj1.y > obj2.y &&
-      obj1.y < obj2.y + obj2.height
+      bullet.x + bullet.width > enemy.x &&
+      bullet.y >= enemy.y &&
+      bullet.y <= enemy.y + enemy.height
     ) {
       return true;
     }
