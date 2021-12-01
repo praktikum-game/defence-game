@@ -19,6 +19,12 @@
       margin: 10px;
     }
   }
+
+  &__title {
+    margin-bottom: 20px;
+    font-size: 22px;
+    text-align: center;
+  }
 }
 
 .overlay {

@@ -9,7 +9,7 @@ import { fetchLeaderboardListData } from '../../store/leaderboard';
 import { LeaderboardThunkDispatch } from '../../store/leaderboard/types';
 import { AppState } from '../../store/types';
 
-const b = block('retings-page');
+const b = block('ratings-page');
 
 const columns: LeaderboardTableColumn[] = [
   { dataId: 'username', title: 'Имя пользователя' },
