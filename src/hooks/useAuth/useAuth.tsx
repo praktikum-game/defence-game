@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { AppState } from '../store';
+import { AppState } from '../../store';
 
 export const useAuth = (redirectIsAuth: boolean = true) => {
   const navigate = useNavigate();

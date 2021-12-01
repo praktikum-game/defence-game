@@ -13,9 +13,9 @@ import { Avatar } from '../../components/Avatar';
 import { LogoutButton } from './LogoutButton';
 import { InputNames } from '../../consts';
 import { AppState } from '../../store';
-import { useAuth } from '../../hooks/useAuth';
 
 import './profilePage.css';
+import { useAuth } from '../../hooks/useAuth';
 
 export const ProfilePage = () => {
   useAuth(false);

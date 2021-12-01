@@ -17,13 +17,13 @@ import {
   nameValidator,
   phoneValidator,
 } from '../../utilities/validators';
-import { useFormInput } from '../../components/Form/hooks/useFormInput';
+import { useFormInput } from '../../hooks/useFormInput/useFormInput';
 import { ProfileUpdateRequest } from '../../api/users';
 import { userUpdateProfile } from '../../store/user/actions/action-creators';
 
 import './profileEditPage.css';
-import { useAuth } from '../../hooks/useAuth';
 import { getValueByKey } from '../../utilities/utilities';
+import { useAuth } from '../../hooks/useAuth';
 
 export const ProfileEditPage = () => {
   useAuth(false);

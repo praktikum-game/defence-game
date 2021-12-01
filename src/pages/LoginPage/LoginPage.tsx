@@ -12,7 +12,7 @@ import { loginValidator, passwordValidator } from '../../utilities/validators';
 import { InputNames } from '../../consts';
 
 import './loginPage.css';
-import { useFormInput } from '../../components/Form/hooks/useFormInput';
+import { useFormInput } from '../../hooks/useFormInput/useFormInput';
 import { LoginRequest } from '../../api/auth';
 import { userAuth } from '../../store/user/actions/action-creators';
 import { AppState } from '../../store/types';
