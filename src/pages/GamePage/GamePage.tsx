@@ -5,7 +5,6 @@ import { Button } from '../../components/Button';
 import { Modal } from '../../components/Modal';
 import { Game } from '../../game/Game';
 import { useFullscreen } from '../../hooks/useFullscreen';
-import './game-page.css';
 
 import './game-page.css';
 
@@ -114,6 +113,6 @@ export const GamePage = () => {
       <div className={isFullscreen ? 'game-container' : ''} ref={gameContainerElementRef}>
         <canvas ref={canvasRef} height="200" width="200"></canvas>
       </div>
-    </Fragment>
+    </>
   );
 };
