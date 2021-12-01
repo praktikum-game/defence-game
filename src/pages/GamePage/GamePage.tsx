@@ -1,10 +1,11 @@
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EndGameStatus } from '../../game/types';
 import { Button } from '../../components/Button';
 import { Modal } from '../../components/Modal';
 import { Game } from '../../game/Game';
-import { useFullscreen } from '../../hooks/useFullscreen/useFullscreen';
+import { useFullscreen } from '../../hooks/useFullscreen';
+import './game-page.css';
 
 import './game-page.css';
 
@@ -73,7 +74,7 @@ export const GamePage = () => {
   }, [navigate]);
 
   return (
-    <Fragment>
+    <>
       <Modal visible={infoModalIsVisible}>
         <p>Освободи мир от вирусов! </p>
         <Button
