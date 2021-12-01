@@ -22,24 +22,8 @@ import { ProfileUpdateRequest } from '../../api/users';
 import { userUpdateProfile } from '../../store/user/actions/action-creators';
 
 import './profileEditPage.css';
-import { FormInputObject } from '../../components/Form/hooks/types';
-import { UserData } from '../../api/auth';
 import { useAuth } from '../../hooks/useAuth';
-
-const defaultInputObject: FormInputObject = {
-  value: '',
-  validationResult: {
-    message: null,
-    valid: false,
-  },
-};
-
-function getKey(data: UserData | null, key: keyof UserData) {
-  if (data) {
-    return data[key];
-  }
-  return '';
-}
+import { getValueByKey } from '../../utilities/utilities';
 
 export const ProfileEditPage = () => {
   useAuth(false);
@@ -48,37 +32,28 @@ export const ProfileEditPage = () => {
   const userData = useSelector((state: AppState) => state.user.data);
 
   const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
-    useFormInput(loginValidator, { ...defaultInputObject, value: getKey(userData, 'login') });
+    useFormInput(loginValidator, getValueByKey(userData, 'login'));
 
   const [{ value: phoneValue, validationResult: phoneValidationResult }, setPhoneValue] =
-    useFormInput(phoneValidator, { ...defaultInputObject, value: getKey(userData, 'phone') });
+    useFormInput(phoneValidator, getValueByKey(userData, 'phone'));
 
   const [
     { value: firstNameValue, validationResult: firstNameValidationResult },
     setFirstNameValue,
-  ] = useFormInput(nameValidator, { ...defaultInputObject, value: getKey(userData, 'first_name') });
+  ] = useFormInput(nameValidator, getValueByKey(userData, 'first_name'));
 
   const [
     { value: secondNameValue, validationResult: secondNameValidationResult },
     setSecondNameValue,
-  ] = useFormInput(nameValidator, {
-    ...defaultInputObject,
-    value: getKey(userData, 'second_name'),
-  });
+  ] = useFormInput(nameValidator, getValueByKey(userData, 'second_name'));
 
   const [
     { value: displayNameValue, validationResult: displayNameValidationResult },
     setDisplayNameValue,
-  ] = useFormInput(nameValidator, {
-    ...defaultInputObject,
-    value: getKey(userData, 'display_name'),
-  });
+  ] = useFormInput(nameValidator, getValueByKey(userData, 'display_name'));
 
   const [{ value: emailValue, validationResult: emailValidationResult }, setEmailValue] =
-    useFormInput(emailValidator, {
-      ...defaultInputObject,
-      value: getKey(userData, 'email'),
-    });
+    useFormInput(emailValidator, getValueByKey(userData, 'email'));
 
   useEffect(() => {
     if (!userData) {
