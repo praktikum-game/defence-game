@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EndGameStatus } from '../../game/types';
 import { Button } from '../../components/Button';
 import { Modal } from '../../components/Modal';
 import { Game } from '../../game/Game';
-import { useFullscreen } from '../../hooks/useFullscreen';
+import { useFullscreen } from '../../hooks/useFullscreen/useFullscreen';
+
 import './game-page.css';
 
 export const GamePage = () => {
@@ -17,15 +18,7 @@ export const GamePage = () => {
   const gameRef = useRef<Game | null>(null);
   const gameContainerElementRef = useRef<HTMLDivElement | null>(null);
 
-  const handleFullscreenToggle = useCallback(() => {
-    if (!document.fullscreenElement) {
-      gameContainerElementRef.current?.requestFullscreen();
-    } else if (document.exitFullscreen) {
-      document.exitFullscreen();
-    }
-  }, []);
-
-  useFullscreen(handleFullscreenToggle);
+  const { isFullscreen, toggleFullscreen } = useFullscreen(gameContainerElementRef);
 
   const handleGameEnd = useCallback((status: EndGameStatus) => {
     switch (status) {
@@ -48,6 +41,18 @@ export const GamePage = () => {
     }
   }, [handleGameEnd]);
 
+  useEffect(() => {
+    const eventListener = (e: Event) => {
+      const event: KeyboardEvent = e as KeyboardEvent;
+      if (event.key.toLocaleLowerCase() === 'f') {
+        toggleFullscreen();
+      }
+    };
+
+    window.addEventListener('keydown', eventListener);
+    return () => window.removeEventListener('keydown', eventListener);
+  }, []);
+
   const handleStartGame = useCallback((lvl?: number) => {
     if (gameRef.current) {
       gameRef.current.run(lvl);
@@ -68,7 +73,7 @@ export const GamePage = () => {
   }, [navigate]);
 
   return (
-    <>
+    <Fragment>
       <Modal visible={infoModalIsVisible}>
         <p>Освободи мир от вирусов! </p>
         <Button
@@ -105,8 +110,9 @@ export const GamePage = () => {
         />
         <Button text="Домой" view="secondary" onClick={handleRedirectToHomeClick} />
       </Modal>
-
-      <canvas ref={canvasRef} height="200" width="200"></canvas>
+      <div className={isFullscreen ? 'game-container' : ''} ref={gameContainerElementRef}>
+        <canvas ref={canvasRef} height="200" width="200"></canvas>
+      </div>
     </Fragment>
   );
 };
