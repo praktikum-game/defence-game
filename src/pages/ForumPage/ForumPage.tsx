@@ -1,9 +1,9 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuthRedirect } from '../../hooks/useAuthRedirect';
 
 export const ForumPage = () => {
-  useAuth(false);
+  useAuthRedirect('/login');
   return (
     <div className="forum-layout-container">
       <Outlet />
