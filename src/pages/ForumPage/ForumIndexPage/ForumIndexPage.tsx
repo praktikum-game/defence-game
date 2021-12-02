@@ -68,7 +68,7 @@ export const ForumIndexPage = () => {
         />
       </Header>
       <PageContainer size="l">
-        <ThreadsList>datedate
+        <ThreadsList>
           {list.map((el) => (
             <ThreadsList.Item key={el.threadId} dataItem={el} />
           ))}
