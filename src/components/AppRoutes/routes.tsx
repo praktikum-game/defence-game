@@ -15,6 +15,7 @@ import { ErrorPage500 } from '../../pages/ErrorPage500';
 import { PageLayout } from '../PageLayout';
 import { PasswordEditPage } from '../../pages/PasswordEditPage';
 import { AppLayout } from '../AppLayout';
+import { RequireAuth } from '../RequireAuth';
 
 export const routes: RouteObject[] = [
   {
@@ -27,27 +28,51 @@ export const routes: RouteObject[] = [
         children: [
           {
             path: '/profile',
-            element: <ProfilePage />,
+            element: (
+              <RequireAuth>
+                <ProfilePage />
+              </RequireAuth>
+            ),
           },
           {
             path: '/profile-edit',
-            element: <ProfileEditPage />,
+            element: (
+              <RequireAuth>
+                <ProfileEditPage />
+              </RequireAuth>
+            ),
           },
           {
             path: '/password-edit',
-            element: <PasswordEditPage />,
+            element: (
+              <RequireAuth>
+                <PasswordEditPage />
+              </RequireAuth>
+            ),
           },
           {
             path: '/login',
-            element: <LoginPage />,
+            element: (
+              <RequireAuth to="/" inverse>
+                <LoginPage />
+              </RequireAuth>
+            ),
           },
           {
             path: '/register',
-            element: <RegisterPage />,
+            element: (
+              <RequireAuth to="/" inverse>
+                <RegisterPage />
+              </RequireAuth>
+            ),
           },
           {
             path: '/game',
-            element: <GamePage />,
+            element: (
+              <RequireAuth>
+                <GamePage />
+              </RequireAuth>
+            ),
           },
           {
             path: '/ratings',
@@ -57,10 +82,21 @@ export const routes: RouteObject[] = [
             path: '/forum',
             element: <ForumPage />,
             children: [
-              { index: true, element: <ForumIndexPage /> },
+              {
+                index: true,
+                element: (
+                  <RequireAuth>
+                    <ForumIndexPage />
+                  </RequireAuth>
+                ),
+              },
               {
                 path: ':forumId',
-                element: <ForumThreadPage />,
+                element: (
+                  <RequireAuth>
+                    <ForumThreadPage />
+                  </RequireAuth>
+                ),
               },
             ],
           },

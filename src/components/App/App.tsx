@@ -5,7 +5,6 @@ import { getUserData } from '../../store/user/actions/action-creators';
 
 import './App.css';
 import '../../utilities/common.css';
-import { privateRoute } from '../PrivateRoute';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -13,11 +12,9 @@ export const App = () => {
     dispatch(getUserData());
   }, [dispatch]);
 
-  const PrivateRoutes = privateRoute(AppRoutes);
-
   return (
     <div className="App">
-      <PrivateRoutes />
+      <AppRoutes />
     </div>
   );
 };
