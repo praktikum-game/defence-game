@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { MessagesListProps } from './types';
 import { MessageItem } from './MessageItem';
+import block from 'bem-cn';
 
-// import './thread-list.css';
+const b = block('messages-list-container');
 
-export const MessagesList = ({ children }: MessagesListProps): JSX.Element => (
-  <div className="messages-list-container">{children}</div>
+export const MessagesList = ({ children, className }: MessagesListProps): JSX.Element => (
+  <div className={b.mix(className)}>{children}</div>
 );
 
-MessagesList.Message = MessageItem;
+MessagesList.Message = memo(MessageItem);

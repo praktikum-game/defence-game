@@ -1,0 +1,41 @@
+.message-list-item {
+  padding: 15px 20px;
+  display: flex;
+  min-height: 77px;
+  justify-content: space-between;
+  border-top: #dcdcdc 1px solid;
+  border-bottom: #dcdcdc 1px solid;
+  background-color: $forum-thread-item-background-color;
+  margin-bottom: 15px;
+
+  &__item-content {
+    display: flex;
+    width: 100%;
+  }
+}
+
+.item-content {
+  &__avatar {
+    margin-right: 20px;
+    width: 40px;
+    height: 40px;
+    border-color: red;
+  }
+
+  &__user {
+    margin-bottom: 7px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__date {
+    min-width: 150px;
+  }
+
+  &__body {
+    width: 100%;
+  }
+}
