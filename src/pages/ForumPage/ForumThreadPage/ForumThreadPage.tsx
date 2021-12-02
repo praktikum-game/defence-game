@@ -36,7 +36,7 @@ export const ForumThreadPage = () => {
       { id: nanoid(), date: Date(), user: 'Доцент', text: currentMessage },
     ]);
     setCurrentMessage('');
-  }, []);
+  }, [currentMessage]);
 
   return (
     <>

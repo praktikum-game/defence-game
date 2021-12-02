@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { leaderboardData, messagesData } from '../mocks/mocks';
 import { MessageItem } from './types';
 
-const mock = new MockAdapter(Axios);
+const mock = new MockAdapter(Axios, { onNoMatch: 'passthrough' });
 
 mock.onGet('/mock/messages').reply(200, messagesData);
 mock.onGet('/mock/leaderboard').reply(200, leaderboardData);
