@@ -49,7 +49,7 @@ export const HomePage = () => (
           <Title headingLevel={3} align="left" className={c('title')}>
             Расставляй медиков по клеткам.
           </Title>
-          <p className={c('info')}>Не зыбывай использовать маску и антисептик</p>
+          <p className={c('info')}>Не забывай использовать маску и антисептик</p>
         </div>
       </div>
       <div className={(c(), c({ right: true }))}>
