@@ -1,0 +1,10 @@
+.thread-page {
+  &__messages_list {
+    margin-bottom: 30px;
+  }
+  &__send_message_panel {
+    /* display: flex; */
+  }
+}
+
+
