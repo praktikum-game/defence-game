@@ -6,7 +6,6 @@ import { Modal } from '../../components/Modal';
 import { Game } from '../../game/Game';
 import { useFullscreen } from '../../hooks/useFullscreen';
 import { Title } from '../../components/Title';
-import { useAuthRedirect } from '../../hooks/useAuthRedirect';
 
 import './game-page.css';
 
