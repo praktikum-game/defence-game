@@ -1,6 +1,5 @@
-import React, { useEffect, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { Footer } from '../../components/Footer';
 import { PageContainer } from '../../components/PageContainer';
 import { Header } from '../../components/Header';
@@ -13,14 +12,10 @@ import { InputNames } from '../../consts';
 
 import './loginPage.css';
 import { useFormInput } from '../../hooks/useFormInput/useFormInput';
-import { LoginRequest } from '../../api/auth';
-import { userAuth } from '../../store/user/actions/action-creators';
-import { AppState } from '../../store/types';
+import { useAuthUser } from '../../hooks/useAuthUser';
 
 export const LoginPage = (): JSX.Element => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const userData = useSelector((state: AppState) => state.user.data);
+  const { executeAuth } = useAuthUser();
 
   const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
     useFormInput(loginValidator);
@@ -33,19 +28,12 @@ export const LoginPage = (): JSX.Element => {
     setPasswordValue('');
   }, [setLoginValue, setPasswordValue]);
 
-  useEffect(() => {
-    if (userData) {
-      navigate('/', { replace: true });
-    }
-  }, [userData, navigate]);
-
-  const handleSubmitClick = useCallback(async (data: FormData) => {
-    const loginData: LoginRequest = {
-      login: String(data.get('login')),
-      password: String(data.get('password')),
-    };
-    dispatch(userAuth(loginData));
-  }, []);
+  const handleSubmitClick = useCallback(
+    async (data: FormData) => {
+      executeAuth({ login: String(data.get('login')), password: String(data.get('password')) });
+    },
+    [executeAuth],
+  );
 
   return (
     <div className="login-page">

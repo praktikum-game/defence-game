@@ -23,11 +23,9 @@ import { RegisterRequest } from '../../api/auth';
 import { userRegister } from '../../store/user/actions/action-creators';
 
 import './registerPage.css';
-import { useAuth } from '../../hooks/useAuth';
 
 export const RegisterPage = (): JSX.Element => {
   const dispatch = useDispatch();
-  useAuth();
 
   const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
     useFormInput(loginValidator);
@@ -74,18 +72,21 @@ export const RegisterPage = (): JSX.Element => {
     setRepeatPasswordValue,
   ]);
 
-  const registerCallback = useCallback(async (data: FormData) => {
-    const registerData: RegisterRequest = {
-      first_name: String(data.get('first_name')),
-      second_name: String(data.get('second_name')),
-      login: String(data.get('login')),
-      password: String(data.get('password')),
-      email: String(data.get('email')),
-      phone: String(data.get('phone')),
-    };
+  const registerCallback = useCallback(
+    async (data: FormData) => {
+      const registerData: RegisterRequest = {
+        first_name: String(data.get('first_name')),
+        second_name: String(data.get('second_name')),
+        login: String(data.get('login')),
+        password: String(data.get('password')),
+        email: String(data.get('email')),
+        phone: String(data.get('phone')),
+      };
 
-    dispatch(userRegister(registerData));
-  }, []);
+      dispatch(userRegister(registerData));
+    },
+    [dispatch],
+  );
 
   return (
     <div className="register-page">

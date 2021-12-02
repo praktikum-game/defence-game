@@ -17,12 +17,12 @@ const columns: LeaderboardTableColumn[] = [
   { dataId: 'score', title: 'Количество очков' },
 ];
 export const RatingsPage = () => {
-  const dispatcher = useDispatch<LeaderboardThunkDispatch>();
+  const dispatch = useDispatch<LeaderboardThunkDispatch>();
   const usersList = useSelector((state: AppState) => state.leaderboard.usersList);
 
   useEffect(() => {
-    dispatcher(fetchLeaderboardListData());
-  }, []);
+    dispatch(fetchLeaderboardListData());
+  }, [dispatch]);
 
   return (
     <div className={b()}>

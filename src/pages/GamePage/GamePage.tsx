@@ -5,13 +5,11 @@ import { Button } from '../../components/Button';
 import { Modal } from '../../components/Modal';
 import { Game } from '../../game/Game';
 import { useFullscreen } from '../../hooks/useFullscreen';
-
-import './game-page.css';
-import { useAuth } from '../../hooks/useAuth';
 import { Title } from '../../components/Title';
 
+import './game-page.css';
+
 export const GamePage = () => {
-  useAuth(false);
   const navigate = useNavigate();
   const [infoModalIsVisible, setInfoModalIsVisible] = useState(true);
   const [loseModalIsVisible, setLoseModalIsVisible] = useState(false);
@@ -54,7 +52,7 @@ export const GamePage = () => {
 
     window.addEventListener('keydown', eventListener);
     return () => window.removeEventListener('keydown', eventListener);
-  }, []);
+  }, [toggleFullscreen]);
 
   const handleStartGame = useCallback((lvl?: number) => {
     if (gameRef.current) {

@@ -17,4 +17,4 @@ class LeaderboardAPI {
   }
 }
 
-export const leaderboarAPI = new LeaderboardAPI();
+export const leaderboardAPI = new LeaderboardAPI();

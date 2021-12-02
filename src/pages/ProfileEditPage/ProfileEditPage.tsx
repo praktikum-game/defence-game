@@ -1,5 +1,5 @@
-import React, { useEffect, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
@@ -23,11 +23,8 @@ import { userUpdateProfile } from '../../store/user/actions/action-creators';
 
 import './profileEditPage.css';
 import { getValueByKey } from '../../utilities/utilities';
-import { useAuth } from '../../hooks/useAuth';
 
 export const ProfileEditPage = () => {
-  useAuth(false);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((state: AppState) => state.user.data);
 
@@ -55,24 +52,21 @@ export const ProfileEditPage = () => {
   const [{ value: emailValue, validationResult: emailValidationResult }, setEmailValue] =
     useFormInput(emailValidator, getValueByKey(userData, 'email'));
 
-  useEffect(() => {
-    if (!userData) {
-      navigate('/');
-    }
-  }, [userData, navigate]);
+  const updateProfileCallback = useCallback(
+    async (data: FormData) => {
+      const profileUpdateData: ProfileUpdateRequest = {
+        first_name: String(data.get('first_name')),
+        second_name: String(data.get('second_name')),
+        display_name: String(data.get('display_name')),
+        login: String(data.get('login')),
+        email: String(data.get('email')),
+        phone: String(data.get('phone')),
+      };
 
-  const updateProfileCallback = useCallback(async (data: FormData) => {
-    const profileUpdateData: ProfileUpdateRequest = {
-      first_name: String(data.get('first_name')),
-      second_name: String(data.get('second_name')),
-      display_name: String(data.get('display_name')),
-      login: String(data.get('login')),
-      email: String(data.get('email')),
-      phone: String(data.get('phone')),
-    };
-
-    dispatch(userUpdateProfile(profileUpdateData));
-  }, []);
+      dispatch(userUpdateProfile(profileUpdateData));
+    },
+    [dispatch],
+  );
 
   return (
     <div className="profile-edit-page">

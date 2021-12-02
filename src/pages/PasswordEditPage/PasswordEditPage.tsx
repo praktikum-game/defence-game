@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
 import { Header } from '../../components/Header';
@@ -11,7 +10,6 @@ import { bindArgsFromN } from '../../utilities/utilities';
 import { Avatar } from '../../components/Avatar';
 import { Footer } from '../../components/Footer';
 import { InputNames } from '../../consts';
-import { AppState } from '../../store';
 import { useFormInput } from '../../hooks/useFormInput/useFormInput';
 import { ProfilePasswordUpdateRequest, usersAPI } from '../../api/users';
 
@@ -19,7 +17,6 @@ import './passwordEditPage.css';
 
 export const PasswordEditPage = () => {
   const navigate = useNavigate();
-  const userData = useSelector((state: AppState) => state.user.data);
 
   const [editResult, setEditResult] = useState(false);
 
@@ -43,12 +40,6 @@ export const PasswordEditPage = () => {
       navigate('/password-edit', { replace: true });
     }
   }, [editResult, navigate]);
-
-  useEffect(() => {
-    if (!userData) {
-      navigate('/');
-    }
-  }, []);
 
   const updatePasswordCallback = useCallback(async (data: FormData) => {
     const passwordData: ProfilePasswordUpdateRequest = {

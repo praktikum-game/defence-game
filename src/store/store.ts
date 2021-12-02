@@ -6,7 +6,7 @@ import { leaderboardReducer } from './leaderboard';
 // eslint-disable-next-line import/no-cycle
 import { ThunkExtraArgument } from './types';
 import { authAPI } from '../api/auth';
-import { leaderboarAPI } from '../api/leaderboard';
+import { leaderboardAPI } from '../api/leaderboard';
 import { usersAPI } from '../api/users';
 
 export const rootReducer = combineReducers({ user: userReducer, leaderboard: leaderboardReducer });
@@ -16,7 +16,7 @@ export type RootReducer = typeof rootReducer;
 const thunkExtraArgument: ThunkExtraArgument = {
   api: {
     auth: authAPI,
-    leaderboard: leaderboarAPI,
+    leaderboard: leaderboardAPI,
     users: usersAPI,
   },
 };

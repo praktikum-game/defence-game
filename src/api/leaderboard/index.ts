@@ -1,2 +1,2 @@
-export { leaderboarAPI } from './LeadboardAPI';
+export { leaderboardAPI } from './LeaderboardAPI';
 export { LeaderboardItem } from './types';
