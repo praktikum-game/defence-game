@@ -14,12 +14,9 @@ import { useFormInput } from '../../hooks/useFormInput/useFormInput';
 import { ProfilePasswordUpdateRequest, usersAPI } from '../../api/users';
 
 import './passwordEditPage.css';
-import { useAuthRedirect } from '../../hooks/useAuthRedirect';
 
 export const PasswordEditPage = () => {
   const navigate = useNavigate();
-
-  useAuthRedirect('/');
 
   const [editResult, setEditResult] = useState(false);
 

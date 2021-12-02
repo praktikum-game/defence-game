@@ -1,5 +1,5 @@
-import React, { useEffect, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { Footer } from '../../components/Footer';
 import { PageContainer } from '../../components/PageContainer';
 import { Header } from '../../components/Header';
@@ -13,14 +13,9 @@ import { InputNames } from '../../consts';
 import './loginPage.css';
 import { useFormInput } from '../../hooks/useFormInput/useFormInput';
 import { useAuthUser } from '../../hooks/useAuthUser';
-import { useAuthRedirect } from '../../hooks/useAuthRedirect';
 
 export const LoginPage = (): JSX.Element => {
-  const navigate = useNavigate();
-
-  useAuthRedirect('/', true);
-
-  const { userData, executeAuth } = useAuthUser();
+  const { executeAuth } = useAuthUser();
 
   const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
     useFormInput(loginValidator);
@@ -32,12 +27,6 @@ export const LoginPage = (): JSX.Element => {
     setLoginValue('');
     setPasswordValue('');
   }, [setLoginValue, setPasswordValue]);
-
-  useEffect(() => {
-    if (userData) {
-      navigate('/', { replace: true });
-    }
-  }, [userData, navigate]);
 
   const handleSubmitClick = useCallback(
     async (data: FormData) => {

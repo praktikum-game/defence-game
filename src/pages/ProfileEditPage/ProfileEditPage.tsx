@@ -23,11 +23,8 @@ import { userUpdateProfile } from '../../store/user/actions/action-creators';
 
 import './profileEditPage.css';
 import { getValueByKey } from '../../utilities/utilities';
-import { useAuthRedirect } from '../../hooks/useAuthRedirect';
 
 export const ProfileEditPage = () => {
-  useAuthRedirect('/');
-
   const dispatch = useDispatch();
   const userData = useSelector((state: AppState) => state.user.data);
 

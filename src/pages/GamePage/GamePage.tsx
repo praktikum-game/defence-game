@@ -11,8 +11,6 @@ import { useAuthRedirect } from '../../hooks/useAuthRedirect';
 import './game-page.css';
 
 export const GamePage = () => {
-  useAuthRedirect('/login');
-
   const navigate = useNavigate();
   const [infoModalIsVisible, setInfoModalIsVisible] = useState(true);
   const [loseModalIsVisible, setLoseModalIsVisible] = useState(false);

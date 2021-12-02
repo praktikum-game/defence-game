@@ -10,14 +10,11 @@ import { Form } from '../../components/Form';
 import { Avatar } from '../../components/Avatar';
 import { LogoutButton } from './LogoutButton';
 import { InputNames } from '../../consts';
-import { useAuthRedirect } from '../../hooks/useAuthRedirect';
 import { useAuthUser } from '../../hooks/useAuthUser';
 
 import './profilePage.css';
 
 export const ProfilePage = () => {
-  useAuthRedirect('/login');
-
   const { userData } = useAuthUser();
 
   return (

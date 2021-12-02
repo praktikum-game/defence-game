@@ -23,11 +23,8 @@ import { RegisterRequest } from '../../api/auth';
 import { userRegister } from '../../store/user/actions/action-creators';
 
 import './registerPage.css';
-import { useAuthRedirect } from '../../hooks/useAuthRedirect';
 
 export const RegisterPage = (): JSX.Element => {
-  useAuthRedirect('/', true);
-
   const dispatch = useDispatch();
 
   const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
