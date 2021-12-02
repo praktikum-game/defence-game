@@ -17,6 +17,5 @@ export const RequireAuth = ({ children, to = '/login', inverse = false }: Requir
     return <Navigate replace to={to} state={{ from: location }} />;
   }
 
-
-  return <>{children}</>;
+  return children;
 };
