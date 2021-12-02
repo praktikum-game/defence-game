@@ -6,17 +6,11 @@ import { Title } from '../../../../../components/Title';
 import './thread-list-item.css';
 import { ThreadListItemProps } from '.';
 import { Avatar } from '../../../../../components/Avatar';
+import { getDateFormatter } from '../../../../../utilities/utilities';
 
 const b = block('thread-list-item');
 
-const formatter = new Intl.DateTimeFormat('ru-RU', {
-  year: 'numeric',
-  month: 'numeric',
-  day: 'numeric',
-  hour: 'numeric',
-  minute: 'numeric',
-  hour12: false,
-});
+const formatter = getDateFormatter();
 
 export const Item = ({ className, dataItem }: ThreadListItemProps): JSX.Element => {
   const { headerText, createdDate, createdUser, threadId, messagesCount, lastChange } = dataItem;
