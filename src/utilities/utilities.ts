@@ -26,3 +26,14 @@ export function getValueByKey<T, K extends keyof T>(obj: T | null, key: K): stri
   }
   return '';
 }
+
+export function getDateFormatter() {
+  return new Intl.DateTimeFormat('ru-RU', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: false,
+  });
+}
