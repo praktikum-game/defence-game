@@ -14,63 +14,69 @@ import { ErrorPage404 } from '../../pages/ErrorPage404';
 import { ErrorPage500 } from '../../pages/ErrorPage500';
 import { PageLayout } from '../PageLayout';
 import { PasswordEditPage } from '../../pages/PasswordEditPage';
+import { AppLayout } from '../AppLayout';
 
 export const routes: RouteObject[] = [
   {
     path: '/',
-    element: <PageLayout />,
+    element: <AppLayout />,
     children: [
       { index: true, element: <HomePage /> },
       {
-        path: '/profile',
-        element: <ProfilePage />,
-      },
-      {
-        path: '/profile-edit',
-        element: <ProfileEditPage />,
-      },
-      {
-        path: '/password-edit',
-        element: <PasswordEditPage />,
-      },
-      {
-        path: '/login',
-        element: <LoginPage />,
-      },
-      {
-        path: '/register',
-        element: <RegisterPage />,
-      },
-      {
-        path: '/game',
-        element: <GamePage />,
-      },
-      {
-        path: '/ratings',
-        element: <RatingsPage />,
-      },
-      {
-        path: '/forum',
-        element: <ForumPage />,
+        element: <PageLayout />,
         children: [
-          { index: true, element: <ForumIndexPage /> },
           {
-            path: ':forumId',
-            element: <ForumThreadPage />,
+            path: '/profile',
+            element: <ProfilePage />,
+          },
+          {
+            path: '/profile-edit',
+            element: <ProfileEditPage />,
+          },
+          {
+            path: '/password-edit',
+            element: <PasswordEditPage />,
+          },
+          {
+            path: '/login',
+            element: <LoginPage />,
+          },
+          {
+            path: '/register',
+            element: <RegisterPage />,
+          },
+          {
+            path: '/game',
+            element: <GamePage />,
+          },
+          {
+            path: '/ratings',
+            element: <RatingsPage />,
+          },
+          {
+            path: '/forum',
+            element: <ForumPage />,
+            children: [
+              { index: true, element: <ForumIndexPage /> },
+              {
+                path: ':forumId',
+                element: <ForumThreadPage />,
+              },
+            ],
+          },
+          {
+            path: '500',
+            element: <ErrorPage500 />,
+          },
+          {
+            path: '/',
+            element: <HomePage />,
+          },
+          {
+            path: '*',
+            element: <ErrorPage404 />,
           },
         ],
-      },
-      {
-        path: '500',
-        element: <ErrorPage500 />,
-      },
-      {
-        path: '/',
-        element: <HomePage />,
-      },
-      {
-        path: '*',
-        element: <ErrorPage404 />,
       },
     ],
   },

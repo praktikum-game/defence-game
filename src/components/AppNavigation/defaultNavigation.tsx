@@ -2,10 +2,6 @@ import { NavigationItem } from './types';
 
 export const defaultNavigation: NavigationItem[] = [
   {
-    path: '/',
-    name: 'Главная',
-  },
-  {
     path: '/profile',
     name: 'Профиль',
   },
@@ -30,15 +26,11 @@ export const defaultNavigation: NavigationItem[] = [
     name: 'Форум',
   },
   {
-    path: '/forum/123',
-    name: 'Раздел форума',
-  },
-  {
     path: '/500',
-    name: 'Ошибка 500',
+    name: '500',
   },
   {
     path: '/404',
-    name: 'Ошибка 404',
+    name: '404',
   },
 ];

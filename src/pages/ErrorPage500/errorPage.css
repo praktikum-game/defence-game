@@ -31,4 +31,13 @@
   .button__link {
     margin-top: 60px;
   }
+
+  &__lines {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: url('../images/lines.png') repeat-x bottom;
+  }
 }

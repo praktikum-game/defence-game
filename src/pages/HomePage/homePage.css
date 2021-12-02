@@ -1,0 +1,129 @@
+.home-page {
+  .main-header {
+    /* stylelint-disable-next-line value-list-comma-space-after */
+    background: url('./static/bg.png') no-repeat bottom right / 50%,
+      url('../images/lines.png') repeat-x bottom $main-page-header-bg;
+    min-height: 600px;
+    padding: 45px 80px 0;
+
+    &__wrapper {
+      display: flex;
+    }
+
+    &__hobart {
+      width: 140px;
+
+      img {
+        width: 140px;
+      }
+    }
+
+    &__logo {
+      padding-right: 140px;
+      text-align: center;
+      flex-grow: 1;
+    }
+
+    &__banner-text {
+      padding-top: 85px;
+      max-width: 450px;
+      font-size: 24px;
+      line-height: 34px;
+
+      h1,
+      p {
+        color: $text-color-contrast;
+      }
+
+      h1 {
+        font-size: 64px;
+        line-height: 77px;
+        margin-bottom: 20px;
+
+        span {
+          color: $error-page-accent-color;
+          font-weight: 900;
+        }
+      }
+    }
+
+    &__buttons {
+      margin-top: 40px;
+
+      button {
+        margin-right: 20px;
+      }
+    }
+  }
+
+  .page-layout {
+    border-bottom: 18px solid $primary-background;
+    padding-bottom: 20px;
+  }
+
+  .card {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+
+    &__image {
+      img {
+        border-radius: 100%;
+      }
+    }
+
+    &_left {
+      .card__image {
+        margin-right: 80px;
+      }
+    }
+
+    &_right {
+      flex-direction: row-reverse;
+
+      .card__image {
+        margin-left: 80px;
+      }
+    }
+
+    &__text {
+      max-width: 500px;
+    }
+
+    &__title {
+      font-weight: 500;
+      font-size: 36px;
+      line-height: 44px;
+      color: $text-color-contrast;
+    }
+
+    &__info {
+      font-size: 18px;
+      line-height: 24px;
+      margin-top: 20px;
+      color: $text-color-contrast;
+    }
+  }
+
+  &__button {
+    background-color: $default-background;
+    color: $text-color-contrast;
+    font-size: 28px;
+    border-radius: 100px;
+    padding: 20px 100px;
+    width: auto;
+    margin-top: 100px;
+  }
+
+  .main-footer {
+    margin-top: 60px;
+
+    a {
+      color: $text-color-contrast;
+    }
+
+    .app-navigation ul li {
+      margin: 0 20px;
+    }
+  }
+}

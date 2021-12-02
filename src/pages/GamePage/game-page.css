@@ -1,3 +1,13 @@
 .game-container {
   background: $page-background-dark;
 }
+
+.game-page {
+  margin-top: 40px;
+  background: $main-page-header-bg;
+  border: 5px solid $main-page-header-bg;
+
+  button {
+    width: auto;
+  }
+}

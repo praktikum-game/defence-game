@@ -9,6 +9,22 @@
   background-color: beige;
   box-shadow: 0 0 10px 4px gray;
   border-radius: 5px;
+  text-align: center;
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+
+    button {
+      margin: 10px;
+    }
+  }
+
+  &__title {
+    margin-bottom: 20px;
+    font-size: 22px;
+    text-align: center;
+  }
 }
 
 .overlay {

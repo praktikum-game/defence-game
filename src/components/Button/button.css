@@ -19,6 +19,17 @@
     border: 1px solid $primary-color;
     background: $secondary-background;
     color: $primary-color;
+    display: flex;
+    justify-content: center;
+  }
+
+  &_info {
+    border: 1px solid $info-btn-border-color;
+    background: transparent;
+    color: $info-btn-border-color;
+    border-radius: 8px;
+    padding: 10px 20px;
+    width: auto;
   }
 
   &_error {
