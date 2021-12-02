@@ -1,10 +1,8 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-export const ForumPage = () => {
-  return (
-    <div>
-      <Outlet />
-    </div>
-  );
-};
+export const ForumPage = () => (
+  <div>
+    <Outlet />
+  </div>
+);

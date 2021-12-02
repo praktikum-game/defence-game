@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import block from 'bem-cn';
+import { nanoid } from 'nanoid';
 
 import { PageContainer } from '../../../components/PageContainer';
 import { MessageItem, messagesAPI } from '../../../api/forum-messages';
@@ -8,7 +9,6 @@ import { Title } from '../../../components/Title';
 import { MessagesList } from '../components/MessagesList';
 import { Button } from '../../../components/Button';
 import { InputField } from '../../../components/InputField';
-import { nanoid } from 'nanoid';
 
 import './forum-thread-page.css';
 
@@ -31,8 +31,8 @@ export const ForumThreadPage = () => {
   }, []);
 
   const handleSendMessageClick = useCallback(() => {
-    setMessages((messages) => [
-      ...messages,
+    setMessages((messagesNew) => [
+      ...messagesNew,
       { id: nanoid(), date: Date(), user: 'Доцент', text: currentMessage },
     ]);
     setCurrentMessage('');

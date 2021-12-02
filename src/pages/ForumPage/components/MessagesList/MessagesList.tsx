@@ -1,7 +1,8 @@
 import React, { memo } from 'react';
+import block from 'bem-cn';
+
 import { MessagesListProps } from './types';
 import { MessageItem } from './MessageItem';
-import block from 'bem-cn';
 
 const b = block('messages-list-container');
 
