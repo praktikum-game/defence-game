@@ -1,3 +1,6 @@
 .ssr-test-page {
   color: green;
+  &:hover {
+    color: red;
+  }
 }
