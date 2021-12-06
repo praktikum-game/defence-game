@@ -18,6 +18,10 @@ import { ENVS, GLOBAL_ARGS } from '../assets/env';
 
 const { __DEV__, __PROD__ } = ENVS;
 
+console.log('client CLIENT_DIR', CLIENT_DIR);
+console.log('client DIST_DIR', DIST_DIR);
+console.log('client ROOT_DIR', ROOT_DIR);
+
 const vendorsManifest = require(join(DIST_DIR, 'webpack', 'vendors-manifest.json').replace(
   'dist/dist',
   'dist',

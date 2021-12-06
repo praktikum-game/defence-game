@@ -4,10 +4,10 @@ import { join } from 'path';
 import webpack, { Configuration } from 'webpack';
 
 import { STATS_OPTIONS, VENDORS } from '../assets/config';
-import { WEBPACK_ROOT_DIR } from '../assets/dir';
+import { ROOT_DIR_FROM_WEBPACK } from '../assets/dir';
 import { ENVS } from '../assets/env';
 
-const DIST_DIR = join(WEBPACK_ROOT_DIR, 'dist');
+const DIST_DIR = join(ROOT_DIR_FROM_WEBPACK, 'dist');
 
 const vendorConfig: Configuration = {
   target: 'web',

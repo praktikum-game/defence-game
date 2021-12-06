@@ -13,7 +13,6 @@ try {
     throw err;
   }
 
-  // eslint-disable-next-line
   console.warn('[cfg] Warning: could not load default config', err);
 }
 
@@ -27,7 +26,6 @@ try {
     throw err;
   }
 
-  // eslint-disable-next-line
   console.warn(`[cfg] Warning: could not load ${ENV} config`, err);
 }
 

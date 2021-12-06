@@ -2,17 +2,18 @@ import { config as envConfig } from 'dotenv'; //Dotenv is a zero-dependency modu
 import merge from 'lodash.merge';
 import { join, resolve } from 'path';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
-import webpack, { Configuration } from 'webpack';
+import webpack, { Configuration, DefinePlugin } from 'webpack';
 import webpackNodeExternals from 'webpack-node-externals'; //Webpack allows you to define externals - modules that should not be bundled.
 
-import { WEBPACK_ROOT_DIR } from '../assets/dir';
-import { ENVS, GLOBAL_ARGS } from '../assets/env';
+import { ROOT_DIR_FROM_WEBPACK } from '../assets/dir';
+import { ENV, ENVS, GLOBAL_ARGS } from '../assets/env';
 
 envConfig();
 
-const { DADATA_TOKEN } = process.env;
+// const { DADATA_TOKEN } = process.env;
 const { __DEV__ } = ENVS;
-console.log(`mode DEV?: ${__DEV__}`);
+console.log(`ssr WEBPACK_ROOT_DIR`, ROOT_DIR_FROM_WEBPACK);
+console.log('ssr GLOBAL_ARGS', GLOBAL_ARGS);
 
 type InputProps = {
   entry: any;
@@ -28,7 +29,7 @@ export const initServerConfig =
       devtool: 'source-map',
       entry: entry.app,
       node: { __dirname: false },
-      mode: __DEV__ ? 'development' : 'production',
+      mode: ENV,
       externals: [
         webpackNodeExternals({
           allowlist: [/\.(?!(?:jsx?|json)$).{1,5}$/i],
@@ -43,7 +44,7 @@ export const initServerConfig =
       output: {
         filename: `ssr.bundles.${lang}.js`,
         libraryTarget: 'commonjs2',
-        path: join(WEBPACK_ROOT_DIR, 'dist'),
+        path: join(ROOT_DIR_FROM_WEBPACK, 'dist'),
         publicPath: '/static/', // ENVS.__DEV__ ? '/static/' : '', //`https://storage.yandexcloud.net/path/to/S3/${process.env.APP_VERSION}/client/`,
       },
 
@@ -64,10 +65,10 @@ export const initServerConfig =
       },
 
       plugins: [
-        new webpack.DefinePlugin(
+        new DefinePlugin(
           merge(GLOBAL_ARGS, {
             'process.env': {
-              DADATA_TOKEN: JSON.stringify(DADATA_TOKEN),
+              // DADATA_TOKEN: JSON.stringify(DADATA_TOKEN),
               LANG: JSON.stringify(lang),
               APP_SIDE: 'server',
             },

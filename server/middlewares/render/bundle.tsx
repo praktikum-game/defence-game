@@ -3,6 +3,7 @@ import htmlescape from 'htmlescape';
 import cfg from 'lib/cfg';
 import React from 'react';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
+import { StaticRouter } from 'react-router-dom/server';
 
 //@ts-ignore
 import vendorsMeta from 'webpack/config/vendors-meta';
@@ -53,14 +54,18 @@ function getPageHtml(params: PageHtmlParams) {
   return `<!doctype html>${html}`;
 }
 
-export default ({ bundleName, data }: RenderBundleArguments) => {
+export default ({ bundleName, data, location }: RenderBundleArguments) => {
   const Bundle = getBundle(bundleName, 'ru');
 
   if (!Bundle) {
     throw new Error(`Bundle ${bundleName} not found`);
   }
 
-  const bundleHtml = renderToString(<Bundle data={data} />);
+  const bundleHtml = renderToString(
+    <StaticRouter location={location}>
+      <Bundle data={data} />
+    </StaticRouter>,
+  );
 
   return {
     html: getPageHtml({
