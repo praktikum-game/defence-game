@@ -4,7 +4,7 @@ import { Configuration } from 'webpack';
 
 import { initClientConfig, loadAssets, loadScripts, loadStyles } from '../settings';
 
-config();
+config(); // получается мы не используем dotenv ?? я не видел файла .env или похожего....
 
 // eslint-disable-next-line
 const cfg = require('../../lib/cfg').default; // ?? почему так

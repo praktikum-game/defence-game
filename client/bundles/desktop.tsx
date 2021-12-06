@@ -8,7 +8,6 @@ import { hot } from 'react-hot-loader/root';
 // import { SsrTest } from '../pages/SSRTest/SsrTest';
 import { Props } from './types';
 
-
 const Bundle: Props = (props) => {
   return (
     <>

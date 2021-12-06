@@ -9,10 +9,10 @@ const cssLoader = {
   loader: 'css-loader',
   options: {
     sourceMap: ENVS.__DEV__,
-    importLoaders: 1,
-    modules: {
-      localIdentName: ENVS.__DEV__ ? '[name]__[local]--[hash:base64:5]' : '[hash:base64:8]',
-    },
+    // importLoaders: 1,
+    // modules: {
+    //   localIdentName: ENVS.__DEV__ ? '[name]__[local]--[hash:base64:5]' : '[hash:base64:8]',
+    // },
   },
 };
 
