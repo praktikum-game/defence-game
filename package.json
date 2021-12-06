@@ -6,18 +6,31 @@
     "node": "14.18.1"
   },
   "scripts": {
-    "dev": "webpack serve --config webpack.dev.js",
-    "start": "ts-node src/server.ts",
-    "prod:w": "webpack --config webpack.prod.js",
-    "prod": "npm-run-all lint prod:w",
-    "build:w": "webpack --config webpack.dev.js",
-    "build": "npm-run-all lint build:w",
-    "lint:p": "prettier --write src/**/*.{js,jsx,ts,tsx,test.tsx,test.ts,json}",
-    "lint:ts": "eslint src/**/*.{ts,tsx}",
-    "lint:style": "stylelint src/**/*.css",
-    "lint": "npm-run-all lint:p lint:ts lint:style",
-    "ts": "tsc",
-    "test": "jest"
+    "build": "npm run build:production",
+    "init": "npm install && npm run build:dev:vendors",
+    "dev": "better-npm-run dev",
+    "build:production:vendors": "better-npm-run build:production:vendors",
+    "build:production:client": "better-npm-run build:production:client",
+    "build:production": "better-npm-run build:production",
+    "build:client": "better-npm-run build:client",
+    "watch:ssr": "better-npm-run watch:ssr",
+    "start:dev": "NODE_PATH=./dist CFG_DIR=$(pwd)/dist/configs node dist/server/index.js",
+    "start:prod": "cd /var/www/html && APP_VERSION=$(cat $(pwd)/.version) CFG_DIR=$(pwd)/dist/configs/ NODE_PATH=$(pwd)/dist node dist/server/index.js",
+    "build:configs": "tsc --project configs",
+    "build:server": "tsc --project server",
+    "build:dev:vendors": "NODE_ENV=development webpack --mode=development --config webpack/config/vendors.config.ts",
+    "build:ssr": "webpack --mode=production --hide-modules --config webpack/config/ssr.config.ts",
+    "clean": "rm -rf dist && mkdir dist",
+    "precommit": "npm-run-all lint tsc",
+    "tsc": "node ./node_modules/.bin/tsc --noEmit",
+    "lint": "npm-run-all lint:*",
+    "lint:style": "npx stylelint './**/*.{css,scss}'",
+    "lint:src": "npx eslint --ext=.ts,.tsx ./",
+    "fix": "npm-run-all fix:lint:*",
+    "fix:lint:src": "npx eslint --fix --ext=.ts,.tsx ./",
+    "fix:lint:style": "npx stylelint './**/*.{css,scss}' --fix",
+    "test": "npm-run-all lint:* test:*",
+    "test:mocha": "echo \"Error: no test specified\""
   },
   "repository": {
     "type": "git",
@@ -38,18 +51,43 @@
   "homepage": "https://github.com/praktikum-game/defence-game#readme",
   "devDependencies": {
     "@testing-library/react": "12.1.2",
+    "@types/compression-webpack-plugin": "^9.0.0",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/copy-webpack-plugin": "^8.0.1",
+    "@types/duplicate-package-checker-webpack-plugin": "^2.1.2",
+    "@types/express-rate-limit": "^5.1.3",
+    "@types/htmlescape": "^1.1.1",
     "@types/jest": "27.0.3",
+    "@types/lodash-webpack-plugin": "^0.11.6",
+    "@types/lodash.flow": "^3.5.6",
+    "@types/lodash.merge": "^4.6.6",
+    "@types/mini-css-extract-plugin": "^2.4.0",
+    "@types/node": "14.18",
+    "@types/pkg-dir": "^2.0.1",
+    "@types/react-helmet": "^6.1.4",
+    "@types/react-loadable": "^5.5.6",
     "@types/react-router-dom": "5.3.2",
+    "@types/webpack-dev-middleware": "^5.0.2",
+    "@types/webpack-hot-middleware": "^2.25.5",
+    "@types/webpack-node-externals": "^2.5.3",
     "@typescript-eslint/eslint-plugin": "5.3.0",
     "@typescript-eslint/parser": "5.3.0",
+    "babel-loader": "^8.2.3",
+    "better-npm-run": "^0.1.1",
     "clean-webpack-plugin": "4.0.0",
+    "compression-webpack-plugin": "^9.0.1",
+    "cookie-parser": "^1.4.6",
     "copy-webpack-plugin": "10.0.0",
+    "css-hot-loader": "^1.4.4",
     "css-loader": "6.5.0",
+    "dotenv": "^10.0.0",
+    "duplicate-package-checker-webpack-plugin": "^3.0.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-jest": "25.2.4",
     "eslint-plugin-react-hooks": "4.2.0",
     "file-loader": "6.2.0",
+    "fork-ts-checker-webpack-plugin": "^6.5.0",
     "html-webpack-plugin": "5.5.0",
     "husky": "7.0.4",
     "image-minimizer-webpack-plugin": "2.2.0",
@@ -58,14 +96,23 @@
     "imagemin-optipng": "8.0.0",
     "imagemin-svgo": "^9.0.0",
     "jest": "27.3.1",
+    "lodash-webpack-plugin": "^0.11.6",
+    "lodash.flow": "^3.5.0",
+    "lodash.merge": "^4.6.2",
+    "merge-options": "^3.0.4",
+    "mini-css-extract-plugin": "^2.4.5",
     "npm-run-all": "4.1.5",
     "path": "0.12.7",
+    "pkg-dir": "^4.2.0",
     "postcss": "8.3.11",
     "postcss-loader": "6.2.0",
     "postcss-nested": "5.0.6",
     "postcss-preset-env": "6.7.0",
     "postcss-simple-vars": "6.0.3",
     "prettier": "2.4.1",
+    "react-hot-loader": "^4.13.0",
+    "react-loadable": "^5.5.0",
+    "react-loadable-ssr-addon": "^1.0.2",
     "react-test-renderer": "17.0.2",
     "style-loader": "3.3.1",
     "stylelint": "14.0.1",
@@ -74,11 +121,14 @@
     "stylelint-prettier": "1.2.0",
     "ts-jest": "27.0.7",
     "ts-loader": "9.2.6",
+    "tsconfig-paths-webpack-plugin": "^3.5.2",
     "typescript": "4.4.4",
     "webpack": "5.61.0",
     "webpack-cli": "4.9.1",
     "webpack-dev-server": "4.4.0",
+    "webpack-hot-middleware": "^2.25.1",
     "webpack-merge": "5.8.0",
+    "webpack-node-externals": "^3.0.0",
     "workbox-webpack-plugin": "6.4.1"
   },
   "dependencies": {
@@ -100,12 +150,16 @@
     "eslint-plugin-jsx-a11y": "6.5.1",
     "eslint-plugin-react": "7.27.0",
     "express": "4.17.1",
+    "express-rate-limit": "^5.5.1",
+    "helmet": "^4.6.0",
+    "htmlescape": "^1.1.1",
     "nanoid": "3.1.30",
     "postcss-advanced-variables": "3.0.1",
     "postcss-modules": "4.2.2",
     "qs": "6.7.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-helmet": "^6.1.0",
     "react-redux": "^7.2.6",
     "react-router-dom": "6.0.2",
     "redux": "^4.1.2",
@@ -118,5 +172,37 @@
     "workbox-precaching": "6.4.1",
     "workbox-routing": "6.4.1",
     "workbox-strategies": "6.4.1"
+  },
+  "betterScripts": {
+    "dev": {
+      "command": "npm-run-all build:configs build:server && npm-run-all --parallel --print-name watch:ssr start:dev",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "build:production": {
+      "command": "npm-run-all build:configs build:server build:production:vendors build:ssr build:production:client",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "build:production:vendors": {
+      "command": "webpack --mode=production --hide-modules --config webpack/config/vendors.config.ts",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "build:production:client": {
+      "command": "webpack --mode=production --hide-modules --config webpack/config/client.config.ts",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "watch:ssr": {
+      "command": "webpack --watch --config webpack/config/ssr.config.ts",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
   }
 }

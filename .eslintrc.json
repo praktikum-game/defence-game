@@ -6,9 +6,9 @@
     "jest/globals": true
   },
   "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
+  // "parserOptions": {
+  //   "project": "./tsconfig.json"
+  // },
   "plugins": ["@typescript-eslint", "react-hooks", "jest"],
   "rules": {
     "no-console": "off",
@@ -21,7 +21,7 @@
     "spaced-comment": "off",
     "import/extensions": "off",
     "import/no-cycle": "warn",
-    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-explicit-any": "warn",
     "no-debugger": "off",
     // "no-magic-numbers": "warn", // Раскомментируйте, если нужно проверить на лишние числа
 

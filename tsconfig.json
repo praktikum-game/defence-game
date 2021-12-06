@@ -15,10 +15,9 @@
     "skipLibCheck": true,
     "declaration": false,
     "sourceMap": true,
-    "outDir": "./dist",
     "forceConsistentCasingInFileNames": true,
-    "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"]
+    "typeRoots": ["typings/**/*.d.ts", "node_modules/@types", "./@types"],
+    "baseUrl": "."
   },
-  "include": ["src", "typings/**/*.d.ts", "./node_modules/@types", "./jest-config/jest-setup.ts"],
   "exclude": ["**/*.js", "./node_modules/"]
 }
