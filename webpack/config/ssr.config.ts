@@ -1,4 +1,4 @@
-import { config } from 'dotenv';
+// import { config } from 'dotenv';
 import flow from 'lodash.flow';
 import { join } from 'path';
 import webpack from 'webpack';
@@ -6,7 +6,7 @@ import webpack from 'webpack';
 import { ROOT_DIR_FROM_WEBPACK } from '../assets/dir';
 import { initServerConfig, loadAssets, loadScripts, loadStyles } from '../settings';
 
-config();
+// config();
 
 const cfg = require('../../lib/cfg').default;
 
