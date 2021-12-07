@@ -1,6 +1,4 @@
-// import { OtherSsrTest } from 'client/pages/OtherSSRTest/OtherSsrTest';
-import { SsrTest } from 'client/pages/SSRTest/SsrTest';
-// import { SsrTestLayout } from 'client/pages/SSRTestLayout/SsrTestLayout';
+import { OAuthSsrPage } from 'client/pages/OAuthSsrPage/OAuthSsrPage';
 import React from 'react';
 import { hydrate } from 'react-dom';
 import { Helmet } from 'react-helmet'; //Helmet helps you secure your Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!
@@ -21,13 +19,7 @@ const Bundle: Props = (props) => {
         />
       </Helmet>
 
-      <SsrTest />
-      {/* <Routes>
-        <Route path="/" element={<SsrTestLayout />}>
-          <Route index element={<SsrTest />} />
-          <Route path="/another" element={<OtherSsrTest />} />
-        </Route>
-      </Routes>*/}
+      <OAuthSsrPage />
     </>
   );
 };
