@@ -61,7 +61,12 @@ export const initClientConfig =
         plugins: [new TsconfigPathsPlugin()],
       },
       module: {
-        rules: [],
+        rules: [
+          {
+            test: /\.(png|svg|jpg|jpeg|gif)$/i,
+            type: 'asset/resource',
+          },
+        ],
       },
       stats: {
         all: undefined,

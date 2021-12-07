@@ -12,6 +12,7 @@ export const loadAssets =
           patterns: [
             { from: './www/favicons', to: 'favicons' },
             { from: './www/robots.txt', to: '' },
+            { from: './client/game/assets/images/', to: './assets/images/' },
           ],
         }),
       );

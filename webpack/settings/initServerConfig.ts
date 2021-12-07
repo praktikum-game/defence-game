@@ -48,7 +48,14 @@ export const initServerConfig =
         publicPath: '/static/', // ENVS.__DEV__ ? '/static/' : '', //`https://storage.yandexcloud.net/path/to/S3/${process.env.APP_VERSION}/client/`,
       },
 
-      module: { rules: [] },
+      module: {
+        rules: [
+          {
+            test: /\.(png|svg|jpg|jpeg|gif)$/i,
+            type: 'asset/resource',
+          },
+        ],
+      },
 
       stats: {
         all: undefined,
