@@ -1,12 +1,11 @@
-// import { config } from 'dotenv';
+import { config as envConfig } from 'dotenv';
 import flow from 'lodash.flow';
 import { Configuration } from 'webpack';
 
 import { initClientConfig, loadAssets, loadScripts, loadStyles } from '../settings';
 
-// config(); // получается мы не используем dotenv ?? я не видел файла .env или похожего....
+envConfig(); // получается мы не используем dotenv ?? я не видел файла .env или похожего....
 
-// eslint-disable-next-line
 const cfg = require('../../lib/cfg').default; // ?? почему так
 
 function getConfig(lang: string, index: number): Configuration {

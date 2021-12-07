@@ -8,7 +8,6 @@ export const ENVS = {
   __TEST__: ENV === 'testing',
 };
 export const GLOBAL_ARGS = {
-  // ...ENVS, // не пойму, зачем это здесь и зачем повторять
   'process.env': {
     ...ENVS,
     NODE_ENV: JSON.stringify(ENV),

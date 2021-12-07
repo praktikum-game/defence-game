@@ -1,16 +1,16 @@
-// import { config } from 'dotenv';
+import { config as envConfig } from 'dotenv';
 import flow from 'lodash.flow';
 import { join } from 'path';
-import webpack from 'webpack';
+import { Configuration } from 'webpack';
 
 import { ROOT_DIR_FROM_WEBPACK } from '../assets/dir';
 import { initServerConfig, loadAssets, loadScripts, loadStyles } from '../settings';
 
-// config();
+envConfig();
 
 const cfg = require('../../lib/cfg').default;
 
-function getConfig(lang: string): webpack.Configuration {
+function getConfig(lang: string): Configuration {
   return flow([
     initServerConfig({
       entry: {

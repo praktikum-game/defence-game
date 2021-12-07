@@ -1,4 +1,4 @@
-// import { config as envConfig } from 'dotenv'; //Dotenv is a zero-dependency module that loads environment variables from a .env file into process.env. Storing configuration in the environment separate from code is based on The Twelve-Factor App methodology.
+import { config as envConfig } from 'dotenv'; //Dotenv is a zero-dependency module that loads environment variables from a .env file into process.env. Storing configuration in the environment separate from code is based on The Twelve-Factor App methodology.
 import merge from 'lodash.merge';
 import { join, resolve } from 'path';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
@@ -7,21 +7,14 @@ import webpackNodeExternals from 'webpack-node-externals'; //Webpack allows you 
 
 import { ROOT_DIR_FROM_WEBPACK } from '../assets/dir';
 import { ENVS, GLOBAL_ARGS } from '../assets/env';
+import { InitSsrConfigProps } from './types';
 
-// envConfig(); // не могу понять, как он испльзуется
+envConfig(); // не могу понять, где он испльзуется и почему им не заменить другие настройки (например GLOBAL_ARGS)
 
-// const { DADATA_TOKEN } = process.env;
 const { __DEV__ } = ENVS;
-console.log(`ssr WEBPACK_ROOT_DIR`, ROOT_DIR_FROM_WEBPACK);
-console.log('ssr GLOBAL_ARGS', GLOBAL_ARGS);
-
-type InputProps = {
-  entry: any;
-  lang: string;
-};
 
 export const initServerConfig =
-  ({ entry, lang }: InputProps) =>
+  ({ entry, lang }: InitSsrConfigProps) =>
   (webpackConfig: Configuration) => {
     const mergedWebpackConfig = Object.assign(webpackConfig, {
       name: `ssr_bundles_${lang}`,
@@ -49,6 +42,7 @@ export const initServerConfig =
       },
 
       module: {
+        // наверно это нужно вынести в лоадер
         rules: [
           {
             test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -75,7 +69,6 @@ export const initServerConfig =
         new DefinePlugin(
           merge(GLOBAL_ARGS, {
             'process.env': {
-              // DADATA_TOKEN: JSON.stringify(DADATA_TOKEN),
               LANG: JSON.stringify(lang),
               APP_SIDE: 'server',
             },
