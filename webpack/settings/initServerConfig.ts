@@ -29,7 +29,7 @@ export const initServerConfig =
       devtool: 'source-map',
       entry: entry.app,
       node: { __dirname: false },
-      mode: ENV,
+      mode: __DEV__ ? 'development' : 'production',
       externals: [
         webpackNodeExternals({
           allowlist: [/\.(?!(?:jsx?|json)$).{1,5}$/i],
