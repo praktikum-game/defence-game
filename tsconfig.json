@@ -21,6 +21,6 @@
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["./jest-config/jest-setup.ts"],
+  "include": ["src", "./jest-config/jest-setup.ts"],
   "exclude": ["node_modules"]
 }
