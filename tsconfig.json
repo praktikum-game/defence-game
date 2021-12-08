@@ -4,21 +4,27 @@
     "downlevelIteration": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es5",
+    "target": "ES2019",
     "jsx": "react",
     "importHelpers": true,
     "noUnusedLocals": true,
     "esModuleInterop": true,
-    "strict": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "declaration": false,
     "sourceMap": true,
     "outDir": "./dist",
-    "forceConsistentCasingInFileNames": true,
-    "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"]
+    "baseUrl": "src",
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["src", "typings/**/*.d.ts", "./node_modules/@types", "./jest-config/jest-setup.ts"],
-  "exclude": ["**/*.js", "./node_modules/"]
+  "include": [
+    "src",
+    "server",
+    "typings/**/*.d.ts",
+    "./node_modules/@types",
+    "./jest-config/jest-setup.ts"
+  ],
+  "exclude": ["node_modules"]
 }
