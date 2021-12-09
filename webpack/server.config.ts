@@ -1,9 +1,10 @@
 import { Configuration } from 'webpack';
 import { join } from 'path';
 import { DIST_DIR, IS_DEV, SSR_DIR } from './env';
-import { css, ts } from './loaders';
+import { css, ts, image } from './loaders';
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import { imageMinOptions } from './plugin-options';
 
 export const serverConfig: Configuration = {
   name: 'ssr',
@@ -11,14 +12,7 @@ export const serverConfig: Configuration = {
   mode: IS_DEV ? 'development' : 'production',
   entry: join(SSR_DIR, 'server.ts'),
   module: {
-    rules: [
-      css.ssr,
-      ts.ssr,
-      {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
-      },
-    ],
+    rules: [css.ssr, ts.ssr, image.ssr],
   },
   output: {
     filename: 'ssr.js',
@@ -31,28 +25,7 @@ export const serverConfig: Configuration = {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     plugins: [new TsconfigPathsPlugin()],
   },
-  plugins: [
-    new ImageMinimizerPlugin({
-      minimizerOptions: {
-        plugins: [
-          ['gifsicle', { interlaced: true }],
-          ['jpegtran', { progressive: true }],
-          ['optipng', { optimizationLevel: 5 }],
-          [
-            'svgo',
-            {
-              plugins: [
-                {
-                  name: 'removeViewBox',
-                  active: false,
-                },
-              ],
-            },
-          ],
-        ],
-      },
-    }),
-  ],
+  plugins: [new ImageMinimizerPlugin(imageMinOptions)],
   devtool: 'source-map',
   performance: {
     hints: IS_DEV ? false : 'warning',

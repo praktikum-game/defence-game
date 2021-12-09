@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "es2017", "dom.iterable", "webworker"],
+    "lib": ["dom", "ES2019", "dom.iterable", "webworker"],
     "downlevelIteration": true,
     "module": "commonjs",
     "moduleResolution": "node",
@@ -15,16 +15,12 @@
     "declaration": false,
     "sourceMap": true,
     "outDir": "./dist",
+    "strict": true,
+    "alwaysStrict": true,
     "baseUrl": "src",
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": [
-    "src",
-    "server",
-    "typings/**/*.d.ts",
-    "./node_modules/@types",
-    "./jest-config/jest-setup.ts"
-  ],
+  "include": ["./jest-config/jest-setup.ts"],
   "exclude": ["node_modules"]
 }
