@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
+// import { Provider } from 'react-redux';
 
+import { SsrHomePage } from 'pages/SsrHomePage/SsrHomePage';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { App } from './components/App';
-import { store } from './store';
+
+// import { store } from './store';
 
 if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   window.addEventListener('load', () => {
@@ -20,13 +21,12 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   });
 }
 
-ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <ErrorBoundary>
-        <App />
-      </ErrorBoundary>
-    </BrowserRouter>
-  </Provider>,
+ReactDOM.hydrate(
+  <BrowserRouter>
+    <ErrorBoundary>
+      <SsrHomePage />
+    </ErrorBoundary>
+  </BrowserRouter>,
+
   document.querySelector('#root'),
 );

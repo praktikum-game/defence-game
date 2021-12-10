@@ -6,3 +6,5 @@ sensitive/
 src/game/assets/original
 .cache/
 src/game/assets/original
+server/assets.json
+server/vendors-assets.json
