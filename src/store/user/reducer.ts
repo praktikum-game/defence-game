@@ -11,8 +11,8 @@ const initialState: UserState = {
   loading: false,
 };
 
-export function reducer(state = initialState, action: UserActions): UserState {
-  switch (action.type) {
+export function reducer(state = initialState, action?: UserActions): UserState {
+  switch (action?.type) {
     case USER_START_FETCH_DATA:
       return { ...state, loading: true };
     case USER_SUCCESS_FETCH_DATA:
