@@ -9,7 +9,7 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint", "react-hooks", "jest"],
+  "plugins": ["@typescript-eslint", "react-hooks", "jest", "import"],
   "rules": {
     "no-console": "off",
     "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
