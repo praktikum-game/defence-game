@@ -9,11 +9,6 @@ import { authAPI } from '../api/auth';
 import { leaderboardAPI } from '../api/leaderboard';
 import { usersAPI } from '../api/users';
 
-export const rootReducer = combineReducers({
-  user: userReducer,
-  leaderboard: leaderboardReducer,
-});
-
 export function configureStore(initialState = {}) {
   const thunkExtraArgument: ThunkExtraArgument = {
     api: {
@@ -22,6 +17,11 @@ export function configureStore(initialState = {}) {
       users: usersAPI,
     },
   };
+
+  const rootReducer = combineReducers({
+    user: userReducer,
+    leaderboard: leaderboardReducer,
+  });
 
   const store = createStore(
     rootReducer,
