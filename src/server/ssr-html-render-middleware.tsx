@@ -12,7 +12,7 @@ import { Store } from 'redux';
 import { ErrorBoundary } from 'components/ErrorBoundary';
 
 function getHtmlString(reactJsxString: string, store?: Store) {
-  return renderToStaticMarkup(
+  const html = renderToStaticMarkup(
     <html lang="ru">
       <head>
         <meta charSet="UTF-8" />
@@ -22,17 +22,18 @@ function getHtmlString(reactJsxString: string, store?: Store) {
         <link href={assets.main.css} rel="stylesheet" />
       </head>
       <body>
-        <div id="root">{reactJsxString}</div>
-        <script src={`/vendors/${vendorsAssets.vendors.js}`}></script>
-        <script src={assets.main.js}></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `window.__PRELOADED_STATE__ = ${renderObject(store?.getState())}`,
           }}
         />
+        <div id="root" dangerouslySetInnerHTML={{ __html: reactJsxString }} />
+        <script src={`/vendors/${vendorsAssets.vendors.js}`}></script>
+        <script src={assets.main.js}></script>
       </body>
     </html>,
   );
+  return `<!DOCTYPE html>${html}`;
 }
 
 const ssrHtmlRenderMiddleware = (req: Request, res: Response) => {

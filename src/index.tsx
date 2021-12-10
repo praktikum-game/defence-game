@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import { SsrHomePage } from './pages/SsrHomePage/SsrHomePage';
@@ -20,7 +19,7 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   });
 }
 
-const state = window.__PRELOADED_STATE__; // Здесь будет объект с данными с сервера
+const state = window.__PRELOADED_STATE__;
 delete window.__PRELOADED_STATE__;
 console.log(state);
 const store = configureStore(state);
