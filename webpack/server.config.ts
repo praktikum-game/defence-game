@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+
 import { Configuration } from 'webpack';
 import { join } from 'path';
 import { DIST_DIR, IS_DEV, SSR_DIR } from './env';

@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+
 import { Configuration, DllReferencePlugin } from 'webpack';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -35,6 +37,7 @@ export const clientConfig: Configuration = {
     new AssetsPlugin({ path: SSR_DIR, filename: 'assets.json' }),
     new ImageMinimizerPlugin(pluginOptions.imageMinimizerOptions),
     !IS_DEV &&
+      // Должен быть всегда последним плагином
       new InjectManifest({
         swSrc: resolve(__dirname, '..', 'src', 'serviceWorker.ts'),
         mode: 'production',
