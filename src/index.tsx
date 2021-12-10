@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-// import { Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 
-import { SsrHomePage } from 'pages/SsrHomePage/SsrHomePage';
+import { SsrHomePage } from './pages/SsrHomePage/SsrHomePage';
 import { ErrorBoundary } from './components/ErrorBoundary';
-
-// import { store } from './store';
+import { configureStore } from './store';
 
 if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   window.addEventListener('load', () => {
@@ -21,12 +20,16 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   });
 }
 
+const state = window.__PRELOADED_STATE__; // Здесь будет объект с данными с сервера
+delete window.__PRELOADED_STATE__;
+console.log(state);
+const store = configureStore(state);
+
 ReactDOM.hydrate(
-  <BrowserRouter>
+  <Provider store={store}>
     <ErrorBoundary>
       <SsrHomePage />
     </ErrorBoundary>
-  </BrowserRouter>,
-
+  </Provider>,
   document.querySelector('#root'),
 );
