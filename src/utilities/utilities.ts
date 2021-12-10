@@ -37,5 +37,3 @@ export function getDateFormatter() {
     hour12: false,
   });
 }
-
-export const isServer = !(typeof window !== 'undefined' && window.document);
