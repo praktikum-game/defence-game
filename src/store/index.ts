@@ -1,2 +1,2 @@
-export { store, rootReducer } from './store';
+export { configureStore, rootReducer } from './store';
 export { ThunkExtraArgument, AppState } from './types';

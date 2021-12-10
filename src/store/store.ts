@@ -9,19 +9,25 @@ import { authAPI } from '../api/auth';
 import { leaderboardAPI } from '../api/leaderboard';
 import { usersAPI } from '../api/users';
 
-export const rootReducer = combineReducers({ user: userReducer, leaderboard: leaderboardReducer });
+export const rootReducer = combineReducers({
+  user: userReducer,
+  leaderboard: leaderboardReducer,
+});
 
-export type RootReducer = typeof rootReducer;
+export function configureStore(initialState = {}) {
+  const thunkExtraArgument: ThunkExtraArgument = {
+    api: {
+      auth: authAPI,
+      leaderboard: leaderboardAPI,
+      users: usersAPI,
+    },
+  };
 
-const thunkExtraArgument: ThunkExtraArgument = {
-  api: {
-    auth: authAPI,
-    leaderboard: leaderboardAPI,
-    users: usersAPI,
-  },
-};
+  const store = createStore(
+    rootReducer,
+    initialState,
+    applyMiddleware(thunk.withExtraArgument(thunkExtraArgument)),
+  );
 
-export const store = createStore(
-  rootReducer,
-  applyMiddleware(thunk.withExtraArgument(thunkExtraArgument)),
-);
+  return store;
+}
