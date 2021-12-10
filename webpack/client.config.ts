@@ -4,6 +4,7 @@ import { Configuration, DllReferencePlugin } from 'webpack';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import AssetsPlugin from 'assets-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import { join, resolve } from 'path';
 import { DIST_DIR, IS_DEV, SRC_DIR, SSR_DIR } from './env';
@@ -29,6 +30,7 @@ export const clientConfig: Configuration = {
     plugins: [new TsconfigPathsPlugin()],
   },
   plugins: [
+    new CleanWebpackPlugin(pluginOptions.cleanWebpackOptions),
     new DllReferencePlugin({
       context: join(DIST_DIR, '..'),
       manifest: join(DIST_DIR, 'vendors', 'vendors-manifest.json'),
