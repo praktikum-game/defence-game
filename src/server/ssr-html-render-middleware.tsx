@@ -2,14 +2,15 @@ import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import React from 'react';
 import { Request, Response } from 'express';
 import { Provider } from 'react-redux';
+import { StaticRouter } from 'react-router-dom/server';
+import { Store } from 'redux';
 
 import assets from './assets.json';
 import vendorsAssets from './vendors-assets.json';
-import { SsrHomePage } from '../pages/SsrHomePage/SsrHomePage';
 import { configureStore } from '../store';
 import { renderObject } from './utilities/renderObject';
-import { Store } from 'redux';
-import { ErrorBoundary } from 'components/ErrorBoundary';
+import { ErrorBoundary } from '../components/ErrorBoundary';
+import { App } from '../components/App';
 
 function getHtmlString(reactJsxString: string, store?: Store) {
   const html = renderToStaticMarkup(
@@ -30,6 +31,7 @@ function getHtmlString(reactJsxString: string, store?: Store) {
         <div id="root" dangerouslySetInnerHTML={{ __html: reactJsxString }} />
         <script src={`/vendors/${vendorsAssets.vendors.js}`}></script>
         <script src={assets.main.js}></script>
+        <div id="portal"></div>
       </body>
     </html>,
   );
@@ -38,11 +40,14 @@ function getHtmlString(reactJsxString: string, store?: Store) {
 
 const ssrHtmlRenderMiddleware = (req: Request, res: Response) => {
   const store = configureStore();
+
   const rootJsx = (
     <Provider store={store}>
-      <ErrorBoundary>
-        <SsrHomePage />
-      </ErrorBoundary>
+      <StaticRouter location={req.url}>
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
+      </StaticRouter>
     </Provider>
   );
   const reactHtml = renderToString(rootJsx);

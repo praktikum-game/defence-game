@@ -1,6 +1,7 @@
 import { join, resolve } from 'path';
 import express, { Express } from 'express';
 import compression from 'compression';
+
 import { ssrHtmlRenderMiddleware } from './ssr-html-render-middleware';
 
 const app: Express = express();

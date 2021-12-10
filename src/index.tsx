@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import { SsrHomePage } from './pages/SsrHomePage/SsrHomePage';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { configureStore } from './store';
+import { BrowserRouter } from 'react-router-dom';
+import { App } from 'components/App';
 
 if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   window.addEventListener('load', () => {
@@ -26,9 +27,11 @@ const store = configureStore(state);
 
 ReactDOM.hydrate(
   <Provider store={store}>
-    <ErrorBoundary>
-      <SsrHomePage />
-    </ErrorBoundary>
+    <BrowserRouter>
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
+    </BrowserRouter>
   </Provider>,
   document.querySelector('#root'),
 );
