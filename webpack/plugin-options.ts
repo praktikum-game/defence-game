@@ -19,7 +19,4 @@ export const pluginOptions = {
       ],
     },
   },
-  cleanWebpackOptions: {
-    cleanOnceBeforeBuildPatterns: ['**/*', '!vendors/**'],
-  },
 };

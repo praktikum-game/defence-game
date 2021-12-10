@@ -1,4 +1,3 @@
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { Configuration } from 'webpack';
 import { join } from 'path';
 import { DIST_DIR, IS_DEV, SSR_DIR } from './env';
@@ -26,10 +25,7 @@ export const serverConfig: Configuration = {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     plugins: [new TsconfigPathsPlugin()],
   },
-  plugins: [
-    new ImageMinimizerPlugin(pluginOptions.imageMinimizerOptions),
-    new CleanWebpackPlugin(pluginOptions.cleanWebpackOptions),
-  ],
+  plugins: [new ImageMinimizerPlugin(pluginOptions.imageMinimizerOptions)],
   devtool: 'source-map',
   performance: {
     hints: IS_DEV ? false : 'warning',
