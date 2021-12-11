@@ -11,7 +11,7 @@ class NotificationWorker {
 
   private _message: string;
 
-  constructor(currentLeader?: string, timerFrequency: number = 10000) {
+  constructor(currentLeader?: string, timerFrequency: number = 30000) {
     this._timeID = 0;
     this._timerFrequency = timerFrequency;
     this._isStop = true;
