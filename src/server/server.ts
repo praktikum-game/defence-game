@@ -18,6 +18,10 @@ app.get('/serviceWorker.js', (_0, res) => {
   res.sendFile(join(__dirname, '..', 'dist', 'serviceWorker.js'));
 });
 
+app.get('/notificationWorker.js', (_0, res) => {
+  res.sendFile(join(__dirname, '..', 'dist', 'notificationWorker.js'));
+});
+
 app.get('*', ssrHtmlRenderMiddleware);
 
 export { app };
