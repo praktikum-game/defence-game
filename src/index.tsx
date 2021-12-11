@@ -24,6 +24,12 @@ const state = window.__PRELOADED_STATE__;
 delete window.__PRELOADED_STATE__;
 const store = configureStore(state);
 
+console.log(window);
+if (window.Worker && window.Notification) {
+  const notificationWorker = new Worker('./notificationWorker.js', { name: 'notificationWorker' });
+  notificationWorker.postMessage('');
+}
+
 ReactDOM.hydrate(
   <Provider store={store}>
     <BrowserRouter>
