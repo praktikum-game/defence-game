@@ -1,8 +1,6 @@
 import { leaderboardAPI } from './api/leaderboard';
 
 class NotificationWorker {
-  static STORAGE_LEADER_KEY = 'currentLeader';
-
   private _timeID: number;
 
   private _timerFrequency: number; // ms
@@ -11,17 +9,18 @@ class NotificationWorker {
 
   private _currentLeader?: string;
 
-  private _notification: Notification;
+  private _message: string;
 
-  constructor(timerFrequency: number = 60000) {
+  constructor(currentLeader?: string, timerFrequency: number = 10000) {
     this._timeID = 0;
     this._timerFrequency = timerFrequency;
     this._isStop = true;
-    this._currentLeader = localStorage.getItem(NotificationWorker.STORAGE_LEADER_KEY) || undefined;
-    this._notification = new Notification(
-      'Хотите получать уведомления об обновлениях лидерборда?',
-      { requireInteraction: true },
-    );
+    this._currentLeader = currentLeader;
+    this._message = 'Сейчас рейтинг возглавляет ';
+
+    if (this._currentLeader !== undefined) {
+      new Notification(`${this._message} ${this._currentLeader}`);
+    }
   }
 
   start() {
@@ -39,18 +38,19 @@ class NotificationWorker {
   }
 
   private _startTimer() {
-    // Из-за того, что у нас в конфиге находится параметр node, импортит не тот модуль
     this._timeID = setTimeout(
       this._startUpdate.bind(this),
       this._timerFrequency,
+      // Из-за того, что у нас в конфиге находится параметр node, подтягивает не тот модуль
     ) as unknown as number;
   }
 
   private _startUpdate() {
     this._getLeader().then((newLeader: string) => {
-      if (newLeader != this._currentLeader) {
-        localStorage.setItem(NotificationWorker.STORAGE_LEADER_KEY, newLeader);
+      if (newLeader !== undefined && newLeader != this._currentLeader) {
+        self.postMessage(newLeader);
         this._currentLeader = newLeader;
+        new Notification(`${this._message} ${this._currentLeader}`);
       }
     });
 
@@ -72,12 +72,11 @@ class NotificationWorker {
 
 let notificationInstance: NotificationWorker | undefined;
 
-onmessage = function () {
-  console.log('Starting notification script');
+self.addEventListener('message', (e) => {
   if (notificationInstance === undefined) {
-    notificationInstance = new NotificationWorker();
+    notificationInstance = new NotificationWorker(e.data);
   }
   if (notificationInstance.isStopped) {
     notificationInstance.start();
   }
-};
+});
