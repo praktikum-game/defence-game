@@ -22,7 +22,6 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
 
 const state = window.__PRELOADED_STATE__;
 delete window.__PRELOADED_STATE__;
-console.log(state);
 const store = configureStore(state);
 
 ReactDOM.hydrate(
