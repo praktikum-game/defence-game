@@ -3,7 +3,6 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 
 import { userReducer } from './user';
 import { leaderboardReducer } from './leaderboard';
-// eslint-disable-next-line import/no-cycle
 import { ThunkExtraArgument } from './types';
 import { authAPI } from '../api/auth';
 import { leaderboardAPI } from '../api/leaderboard';
