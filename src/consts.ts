@@ -11,6 +11,7 @@ export enum InputNames {
   OLD_PASSWORD = 'old_password',
   NEW_PASSWORD = 'new_password',
   REPEAT_PASSWORD = 'repeat_password',
+  AVATAR = 'avatar',
 }
 
 export const STORAGE_LEADER_KEY = 'currentLeader';
