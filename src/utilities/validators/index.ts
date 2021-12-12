@@ -14,4 +14,5 @@ export {
   emailValidator,
   phoneValidator,
   nameValidator,
+  avatarValidator,
 } from './validators';
