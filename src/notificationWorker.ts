@@ -7,7 +7,7 @@ class NotificationWorker {
 
   private _isStop: boolean;
 
-  private _currentLeader?: string;
+  private _currentLeader: string;
 
   private _message: string;
 
@@ -15,7 +15,7 @@ class NotificationWorker {
     this._timeID = 0;
     this._timerFrequency = timerFrequency;
     this._isStop = true;
-    this._currentLeader = currentLeader;
+    this._currentLeader = currentLeader === undefined ? '' : currentLeader;
     this._message = 'Сейчас рейтинг возглавляет ';
 
     if (this._currentLeader !== undefined) {
@@ -47,7 +47,7 @@ class NotificationWorker {
 
   private _startUpdate() {
     this._getLeader().then((newLeader: string) => {
-      if (newLeader !== undefined && newLeader != this._currentLeader) {
+      if (newLeader !== '' && newLeader != this._currentLeader) {
         self.postMessage(newLeader);
         this._currentLeader = newLeader;
         new Notification(`${this._message} ${this._currentLeader}`);
