@@ -33,7 +33,6 @@ if (window.Worker && window.Notification) {
       });
 
       notificationWorker.addEventListener('message', (e) => {
-        console.log('Received from worker');
         localStorage.setItem(STORAGE_LEADER_KEY, e.data);
       });
 

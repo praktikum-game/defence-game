@@ -64,7 +64,6 @@ class NotificationWorker {
       const response = await leaderboardAPI.fetchLeaderboardData();
       return response.data[0].username;
     } catch (e) {
-      console.log(e);
       return '';
     }
   }
