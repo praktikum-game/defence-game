@@ -16,10 +16,11 @@ import {
   emailValidator,
   nameValidator,
   phoneValidator,
+  avatarValidator,
 } from '../../utilities/validators';
 import { useFormInput } from '../../hooks/useFormInput/useFormInput';
 import { ProfileUpdateRequest } from '../../api/users';
-import { userUpdateProfile } from '../../store/user/actions/action-creators';
+import { userUpdateAvatar, userUpdateProfile } from '../../store/user/actions/action-creators';
 
 import './profileEditPage.css';
 import { getValueByKey } from '../../utilities/utilities';
@@ -52,6 +53,11 @@ export const ProfileEditPage = () => {
   const [{ value: emailValue, validationResult: emailValidationResult }, setEmailValue] =
     useFormInput(emailValidator, getValueByKey(userData, 'email'));
 
+  const [{ validationResult: avatarValidationResult }, setAvatarValue] = useFormInput(
+    avatarValidator,
+    getValueByKey(userData, 'avatar'),
+  );
+
   const updateProfileCallback = useCallback(
     async (data: FormData) => {
       const profileUpdateData: ProfileUpdateRequest = {
@@ -68,12 +74,42 @@ export const ProfileEditPage = () => {
     [dispatch],
   );
 
+  const updateAvatarCallback = useCallback(
+    async (data: FormData) => {
+      dispatch(userUpdateAvatar(data));
+    },
+    [dispatch],
+  );
+
   return (
     <div className="profile-edit-page">
       <Header backButton={true}>
         <Avatar />
       </Header>
       <PageContainer className="profile-edit-page__page-container" size="m">
+        <Form
+          className="profile-edit-page__form"
+          validationResults={[avatarValidationResult]}
+          controllerCallback={updateAvatarCallback}
+        >
+          <InputField
+            name={InputNames.AVATAR}
+            label="Avatar"
+            type="file"
+            accept="image/*"
+            errorText={avatarValidationResult.message}
+            isValid={avatarValidationResult.valid}
+            valueChangeCallback={setAvatarValue}
+          />
+          <Button
+            className="profile-edit-page__button"
+            type="submit"
+            text="Загрузить"
+            view="primary"
+            disabled={!avatarValidationResult.valid}
+          />
+        </Form>
+
         <Form
           className="profile-edit-page__form"
           validationResults={[
