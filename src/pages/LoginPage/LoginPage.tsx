@@ -17,7 +17,8 @@ import { useAuthUser } from '../../hooks/useAuthUser';
 
 export const LoginPage = (): JSX.Element => {
   const { executeAuth } = useAuthUser();
-  const startOAuth = useOAuth();
+  //@ts-ignore
+  const startOAuth = useOAuth(OAUTH_REDIRECT_URL);
 
   const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
     useFormInput(loginValidator);

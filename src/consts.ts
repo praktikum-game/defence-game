@@ -1,5 +1,4 @@
 export const backendStaticUrl = 'https://ya-praktikum.tech/api/v2/resources';
-export const OAUTH_REDIRECT_URL = 'http://localhost:3000';
 
 export enum InputNames {
   FIRST_NAME = 'first_name',

@@ -1,14 +1,13 @@
 import { useCallback } from 'react';
 
 import { oauthApi } from 'api/oauth';
-import { OAUTH_REDIRECT_URL } from '../../consts';
 
-export const useOAuth = () => {
+export const useOAuth = (redirectUri: string) => {
   const startOAuth = useCallback(async () => {
-    const { data } = await oauthApi.getServiceId(OAUTH_REDIRECT_URL);
-    const link = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${data.service_id}&redirect_uri=${OAUTH_REDIRECT_URL}`;
+    const { data } = await oauthApi.getServiceId(redirectUri);
+    const link = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${data.service_id}&redirect_uri=${redirectUri}`;
     window.location.href = link;
-  }, []);
+  }, [redirectUri]);
 
   return startOAuth;
 };
