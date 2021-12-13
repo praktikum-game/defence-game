@@ -12,10 +12,12 @@ import { InputNames } from '../../consts';
 
 import './loginPage.css';
 import { useFormInput } from '../../hooks/useFormInput/useFormInput';
-import { useAuthUser } from '../../hooks/useAuthUser';
+import { useOAuth } from 'hooks/useOAuth';
+// import { useAuthUser } from '../../hooks/useAuthUser';
 
 export const LoginPage = (): JSX.Element => {
-  const { executeAuth } = useAuthUser();
+  // const { executeAuth } = useAuthUser();
+  const { startOAuth } = useOAuth();
 
   const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
     useFormInput(loginValidator);
@@ -30,10 +32,15 @@ export const LoginPage = (): JSX.Element => {
 
   const handleSubmitClick = useCallback(
     async (data: FormData) => {
-      executeAuth({ login: String(data.get('login')), password: String(data.get('password')) });
+      // executeAuth({ login: String(data.get('login')), password: String(data.get('password')) });
     },
-    [executeAuth],
+    [],
+    // [executeAuth],
   );
+
+  const handleOAuthLogin = () => {
+    startOAuth();
+  };
 
   return (
     <div className="login-page">
@@ -75,6 +82,7 @@ export const LoginPage = (): JSX.Element => {
               disabled={!(loginValidationResult.valid && passwordValidationResult.valid)}
               className="center-horizontal"
             />
+            <Button onClick={handleOAuthLogin} text="Войти через Яндекс"></Button>
 
             <Link className="footer__link" to="/register">
               Нет аккаунта?
