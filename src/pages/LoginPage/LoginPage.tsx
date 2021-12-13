@@ -12,7 +12,7 @@ import { InputNames } from '../../consts';
 
 import './loginPage.css';
 import { useFormInput } from '../../hooks/useFormInput/useFormInput';
-import { useOAuth } from 'hooks/useOAuth';
+import { useOAuth } from '../../hooks/useOAuth';
 import { useAuthUser } from '../../hooks/useAuthUser';
 
 export const LoginPage = (): JSX.Element => {
