@@ -11,11 +11,11 @@ class NotificationWorker {
 
   private _message: string;
 
-  constructor(currentLeader?: string, timerFrequency: number = 30000) {
+  constructor(timerFrequency: number = 30000) {
     this._timeID = 0;
     this._timerFrequency = timerFrequency;
     this._isStop = true;
-    this._currentLeader = currentLeader === undefined ? '' : currentLeader;
+    this._currentLeader = '';
     this._message = 'Сейчас рейтинг возглавляет ';
 
     if (this._currentLeader !== undefined) {
@@ -33,6 +33,14 @@ class NotificationWorker {
     clearTimeout(this._timeID);
   }
 
+  get currentLeader() {
+    return this._currentLeader;
+  }
+
+  set currentLeader(value?: string) {
+    this._currentLeader = value === undefined ? '' : value;
+  }
+
   get isStopped() {
     return this._isStop;
   }
@@ -47,10 +55,10 @@ class NotificationWorker {
 
   private _startUpdate() {
     this._getLeader().then((newLeader: string) => {
-      if (newLeader !== '' && newLeader != this._currentLeader) {
+      if (newLeader !== '' && newLeader != this.currentLeader) {
         self.postMessage(newLeader);
-        this._currentLeader = newLeader;
-        new Notification(`${this._message} ${this._currentLeader}`);
+        this.currentLeader = newLeader;
+        new Notification(`${this._message} ${this.currentLeader}`);
       }
     });
 
@@ -69,11 +77,11 @@ class NotificationWorker {
   }
 }
 
-let notificationInstance: NotificationWorker | undefined;
+let notificationInstance = new NotificationWorker();
 
 self.addEventListener('message', (e) => {
-  if (notificationInstance === undefined) {
-    notificationInstance = new NotificationWorker(e.data);
+  if (notificationInstance.currentLeader === '' && e.data !== undefined) {
+    notificationInstance.currentLeader = e.data;
   }
   if (notificationInstance.isStopped) {
     notificationInstance.start();
