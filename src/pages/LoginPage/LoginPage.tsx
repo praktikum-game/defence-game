@@ -13,10 +13,10 @@ import { InputNames } from '../../consts';
 import './loginPage.css';
 import { useFormInput } from '../../hooks/useFormInput/useFormInput';
 import { useOAuth } from 'hooks/useOAuth';
-// import { useAuthUser } from '../../hooks/useAuthUser';
+import { useAuthUser } from '../../hooks/useAuthUser';
 
 export const LoginPage = (): JSX.Element => {
-  // const { executeAuth } = useAuthUser();
+  const { executeAuth } = useAuthUser();
   const { startOAuth } = useOAuth();
 
   const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
@@ -32,10 +32,9 @@ export const LoginPage = (): JSX.Element => {
 
   const handleSubmitClick = useCallback(
     async (data: FormData) => {
-      // executeAuth({ login: String(data.get('login')), password: String(data.get('password')) });
+      executeAuth({ login: String(data.get('login')), password: String(data.get('password')) });
     },
-    [],
-    // [executeAuth],
+    [executeAuth],
   );
 
   const handleOAuthLogin = () => {
