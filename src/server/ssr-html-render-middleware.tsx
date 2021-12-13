@@ -8,7 +8,7 @@ import { Store } from 'redux';
 import assets from './assets.json';
 import vendorsAssets from './vendors-assets.json';
 import { configureStore } from '../store';
-import { renderObject } from './utilities/renderObject';
+import { serializeObject } from './utilities/serializeObject';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { App } from '../components/App';
 
@@ -25,7 +25,7 @@ function getHtmlString(reactJsxString: string, store?: Store) {
       <body>
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.__PRELOADED_STATE__ = ${renderObject(store?.getState())}`,
+            __html: `window.__PRELOADED_STATE__ = ${serializeObject(store?.getState())}`,
           }}
         />
         <div id="root" dangerouslySetInnerHTML={{ __html: reactJsxString }} />
