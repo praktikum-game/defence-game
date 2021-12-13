@@ -10,6 +10,8 @@ export const RequireAuth = ({ children, to = '/login', inverse = false }: Requir
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Нет еще нормального server-side редиректа, так как не получаем юзера
+  // Будет доделан позже
   useEffect(() => {
     if (!inverse && !userData) {
       navigate(to, { replace: true, state: { from: location } });
