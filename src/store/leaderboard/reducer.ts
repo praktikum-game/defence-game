@@ -6,8 +6,8 @@ const initialState: LeaderboardState = {
   loading: false,
 };
 
-export function reducer(state = initialState, actions: LeaderboardActions): LeaderboardState {
-  switch (actions.type) {
+export function reducer(state = initialState, actions?: LeaderboardActions): LeaderboardState {
+  switch (actions?.type) {
     case 'LB_PENDING_FETCH_LIST_DATA':
       return { ...state, loading: true };
     case 'LB_SUCCESS_FETCH_LIST_DATA':

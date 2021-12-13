@@ -1,21 +1,26 @@
-import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuthUser } from '../../hooks/useAuthUser';
 import { RequireAuthProps } from './types';
 
-// Опасно вот хардкодить путь. Если он поменяется, то забудем. Лучше бы вынести
+// Ненадежно вот так хардкодить путь. Если он поменяется, то забудем. Лучше бы вынести
 // в отдельное место все пути
 export const RequireAuth = ({ children, to = '/login', inverse = false }: RequireAuthProps) => {
   const { userData } = useAuthUser();
   const location = useLocation();
+  const navigate = useNavigate();
 
-  if (!inverse && !userData) {
-    return <Navigate replace to={to} state={{ from: location }} />;
-  }
+  // Нет еще нормального server-side редиректа, так как не получаем юзера
+  // Будет доделан позже
+  useEffect(() => {
+    if (!inverse && !userData) {
+      navigate(to, { replace: true, state: { from: location } });
+    }
 
-  if (inverse && userData) {
-    return <Navigate replace to={to} state={{ from: location }} />;
-  }
+    if (inverse && userData) {
+      navigate(to, { replace: true, state: { from: location } });
+    }
+  });
 
   return children;
 };

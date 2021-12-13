@@ -1,6 +1,7 @@
 import { join, resolve } from 'path';
 import express, { Express } from 'express';
 import compression from 'compression';
+
 import { ssrHtmlRenderMiddleware } from './ssr-html-render-middleware';
 
 const app: Express = express();
@@ -17,6 +18,6 @@ app.get('/serviceWorker.js', (_0, res) => {
   res.sendFile(join(__dirname, '..', 'dist', 'serviceWorker.js'));
 });
 
-app.get('/*', ssrHtmlRenderMiddleware);
+app.get('*', ssrHtmlRenderMiddleware);
 
 export { app };

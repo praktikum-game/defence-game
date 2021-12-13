@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-// import { Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 
-import { SsrHomePage } from 'pages/SsrHomePage/SsrHomePage';
 import { ErrorBoundary } from './components/ErrorBoundary';
-
-// import { store } from './store';
+import { configureStore } from './store';
+import { BrowserRouter } from 'react-router-dom';
+import { App } from 'components/App';
 
 if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   window.addEventListener('load', () => {
@@ -21,12 +20,17 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   });
 }
 
-ReactDOM.hydrate(
-  <BrowserRouter>
-    <ErrorBoundary>
-      <SsrHomePage />
-    </ErrorBoundary>
-  </BrowserRouter>,
+const state = window.__PRELOADED_STATE__;
+delete window.__PRELOADED_STATE__;
+const store = configureStore(state);
 
+ReactDOM.hydrate(
+  <Provider store={store}>
+    <BrowserRouter>
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
+    </BrowserRouter>
+  </Provider>,
   document.querySelector('#root'),
 );
