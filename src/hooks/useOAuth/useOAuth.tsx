@@ -10,5 +10,5 @@ export const useOAuth = () => {
     window.location.href = link;
   }, []);
 
-  return { startOAuth };
+  return startOAuth;
 };

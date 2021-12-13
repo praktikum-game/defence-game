@@ -26,9 +26,9 @@ export const HomePage = () => {
   const navigate = useNavigate();
   useEffect(() => {
     async function checkOAuthUser() {
-      if (window.location.search) {
-        // если в адресной строке есть searchParams, то значит прелетел код от OAuth
-        let searchString = window.location.search;
+      let searchString = window.location.search;
+      // ищем совпадение по паттерну code=<number>
+      if (searchString.match(/\\?code=\d+/gi) !== null) {
         const token = searchString.replace(/\D+/gi, '');
         try {
           // проверка access-кода
