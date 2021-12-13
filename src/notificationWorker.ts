@@ -37,7 +37,7 @@ class NotificationWorker {
     return this._currentLeader;
   }
 
-  set currentLeader(value?: string) {
+  set currentLeader(value: string | undefined) {
     this._currentLeader = value === undefined ? '' : value;
   }
 
