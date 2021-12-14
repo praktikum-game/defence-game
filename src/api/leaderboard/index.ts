@@ -1,2 +1,2 @@
 export { leaderboardAPI } from './LeaderboardAPI';
-export { LeaderboardItem } from './types';
+export { LeaderboardUser } from './types';

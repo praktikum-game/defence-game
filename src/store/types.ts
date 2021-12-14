@@ -2,7 +2,7 @@ import { authAPI } from '../api/auth';
 import { leaderboardAPI } from '../api/leaderboard';
 import { usersAPI } from '../api/users';
 // eslint-disable-next-line import/no-cycle
-import { RootReducer } from './store';
+import { rootReducer } from './store';
 
 export type ThunkExtraArgument = {
   api: {
@@ -12,4 +12,4 @@ export type ThunkExtraArgument = {
   };
 };
 
-export type AppState = ReturnType<RootReducer>;
+export type AppState = ReturnType<typeof rootReducer>;
