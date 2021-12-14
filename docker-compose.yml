@@ -1,6 +1,9 @@
 version: "3.9"
 
 services:
+  postgre:
+    container_name: postgre
+    image: postgres: 12
   game:
     container_name: game
     image: praktikum/game
