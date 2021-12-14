@@ -3,7 +3,7 @@ import { ProfileUpdateRequest } from '../../../api/users';
 import { UserActionCreator, UserThunkDispatch } from '../types';
 import {
   UserEndFetch,
-  UserFaliedFetch,
+  UserFailedFetch,
   UserStartFetch,
   UserSuccessFetch,
 } from './action-creators-types';
@@ -20,7 +20,7 @@ export const userSuccessFetch = (data: UserData | null): UserSuccessFetch => ({
   type: USER_SUCCESS_FETCH_DATA,
   payload: data,
 });
-export const userFailedFetch = (): UserFaliedFetch => ({ type: USER_FAILED_FETCH_DATA });
+export const userFailedFetch = (): UserFailedFetch => ({ type: USER_FAILED_FETCH_DATA });
 export const userEndFetch = (): UserEndFetch => ({ type: USER_END_FETCH_DATA });
 
 export const getUserData: UserActionCreator =

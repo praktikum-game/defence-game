@@ -13,7 +13,7 @@ export interface UserSuccessFetch {
   type: typeof USER_SUCCESS_FETCH_DATA;
   payload: UserData | null;
 }
-export interface UserFaliedFetch {
+export interface UserFailedFetch {
   type: typeof USER_FAILED_FETCH_DATA;
 }
 
@@ -21,4 +21,4 @@ export interface UserEndFetch {
   type: typeof USER_END_FETCH_DATA;
 }
 
-export type UserActions = UserStartFetch | UserSuccessFetch | UserFaliedFetch | UserEndFetch;
+export type UserActions = UserStartFetch | UserSuccessFetch | UserFailedFetch | UserEndFetch;

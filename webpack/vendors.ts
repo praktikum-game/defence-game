@@ -9,4 +9,5 @@ export const VENDORS = [
   'qs',
   'axios',
   'react-router-dom',
+  'tslib',
 ];

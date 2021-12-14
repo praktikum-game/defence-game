@@ -35,6 +35,7 @@ function getHtmlString(reactJsxString: string, store?: Store) {
       </body>
     </html>,
   );
+
   return `<!DOCTYPE html>${html}`;
 }
 

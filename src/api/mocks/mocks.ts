@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
-import { MessageItem } from '../forum-messages';
-import { LeaderboardItem } from '../leaderboard';
+import { MessageItem } from '../forum-messages/types';
+import { LeaderboardItem } from '../leaderboard/types';
 
 export const messagesData: MessageItem[] = [
   {

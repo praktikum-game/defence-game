@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+
 import { leaderboardData, messagesData } from '../mocks/mocks';
 import { MessageItem } from './types';
 
