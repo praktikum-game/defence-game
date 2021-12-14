@@ -1,4 +1,6 @@
 export const backendStaticUrl = 'https://ya-praktikum.tech/api/v2/resources';
+export const LEADERBOARD_TEAM_NAME = 'defence-game';
+export const LEADERBOARD_EMPTY_USERNAME_PLACEHOLDER = '<unknown>';
 
 export enum InputNames {
   FIRST_NAME = 'first_name',

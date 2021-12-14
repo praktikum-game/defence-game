@@ -1,4 +1,5 @@
 import { BaseAPI } from 'api/BaseAPI';
+import { LEADERBOARD_TEAM_NAME } from 'consts';
 import { LeaderboardListResponse, LeaderboardUser } from './types';
 
 class LeaderboardAPI extends BaseAPI {
@@ -10,7 +11,7 @@ class LeaderboardAPI extends BaseAPI {
     return this.http.post('', {
       data: { ...user },
       ratingFieldName: 'score',
-      teamName: 'defence-game',
+      teamName: LEADERBOARD_TEAM_NAME,
     });
   }
 
@@ -23,7 +24,7 @@ class LeaderboardAPI extends BaseAPI {
   }
 
   public getTeamLeaderboard(fromPage = 0, limit = 10) {
-    return this.http.post<Array<LeaderboardListResponse>>('/defence-game', {
+    return this.http.post<Array<LeaderboardListResponse>>(`/${LEADERBOARD_TEAM_NAME}`, {
       ratingFieldName: 'score',
       cursor: fromPage,
       limit: limit,

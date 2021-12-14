@@ -1,3 +1,4 @@
+import { LEADERBOARD_EMPTY_USERNAME_PLACEHOLDER } from 'consts';
 import { LeaderboardUser } from '../../../api/leaderboard';
 import { LeadboardActionCreator, LeaderboardThunkDispatch } from '../types';
 import {
@@ -37,7 +38,7 @@ export const fetchLeaderboardListData: LeadboardActionCreator =
           .sort((item, anotherItem) => anotherItem.data.score - item.data.score)
           .map((el) => {
             if (!el.data.username) {
-              el.data.username = '<unknown>';
+              el.data.username = LEADERBOARD_EMPTY_USERNAME_PLACEHOLDER;
             }
             return el.data;
           });
