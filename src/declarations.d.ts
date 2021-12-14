@@ -14,4 +14,5 @@ declare global {
   interface Window {
     __PRELOADED_STATE__?: AppState;
   }
+  const OAUTH_REDIRECT_URL: string;
 }
