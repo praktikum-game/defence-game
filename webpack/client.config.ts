@@ -14,7 +14,6 @@ import { config } from 'dotenv';
 
 config();
 
-console.log(process.env);
 export const clientConfig: Configuration = {
   entry: join(SRC_DIR, 'index.tsx'),
   mode: IS_DEV ? 'development' : 'production',
@@ -41,7 +40,7 @@ export const clientConfig: Configuration = {
     new AssetsPlugin({ path: SSR_DIR, filename: 'assets.json' }),
     new ImageMinimizerPlugin(pluginOptions.imageMinimizerOptions),
     new DefinePlugin({
-      OAUTH_REDIRECT_URL: process.env.OAUTH_REDIRECT_URL,
+      OAUTH_REDIRECT_URL: JSON.stringify(process.env.OAUTH_REDIRECT_URL),
     }),
 
     !IS_DEV &&

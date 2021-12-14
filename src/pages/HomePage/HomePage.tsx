@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import block from 'bem-cn';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AppNavigation } from '../../components/AppNavigation';
 import { Button } from '../../components/Button';
 import './homePage.css';
@@ -11,50 +11,16 @@ import { Title } from '../../components/Title';
 import medic from './static/medic.png';
 import viruses from './static/viruses.png';
 import bankomat from './static/bankomat.png';
-import { useDispatch } from 'react-redux';
-import { oauthApi } from 'api/oauth';
-import { OAUTH_REDIRECT_URL } from 'consts';
-import { AxiosError } from 'axios';
-import { getUserData } from 'store/user/actions/action-creators';
+
+import { useOAuth } from '../../hooks/useOAuth';
 
 const b = block('home-page');
 const h = block('main-header');
 const c = block('card');
 
 export const HomePage = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  useEffect(() => {
-    async function checkOAuthUser() {
-      let searchString = window.location.search;
-      // ищем совпадение по паттерну code=<number>
-      if (searchString.match(/\\?code=\d+/gi) !== null) {
-        const token = searchString.replace(/\D+/gi, '');
-        try {
-          // проверка access-кода
-          const { status } = await oauthApi.oauth({
-            code: token,
-            redirect_uri: OAUTH_REDIRECT_URL,
-          });
-          if (status === 200) {
-            //все норм - получаем пользователя
-            dispatch(getUserData());
-          }
-        } catch (e: unknown) {
-          // если ошибка при получении токена, значит пользователя уже залогинен не по  oauth
-          const error = e as AxiosError;
-          if (error.response) {
-            if (error.response.status === 400) {
-              dispatch(getUserData());
-            }
-          }
-        }
-      }
-    }
-
-    checkOAuthUser();
-    navigate('/'); // убираем query праметр, чтобы не мешался.
-  }, []);
+  //@ts-ignore
+  useOAuth();
   return (
     <div className={b()}>
       <div className={h()}>

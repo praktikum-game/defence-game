@@ -11,7 +11,7 @@ class OAuthAPI extends BaseAPI {
   }
 
   oauth(oauthRequest: OAuthRequest) {
-    return this.http.post('', { ...oauthRequest });
+    return this.http.post('', oauthRequest);
   }
 }
 
