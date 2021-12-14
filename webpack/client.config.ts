@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-import { Configuration, DllReferencePlugin } from 'webpack';
+import { Configuration, DllReferencePlugin, DefinePlugin } from 'webpack';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import AssetsPlugin from 'assets-webpack-plugin';
@@ -10,6 +10,9 @@ import { DIST_DIR, IS_DEV, SRC_DIR, SSR_DIR } from './env';
 import { ts, css, image } from './loaders';
 import { pluginOptions } from './plugin-options';
 import { InjectManifest } from 'workbox-webpack-plugin';
+import { config } from 'dotenv';
+
+config();
 
 export const clientConfig: Configuration = {
   entry: join(SRC_DIR, 'index.tsx'),
@@ -36,6 +39,10 @@ export const clientConfig: Configuration = {
     new MiniCssExtractPlugin({ filename: '[name]_[fullhash].css' }),
     new AssetsPlugin({ path: SSR_DIR, filename: 'assets.json' }),
     new ImageMinimizerPlugin(pluginOptions.imageMinimizerOptions),
+    new DefinePlugin({
+      OAUTH_REDIRECT_URL: JSON.stringify(process.env.OAUTH_REDIRECT_URL),
+    }),
+
     !IS_DEV &&
       // Должен быть всегда последним плагином
       new InjectManifest({
