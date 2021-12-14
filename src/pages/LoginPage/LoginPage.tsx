@@ -38,10 +38,6 @@ export const LoginPage = (): JSX.Element => {
     [executeAuth],
   );
 
-  const handleOAuthLogin = () => {
-    startOAuth();
-  };
-
   return (
     <div className="login-page">
       <Header size="s">
@@ -82,7 +78,7 @@ export const LoginPage = (): JSX.Element => {
               disabled={!(loginValidationResult.valid && passwordValidationResult.valid)}
               className="center-horizontal"
             />
-            <Button onClick={handleOAuthLogin} text="Войти через Яндекс"></Button>
+            <Button onClick={startOAuth} text="Войти через Яндекс"></Button>
 
             <Link className="footer__link" to="/register">
               Нет аккаунта?
