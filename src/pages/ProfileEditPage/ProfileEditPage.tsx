@@ -1,6 +1,9 @@
 import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
+import './profileEditPage.css';
+
 import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
 import { Header } from '../../components/Header';
@@ -21,12 +24,12 @@ import {
 import { useFormInput } from '../../hooks/useFormInput/useFormInput';
 import { ProfileUpdateRequest } from '../../api/users';
 import { userUpdateAvatar, userUpdateProfile } from '../../store/user/actions/action-creators';
-
-import './profileEditPage.css';
+import { useAvatar } from 'hooks/useAvatar/useAvatar';
 import { getValueByKey } from '../../utilities';
 
 export const ProfileEditPage = () => {
   const dispatch = useDispatch();
+  const { getAvatar } = useAvatar();
   const userData = useSelector((state: AppState) => state.user.data);
 
   const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
@@ -84,7 +87,7 @@ export const ProfileEditPage = () => {
   return (
     <div className="profile-edit-page">
       <Header backButton={true}>
-        <Avatar />
+        <Avatar src={getAvatar()} />
       </Header>
       <PageContainer className="profile-edit-page__page-container" size="m">
         <Form

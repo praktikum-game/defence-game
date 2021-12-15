@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './profilePage.css';
+
 import { Button } from '../../components/Button';
 import { InputField } from '../../components/InputField';
 import { Header } from '../../components/Header';
@@ -11,16 +13,16 @@ import { Avatar } from '../../components/Avatar';
 import { LogoutButton } from './LogoutButton';
 import { InputNames } from '../../consts';
 import { useAuthUser } from '../../hooks/useAuthUser';
-
-import './profilePage.css';
+import { useAvatar } from 'hooks/useAvatar/useAvatar';
 
 export const ProfilePage = () => {
   const { userData } = useAuthUser();
+  const { getAvatar } = useAvatar();
 
   return (
     <div className="profile-page">
       <Header backButton={true}>
-        <Avatar />
+        <Avatar src={getAvatar()} />
         <LogoutButton />
       </Header>
       <PageContainer className="profile-page__page-container" size="m">
