@@ -17,10 +17,6 @@ class NotificationWorker {
     this._isStop = true;
     this._currentLeader = '';
     this._message = 'Сейчас рейтинг возглавляет ';
-
-    if (this._currentLeader !== undefined) {
-      new Notification(`${this._message} ${this._currentLeader}`);
-    }
   }
 
   start() {
@@ -38,6 +34,10 @@ class NotificationWorker {
   }
 
   set currentLeader(value: string | undefined) {
+    if (value !== undefined && value !== "undefined") {
+      new Notification(`${this._message} ${this._currentLeader}`);
+    }
+
     this._currentLeader = value === undefined ? '' : value;
   }
 
@@ -58,7 +58,6 @@ class NotificationWorker {
       if (newLeader !== '' && newLeader != this.currentLeader) {
         self.postMessage(newLeader);
         this.currentLeader = newLeader;
-        new Notification(`${this._message} ${this.currentLeader}`);
       }
     });
 
