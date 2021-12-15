@@ -6,7 +6,7 @@ import { Header } from '../../components/Header';
 import { PageContainer } from '../../components/PageContainer';
 import { Form } from '../../components/Form';
 import { passwordValidator } from '../../utilities/validators';
-import { bindArgsFromN } from '../../utilities/utilities';
+import { bindArgsFromN } from '../../utilities';
 import { Avatar } from '../../components/Avatar';
 import { Footer } from '../../components/Footer';
 import { InputNames } from '../../consts';

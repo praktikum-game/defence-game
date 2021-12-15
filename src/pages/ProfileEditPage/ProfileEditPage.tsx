@@ -23,7 +23,7 @@ import { ProfileUpdateRequest } from '../../api/users';
 import { userUpdateAvatar, userUpdateProfile } from '../../store/user/actions/action-creators';
 
 import './profileEditPage.css';
-import { getValueByKey } from '../../utilities/utilities';
+import { getValueByKey } from '../../utilities';
 
 export const ProfileEditPage = () => {
   const dispatch = useDispatch();

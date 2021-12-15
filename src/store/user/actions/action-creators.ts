@@ -1,4 +1,4 @@
-import { normalizeAvatar } from '../../../utilities/utilities';
+import { normalizeAvatar } from '../../../utilities';
 import { LoginRequest, RegisterRequest, UserData } from '../../../api/auth';
 import { ProfileUpdateRequest } from '../../../api/users';
 import { UserActionCreator, UserThunkDispatch } from '../types';
