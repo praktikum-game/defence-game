@@ -1,20 +1,24 @@
-import { TestCrud } from 'server/orm';
+import { TestCrudModel, TestCrudTableCreationAttributes } from 'server/orm/models/TestCrud';
 
 class CrudService {
   readAll() {
-    return TestCrud.findAll();
+    return TestCrudModel.findAll();
   }
 
-  create(data: TestCrud) {
-    TestCrud.create(data);
+  readById(id: number) {
+    return TestCrudModel.findByPk(id);
   }
 
-  update(id: number, field: keyof Pick<TestCrud, 'text' | 'description'>, value: string) {
-    TestCrud.update({ [field]: value }, { where: { id } });
+  create(data: TestCrudTableCreationAttributes) {
+    return TestCrudModel.create(data);
+  }
+
+  update(id: number, field: string, value: string) {
+    return TestCrudModel.update({ [field]: value }, { where: { id } });
   }
 
   delete(id: number) {
-    TestCrud.destroy({ where: { id } });
+    return TestCrudModel.destroy({ where: { id } });
   }
 }
 

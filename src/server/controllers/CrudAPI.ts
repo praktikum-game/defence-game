@@ -2,9 +2,15 @@ import { crudService } from 'server/services/CrudService';
 import { Request, Response } from 'express';
 
 export class CrudAPI {
-  public static readAll = async (request: Request, response: Response) => {
+  public static getAll = async (request: Request, response: Response) => {
     const data = await crudService.readAll();
-    response.sendStatus(200).send(data);
+    response.send(data);
+  };
+
+  public static getById = async (request: Request, response: Response) => {
+    const { id } = request.params;
+    const record = await crudService.readById(Number(id));
+    response.send(record);
   };
 
   public static create = async (request: Request, response: Response) => {
@@ -16,13 +22,13 @@ export class CrudAPI {
   public static update = async (request: Request, response: Response) => {
     const { body, params } = request;
     const id = params.id;
-    await crudService.update(Number(id), body, 'sdfsdff');
+    await crudService.update(Number(id), body.field, body.value);
     response.sendStatus(204);
   };
 
   public static delete = async (request: Request, response: Response) => {
     const id = request.params.id;
-    crudService.delete(Number(id));
+    await crudService.delete(Number(id));
     response.sendStatus(204);
   };
 }

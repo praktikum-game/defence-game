@@ -8,7 +8,6 @@ import { Sequelize } from 'sequelize';
 import { router } from './router';
 import { initModels } from './orm/initModels';
 
-const app: Express = express();
 const sequelize = new Sequelize(sequelizeOptions);
 
 sequelize
@@ -18,6 +17,8 @@ sequelize
   .catch(() => {
     throw new Error('No connection to db');
   });
+
+const app: Express = express();
 if (process.env.NODE_ENV === 'development') {
   app.use(compression());
 }
