@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { App } from 'components/App';
 import { STORAGE_LEADER_KEY } from 'consts';
 
+
 if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   window.addEventListener('load', () => {
     navigator.serviceWorker
