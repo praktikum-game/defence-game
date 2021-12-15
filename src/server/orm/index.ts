@@ -1,1 +1,1 @@
-export { sequelizeOptions } from './orm';
+export { sequelizeOptions } from './connectOptions';

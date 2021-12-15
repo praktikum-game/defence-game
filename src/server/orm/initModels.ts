@@ -14,14 +14,16 @@ export const initModels = (sequelize: Sequelize) => {
         type: DataTypes.STRING(1024),
         allowNull: false,
       },
-      descr: {
+      description: {
         type: DataTypes.STRING(255),
         allowNull: true,
+        field: 'descr',
       },
     },
     {
       tableName: 'crud_test',
       sequelize,
+      timestamps: false,
     },
   );
 };
