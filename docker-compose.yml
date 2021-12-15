@@ -2,10 +2,11 @@ version: "3.9"
 
 services:
   postgres:
-    container_name: postgres
+    container_name: pg
     image: postgres:12
     volumes:
-      - ./src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/dbinit.sql
+      - ./postgresdata:/var/lib/postgresql/data
+    restart: always
     ports:
       - "5432:5432"
     networks:
