@@ -1,0 +1,1 @@
+export { sequelizeOptions } from './orm';
