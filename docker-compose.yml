@@ -1,16 +1,31 @@
 version: "3.9"
 
 services:
-  postgre:
-    container_name: postgre
-    image: postgres: 12
-  game:
-    container_name: game
-    image: praktikum/game
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: npm run start
+  postgres:
+    container_name: pg
+    image: postgres:12
+    volumes:
+      - ./src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/dbinit.sql
     ports:
-      - ${PORT:-3000}:${PORT:-3000}
-    restart: on-failure
+      - "5432:5432"
+    networks:
+      - innerNetwork
+    env_file:
+      - .env-dev
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    env_file:
+      - .env-dev
+    environment:
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "8080:80"
+    networks:
+      - innerNetwork
+    depends_on:
+      - postgres
+
+networks:
+  innerNetwork:
+    driver: bridge
