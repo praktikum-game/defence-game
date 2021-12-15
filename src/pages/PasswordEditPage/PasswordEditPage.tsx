@@ -6,17 +6,19 @@ import { Header } from '../../components/Header';
 import { PageContainer } from '../../components/PageContainer';
 import { Form } from '../../components/Form';
 import { passwordValidator } from '../../utilities/validators';
-import { bindArgsFromN } from '../../utilities/utilities';
+import { bindArgsFromN } from '../../utilities';
 import { Avatar } from '../../components/Avatar';
 import { Footer } from '../../components/Footer';
 import { InputNames } from '../../consts';
 import { useFormInput } from '../../hooks/useFormInput/useFormInput';
 import { ProfilePasswordUpdateRequest, usersAPI } from '../../api/users';
+import { useAvatar } from 'hooks/useAvatar/useAvatar';
 
 import './passwordEditPage.css';
 
 export const PasswordEditPage = () => {
   const navigate = useNavigate();
+  const { getAvatar } = useAvatar();
 
   const [editResult, setEditResult] = useState(false);
 
@@ -52,7 +54,7 @@ export const PasswordEditPage = () => {
   return (
     <div className="profile-edit-page">
       <Header backButton={true}>
-        <Avatar />
+        <Avatar src={getAvatar()} />
       </Header>
       <PageContainer size="m">
         <Form

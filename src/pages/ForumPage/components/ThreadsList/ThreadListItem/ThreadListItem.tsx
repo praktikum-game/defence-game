@@ -6,7 +6,7 @@ import { Title } from '../../../../../components/Title';
 import './thread-list-item.css';
 import { ThreadListItemProps } from '.';
 import { Avatar } from '../../../../../components/Avatar';
-import { getDateFormatter } from '../../../../../utilities/utilities';
+import { getDateFormatter } from '../../../../../utilities';
 
 const b = block('thread-list-item');
 

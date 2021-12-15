@@ -2,7 +2,7 @@ import React from 'react';
 import { block } from 'bem-cn';
 import { Title } from '../../../../../components/Title';
 import { Avatar } from '../../../../../components/Avatar';
-import { getDateFormatter } from '../../../../../utilities/utilities';
+import { getDateFormatter } from '../../../../../utilities';
 import { MessageItemProps } from './types';
 
 import './message-item.css';

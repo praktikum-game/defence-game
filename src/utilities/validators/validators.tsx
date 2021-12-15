@@ -138,3 +138,13 @@ export function nameValidator(value: string): ValidationResult {
   ];
   return validate(validators, value);
 }
+
+export function avatarValidator(value: string): ValidationResult {
+  const validators: ValidatorItem[] = [
+    {
+      checkFunction: (params: ValidateItemParams) => required()({ ...params }),
+      message: 'Аватар не может быть пустым',
+    },
+  ];
+  return validate(validators, value);
+}

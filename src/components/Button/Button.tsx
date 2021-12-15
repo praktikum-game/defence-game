@@ -1,7 +1,7 @@
 import React from 'react';
 import block from 'bem-cn';
 import { ButtonProps } from './types';
-import { getViewTypes } from '../../utilities/utilities';
+import { getViewTypes } from '../../utilities';
 import './button.css';
 
 const viewTypes = getViewTypes('button');

@@ -16,7 +16,7 @@ import {
   nameValidator,
   phoneValidator,
 } from '../../utilities/validators';
-import { bindArgsFromN } from '../../utilities/utilities';
+import { bindArgsFromN } from '../../utilities';
 import { InputNames } from '../../consts';
 import { useFormInput } from '../../hooks/useFormInput/useFormInput';
 import { RegisterRequest } from '../../api/auth';
