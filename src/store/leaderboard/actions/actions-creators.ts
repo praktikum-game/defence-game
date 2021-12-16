@@ -1,4 +1,5 @@
-import { LeaderboardItem } from '../../../api/leaderboard/types';
+import { LEADERBOARD_EMPTY_USERNAME_PLACEHOLDER } from 'consts';
+import { LeaderboardUser } from '../../../api/leaderboard';
 import { LeadboardActionCreator, LeaderboardThunkDispatch } from '../types';
 import {
   LeaderboardFaliedFetchList,
@@ -12,7 +13,7 @@ export const leaderboardStartFetchList = (): LeaderboardPendingFetchList => ({
 });
 
 export const leaderboardSuccesFetchList = (
-  data: LeaderboardItem[],
+  data: LeaderboardUser[],
 ): LeaderboardSuccessFetchList => ({
   type: 'LB_SUCCESS_FETCH_LIST_DATA',
   payload: data,
@@ -31,11 +32,16 @@ export const fetchLeaderboardListData: LeadboardActionCreator =
   async (dispatch: LeaderboardThunkDispatch, _1, { api }) => {
     try {
       dispatch(leaderboardStartFetchList());
-      const { data, status } = await api.leaderboard.fetchLeaderboardData();
+      const { data, status } = await api.leaderboard.getTeamLeaderboard();
       if (status < 300) {
-        const sortedData = [...data].sort(
-          (item: LeaderboardItem, anotherItem: LeaderboardItem) => anotherItem.score - item.score,
-        );
+        const sortedData = data
+          .sort((item, anotherItem) => anotherItem.data.score - item.data.score)
+          .map((el) => {
+            if (!el.data.username) {
+              el.data.username = LEADERBOARD_EMPTY_USERNAME_PLACEHOLDER;
+            }
+            return el.data;
+          });
 
         dispatch(leaderboardSuccesFetchList(sortedData));
       }

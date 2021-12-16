@@ -11,7 +11,7 @@ export type RegisterRequest = LoginRequest & {
 };
 
 export type UserData = {
-  id: string;
+  id: number;
   login: string;
   first_name: string;
   second_name: string;
