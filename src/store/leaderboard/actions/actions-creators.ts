@@ -34,7 +34,7 @@ export const fetchLeaderboardListData: LeadboardActionCreator =
       dispatch(leaderboardStartFetchList());
       const { data, status } = await api.leaderboard.getTeamLeaderboard();
       if (status < 300) {
-        const sortedData = [...data]
+        const sortedData = data
           .sort((item, anotherItem) => anotherItem.data.score - item.data.score)
           .map((el) => {
             if (!el.data.username) {

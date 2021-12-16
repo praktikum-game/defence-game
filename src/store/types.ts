@@ -1,8 +1,8 @@
-import { Reducer } from 'redux';
-
 import { authAPI } from '../api/auth';
 import { leaderboardAPI } from '../api/leaderboard';
 import { usersAPI } from '../api/users';
+import { LeaderboardState } from './leaderboard';
+import { UserState } from './user';
 
 export type ThunkExtraArgument = {
   api: {
@@ -12,4 +12,7 @@ export type ThunkExtraArgument = {
   };
 };
 
-export type AppState = ReturnType<Reducer>;
+export interface AppState {
+  user: UserState;
+  leaderboard: LeaderboardState;
+}
