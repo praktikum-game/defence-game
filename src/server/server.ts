@@ -12,7 +12,10 @@ const sequelize = new Sequelize(sequelizeOptions);
 
 sequelize
   .authenticate()
-  .then(() => console.log('db test connection ok'))
+  .then(() => {
+    console.log('\x1b[32m', 'db test connection ok');
+    console.log('\x1b[0m');
+  })
   .then(() => initModels(sequelize))
   .catch(() => {
     throw new Error('No connection to db');

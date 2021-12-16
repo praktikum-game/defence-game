@@ -11,7 +11,7 @@
     "start:dev:server": "nodemon index.js --watch dist/ssr.js",
     "dev": "NODE_ENV=development npm-run-all --print-label --parallel start:dev:*",
     "build:prod:vendors": "NODE_ENV=production webpack --config webpack/vendors.config.ts",
-    "build:prod": "npm-run-all lint test && NODE_ENV=production webpack",
+    "build:prod": "NODE_ENV=production webpack",
     "start:prod": "NODE_ENV=production node index.js",
     "lint:p": "prettier src/**/*.{js,jsx,ts,tsx,test.tsx,test.ts,json}",
     "lint:es": "eslint src/**/*.{ts,tsx}",

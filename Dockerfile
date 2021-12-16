@@ -1,35 +1,10 @@
-FROM node:14.18.1-bullseye AS appBuild
+FROM node:14.18.1-slim
+RUN apt update && apt install -y netcat
+WORKDIR /var/www
 
-ENV USERNAME user
-ENV APPDIR app
-ENV HOMEDIR /home/${USERNAME}/
-WORKDIR ${HOMEDIR}${APPDIR}
-RUN apt-get update
+COPY . .
+RUN chmod +x ./utils/wait-for.sh
+RUN npm install && npm run build:prod:vendors && npm run build:prod
 
-COPY --chown=${USER} ./package-lock.json .
-COPY --chown=${USER} ./package.json .
-RUN npm ci
-COPY --chown=${USER} . .
+EXPOSE 3000
 
-RUN npm run prod
-
-FROM node:14.18.1-bullseye
-
-ENV USERNAME user
-ENV APPDIR app
-ENV HOMEDIR /home/${USERNAME}/
-
-RUN useradd --create-home ${USERNAME} && chown -R ${USERNAME} /home/${USERNAME}/
-WORKDIR ${HOMEDIR}${APPDIR}
-RUN apt-get update && apt-get -y install netcat locales nano apt-utils
-
-COPY --chown=${USER} ./package-lock.json .
-COPY --chown=${USER} ./package.json .
-RUN npm ci --production
-COPY --chown=${USER} --from=appBuild ${HOMEDIR}${APPDIR}/dist ./dist
-COPY --chown=${USER} ./src/server.ts ./src/server.ts
-COPY --chown=${USER} ./tsconfig.json ./tsconfig.ts
-
-USER ${USER}
-
-CMD ["npm", "run", "start"]
