@@ -1,5 +1,5 @@
-import { crudService } from 'server/services/CrudService';
 import { Request, Response } from 'express';
+import { crudService } from 'server/services/CrudService';
 
 export class CrudAPI {
   public static getAll = async (request: Request, response: Response) => {
