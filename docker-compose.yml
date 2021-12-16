@@ -11,12 +11,26 @@ services:
     networks:
       - innerNetwork
     env_file:
-      - .env-dev
+      - .env
+  webapp:
+    container_name: webapp
+    image: game/webapp
+    build:
+      context: .
+    env_file:
+      - .env
+    command: ./utils/wait-for.sh postgres:5432 -- npm run start:prod
+    environment:
+      POSTGRES_ORM_HOST: 'postgres'
+    ports:
+      - "3000:3000"
+    networks:
+      - innerNetwork
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4:latest
     env_file:
-      - .env-dev
+      - .env
     environment:
       PGADMIN_LISTEN_PORT: 80
     ports:

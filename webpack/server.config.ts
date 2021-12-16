@@ -1,12 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-import { Configuration } from 'webpack';
+import { Configuration, IgnorePlugin } from 'webpack';
 import { join } from 'path';
 import { DIST_DIR, IS_DEV, SSR_DIR } from './env';
 import { css, ts, image } from './loaders';
-import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
+// import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
-import { pluginOptions } from './plugin-options';
+// import { pluginOptions } from './plugin-options';
 
 export const serverConfig: Configuration = {
   name: 'ssr',
@@ -23,11 +23,18 @@ export const serverConfig: Configuration = {
     publicPath: '/',
   },
   resolve: {
-    modules: ['src', 'server', 'node_modules'],
+    modules: ['src', 'node_modules'],
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     plugins: [new TsconfigPathsPlugin()],
   },
-  plugins: [new ImageMinimizerPlugin(pluginOptions.imageMinimizerOptions)],
+  plugins: [
+    // с этим плагином не собирается (или неправильные опции или что-то с плагином)
+    // new ImageMinimizerPlugin(pluginOptions.imageMinimizerOptions),
+    // это исключение очень важно - без него не соберется
+    new IgnorePlugin({
+      resourceRegExp: /^pg-native$/,
+    }),
+  ],
   devtool: 'source-map',
   performance: {
     hints: IS_DEV ? false : 'warning',

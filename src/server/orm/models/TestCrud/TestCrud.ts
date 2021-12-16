@@ -1,4 +1,3 @@
-// import { Model, Table, Column, DataType } from 'sequelize';
 import { Model } from 'sequelize';
 import { TestCrudTableAttributes, TestCrudTableCreationAttributes } from './types';
 
@@ -10,5 +9,5 @@ export class TestCrudModel
 
   text!: string;
 
-  descr!: string | null;
+  description!: string | null;
 }
