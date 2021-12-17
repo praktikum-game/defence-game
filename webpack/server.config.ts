@@ -1,12 +1,15 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-import { Configuration } from 'webpack';
+import { Configuration, DefinePlugin } from 'webpack';
 import { join } from 'path';
 import { DIST_DIR, IS_DEV, SSR_DIR } from './env';
 import { css, ts, image } from './loaders';
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import { pluginOptions } from './plugin-options';
+import { config } from 'dotenv';
+
+config();
 
 export const serverConfig: Configuration = {
   name: 'ssr',
@@ -27,7 +30,12 @@ export const serverConfig: Configuration = {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     plugins: [new TsconfigPathsPlugin()],
   },
-  plugins: [new ImageMinimizerPlugin(pluginOptions.imageMinimizerOptions)],
+  plugins: [
+    new ImageMinimizerPlugin(pluginOptions.imageMinimizerOptions),
+    new DefinePlugin({
+      OAUTH_REDIRECT_URL: JSON.stringify(process.env.OAUTH_REDIRECT_URL),
+    }),
+  ],
   devtool: 'source-map',
   performance: {
     hints: IS_DEV ? false : 'warning',
