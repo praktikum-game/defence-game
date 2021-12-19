@@ -2,7 +2,7 @@
 
 import { DllPlugin } from 'webpack';
 import { join } from 'path';
-import { DIST_DIR, IS_DEV, SSR_DIR } from './env';
+import { DIST_DIR, IS_DEV } from './env';
 import { VENDORS } from './vendors';
 import AssetsPlugin from 'assets-webpack-plugin';
 
@@ -24,7 +24,7 @@ export default {
       name: '[name]_[fullhash]',
     }),
     new AssetsPlugin({
-      path: SSR_DIR,
+      path: DIST_DIR,
       removeFullPathAutoPrefix: true,
       filename: 'vendors-assets.json',
     }),
