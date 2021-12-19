@@ -7,6 +7,7 @@ import { DIST_DIR, IS_DEV, SSR_DIR } from './env';
 import { css, ts, image } from './loaders';
 // import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+
 // import { pluginOptions } from './plugin-options';
 
 export const serverConfig: Configuration = {
