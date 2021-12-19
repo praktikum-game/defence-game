@@ -17,7 +17,6 @@ function getHtmlString(
   assets: { vendorsAssets: any; mainAssets: any },
   store?: Store,
 ) {
-  console.log('hohoho, mmee');
   const html = renderToStaticMarkup(
     <html lang="ru">
       <head>
