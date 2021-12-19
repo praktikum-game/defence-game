@@ -7,7 +7,7 @@ import { Store } from 'redux';
 
 import { readFileSync } from 'fs';
 import { configureStore } from '../store';
-import { serializeObject } from './utilities/serializeObject';
+import { renderObject } from './utilities/renderObject';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { App } from '../components/App';
 
@@ -29,7 +29,7 @@ function getHtmlString(
       <body>
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.__PRELOADED_STATE__ = ${serializeObject(store?.getState())}`,
+            __html: `window.__PRELOADED_STATE__ = ${renderObject(store?.getState())}`,
           }}
         />
         <div id="root" dangerouslySetInnerHTML={{ __html: reactJsxString }} />
