@@ -35,6 +35,6 @@ app.get('/serviceWorker.js', (_0, res) => {
   res.sendFile(join(__dirname, '..', 'dist', 'serviceWorker.js'));
 });
 
-app.get('*', ssrHtmlRenderMiddleware);
+app.get('*', ssrHtmlRenderMiddleware());
 
 export { app };
