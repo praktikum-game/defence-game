@@ -44,7 +44,8 @@ export const useOAuth = (redirectUri: string) => {
     }
 
     checkOAuthUser();
+    // eslint-disable-next-line
   }, []);
+
   return startOAuth;
 };
-
