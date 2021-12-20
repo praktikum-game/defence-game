@@ -17,7 +17,7 @@ const sequelizeOptions: Options = {
   dialectModule: pg,
 };
 
-export const configs = {
+export const SequelizeConfigs = {
   development: sequelizeOptions,
   test: sequelizeOptions,
   production: sequelizeOptions,
