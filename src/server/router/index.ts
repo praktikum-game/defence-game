@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { crudRoutes } from './crud';
+import { crudRoutes } from './user';
 
 const router: Router = Router();
 
