@@ -7,6 +7,10 @@ export abstract class BaseCrud<T, D> {
     this._model = model;
   }
 
+  get model() {
+    return this._model;
+  }
+
   readAll() {
     return this._model.findAll();
   }
@@ -17,6 +21,10 @@ export abstract class BaseCrud<T, D> {
 
   create(data: D) {
     return this._model.create(data);
+  }
+
+  bulkCreate(data: D[]) {
+    return this._model.bulkCreate(data);
   }
 
   update(id: number, field: string, value: string) {
