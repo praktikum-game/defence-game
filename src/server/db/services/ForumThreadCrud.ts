@@ -3,7 +3,7 @@ import {
   ForumThread,
   ForumThreadAttributes,
   ForumThreadCreationAttributes,
-} from '../db/models/ForumThread';
+} from '../models/ForumThread';
 
 class ForumThreadCrud extends BaseCrud<ForumThreadAttributes, ForumThreadCreationAttributes> {
   constructor() {

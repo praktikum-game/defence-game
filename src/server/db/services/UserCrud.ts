@@ -1,5 +1,5 @@
 import { BaseCrud } from './BaseCrud';
-import { User, UserAttributes, UserCreationAttributes } from '../db/models/User';
+import { User, UserAttributes, UserCreationAttributes } from '../models/User';
 
 class UserCrud extends BaseCrud<UserAttributes, UserCreationAttributes> {
   constructor() {

@@ -3,7 +3,7 @@ import {
   SiteTheme,
   SiteThemeAttributes,
   SiteThemeCreationAttributes,
-} from '../db/models/SiteTheme';
+} from '../models/SiteTheme';
 
 class SiteThemeCrud extends BaseCrud<SiteThemeAttributes, SiteThemeCreationAttributes> {
   constructor() {
