@@ -1,35 +1,30 @@
-FROM node:14.18.1-bullseye AS appBuild
+FROM node:14.18.1-slim as build
 
-ENV USERNAME user
-ENV APPDIR app
-ENV HOMEDIR /home/${USERNAME}/
-WORKDIR ${HOMEDIR}${APPDIR}
-RUN apt-get update
+WORKDIR /usr/webapp
 
-COPY --chown=${USER} ./package-lock.json .
-COPY --chown=${USER} ./package.json .
-RUN npm ci
-COPY --chown=${USER} . .
+COPY . .
 
-RUN npm run prod
+RUN npm install \
+    && npm run build:prod:vendors \
+    && npm run build:prod \
+    && mkdir -p ./build \
+    && cp -f -R ./dist ./build/dist \
+    && cp -f ./index.js ./build/index.js \
+    && cp -f -R ./utils ./build/utils \
+    && cp -f ./package.json ./build/package.json
 
-FROM node:14.18.1-bullseye
+FROM node:14.18.1-slim 
+RUN apt update \
+    && apt install -y netcat locales nano \
+    && addgroup inner \
+    && adduser --system --shell /bin/bash --disabled-login --home /home/appuser --ingroup inner appuser
 
-ENV USERNAME user
-ENV APPDIR app
-ENV HOMEDIR /home/${USERNAME}/
+WORKDIR /usr/appuser
 
-RUN useradd --create-home ${USERNAME} && chown -R ${USERNAME} /home/${USERNAME}/
-WORKDIR ${HOMEDIR}${APPDIR}
-RUN apt-get update && apt-get -y install netcat locales nano apt-utils
+COPY --from=build /usr/webapp/build ./
 
-COPY --chown=${USER} ./package-lock.json .
-COPY --chown=${USER} ./package.json .
-RUN npm ci --production
-COPY --chown=${USER} --from=appBuild ${HOMEDIR}${APPDIR}/dist ./dist
-COPY --chown=${USER} ./src/server.ts ./src/server.ts
-COPY --chown=${USER} ./tsconfig.json ./tsconfig.ts
+RUN chown -R appuser:inner /home/appuser 
+RUN chmod +x ./utils/wait-for.sh
 
-USER ${USER}
+USER appuser
 
-CMD ["npm", "run", "start"]
