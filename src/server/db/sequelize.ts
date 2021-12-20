@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize';
-import { SequelizeConfigs } from '../../../config';
+import { SequelizeConfigs } from './config';
 
 const env: keyof typeof SequelizeConfigs =
   (process.env.NODE_ENV as 'development' | 'test' | 'production') || 'development';

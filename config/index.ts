@@ -1,1 +1,0 @@
-export { SequelizeConfigs } from './database';
