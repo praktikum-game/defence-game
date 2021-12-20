@@ -11,6 +11,12 @@ sequelize
   .then(() => {
     console.log('\x1b[32m', 'db test connection ok');
     console.log('\x1b[0m');
+    sequelize
+      .sync()
+      .then(() => {
+        console.log('Sequelize synced!');
+      })
+      .catch((e) => console.log(e));
   })
   .catch((e) => {
     console.log(e);
