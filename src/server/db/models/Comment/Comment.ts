@@ -9,6 +9,7 @@ const Comment: ModelDefined<CommentAttributes, CommentCreationAttributes> = sequ
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     content: { type: DataTypes.TEXT, allowNull: false },
   },
+  { underscored: true },
 );
 
 Comment.belongsTo(Comment, { as: 'reply_comment', foreignKey: { allowNull: true } });
