@@ -1,4 +1,4 @@
-import { ModelDefined } from 'sequelize/types';
+import { CreateOptions, ModelDefined } from 'sequelize/types';
 
 export abstract class BaseCrud<T, D> {
   private _model: ModelDefined<T, D>;
@@ -19,12 +19,12 @@ export abstract class BaseCrud<T, D> {
     return this._model.findByPk(id);
   }
 
-  create(data: D) {
-    return this._model.create(data);
+  create(data: D, options?: CreateOptions<T>) {
+    return this._model.create(data, options);
   }
 
-  bulkCreate(data: D[]) {
-    return this._model.bulkCreate(data);
+  bulkCreate(data: D[], options?: CreateOptions<T>) {
+    return this._model.bulkCreate(data, options);
   }
 
   update(id: number, field: string, value: string) {

@@ -8,7 +8,7 @@ export async function addTestSamples() {
   // Чтобы сильно не заморачиваться с дублирующимися данными, просто делаю такую
   // проверку
   const existedThemes = await siteThemeCrud.readAll();
-  if (existedThemes) {
+  if (existedThemes.length !== 0) {
     console.log('Data exits. No need to add');
     return;
   }
