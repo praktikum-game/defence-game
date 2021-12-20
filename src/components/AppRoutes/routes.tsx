@@ -69,9 +69,9 @@ export const routes: RouteObject[] = [
           {
             path: '/game',
             element: (
-              <RequireAuth>
+              // <RequireAuth>
                 <GamePage />
-              </RequireAuth>
+              // </RequireAuth>
             ),
           },
           {

@@ -1,13 +1,22 @@
 .game-container {
-  background: $page-background-dark;
+  position: relative;
+
+  &_fullscreen {
+    background: $page-background-dark;
+  }
+
+  &__game {
+    &_fullscreen {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 }
 
 .game-page {
   margin-top: 40px;
   background: $main-page-header-bg;
   border: 5px solid $main-page-header-bg;
-
-  button {
-    width: auto;
-  }
 }
