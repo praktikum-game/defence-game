@@ -4,11 +4,10 @@ import { config } from 'dotenv';
 
 config();
 
-const { POSTGRES_ORM_HOST, POSTGRES_PORT, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB } =
-  process.env;
+const { POSTGRES_HOST, POSTGRES_PORT, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB } = process.env;
 
 const sequelizeOptions: Options = {
-  host: POSTGRES_ORM_HOST,
+  host: POSTGRES_HOST,
   port: Number(POSTGRES_PORT),
   username: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
