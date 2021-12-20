@@ -6,7 +6,7 @@ export interface ForumThreadAttributes {
   content: string;
   subject: string;
 
-  comments: typeof Comment[];
+  comments?: typeof Comment[];
 }
 
 export interface ForumThreadCreationAttributes extends Optional<ForumThreadAttributes, 'id'> {}

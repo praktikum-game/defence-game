@@ -8,15 +8,15 @@ export interface UserAttributes {
   backendId: number;
   first_name: string;
   second_name: string;
-  display_name: string;
+  display_name?: string;
   login: string;
   email: string;
   phone: string;
   avatar: string;
-  score: number;
+  score?: number;
 
-  comments: typeof Comment[];
-  forum_threads: typeof ForumThread[];
+  comments?: typeof Comment[];
+  forum_threads?: typeof ForumThread[];
   current_theme: typeof SiteTheme;
 }
 
