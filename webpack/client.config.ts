@@ -1,15 +1,15 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-import { Configuration, DllReferencePlugin, DefinePlugin } from 'webpack';
+import { Configuration, DllReferencePlugin, DefinePlugin, ProgressPlugin } from 'webpack';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import AssetsPlugin from 'assets-webpack-plugin';
-// import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import { join, resolve } from 'path';
 import { DIST_DIR, IS_DEV, SRC_DIR } from './env';
 import { ts, css, image } from './loaders';
-// import { pluginOptions } from './plugin-options';
 import { InjectManifest } from 'workbox-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
 import { config } from 'dotenv';
 
 config();
@@ -32,14 +32,20 @@ export const clientConfig: Configuration = {
     plugins: [new TsconfigPathsPlugin()],
   },
   plugins: [
+    new ProgressPlugin(),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ['main*', '!vendors/**'],
+    }),
+    new CopyPlugin({
+      patterns: [{ from: './src/game/assets/images/', to: './assets/images/' }],
+    }),
     new AssetsPlugin({ path: DIST_DIR, filename: 'client-assets.json' }),
     new DllReferencePlugin({
       context: join(DIST_DIR, '..'),
       manifest: join(DIST_DIR, 'vendors', 'vendors-manifest.json'),
     }),
     new MiniCssExtractPlugin({ filename: '[name]_[fullhash].css' }),
-    // не собирается, если раскоментить
-    // new ImageMinimizerPlugin(pluginOptions.imageMinimizerOptions),
+    
     new DefinePlugin({
       OAUTH_REDIRECT_URL: JSON.stringify(process.env.OAUTH_REDIRECT_URL),
     }),
