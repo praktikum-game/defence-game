@@ -5,6 +5,7 @@ import compression from 'compression';
 import { ssrHtmlRenderMiddleware } from './ssr-html-render-middleware';
 import { sequelize } from './db/sequelize';
 import { router } from './router';
+import { addTestSamples } from './db/testSample';
 
 sequelize
   .authenticate()
@@ -14,7 +15,12 @@ sequelize
     sequelize
       .sync()
       .then(() => {
-        console.log('Sequelize synced!');
+        console.log('Sequelize is synced');
+        if (process.env.NODE_ENV !== 'production') {
+          addTestSamples().then(() => {
+            console.log('Test samples added');
+          });
+        }
       })
       .catch((e) => console.log(e));
   })
