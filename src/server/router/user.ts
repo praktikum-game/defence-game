@@ -3,7 +3,7 @@ import { UserAPI } from '../controllers/UserAPI';
 
 const jsonParser = express.json();
 
-export const crudRoutes = (router: Router) => {
+export const userRoutes = (router: Router) => {
   router.get('/user', UserAPI.getAll);
   router.get('/user/:id', UserAPI.getById);
   router.post('/user', jsonParser, UserAPI.create);

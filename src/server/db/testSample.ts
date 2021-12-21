@@ -2,54 +2,54 @@ import { ModelDefined } from 'sequelize/types';
 import { CommentAttributes, CommentCreationAttributes } from './models/Comment';
 import { ForumThreadAttributes, ForumThreadCreationAttributes } from './models/ForumThread';
 import { SiteThemeAttributes, SiteThemeCreationAttributes } from './models/SiteTheme';
-import { commentCrud, forumThreadCrud, siteThemeCrud, userCrud } from './services';
+import { commentService, forumThreadService, siteThemeService, userService } from './services';
 
 export async function addTestSamples() {
   // Чтобы сильно не заморачиваться с дублирующимися данными, просто делаю такую
   // проверку
-  const existedThemes = await siteThemeCrud.readAll();
+  const existedThemes = await siteThemeService.readAll();
   if (existedThemes.length !== 0) {
     console.log('Data exits. No need to add');
     return;
   }
 
-  await siteThemeCrud.bulkCreate([{ theme: 'light' }, { theme: 'dark' }]);
+  await siteThemeService.bulkCreate([{ theme: 'light' }, { theme: 'dark' }]);
 
-  const lightTheme = (await siteThemeCrud.readById(0)) as unknown as ModelDefined<
+  const lightTheme = (await siteThemeService.readById(0)) as unknown as ModelDefined<
     SiteThemeAttributes,
     SiteThemeCreationAttributes
   >;
 
-  const darkTheme = (await siteThemeCrud.readById(1)) as unknown as ModelDefined<
+  const darkTheme = (await siteThemeService.readById(1)) as unknown as ModelDefined<
     SiteThemeAttributes,
     SiteThemeCreationAttributes
   >;
 
-  await commentCrud.bulkCreate([
+  await commentService.bulkCreate([
     { content: 'TestComment1', reply_comment: null },
     { content: 'TestComment2', reply_comment: null },
   ]);
-  const commentTest = commentCrud.readById(0) as unknown as ModelDefined<
+  const commentTest = commentService.readById(0) as unknown as ModelDefined<
     CommentAttributes,
     CommentCreationAttributes
   >;
-  await commentCrud.bulkCreate([{ content: 'TestComment3', reply_comment: commentTest }]);
-  const allComments = (await commentCrud.readAll()) as unknown as ModelDefined<
+  await commentService.bulkCreate([{ content: 'TestComment3', reply_comment: commentTest }]);
+  const allComments = (await commentService.readAll()) as unknown as ModelDefined<
     CommentAttributes,
     CommentCreationAttributes
   >[];
 
-  await forumThreadCrud.create({
+  await forumThreadService.create({
     content: 'ForumContent1',
     subject: 'ForumSubject1',
     comments: allComments,
   });
-  const forumThread = forumThreadCrud.readById(0) as unknown as ModelDefined<
+  const forumThread = forumThreadService.readById(0) as unknown as ModelDefined<
     ForumThreadAttributes,
     ForumThreadCreationAttributes
   >;
 
-  await userCrud.bulkCreate([
+  await userService.bulkCreate([
     {
       backendId: 1,
       first_name: 'Name1',

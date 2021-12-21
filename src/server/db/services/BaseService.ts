@@ -1,6 +1,6 @@
 import { CreateOptions, ModelDefined } from 'sequelize/types';
 
-export abstract class BaseCrud<T, D> {
+export abstract class BaseService<T, D> {
   private _model: ModelDefined<T, D>;
 
   constructor(model: ModelDefined<T, D>) {

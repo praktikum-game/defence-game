@@ -1,4 +1,4 @@
-export { commentCrud } from './CommentCrud';
-export { forumThreadCrud } from './ForumThreadCrud';
-export { siteThemeCrud } from './SiteThemeCrud';
-export { userCrud } from './UserCrud';
+export { commentService } from './CommentService';
+export { forumThreadService } from './ForumThreadService';
+export { siteThemeService } from './SiteThemeService';
+export { userService } from './UserService';

@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { crudRoutes } from './user';
+import { userRoutes } from './user';
 
 const router: Router = Router();
 
-crudRoutes(router);
+userRoutes(router);
 
 export { router };
