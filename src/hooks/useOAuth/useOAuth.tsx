@@ -44,7 +44,10 @@ export const useOAuth = (redirectUri: string) => {
     }
 
     checkOAuthUser();
+    // Ругается на то, что надо передать dispatch, navigate и redirectUri в массив
+    // А мы хотим ее исполнить только один раз после рендеринга, а не при обновлении пропсов
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return startOAuth;
 };
-

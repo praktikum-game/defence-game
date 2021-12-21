@@ -1,1 +1,0 @@
-export { sequelizeOptions } from './connectOptions';

@@ -5,27 +5,30 @@ services:
     container_name: pg
     image: postgres:12
     volumes:
-      - ./src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/dbinit.sql
+      - pgdata:/var/lib/postgresql/data
+    restart: always
     ports:
       - "5432:5432"
     networks:
       - innerNetwork
     env_file:
       - .env
-  webapp:
-    container_name: webapp
-    image: game/webapp
-    build:
-      context: .
-    env_file:
-      - .env
-    command: ./utils/wait-for.sh postgres:5432 -- npm run start:prod
-    environment:
-      POSTGRES_ORM_HOST: 'postgres'
-    ports:
-      - "3000:3000"
-    networks:
-      - innerNetwork
+  # Закомментил, чтобы каждый раз не собирать билд, но держать постгрес запущенным
+
+  # webapp:
+  #   container_name: webapp
+  #   image: game/webapp
+  #   build:
+  #     context: .
+  #   env_file:
+  #     - .env
+  #   command: ./utils/wait-for.sh postgres:5432 -- npm run start:prod
+  #   environment:
+  #     POSTGRES_ORM_HOST: 'postgres'
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - innerNetwork
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4:latest
@@ -43,3 +46,6 @@ services:
 networks:
   innerNetwork:
     driver: bridge
+
+volumes:
+  pgdata:
