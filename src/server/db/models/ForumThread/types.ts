@@ -1,12 +1,12 @@
-import { Optional } from 'sequelize';
-import { Comment } from '../Comment';
+import { Optional, Model } from 'sequelize';
+import { CommentAttributes, CommentCreationAttributes } from '../Comment';
 
 export interface ForumThreadAttributes {
   id: number;
   content: string;
   subject: string;
 
-  comments?: typeof Comment[];
+  comments?: Model<CommentAttributes, CommentCreationAttributes>[];
 }
 
 export interface ForumThreadCreationAttributes extends Optional<ForumThreadAttributes, 'id'> {}

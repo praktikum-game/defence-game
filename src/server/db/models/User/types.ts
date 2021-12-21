@@ -1,23 +1,15 @@
-import { Optional } from 'sequelize';
-import { Comment } from '../Comment';
-import { ForumThread } from '../ForumThread';
-import { SiteTheme } from '../SiteTheme';
+import { Optional, Model } from 'sequelize';
+import { CommentAttributes, CommentCreationAttributes } from '../Comment';
+import { ForumThreadAttributes, ForumThreadCreationAttributes } from '../ForumThread';
+import { SiteThemeAttributes, SiteThemeCreationAttributes } from '../SiteTheme';
 
 export interface UserAttributes {
   id: number;
-  backendId: number;
-  first_name: string;
-  second_name: string;
-  display_name?: string;
-  login: string;
-  email: string;
-  phone: string;
-  avatar: string;
-  score?: number;
+  praktikumId: number;
 
-  comments?: typeof Comment[];
-  forum_threads?: typeof ForumThread[];
-  current_theme: typeof SiteTheme;
+  comments?: Model<CommentAttributes, CommentCreationAttributes>[];
+  forum_threads?: Model<ForumThreadAttributes, ForumThreadCreationAttributes>[];
+  current_theme: Model<SiteThemeAttributes, SiteThemeCreationAttributes>;
 }
 
 export interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
