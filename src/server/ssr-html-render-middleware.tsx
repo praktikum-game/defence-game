@@ -35,7 +35,6 @@ function getHtmlString(
         <div id="root" dangerouslySetInnerHTML={{ __html: reactJsxString }} />
         <script src={`/vendors/${assets.vendorsAssets.vendors.js}`}></script>
         <script src={assets.mainAssets.main.js}></script>
-        <div id="portal"></div>
       </body>
     </html>,
   );

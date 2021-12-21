@@ -6,8 +6,11 @@ import { Modal } from '../../components/Modal';
 import { Game } from '../../game/Game';
 import { useFullscreen } from '../../hooks/useFullscreen';
 import { Title } from '../../components/Title';
+import block from 'bem-cn';
 
 import './game-page.css';
+
+const b = block('game-container');
 
 export const GamePage = () => {
   const navigate = useNavigate();
@@ -75,56 +78,61 @@ export const GamePage = () => {
 
   return (
     <div className="game-page">
-      <Modal visible={infoModalIsVisible}>
-        <Title headingLevel={3} className="modal__title">
-          Освободи мир от вирусов!{' '}
-        </Title>
-        <div className="modal__buttons">
-          <Button
-            text="Начать игру!"
-            onClick={() => {
-              handleCloseInfoModal();
-              handleStartGame();
-            }}
-          />
-        </div>
-      </Modal>
+      <div className={b({ fullscreen: isFullscreen })} ref={gameContainerElementRef}>
+        <Modal visible={infoModalIsVisible}>
+          <Title headingLevel={3} className="modal__title">
+            Освободи мир от вирусов!{' '}
+          </Title>
+          <div className="modal__buttons">
+            <Button
+              text="Начать игру!"
+              onClick={() => {
+                handleCloseInfoModal();
+                handleStartGame();
+              }}
+            />
+          </div>
+        </Modal>
 
-      <Modal visible={loseModalIsVisible}>
-        <Title headingLevel={3} className="modal__title">
-          К сожалению, Вы проиграли. Повторить?
-        </Title>
-        <div className="modal__buttons">
-          <Button
-            text="Это произошло случайно, в бой!"
-            view="primary"
-            onClick={() => {
-              handleCloseModals();
-              handleStartGame();
-            }}
-          />
-          <Button text="Домой" view="secondary" onClick={handleRedirectToHomeClick} />
-        </div>
-      </Modal>
+        <Modal visible={loseModalIsVisible}>
+          <Title headingLevel={3} className="modal__title">
+            К сожалению, Вы проиграли. Повторить?
+          </Title>
+          <div className="modal__buttons">
+            <Button
+              text="Это произошло случайно, в бой!"
+              view="primary"
+              onClick={() => {
+                handleCloseModals();
+                handleStartGame();
+              }}
+            />
+            <Button text="Домой" view="secondary" onClick={handleRedirectToHomeClick} />
+          </div>
+        </Modal>
 
-      <Modal visible={winModalIsVisible}>
-        <Title headingLevel={3} className="modal__title">
-          Ура, победа!
-        </Title>
-        <div className="modal__buttons">
-          <Button
-            text="Вперёд на следующий уровень!"
-            view="primary"
-            onClick={() => {
-              handleCloseModals();
-              handleStartGame(+1);
-            }}
-          />
-          <Button text="Домой" view="secondary" onClick={handleRedirectToHomeClick} />
-        </div>
-      </Modal>
-      <div className={isFullscreen ? 'game-container' : ''} ref={gameContainerElementRef}>
-        <canvas ref={canvasRef} height="200" width="200"></canvas>
+        <Modal visible={winModalIsVisible}>
+          <Title headingLevel={3} className="modal__title">
+            Ура, победа!
+          </Title>
+          <div className="modal__buttons">
+            <Button
+              text="Вперёд на следующий уровень!"
+              view="primary"
+              onClick={() => {
+                handleCloseModals();
+                handleStartGame(+1);
+              }}
+            />
+            <Button text="Домой" view="secondary" onClick={handleRedirectToHomeClick} />
+          </div>
+        </Modal>
+        <canvas
+          className={b('game', { fullscreen: isFullscreen })}
+          ref={canvasRef}
+          height="200"
+          width="200"
+        ></canvas>
       </div>
     </div>
   );
