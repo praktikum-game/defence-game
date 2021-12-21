@@ -19,7 +19,7 @@ RUN apt update \
   && addgroup inner \
   && adduser --system --shell /bin/bash --disabled-login --home /home/appuser --ingroup inner appuser
 
-WORKDIR /usr/appuser
+WORKDIR /home/appuser
 
 COPY --from=build /usr/webapp/build ./
 
