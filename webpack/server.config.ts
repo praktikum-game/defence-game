@@ -1,14 +1,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-import { Configuration, IgnorePlugin } from 'webpack';
+import { Configuration, IgnorePlugin, ProgressPlugin } from 'webpack';
 import { join } from 'path';
-// import { statSync, writeFileSync } from 'fs';
 import { DIST_DIR, IS_DEV, SSR_DIR } from './env';
 import { css, ts, image } from './loaders';
-// import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
+import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
-
-// import { pluginOptions } from './plugin-options';
+import CopyPlugin from 'copy-webpack-plugin';
+import { pluginOptions } from './plugin-options';
 
 export const serverConfig: Configuration = {
   name: 'ssr',
@@ -29,9 +28,14 @@ export const serverConfig: Configuration = {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     plugins: [new TsconfigPathsPlugin()],
   },
+  optimization: {
+    minimizer: [new ImageMinimizerPlugin(pluginOptions.imageMinimizerOptions)],
+  },
   plugins: [
-    // с этим плагином не собирается (или неправильные опции или что-то с плагином)
-    // new ImageMinimizerPlugin(pluginOptions.imageMinimizerOptions),
+    new ProgressPlugin(),
+    new CopyPlugin({
+      patterns: [{ from: './src/game/assets/images/', to: './assets/images/' }],
+    }),
     // это исключение очень важно - без него не соберется
     new IgnorePlugin({
       resourceRegExp: /^pg-native$/,
