@@ -8,7 +8,7 @@ export const SiteTheme: ModelDefined<SiteThemeAttributes, SiteThemeCreationAttri
     'SiteTheme',
     {
       id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-      theme: { type: DataTypes.STRING, allowNull: false },
+      theme: { type: DataTypes.STRING, allowNull: false, unique: true },
     },
-    { underscored: true },
+    { underscored: true, indexes: [{ unique: true, fields: ['theme'] }] },
   );
