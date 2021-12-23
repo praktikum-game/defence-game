@@ -7,15 +7,6 @@ export class SiteThemeAPI {
     response.json(data);
   };
 
-  public static getById = async (request: Request, response: Response) => {
-    const { id } = request.params;
-    if (!id) {
-      return response.sendStatus(400);
-    }
-    const record = await siteThemeService.readById(Number(id));
-    response.json(record);
-  };
-
   public static getByThemeName = async (request: Request, response: Response) => {
     const { theme } = request.params;
     const record = await siteThemeService.findByThemeName(theme);
@@ -24,26 +15,25 @@ export class SiteThemeAPI {
 
   public static create = async (request: Request, response: Response) => {
     const { body } = request;
-    await siteThemeService.create(body);
-    response.sendStatus(201);
+    if (typeof body.theme === 'string') {
+      await siteThemeService.create(body);
+      return response.sendStatus(201);
+    }
+    response.sendStatus(400);
   };
 
   public static update = async (request: Request, response: Response) => {
     const { body, params } = request;
     const { theme } = params;
-    if (!theme || !body.field || !body.value) {
+    if (!body.theme) {
       return response.sendStatus(400);
     }
-    await siteThemeService.update({ theme }, { [body.field]: body.value });
+    await siteThemeService.update({ theme }, { theme: body.theme });
     response.sendStatus(204);
   };
 
   public static delete = async (request: Request, response: Response) => {
     const { theme } = request.params;
-    if (!theme) {
-      return response.sendStatus(400);
-    }
-
     await siteThemeService.delete({ theme });
     response.sendStatus(204);
   };
