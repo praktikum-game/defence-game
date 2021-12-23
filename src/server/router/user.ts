@@ -5,7 +5,6 @@ const jsonParser = express.json();
 
 export const userRoutes = (router: Router) => {
   router.get(`/user`, UserAPI.getAll);
-  router.get(`/user/:id`, UserAPI.getById);
   router.get(`/user/:praktikumId`, UserAPI.getByPraktikumId);
   router.post(`/user`, jsonParser, UserAPI.create);
   router.patch(`/user/:praktikumId`, jsonParser, UserAPI.update);

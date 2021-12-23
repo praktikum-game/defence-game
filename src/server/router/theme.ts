@@ -5,7 +5,6 @@ const jsonParser = express.json();
 
 export const themeRoutes = (router: Router) => {
   router.get(`/theme`, SiteThemeAPI.getAll);
-  router.get(`/theme/:id`, SiteThemeAPI.getById);
   router.get(`/theme/:theme`, SiteThemeAPI.getByThemeName);
   router.post(`/theme`, jsonParser, SiteThemeAPI.create);
   router.patch(`/theme/:theme`, jsonParser, SiteThemeAPI.update);
