@@ -2,14 +2,26 @@ import { Request, Response } from 'express';
 import { userService } from '../db/services';
 
 export class UserAPI {
-  public static getAll = async (request: Request, response: Response) => {
+  public static getAll = async (_0: Request, response: Response) => {
     const data = await userService.readAll();
     response.send(data);
   };
 
   public static getById = async (request: Request, response: Response) => {
     const { id } = request.params;
+    if (!id) {
+      return response.send(400);
+    }
     const record = await userService.readById(Number(id));
+    response.send(record);
+  };
+
+  public static getByPraktikumId = async (request: Request, response: Response) => {
+    const { id } = request.params;
+    if (!id) {
+      return response.send(400);
+    }
+    const record = await userService.findByPraktikumId(Number(id));
     response.send(record);
   };
 
@@ -21,14 +33,21 @@ export class UserAPI {
 
   public static update = async (request: Request, response: Response) => {
     const { body, params } = request;
-    const id = params.id;
-    await userService.update(Number(id), body.field, body.value);
+    const { praktikumId } = params;
+    if (!praktikumId || !body.field || !body.value) {
+      return response.sendStatus(400);
+    }
+    await userService.update({ praktikumId: Number(praktikumId) }, { [body.field]: body.value });
     response.sendStatus(204);
   };
 
   public static delete = async (request: Request, response: Response) => {
-    const id = request.params.id;
-    await userService.delete(Number(id));
+    const { praktikumId } = request.params;
+    if (!praktikumId) {
+      return response.sendStatus(400);
+    }
+
+    await userService.delete({ praktikumId: Number(praktikumId) });
     response.sendStatus(204);
   };
 }
