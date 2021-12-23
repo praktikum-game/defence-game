@@ -4,7 +4,7 @@ import { userService } from '../db/services';
 export class UserAPI {
   public static getAll = async (_0: Request, response: Response) => {
     const data = await userService.readAll();
-    response.send(data);
+    response.json(data);
   };
 
   public static getById = async (request: Request, response: Response) => {
@@ -13,7 +13,7 @@ export class UserAPI {
       return response.send(400);
     }
     const record = await userService.readById(Number(id));
-    response.send(record);
+    response.json(record);
   };
 
   public static getByPraktikumId = async (request: Request, response: Response) => {
@@ -22,7 +22,7 @@ export class UserAPI {
       return response.send(400);
     }
     const record = await userService.findByPraktikumId(Number(id));
-    response.send(record);
+    response.json(record);
   };
 
   public static create = async (request: Request, response: Response) => {

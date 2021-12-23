@@ -4,7 +4,7 @@ import { siteThemeService } from '../db/services';
 export class SiteThemeAPI {
   public static getAll = async (_0: Request, response: Response) => {
     const data = await siteThemeService.readAll();
-    response.send(data);
+    response.json(data);
   };
 
   public static getById = async (request: Request, response: Response) => {
@@ -13,13 +13,13 @@ export class SiteThemeAPI {
       return response.sendStatus(400);
     }
     const record = await siteThemeService.readById(Number(id));
-    response.send(record);
+    response.json(record);
   };
 
   public static getByThemeName = async (request: Request, response: Response) => {
     const { theme } = request.params;
     const record = await siteThemeService.findByThemeName(theme);
-    response.send(record);
+    response.json(record);
   };
 
   public static create = async (request: Request, response: Response) => {
