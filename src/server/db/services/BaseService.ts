@@ -1,4 +1,4 @@
-import { CreateOptions, ModelDefined } from 'sequelize/types';
+import { CreateOptions, FindOptions, ModelDefined } from 'sequelize/types';
 
 export abstract class BaseService<T, D> {
   private _model: ModelDefined<T, D>;
@@ -11,8 +11,12 @@ export abstract class BaseService<T, D> {
     return this._model;
   }
 
-  readAll() {
-    return this._model.findAll();
+  readAll(options?: FindOptions<T>) {
+    return this._model.findAll(options);
+  }
+
+  readOne(options?: FindOptions<T>) {
+    return this._model.findOne(options);
   }
 
   readById(id: number) {
@@ -27,15 +31,11 @@ export abstract class BaseService<T, D> {
     return this._model.bulkCreate(data, options);
   }
 
-  update(id: number, field: string, value: string) {
-    // Не могу справиться с типами. Нужная помощь
-    // @ts-expect-error
-    return this._model.update({ [field]: value }, { where: { id } });
+  update(queryObject: { [key in keyof T]?: T[key] }, changeObject: { [key in keyof T]?: T[key] }) {
+    return this._model.update(changeObject, { where: queryObject });
   }
 
-  delete(id: number) {
-    // Не могу справиться с типами. Нужная помощь
-    // @ts-expect-error
-    return this._model.destroy({ where: { id } });
+  delete(queryObject: { [key in keyof T]?: T[key] }) {
+    return this._model.destroy({ where: queryObject });
   }
 }
