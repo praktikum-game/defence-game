@@ -10,5 +10,5 @@ export const SiteTheme: ModelDefined<SiteThemeAttributes, SiteThemeCreationAttri
       id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
       theme: { type: DataTypes.STRING, allowNull: false, unique: true },
     },
-    { underscored: true, indexes: [{ unique: true, fields: ['theme'] }] },
+    { underscored: true, indexes: [{ fields: ['theme'] }] },
   );
