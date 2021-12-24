@@ -36,6 +36,8 @@ export abstract class BaseService<T, D> {
   }
 
   delete(queryObject: { [key in keyof T]?: T[key] }) {
-    return this._model.destroy({ where: queryObject });
+    if (Object.keys(queryObject).length !== 0) {
+      return this._model.destroy({ where: queryObject });
+    }
   }
 }
