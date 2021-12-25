@@ -5,6 +5,10 @@ class UserService extends BaseService<UserAttributes, UserCreationAttributes> {
   constructor() {
     super(User);
   }
+
+  findByPraktikumId(praktikumId: number) {
+    return this.readOne({ where: { praktikumId } });
+  }
 }
 
 export const userService = new UserService();

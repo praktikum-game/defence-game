@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === 'development') {
 app
   .use(express.static(resolve(__dirname, '../dist')))
   .use(express.static(resolve(__dirname, '../static')))
-  .use(router);
+  .use('/api/v1', router);
 
 app.get('/serviceWorker.js', (_0, res) => {
   res.sendFile(join(__dirname, '..', 'dist', 'serviceWorker.js'));
