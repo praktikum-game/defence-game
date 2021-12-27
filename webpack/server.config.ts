@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-import { Configuration, IgnorePlugin, ProgressPlugin } from 'webpack';
+import { Configuration, IgnorePlugin, ProgressPlugin,DefinePlugin} from 'webpack';
 import { join } from 'path';
 import { DIST_DIR, IS_DEV, SSR_DIR } from './env';
 import { css, ts, image } from './loaders';
@@ -8,6 +8,10 @@ import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 import { pluginOptions } from './plugin-options';
+import { config } from 'dotenv';
+
+config();
+
 
 export const serverConfig: Configuration = {
   name: 'ssr',
@@ -34,7 +38,13 @@ export const serverConfig: Configuration = {
   plugins: [
     new ProgressPlugin(),
     new CopyPlugin({
-      patterns: [{ from: './src/game/assets/images/', to: './assets/images/' }],
+      patterns: [
+        { from: './src/game/assets/images/', to: './assets/images/' },
+        {from:'./certs/', to:'./certs/'}
+      ],
+    }),
+    new DefinePlugin({
+      OAUTH_REDIRECT_URL: JSON.stringify(process.env.OAUTH_REDIRECT_URL),
     }),
     // это исключение очень важно - без него не соберется
     new IgnorePlugin({
