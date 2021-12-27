@@ -2,12 +2,13 @@ import { join, resolve } from 'path';
 import express, { Express } from 'express';
 import compression from 'compression';
 
-import { ssrHtmlRenderMiddleware } from './ssr-html-render-middleware';
+import { ssrHtmlRenderMiddleware } from './middlewares/ssr-html-render-middleware';
 import { sequelize } from './db/sequelize';
 import { router } from './router';
 import { addTestSamples } from './db/testSample';
 import { readFileSync } from 'fs';
 import https from 'https';
+import cookieParserMiddleware from 'cookie-parser';
 
 sequelize
   .authenticate()
@@ -34,25 +35,22 @@ sequelize
 const app: Express = express();
 
 const startServer = (PORT: number) => {
-  // if (isDev) {
-
-  const options = {
-    cert: readFileSync('cert.crt', 'utf-8'),
-    key: readFileSync('cert.key', 'utf-8'),
-  };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  https.createServer(options, app).listen(PORT, '0.0.0.0' as any, () => {
-    console.log('\x1b[32m', `START HTTPS DEV SERVER ON PORT:${PORT}`);
-    console.log('\x1b[0m');
-  });
-  // }
-
-  // if (!isDev) {
-  //   app.listen(PORT, () => {
-  //     console.log('\x1b[32m', `START PRODUCTION SERVER ON PORT: ${PORT}`);
-  //     console.log('\x1b[0m');
-  //   });
-  // }
+  if (process.env.NODE_ENV !== 'production') {
+    const options = {
+      cert: readFileSync(join(__dirname, 'certs', 'cert.crt'), 'utf-8'),
+      key: readFileSync(join(__dirname, 'certs', 'cert.key'), 'utf-8'),
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    https.createServer(options, app).listen(PORT, '0.0.0.0' as any, () => {
+      console.log('\x1b[32m', `START HTTPS DEV SERVER ON PORT:${PORT}`);
+      console.log('\x1b[0m');
+    });
+  } else {
+    app.listen(PORT, () => {
+      console.log('\x1b[32m', `START PRODUCTION SERVER ON PORT: ${PORT}`);
+      console.log('\x1b[0m');
+    });
+  }
 };
 
 if (process.env.NODE_ENV === 'development') {
@@ -68,6 +66,9 @@ app.get('/serviceWorker.js', (_0, res) => {
   res.sendFile(join(__dirname, '..', 'dist', 'serviceWorker.js'));
 });
 
-app.get('*', ssrHtmlRenderMiddleware());
+const cookieParser = cookieParserMiddleware();
+const ssrRender = ssrHtmlRenderMiddleware();
+
+app.get('*', [cookieParser, ssrRender]);
 
 export { startServer };
