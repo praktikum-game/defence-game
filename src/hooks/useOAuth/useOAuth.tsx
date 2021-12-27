@@ -24,7 +24,6 @@ export const useOAuth = (redirectUri: string) => {
         try {
           const { status } = await oauthApi.oauth({
             code: oauthCode,
-
             redirect_uri: redirectUri,
           });
           if (status === 200) {

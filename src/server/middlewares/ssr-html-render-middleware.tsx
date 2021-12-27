@@ -6,14 +6,16 @@ import { StaticRouter } from 'react-router-dom/server';
 import { Store } from 'redux';
 
 import { readFileSync } from 'fs';
-import { configureStore } from '../store';
-import { renderObject } from './utilities/renderObject';
-import { ErrorBoundary } from '../components/ErrorBoundary';
-import { App } from '../components/App';
+import { configureStore } from '../../store';
+import { renderObject } from '../utilities/renderObject';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { App } from '../../components/App';
+
+import { getUserDataSsr } from 'server/utilities/getUserData';
 
 function getHtmlString(
   reactJsxString: string,
-  //eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   assets: { vendorsAssets: any; mainAssets: any },
   store?: Store,
 ) {
@@ -46,8 +48,14 @@ const ssrHtmlRenderMiddleware = () => {
   const vendorsAssets = JSON.parse(readFileSync('dist/vendors-assets.json', { encoding: 'utf-8' }));
   const mainAssets = JSON.parse(readFileSync('dist/client-assets.json', { encoding: 'utf-8' }));
 
-  return (req: Request, res: Response) => {
+  return async (req: Request, res: Response) => {
     const store = configureStore();
+    try {
+      const { data } = await getUserDataSsr(req.headers.cookie);
+      store.getState().user.data = data;
+    } catch (e: unknown) {
+      store.getState().user.data = null;
+    }
 
     const rootJsx = (
       <Provider store={store}>
@@ -58,6 +66,7 @@ const ssrHtmlRenderMiddleware = () => {
         </StaticRouter>
       </Provider>
     );
+
     const reactHtml = renderToString(rootJsx);
     res.status(200).send(getHtmlString(reactHtml, { vendorsAssets, mainAssets }, store));
   };

@@ -13,14 +13,16 @@ import viruses from './static/viruses.png';
 import bankomat from './static/bankomat.png';
 
 import { useOAuth } from '../../hooks/useOAuth';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../store';
 
 const b = block('home-page');
 const h = block('main-header');
 const c = block('card');
 
 export const HomePage = () => {
-  //@ts-ignore
-  useOAuth();
+  const user = useSelector((state: AppState) => state.user.data);
+  useOAuth(OAUTH_REDIRECT_URL);
   return (
     <div className={b()}>
       <div className={h()}>
@@ -36,14 +38,16 @@ export const HomePage = () => {
           </h1>
           <p>Почувствуй на своей шкуре, каково сейчас докторам&nbsp;... </p>
         </div>
-        <div className={h('buttons')}>
-          <Link className="button__link" to="/login">
-            <Button text="Вход" view="info" />
-          </Link>
-          <Link className="button__link" to="/register">
-            <Button text="Регистрация" view="info" />
-          </Link>
-        </div>
+        {!user && (
+          <div className={h('buttons')}>
+            <Link className="button__link" to="/login">
+              <Button text="Вход" view="info" />
+            </Link>
+            <Link className="button__link" to="/register">
+              <Button text="Регистрация" view="info" />
+            </Link>
+          </div>
+        )}
       </div>
       <div className="page-layout">
         <div className={(c(), c({ left: true }))}>
