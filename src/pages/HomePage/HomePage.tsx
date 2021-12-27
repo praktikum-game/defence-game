@@ -22,8 +22,7 @@ const c = block('card');
 
 export const HomePage = () => {
   const user = useSelector((state: AppState) => state.user.data);
-  //@ts-ignore
-  useOAuth();
+  useOAuth(OAUTH_REDIRECT_URL);
   return (
     <div className={b()}>
       <div className={h()}>

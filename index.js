@@ -1,5 +1,5 @@
 const { startServer } = require('./dist/ssr.js');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 443;
 
-startServer(PORT);
+startServer(443);
