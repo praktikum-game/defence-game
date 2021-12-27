@@ -46,6 +46,7 @@ const startServer = (PORT: number) => {
       console.log('\x1b[0m');
     });
   } else {
+    // Если сервер в прод, то перед ним будет стоять nginx
     app.listen(PORT, () => {
       console.log('\x1b[32m', `START PRODUCTION SERVER ON PORT: ${PORT}`);
       console.log('\x1b[0m');
