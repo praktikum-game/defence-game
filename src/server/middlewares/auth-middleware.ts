@@ -1,27 +1,15 @@
-import { AxiosError } from 'axios';
 import { Request, Response, NextFunction } from 'express';
-import { authAPI } from '../../api/auth';
+import { getUserDataSsr } from 'server/utilities/getUserData';
 import { HttpStatus } from '../http-statuses';
 
 export const authMiddleware =
   () => async (request: Request, response: Response, next: NextFunction) => {
-    const { cookie } = request.headers;
-    if (!cookie) {
-      return response.sendStatus(HttpStatus.Forbidden).send('User not authorized');
-    }
     try {
-      const { status } = await authAPI.userRead({
-        headers: {
-          Cookie: cookie,
-        },
-      });
+      const { status } = await getUserDataSsr(request.headers.cookie);
       if (status === HttpStatus.OK) {
         next();
       }
     } catch (e: unknown) {
-      const error = e as AxiosError;
-      if (error.code) {
-        response.sendStatus(HttpStatus.InternalServerError);
-      }
+      return response.sendStatus(HttpStatus.Forbidden).send('Not authorize');
     }
   };

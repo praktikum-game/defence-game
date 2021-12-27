@@ -10,8 +10,8 @@ import { configureStore } from '../../store';
 import { renderObject } from '../utilities/renderObject';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { App } from '../../components/App';
-import { userSuccessFetch } from '../../store/user/actions/action-creators';
-import { authAPI } from '../../api/auth';
+
+import { getUserDataSsr } from 'server/utilities/getUserData';
 
 function getHtmlString(
   reactJsxString: string,
@@ -51,16 +51,11 @@ const ssrHtmlRenderMiddleware = () => {
   return async (req: Request, res: Response) => {
     const store = configureStore();
     try {
-      const { cookie } = req.headers;
-      if (cookie) {
-        const data = await authAPI.userRead({
-          headers: {
-            Cookie: cookie,
-          },
-        });
-        store.dispatch(userSuccessFetch(data.data));
-      }
-    } catch (e: unknown) {}
+      const { data } = await getUserDataSsr(req.headers.cookie);
+      store.getState().user.data = data;
+    } catch (e: unknown) {
+      store.getState().user.data = null;
+    }
 
     const rootJsx = (
       <Provider store={store}>
