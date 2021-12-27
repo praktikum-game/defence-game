@@ -40,8 +40,7 @@ const startServer = (PORT: number) => {
       cert: readFileSync(join(__dirname, 'certs', 'cert.crt'), 'utf-8'),
       key: readFileSync(join(__dirname, 'certs', 'cert.key'), 'utf-8'),
     };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    https.createServer(options, app).listen(PORT, '0.0.0.0' as any, () => {
+    https.createServer(options, app).listen(PORT, '0.0.0.0', () => {
       console.log('\x1b[32m', `START HTTPS DEV SERVER ON PORT:${PORT}`);
       console.log('\x1b[0m');
     });
