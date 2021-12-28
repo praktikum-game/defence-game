@@ -11,6 +11,8 @@ const ForumThread: ModelDefined<ForumThreadAttributes, ForumThreadCreationAttrib
       id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
       content: { type: DataTypes.TEXT, allowNull: false },
       subject: { type: DataTypes.STRING, allowNull: false },
+      userId: { type: DataTypes.INTEGER, allowNull: false },
+      userName: { type: DataTypes.STRING, allowNull: true, defaultValue: 'N/A' },
     },
     { underscored: true },
   );

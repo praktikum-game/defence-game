@@ -5,6 +5,8 @@ export interface ForumThreadAttributes {
   id: number;
   content: string;
   subject: string;
+  userId: number;
+  userName: string;
 
   comments?: Model<CommentAttributes, CommentCreationAttributes>[];
 }
