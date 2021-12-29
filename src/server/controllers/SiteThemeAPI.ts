@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { HttpStatus } from 'server/http-statuses';
 import { siteThemeService } from '../db/services';
 
 export class SiteThemeAPI {
@@ -17,24 +18,24 @@ export class SiteThemeAPI {
     const { body } = request;
     if (typeof body.theme === 'string') {
       await siteThemeService.create(body);
-      return response.sendStatus(201);
+      return response.sendStatus(HttpStatus.Created);
     }
-    response.sendStatus(400);
+    response.sendStatus(HttpStatus.BadRequest);
   };
 
   public static update = async (request: Request, response: Response) => {
     const { body, params } = request;
     const { theme } = params;
     if (!body.theme) {
-      return response.sendStatus(400);
+      return response.sendStatus(HttpStatus.BadRequest);
     }
     await siteThemeService.update({ theme }, { theme: body.theme });
-    response.sendStatus(204);
+    response.sendStatus(HttpStatus.NoContent);
   };
 
   public static delete = async (request: Request, response: Response) => {
     const { theme } = request.params;
     await siteThemeService.delete({ theme });
-    response.sendStatus(204);
+    response.sendStatus(HttpStatus.NoContent);
   };
 }

@@ -2,9 +2,9 @@ import { ModelDefined, DataTypes } from 'sequelize';
 import { sequelize } from '../../sequelize';
 
 import { UserAttributes, UserCreationAttributes } from './types';
-import { Comment } from '../Comment';
+// import { Comment } from '../Comment';
 import { SiteTheme } from '../SiteTheme';
-import { ForumThread } from '../ForumThread';
+// import { ForumThread } from '../ForumThread';
 
 const User: ModelDefined<UserAttributes, UserCreationAttributes> = sequelize.define(
   'User',
@@ -15,8 +15,8 @@ const User: ModelDefined<UserAttributes, UserCreationAttributes> = sequelize.def
   { underscored: true },
 );
 
-User.hasMany(Comment, { as: 'comments' });
-User.hasMany(ForumThread, { as: 'forum_threads' });
+// User.hasMany(Comment, { as: 'comments' });
+// User.hasMany(ForumThread, { as: 'forum_threads' });
 User.belongsTo(SiteTheme, { as: 'current_theme' });
 
 export { User };
