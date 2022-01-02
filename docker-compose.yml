@@ -42,6 +42,15 @@ services:
       - innerNetwork
     depends_on:
       - postgres
+  nginx:
+    container_name: nginx
+    image: nginx/nginx-custom
+    build:
+      context: ./nginx
+    networks:
+      - innerNetwork
+    env_file:
+      - .env
 
 networks:
   innerNetwork:
