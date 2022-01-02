@@ -1,7 +1,8 @@
 import { join, resolve } from 'path';
 import express, { Express } from 'express';
 import compression from 'compression';
-
+import helmet from 'helmet';
+import xXssProtection from 'x-xss-protection';
 import { ssrHtmlRenderMiddleware } from './middlewares/ssr-html-render-middleware';
 import { sequelize } from './db/sequelize';
 import { router } from './router';
@@ -58,6 +59,23 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app
+  // Добавляем CSP + вагон разных предустановленных защит. Установленные настройки следующие:
+  /*
+    default-src 'self';
+    base-uri 'self';
+    block-all-mixed-content;
+    font-src 'self' https: data:;
+    frame-ancestors 'self';
+    img-src 'self' data:;
+    object-src 'none';
+    script-src 'self';
+    script-src-attr 'none';
+    style-src 'self' https: 'unsafe-inline';
+    upgrade-insecure-requests
+  */
+  .use(helmet())
+  // Отключаем заголовок X-XSS-Protection, так как он вызывает много проблем и используем для защиты другие способы
+  .use(xXssProtection())
   .use(express.static(resolve(__dirname, '../dist')))
   .use(express.static(resolve(__dirname, '../static')))
   .use('/api/v1', router);
