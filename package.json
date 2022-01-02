@@ -51,6 +51,7 @@
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "@types/react-router-dom": "^5.3.2",
+    "@types/sanitize-html": "^2.6.1",
     "@types/serialize-javascript": "^5.0.1",
     "@types/validator": "^13.7.0",
     "@types/workbox-cacheable-response": "^4.3.1",
@@ -121,6 +122,7 @@
     "cookie-parser": "^1.4.6",
     "dotenv": "^10.0.0",
     "express": "4.17.1",
+    "helmet": "^4.6.0",
     "https": "^1.0.0",
     "nanoid": "3.1.30",
     "pg": "^8.7.1",
@@ -132,12 +134,14 @@
     "react-router-dom": "6.0.2",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
+    "sanitize-html": "^2.6.1",
     "sequelize": "^6.11.0",
     "serialize-javascript": "^6.0.0",
     "workbox-cacheable-response": "6.4.1",
     "workbox-expiration": "6.4.1",
     "workbox-precaching": "6.4.1",
     "workbox-routing": "6.4.1",
-    "workbox-strategies": "6.4.1"
+    "workbox-strategies": "6.4.1",
+    "x-xss-protection": "^2.0.0"
   }
 }
