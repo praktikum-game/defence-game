@@ -1,5 +1,5 @@
-import { backendStaticUrl } from 'consts';
-import defaultAvatar from "../components/Avatar/static/default-avatar.svg"
+import { backendStaticUrl } from '../consts';
+import defaultAvatar from '../components/Avatar/static/default-avatar.svg';
 import { ViewType } from './types';
 
 export function getViewTypes(name: string): ViewType {
