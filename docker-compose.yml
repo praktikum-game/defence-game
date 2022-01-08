@@ -23,8 +23,6 @@ services:
     env_file:
       - .env
     command: ./utils/wait-for.sh postgres:5432 -- npm run start:prod
-    ports:
-      - '3000:3000'
     environment:
       POSTGRES_HOST: 'postgres'
     networks:
@@ -42,20 +40,20 @@ services:
       - innerNetwork
     depends_on:
       - postgres
-  # nginx:
-  #   container_name: nginx
-  #   image: nginx/nginx-custom
-  #   build:
-  #     context: ./nginx
-  #   volumes:
-  #     - ./certs/cert.crt:/etc/ssl/cert.crt
-  #     - ./certs/cert.key:/etc/ssl/key.key
-  #   networks:
-  #     - innerNetwork
-  #   env_file:
-  #     - .env
-  #   ports:
-  #     - ${PORT:-443}:${PORT:-443}
+  nginx:
+    container_name: nginx
+    image: nginx/nginx-custom
+    build:
+      context: ./nginx
+    volumes:
+      - ./certs/cert.crt:/etc/ssl/cert.crt
+      - ./certs/cert.key:/etc/ssl/key.key
+    networks:
+      - innerNetwork
+    env_file:
+      - .env
+    ports:
+      - ${PORT:-443}:${PORT:-443}
 
 networks:
   innerNetwork:
