@@ -11,6 +11,11 @@ COPY ./webpack.config.ts ./webpack.config.ts
 COPY ./index.js ./index.js
 COPY ./certs ./certs
 COPY ./utils ./utils
+COPY ./jest.config.js ./jest.config.js
+COPY ./jest-config ./jest-config
+COPY ./postcss.config.js ./postcss.config.js
+COPY ./.eslintrc.json ./eslintrc.json
+COPY ./.eslintignore ./eslintignore
 
 RUN npm install \
   && npm run build:prod:vendors \
