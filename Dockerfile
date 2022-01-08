@@ -1,8 +1,16 @@
-FROM node:14.18.1-slim as build
+FROM node:14.18.1-bullseye as build
 
 WORKDIR /usr/webapp
 
-COPY . .
+COPY ./src ./src
+COPY ./tsconfig.json ./tsconfig.json
+COPY ./package.json ./package.json
+COPY ./package-lock.json ./package-lock.json
+COPY ./webpack ./webpack
+COPY ./webpack.config.ts ./webpack.config.ts
+COPY ./index.js ./index.js
+COPY ./certs ./certs
+COPY ./utils ./utils
 
 RUN npm install \
   && npm run build:prod:vendors \
@@ -11,9 +19,10 @@ RUN npm install \
   && cp -f -R ./dist ./build/dist \
   && cp -f ./index.js ./build/index.js \
   && cp -f -R ./utils ./build/utils \
+  && cp -f ./package-lock.json ./build/package-lock.json \
   && cp -f ./package.json ./build/package.json
 
-FROM node:14.18.1-slim
+FROM node:14.18.1-bullseye
 RUN apt update \
   && apt install -y netcat locales nano \
   && addgroup inner \
