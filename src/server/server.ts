@@ -73,15 +73,14 @@ app
     style-src 'self' https: 'unsafe-inline';
     upgrade-insecure-requests
   */
-  .use(helmet())
+  // .use(helmet.contentSecurityPolicy({ directives: { 'script-src-attr': ['none'] } }))
   // Отключаем заголовок X-XSS-Protection, так как он вызывает много проблем и используем для защиты другие способы
-  .use(xXssProtection())
-  .use(express.static(resolve(__dirname, '../dist')))
-  .use(express.static(resolve(__dirname, '../static')))
+  // .use(xXssProtection())
+  .use(express.static(resolve(__dirname)))
   .use('/api/v1', router);
 
 app.get('/serviceWorker.js', (_0, res) => {
-  res.sendFile(join(__dirname, '..', 'dist', 'serviceWorker.js'));
+  res.sendFile(join(__dirname, 'serviceWorker.js'));
 });
 
 const cookieParser = cookieParserMiddleware();
