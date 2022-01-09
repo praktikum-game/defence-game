@@ -1,9 +1,11 @@
-import { Optional, Model } from 'sequelize';
+import { Optional } from 'sequelize';
 
 export interface CommentAttributes {
   id: number;
   content: string;
-  reply_comment: Model<CommentAttributes, CommentCreationAttributes> | null;
+  replyCommentId: number | null;
+  userId: number;
+  forumThreadId: number;
 }
 
 export interface CommentCreationAttributes extends Optional<CommentAttributes, 'id'> {}

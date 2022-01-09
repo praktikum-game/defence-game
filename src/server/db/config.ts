@@ -19,5 +19,5 @@ const sequelizeOptions: Options = {
 export const SequelizeConfigs = {
   development: sequelizeOptions,
   test: sequelizeOptions,
-  production: sequelizeOptions,
+  production: sequelizeOptions
 };

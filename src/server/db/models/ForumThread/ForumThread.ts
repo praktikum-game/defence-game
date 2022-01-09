@@ -1,6 +1,6 @@
 import { ModelDefined, DataTypes } from 'sequelize';
 import { sequelize } from '../../sequelize';
-import { Comment } from '../Comment';
+import { User } from '../User';
 
 import { ForumThreadAttributes, ForumThreadCreationAttributes } from './types';
 
@@ -11,12 +11,10 @@ const ForumThread: ModelDefined<ForumThreadAttributes, ForumThreadCreationAttrib
       id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
       content: { type: DataTypes.TEXT, allowNull: false },
       subject: { type: DataTypes.STRING, allowNull: false },
-      userId: { type: DataTypes.INTEGER, allowNull: false },
-      userName: { type: DataTypes.STRING, allowNull: true, defaultValue: 'N/A' },
     },
     { underscored: true },
   );
 
-ForumThread.hasMany(Comment, { as: 'comments' });
+ForumThread.belongsTo(User, { as: 'user', foreignKey: { allowNull: false } });
 
 export { ForumThread };

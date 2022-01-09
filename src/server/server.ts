@@ -5,10 +5,11 @@ import compression from 'compression';
 import { ssrHtmlRenderMiddleware } from './middlewares/ssr-html-render-middleware';
 import { sequelize } from './db/sequelize';
 import { router } from './router';
-import { addTestSamples } from './db/testSample';
+// import { addTestSamples } from './db/testSample';
 import { readFileSync } from 'fs';
 import https from 'https';
 import cookieParserMiddleware from 'cookie-parser';
+import { addTestSamples } from './db/testSample';
 
 sequelize
   .authenticate()
@@ -16,7 +17,7 @@ sequelize
     console.log('\x1b[32m', 'db test connection ok');
     console.log('\x1b[0m');
     sequelize
-      .sync()
+      .sync({ force: true })
       .then(() => {
         console.log('Sequelize is synced');
         if (process.env.NODE_ENV !== 'production') {
