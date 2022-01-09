@@ -1,15 +1,10 @@
-import { Optional, Model } from 'sequelize';
-import { CommentAttributes, CommentCreationAttributes } from '../Comment';
-import { ForumThreadAttributes, ForumThreadCreationAttributes } from '../ForumThread';
-import { SiteThemeAttributes, SiteThemeCreationAttributes } from '../SiteTheme';
+import { Optional } from 'sequelize';
 
 export interface UserAttributes {
   id: number;
   praktikumId: number;
 
-  comments?: Model<CommentAttributes, CommentCreationAttributes>[];
-  forum_threads?: Model<ForumThreadAttributes, ForumThreadCreationAttributes>[];
-  current_theme: Model<SiteThemeAttributes, SiteThemeCreationAttributes>;
+  siteThemeId: number;
 }
 
 export interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
