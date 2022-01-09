@@ -11,7 +11,7 @@
   },
   "plugins": ["@typescript-eslint", "react-hooks", "jest", "import"],
   "rules": {
-    "no-console": "off",
+    "no-console": "warn",
     "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
     "class-methods-use-this": "off",
     "no-underscore-dangle": "off",

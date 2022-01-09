@@ -6,6 +6,7 @@ export async function addTestSamples() {
   // проверку
   const existedThemes = await siteThemeService.readAll();
   if (existedThemes.length !== 0) {
+    // eslint-disable-next-line no-console
     console.log('Data exits. No need to add');
     return;
   }
@@ -16,9 +17,7 @@ export async function addTestSamples() {
   const darkTheme = await siteThemeService.readById(2);
 
   if (darkTheme && lightTheme) {
-    console.log('---------------lightTheme exists-------------');
-    console.log('theme', darkTheme.toJSON());
-    const res = await userService.bulkCreate([
+     await userService.bulkCreate([
       {
         praktikumId: 1,
         siteThemeId: lightTheme.getDataValue('id'),
@@ -33,26 +32,21 @@ export async function addTestSamples() {
       },
     ]);
 
-    console.log(
-      'creating models',
-      res.map((r) => r.toJSON()),
-    );
   }
 
   const user = await userService.readOne();
   if (user) {
-    const forumThread = await forumThreadService.create({
+    await forumThreadService.create({
       content: 'ForumContent1',
       subject: 'ForumSubject1',
       userId: user.getDataValue('id'),
     });
 
-    console.log('forumThread: ', forumThread.toJSON());
   }
   const forumThread = await forumThreadService.readOne();
 
   if (user && forumThread) {
-    const comments = await commentService.bulkCreate([
+     await commentService.bulkCreate([
       {
         content: 'TestComment1',
         replyCommentId: null,
@@ -66,10 +60,7 @@ export async function addTestSamples() {
         forumThreadId: forumThread.getDataValue('id'),
       },
     ]);
-    console.log(
-      'comments: ',
-      comments.map((c) => c.toJSON()),
-    );
+    
   }
 
   const commentTest = await commentService.readOne();
