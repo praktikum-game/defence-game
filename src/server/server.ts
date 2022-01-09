@@ -19,7 +19,7 @@ sequelize
     // eslint-disable-next-line no-console
     console.log('\x1b[0m');
     sequelize
-      .sync({ force: true })
+      .sync()
       .then(() => {
         // eslint-disable-next-line no-console
         console.log('Sequelize is synced');
