@@ -15,20 +15,18 @@ services:
       - .env
   # Закомментил, чтобы каждый раз не собирать билд, но держать постгрес запущенным
 
-  # webapp:
-  #   container_name: webapp
-  #   image: game/webapp
-  #   build:
-  #     context: .
-  #   env_file:
-  #     - .env
-  #   command: ./utils/wait-for.sh postgres:5432 -- npm run start:prod
-  #   environment:
-  #     POSTGRES_ORM_HOST: 'postgres'
-  #   ports:
-  #     - "3000:3000"
-  #   networks:
-  #     - innerNetwork
+  webapp:
+    container_name: webapp
+    image: game/webapp
+    build:
+      context: .
+    env_file:
+      - .env
+    command: ./utils/wait-for.sh postgres:5432 -- npm run start:prod
+    environment:
+      POSTGRES_HOST: 'postgres'
+    networks:
+      - innerNetwork
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4:latest
@@ -42,6 +40,20 @@ services:
       - innerNetwork
     depends_on:
       - postgres
+  nginx:
+    container_name: nginx
+    image: nginx/nginx-custom
+    build:
+      context: ./nginx
+    volumes:
+      - ./certs/cert.crt:/etc/ssl/cert.crt
+      - ./certs/cert.key:/etc/ssl/key.key
+    networks:
+      - innerNetwork
+    env_file:
+      - .env
+    ports:
+      - ${PORT:-443}:${PORT:-443}
 
 networks:
   innerNetwork:

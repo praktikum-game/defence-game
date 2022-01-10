@@ -1,6 +1,8 @@
 import React from 'react';
 import block from 'bem-cn';
-import { InputFieldProps } from '.';
+import sanitizeHtml from 'sanitize-html';
+
+import { InputFieldProps } from './types';
 import './input-field.css';
 
 const b = block('input-field');
@@ -20,7 +22,7 @@ export const InputField = ({
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.target;
     if (valueChangeCallback !== undefined) {
-      valueChangeCallback(value);
+      valueChangeCallback(sanitizeHtml(value));
     }
   };
 

@@ -24,6 +24,6 @@ export const notificationWorkerConfig: Configuration = {
     plugins: [new TsconfigPathsPlugin()],
   },
   performance: {
-    hints: IS_DEV ? false : 'error',
+    hints: IS_DEV ? false : 'warning',
   },
 };

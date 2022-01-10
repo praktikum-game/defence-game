@@ -45,7 +45,7 @@ export const clientConfig: Configuration = {
       manifest: join(DIST_DIR, 'vendors', 'vendors-manifest.json'),
     }),
     new MiniCssExtractPlugin({ filename: '[name]_[fullhash].css' }),
-    
+
     new DefinePlugin({
       OAUTH_REDIRECT_URL: JSON.stringify(process.env.OAUTH_REDIRECT_URL),
     }),
@@ -58,6 +58,6 @@ export const clientConfig: Configuration = {
       }),
   ].filter(Boolean) as [],
   performance: {
-    hints: IS_DEV ? false : 'error',
+    hints: IS_DEV ? false : 'warning',
   },
 };

@@ -1,4 +1,4 @@
-FROM node:14.18.1-slim as build
+FROM node:14.18.1-bullseye as build
 
 WORKDIR /usr/webapp
 
@@ -11,9 +11,10 @@ RUN npm install \
   && cp -f -R ./dist ./build/dist \
   && cp -f ./index.js ./build/index.js \
   && cp -f -R ./utils ./build/utils \
+  && cp -f ./package-lock.json ./build/package-lock.json \
   && cp -f ./package.json ./build/package.json
 
-FROM node:14.18.1-slim
+FROM node:14.18.1-bullseye
 RUN apt update \
   && apt install -y netcat locales nano \
   && addgroup inner \
