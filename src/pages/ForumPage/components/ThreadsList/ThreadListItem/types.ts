@@ -1,13 +1,9 @@
-export type ThreadListItemData = {
-  headerText: string;
-  createdUser: string;
-  createdDate: Date;
-  lastChange: Date;
-  threadId: string;
-  messagesCount: number;
-};
+import { ForumThreadModel } from 'api/forum-topics';
 
 export type ThreadListItemProps = {
   className?: string;
-  dataItem: ThreadListItemData;
+  dataItem: ForumThreadModel;
+  isAuthor: boolean;
+  onRemoveClick: (id: number) => void;
+  onEditClick: (id: number) => void;
 };
