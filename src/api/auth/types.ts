@@ -18,5 +18,5 @@ export type UserData = {
   display_name: string;
   email: string;
   phone: string;
-  avatar: string;
+  avatar: string | null;
 };

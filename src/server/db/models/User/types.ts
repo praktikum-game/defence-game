@@ -1,10 +1,9 @@
-import { Optional } from 'sequelize';
-
 export interface UserAttributes {
   id: number;
-  praktikumId: number;
+  name: string;
+  avatar?: string | null;
 
-  siteThemeId: number;
+  siteThemeId?: number | null;
 }
 
-export interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+export interface UserCreationAttributes extends UserAttributes {}

@@ -3,59 +3,76 @@ import { Header } from '../../../components/Header';
 import { ThreadsList } from '../components/ThreadsList';
 import { Title } from '../../../components/Title';
 import { Button } from '../../../components/Button';
-import { ThreadListItemData } from '../components/ThreadsList/ThreadListItem';
 
 import './forum-index-page.css';
 import { PageContainer } from '../../../components/PageContainer';
-
-const mockData: Array<ThreadListItemData> = [
-  {
-    createdDate: new Date(),
-    createdUser: 'Доцент',
-    headerText: 'Как вспомнить, где шлем?',
-    lastChange: new Date(),
-    messagesCount: 4,
-    threadId: 'f123',
-  },
-  {
-    createdDate: new Date(),
-    createdUser: 'Хмырь',
-    headerText: 'Лечение горла. Мой способ',
-    lastChange: new Date(),
-    messagesCount: 45,
-    threadId: 'f124',
-  },
-  {
-    createdDate: new Date(),
-    createdUser: 'Косой',
-    headerText: 'Пожалуйста, подскажите, как ходит конь',
-    lastChange: new Date(),
-    messagesCount: 17,
-    threadId: 'f127',
-  },
-  {
-    createdDate: new Date(),
-    createdUser: 'Василий Алибабаевич',
-    headerText: 'Как заработать червонец?',
-    lastChange: new Date(),
-    messagesCount: 9,
-    threadId: 'f1238',
-  },
-];
+import { forumTopicsAPI } from 'api/forum-topics/ForumTopicsAPI';
+import { ForumThreadModel } from 'api/forum-topics';
+import { AddThreadModal } from './AddThreadModal/AddThreadModal';
+import { AppState } from 'store';
+import { useSelector } from 'react-redux';
+import { EditThreadModal } from './EditThreadModal';
+import { ForumThreadCreationModel } from 'api/forum-topics/types';
 
 export const ForumIndexPage = () => {
-  const [list, setList] = useState<Array<ThreadListItemData>>([]);
+  const userData = useSelector((state: AppState) => state.user.data);
+
+  const [list, setList] = useState<Array<ForumThreadModel>>([]);
+  const [addModalIsVisible, setAddModalIsVisible] = useState(false);
+  const [editModalIsVisible, setEditModalIsVisible] = useState(false);
+  const [editData, setEditData] = useState<ForumThreadCreationModel & { id: number }>();
 
   useEffect(() => {
-    setList(mockData);
+    forumTopicsAPI.fetch().then((data) => {
+      setList(data.data);
+    });
   }, []);
 
-  const handleCreateNewThreadButtonClick = useCallback(() => {
-    alert('create new forum thread');
+  const handleCloseAddModal = useCallback(() => {
+    setAddModalIsVisible(false);
   }, []);
+
+  const handleCloseEditModal = useCallback(() => {
+    setEditModalIsVisible(false);
+  }, []);
+
+  const handleCreateThreadClick = useCallback(() => {
+    setAddModalIsVisible(true);
+  }, []);
+
+  const handleTopicRemoveClick = async (id: number) => {
+    await forumTopicsAPI.remove(id);
+  };
+
+  const handleTopicEditClick = async (id: number) => {
+    const { data } = await forumTopicsAPI.fetchById(id);
+    setEditData({ id: data.id, content: data.content, subject: data.subject });
+    setEditModalIsVisible(true);
+  };
+  const handleChangeField = useCallback((field: keyof ForumThreadCreationModel, value: string) => {
+    setEditData((prev) => {
+      if (prev) {
+        return { ...prev, [field]: value };
+      }
+    });
+  }, []);
+  const handleTopicSaveEditedData = useCallback(async () => {
+    if (editData) {
+      const { id, ...other } = editData;
+      await forumTopicsAPI.edit(id, other);
+    }
+  }, [editData]);
 
   return (
     <>
+      <AddThreadModal visible={addModalIsVisible} onClose={handleCloseAddModal} />
+      <EditThreadModal
+        visible={editModalIsVisible}
+        onClose={handleCloseEditModal}
+        data={editData}
+        onChange={handleChangeField}
+        onSaveData={handleTopicSaveEditedData}
+      />
       <Header backButton={true}>
         <Title headingLevel={2} align="center">
           Темы для обсуждений
@@ -64,13 +81,19 @@ export const ForumIndexPage = () => {
           text="Создать новую тему"
           view="secondary"
           className="create-new-theme-button"
-          onClick={handleCreateNewThreadButtonClick}
+          onClick={handleCreateThreadClick}
         />
       </Header>
       <PageContainer size="l">
         <ThreadsList>
           {list.map((el) => (
-            <ThreadsList.Item key={el.threadId} dataItem={el} />
+            <ThreadsList.Item
+              key={el.id}
+              dataItem={el}
+              isAuthor={userData ? userData.id === el.userId : false}
+              onEditClick={handleTopicEditClick}
+              onRemoveClick={handleTopicRemoveClick}
+            />
           ))}
         </ThreadsList>
       </PageContainer>

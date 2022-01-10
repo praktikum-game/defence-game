@@ -1,4 +1,3 @@
-// import { SiteTheme } from './models/SiteTheme';
 import { commentService, forumThreadService, siteThemeService, userService } from './services';
 
 export async function addTestSamples() {
@@ -17,21 +16,24 @@ export async function addTestSamples() {
   const darkTheme = await siteThemeService.readById(2);
 
   if (darkTheme && lightTheme) {
-     await userService.bulkCreate([
+    await userService.bulkCreate([
       {
-        praktikumId: 1,
+        id: 123,
         siteThemeId: lightTheme.getDataValue('id'),
+        name: 'TestUser1',
+        avatar: null,
       },
       {
-        praktikumId: 2,
+        id: 2,
         siteThemeId: darkTheme.getDataValue('id'),
+        name: 'TestUser2',
       },
       {
-        praktikumId: 3,
+        id: 3,
         siteThemeId: darkTheme.getDataValue('id'),
+        name: 'TestUser3',
       },
     ]);
-
   }
 
   const user = await userService.readOne();
@@ -41,12 +43,11 @@ export async function addTestSamples() {
       subject: 'ForumSubject1',
       userId: user.getDataValue('id'),
     });
-
   }
   const forumThread = await forumThreadService.readOne();
 
   if (user && forumThread) {
-     await commentService.bulkCreate([
+    await commentService.bulkCreate([
       {
         content: 'TestComment1',
         replyCommentId: null,
@@ -60,7 +61,6 @@ export async function addTestSamples() {
         forumThreadId: forumThread.getDataValue('id'),
       },
     ]);
-    
   }
 
   const commentTest = await commentService.readOne();
