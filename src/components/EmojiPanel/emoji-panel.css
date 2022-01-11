@@ -1,0 +1,18 @@
+.emoji-panel {
+  position: absolute;
+  top: 23px;
+  right: 5px;
+
+  &__button {
+    transform: rotate(90deg);
+  }
+
+  &__picker {
+    display: block;
+    position: absolute;
+
+    &_hide {
+      display: none;
+    }
+  }
+}

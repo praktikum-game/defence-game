@@ -8,32 +8,30 @@ import './forum-index-page.css';
 import { PageContainer } from '../../../components/PageContainer';
 import { forumTopicsAPI } from 'api/forum-topics/ForumTopicsAPI';
 import { ForumThreadModel } from 'api/forum-topics';
-import { AddThreadModal } from './AddThreadModal/AddThreadModal';
+import { UpsertThreadModal } from './UpsertThreadModal/UpsertThreadModal';
 import { AppState } from 'store';
 import { useSelector } from 'react-redux';
-import { EditThreadModal } from './EditThreadModal';
 import { ForumThreadCreationModel } from 'api/forum-topics/types';
 
+const defaultValue: ForumThreadCreationModel = { content: '', subject: '' };
 export const ForumIndexPage = () => {
   const userData = useSelector((state: AppState) => state.user.data);
 
-  const [list, setList] = useState<Array<ForumThreadModel>>([]);
+  const [topicsList, setTopicsList] = useState<Array<ForumThreadModel>>([]);
   const [addModalIsVisible, setAddModalIsVisible] = useState(false);
-  const [editModalIsVisible, setEditModalIsVisible] = useState(false);
-  const [editData, setEditData] = useState<ForumThreadCreationModel & { id: number }>();
+  const [recordData, setRecordData] = useState<ForumThreadCreationModel>(defaultValue);
+  const [recordId, setRecordId] = useState<number>();
 
   useEffect(() => {
     forumTopicsAPI.fetch().then((data) => {
-      setList(data.data);
+      setTopicsList(data.data);
     });
   }, []);
 
   const handleCloseAddModal = useCallback(() => {
+    setRecordId(undefined);
+    setRecordData(defaultValue);
     setAddModalIsVisible(false);
-  }, []);
-
-  const handleCloseEditModal = useCallback(() => {
-    setEditModalIsVisible(false);
   }, []);
 
   const handleCreateThreadClick = useCallback(() => {
@@ -42,37 +40,44 @@ export const ForumIndexPage = () => {
 
   const handleTopicRemoveClick = async (id: number) => {
     await forumTopicsAPI.remove(id);
+    const { data } = await forumTopicsAPI.fetch();
+    setTopicsList(data);
   };
 
   const handleTopicEditClick = async (id: number) => {
     const { data } = await forumTopicsAPI.fetchById(id);
-    setEditData({ id: data.id, content: data.content, subject: data.subject });
-    setEditModalIsVisible(true);
+    setRecordData({ content: data.content, subject: data.subject });
+    setRecordId(data.id);
+    setAddModalIsVisible(true);
   };
   const handleChangeField = useCallback((field: keyof ForumThreadCreationModel, value: string) => {
-    setEditData((prev) => {
-      if (prev) {
-        return { ...prev, [field]: value };
-      }
-    });
+    setRecordData((prev) => ({ ...prev, [field]: value }));
   }, []);
-  const handleTopicSaveEditedData = useCallback(async () => {
-    if (editData) {
-      const { id, ...other } = editData;
-      await forumTopicsAPI.edit(id, other);
+
+  const handleSaveData = useCallback(async () => {
+    if (recordData) {
+      if (recordId) {
+        await forumTopicsAPI.edit(recordId, recordData);
+      } else {
+        await forumTopicsAPI.create(recordData);
+      }
     }
-  }, [editData]);
+
+    setAddModalIsVisible(false);
+    const { data } = await forumTopicsAPI.fetch();
+    setTopicsList(data);
+  }, [recordData, recordId]);
 
   return (
     <>
-      <AddThreadModal visible={addModalIsVisible} onClose={handleCloseAddModal} />
-      <EditThreadModal
-        visible={editModalIsVisible}
-        onClose={handleCloseEditModal}
-        data={editData}
+      <UpsertThreadModal
+        data={recordData}
+        visible={addModalIsVisible}
+        onClose={handleCloseAddModal}
+        onSaveData={handleSaveData}
         onChange={handleChangeField}
-        onSaveData={handleTopicSaveEditedData}
       />
+
       <Header backButton={true}>
         <Title headingLevel={2} align="center">
           Темы для обсуждений
@@ -86,7 +91,7 @@ export const ForumIndexPage = () => {
       </Header>
       <PageContainer size="l">
         <ThreadsList>
-          {list.map((el) => (
+          {topicsList.map((el) => (
             <ThreadsList.Item
               key={el.id}
               dataItem={el}

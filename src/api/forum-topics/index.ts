@@ -1,2 +1,2 @@
-export { ForumThreadModel } from './types';
+export { ForumThreadModel, ForumThreadCreationModel } from './types';
 export { forumTopicsAPI } from './ForumTopicsAPI';
