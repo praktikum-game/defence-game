@@ -1,0 +1,14 @@
+.text-area {
+  margin-bottom: 10px;
+  &__label {
+    display: block;
+    text-align: left;
+    padding-bottom: 3px;
+  }
+  &__text {
+    border: 1px solid rgb(1, 152, 164);
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+  }
+}
