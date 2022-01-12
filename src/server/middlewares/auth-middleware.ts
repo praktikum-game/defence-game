@@ -5,8 +5,9 @@ import { HttpStatus } from '../http-statuses';
 export const authMiddleware =
   () => async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const { status } = await getUserDataSsr(request.headers.cookie);
+      const { data, status } = await getUserDataSsr(request.headers.cookie);
       if (status === HttpStatus.OK) {
+        response.locals.user = data;
         next();
       }
     } catch (e: unknown) {

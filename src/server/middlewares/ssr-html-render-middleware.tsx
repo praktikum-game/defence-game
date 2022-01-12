@@ -1,6 +1,6 @@
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import React from 'react';
-import { Request, Response } from 'express';
+import { Request, response, Response } from 'express';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom/server';
 import { Store } from 'redux';
@@ -10,8 +10,6 @@ import { configureStore } from '../../store';
 import { renderObject } from '../utilities/renderObject';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { App } from '../../components/App';
-
-import { getUserDataSsr } from 'server/utilities/getUserData';
 
 function getHtmlString(
   reactJsxString: string,
@@ -51,8 +49,7 @@ const ssrHtmlRenderMiddleware = () => {
   return async (req: Request, res: Response) => {
     const store = configureStore();
     try {
-      const { data } = await getUserDataSsr(req.headers.cookie);
-      store.getState().user.data = data;
+      store.getState().user.data = response.locals.user;
     } catch (e: unknown) {
       store.getState().user.data = null;
     }
