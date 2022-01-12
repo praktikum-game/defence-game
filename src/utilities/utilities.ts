@@ -1,5 +1,5 @@
 import { backendStaticUrl } from 'consts';
-import defaultAvatar from "../components/Avatar/static/default-avatar.svg"
+import defaultAvatar from '../components/Avatar/static/default-avatar.svg';
 import { ViewType } from './types';
 
 export function getViewTypes(name: string): ViewType {
@@ -13,7 +13,6 @@ export function getViewTypes(name: string): ViewType {
   };
 }
 
-// Bind arguments starting with argument number "n".
 export function bindArgsFromN(fn: Function, n: number, ...bound_args: unknown[]) {
   return (...args: unknown[]) => fn(...args.slice(0, n - 1), ...bound_args);
 }

@@ -1,9 +1,6 @@
-// import { SiteTheme } from './models/SiteTheme';
 import { commentService, forumThreadService, siteThemeService, userService } from './services';
 
 export async function addTestSamples() {
-  // Чтобы сильно не заморачиваться с дублирующимися данными, просто делаю такую
-  // проверку
   const existedThemes = await siteThemeService.readAll();
   if (existedThemes.length !== 0) {
     // eslint-disable-next-line no-console
@@ -17,7 +14,7 @@ export async function addTestSamples() {
   const darkTheme = await siteThemeService.readById(2);
 
   if (darkTheme && lightTheme) {
-     await userService.bulkCreate([
+    await userService.bulkCreate([
       {
         praktikumId: 1,
         siteThemeId: lightTheme.getDataValue('id'),
@@ -31,7 +28,6 @@ export async function addTestSamples() {
         siteThemeId: darkTheme.getDataValue('id'),
       },
     ]);
-
   }
 
   const user = await userService.readOne();
@@ -41,12 +37,11 @@ export async function addTestSamples() {
       subject: 'ForumSubject1',
       userId: user.getDataValue('id'),
     });
-
   }
   const forumThread = await forumThreadService.readOne();
 
   if (user && forumThread) {
-     await commentService.bulkCreate([
+    await commentService.bulkCreate([
       {
         content: 'TestComment1',
         replyCommentId: null,
@@ -60,7 +55,6 @@ export async function addTestSamples() {
         forumThreadId: forumThread.getDataValue('id'),
       },
     ]);
-    
   }
 
   const commentTest = await commentService.readOne();
