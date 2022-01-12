@@ -43,6 +43,6 @@ export function getFullStaticUri(relativePath: string) {
   return `${encodeURI(backendStaticUrl)}${encodeURI(relativePath)}`;
 }
 
-export function normalizeAvatar(avatar: string): string {
+export function normalizeAvatar(avatar: string | null): string {
   return avatar === null ? defaultAvatar : getFullStaticUri(avatar);
 }
