@@ -1,6 +1,6 @@
+import { UserData } from 'api/auth';
 import { Request, Response } from 'express';
 import { HttpStatus } from 'server/http-statuses';
-import { getUserDataSsr } from 'server/utilities/getUserData';
 import { forumThreadService, userService } from '../db/services';
 
 export class ForumThreadAPI {
@@ -23,16 +23,16 @@ export class ForumThreadAPI {
 
   public static create = async (request: Request, response: Response) => {
     try {
-      const { data } = await getUserDataSsr(request.headers.cookie);
-      const user = await userService.readById(data.id);
+      const userData: UserData = response.locals.user;
+      const user = await userService.readById(userData.id);
       if (user === null) {
         await userService.create({
-          id: Number(data.id),
-          name: data.login,
-          avatar: data.avatar,
+          id: Number(userData.id),
+          name: userData.login,
+          avatar: userData.avatar,
         });
       }
-      await forumThreadService.create({ ...request.body, userId: data.id });
+      await forumThreadService.create({ ...request.body, userId: userData.id });
       response.sendStatus(HttpStatus.Created);
     } catch (e: unknown) {
       response.sendStatus(HttpStatus.InternalServerError);
