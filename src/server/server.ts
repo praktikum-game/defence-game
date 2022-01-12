@@ -6,7 +6,6 @@ import xXssProtection from 'x-xss-protection';
 import { ssrHtmlRenderMiddleware } from './middlewares/ssr-html-render-middleware';
 import { sequelize } from './db/sequelize';
 import { router } from './router';
-// import { addTestSamples } from './db/testSample';
 import { readFileSync } from 'fs';
 import https from 'https';
 import cookieParserMiddleware from 'cookie-parser';

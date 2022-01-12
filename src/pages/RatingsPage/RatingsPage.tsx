@@ -1,5 +1,5 @@
 import block from 'bem-cn';
-import React, { useEffect } from 'react'; // eslint-disable-line
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Header } from '../../components/Header';
 import { LeaderboardTable, LeaderboardTableColumn } from '../../components/LeaderboardTable';
