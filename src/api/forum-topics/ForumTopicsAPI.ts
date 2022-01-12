@@ -1,9 +1,10 @@
 import { BaseAPI } from 'api/BaseAPI';
-import { ForumThreadCreationModel, ForumThreadModel, ForumThreadUpdateModel } from './types';
+import { localBaseUrl } from 'api/consts';
+import { ForumThreadCreationModel, ForumThreadModel } from './types';
 
 class ForumTopicsAPI extends BaseAPI {
   constructor() {
-    super('/threads', 'https://local.ya-praktikum.tech/api/v1');
+    super('/threads', localBaseUrl);
   }
 
   public fetch(offset: number = 0, limit: number = 10) {
@@ -22,7 +23,7 @@ class ForumTopicsAPI extends BaseAPI {
     return this.http.delete(`/${id}`);
   }
 
-  public edit(id: number, data: ForumThreadUpdateModel) {
+  public edit(id: number, data: ForumThreadCreationModel) {
     return this.http.patch(`/${id}`, data);
   }
 }

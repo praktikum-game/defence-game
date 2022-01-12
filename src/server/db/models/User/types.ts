@@ -1,9 +1,3 @@
-export interface UserAttributes {
-  id: number;
-  name: string;
-  avatar?: string | null;
-
-  siteThemeId?: number | null;
-}
+import { UserAttributes } from 'shared/types/UserAttributes';
 
 export interface UserCreationAttributes extends UserAttributes {}

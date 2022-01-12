@@ -1,8 +1,4 @@
-export type UserDbModel = {
-  id: number;
-  name: string;
-  avatar: string | null;
-  createdAt: string;
-  updatedAt: string;
-  siteThemeId: number | null;
-};
+import { UpdateModelAttributes } from 'shared/types/UpdateModelAttributes';
+import { UserAttributes } from 'shared/types/UserAttributes';
+
+export type UserDbModel = UserAttributes & UpdateModelAttributes;

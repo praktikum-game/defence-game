@@ -1,9 +1,10 @@
 import { BaseAPI } from 'api/BaseAPI';
+import { localBaseUrl } from 'api/consts';
 import { UserDbModel } from './types';
 
 class UsersDbAPI extends BaseAPI {
   constructor() {
-    super('/users', 'https://local.ya-praktikum.tech/api/v1');
+    super('/users', localBaseUrl);
   }
 
   public getUsers(offset: number = 0, limit: number = 10) {
