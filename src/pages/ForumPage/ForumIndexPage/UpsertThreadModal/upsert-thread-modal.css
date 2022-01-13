@@ -1,0 +1,9 @@
+.add-topic-modal {
+  &__buttons {
+    display: flex;
+  }
+
+  &__message {
+    position: relative;
+  }
+}

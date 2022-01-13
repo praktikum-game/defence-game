@@ -19,7 +19,7 @@ sequelize
     // eslint-disable-next-line no-console
     console.log('\x1b[0m');
     sequelize
-      .sync()
+      .sync({ force: true })
       .then(() => {
         // eslint-disable-next-line no-console
         console.log('Sequelize is synced');
@@ -83,7 +83,17 @@ app
     style-src 'self' https: 'unsafe-inline';
     upgrade-insecure-requests
   */
-  .use(helmet())
+  .use(
+    helmet({
+      contentSecurityPolicy: {
+        useDefaults: false,
+        directives: {
+          defaultSrc: ["'self'", 'ya-praktikum.tech', 'fonts.googleapis.com', 'fonts.gstatic.com'],
+          scriptSrc: ["'self'", 'ya-praktikum.tech', 'fonts.googleapis.com'],
+        },
+      },
+    }),
+  )
   // Отключаем заголовок X-XSS-Protection, так как он вызывает много проблем и используем для защиты другие способы
   .use(xXssProtection())
   .use(express.static(resolve(__dirname)))

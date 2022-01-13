@@ -1,9 +1,11 @@
 import express, { Router } from 'express';
 import { ForumThreadAPI } from 'server/controllers/ForumThreadAPI';
 import { ForumThreadAttributes } from 'server/db/models/ForumThread';
+import { authMiddleware } from 'server/middlewares/auth-middleware';
 import { validatorMiddleware } from 'server/middlewares/validator-middleware';
 
 const jsonParser = express.json();
+const authenticate = authMiddleware();
 
 export const threadRoutes = (router: Router) => {
   router.get(
@@ -19,10 +21,9 @@ export const threadRoutes = (router: Router) => {
   );
   router.get(
     `/threads/:id`,
-
     validatorMiddleware<ForumThreadAttributes>(
       [{ key: 'id', validate: (value) => !isNaN(Number(value)), required: true }],
-      'query',
+      'params',
     ),
     ForumThreadAPI.getById,
   );
@@ -30,10 +31,10 @@ export const threadRoutes = (router: Router) => {
     `/threads`,
     [
       jsonParser,
+      authenticate,
       validatorMiddleware<ForumThreadAttributes>([
         { key: 'subject', validate: (value) => typeof value === 'string', required: true },
         { key: 'content', validate: (value) => typeof value === 'string', required: true },
-        { key: 'userId', validate: (value) => typeof value === 'number', required: true },
       ]),
     ],
     ForumThreadAPI.create,

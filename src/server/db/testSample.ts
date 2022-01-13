@@ -16,16 +16,20 @@ export async function addTestSamples() {
   if (darkTheme && lightTheme) {
     await userService.bulkCreate([
       {
-        praktikumId: 1,
+        id: 123,
         siteThemeId: lightTheme.getDataValue('id'),
+        name: 'TestUser1',
+        avatar: null,
       },
       {
-        praktikumId: 2,
+        id: 2,
         siteThemeId: darkTheme.getDataValue('id'),
+        name: 'TestUser2',
       },
       {
-        praktikumId: 3,
+        id: 3,
         siteThemeId: darkTheme.getDataValue('id'),
+        name: 'TestUser3',
       },
     ]);
   }

@@ -15,6 +15,8 @@ const Comment: ModelDefined<CommentAttributes, CommentCreationAttributes> = sequ
 );
 
 Comment.belongsTo(Comment, { as: 'reply_comment' });
+ForumThread.hasMany(Comment, { as: 'comments', foreignKey: { allowNull: false } });
+
 Comment.belongsTo(ForumThread, { as: 'forum_thread', foreignKey: { allowNull: false } });
 Comment.belongsTo(User, { as: 'user', foreignKey: { allowNull: false } });
 export { Comment };
