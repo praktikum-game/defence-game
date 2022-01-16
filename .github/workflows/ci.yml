@@ -3,10 +3,10 @@ on:
   push:
     branches:
       - main
+      - sprint_9/ci_gh_actions
   pull_request:
     branches:
       - main
-
 build:
   runs-on: ubuntu-latest
   steps:
