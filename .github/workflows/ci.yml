@@ -1,0 +1,17 @@
+name: APP-CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+build:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v2
+    - name: Run tests
+    run: |
+      npm ci,
+      npm run test.
