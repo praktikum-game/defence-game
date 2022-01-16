@@ -7,11 +7,14 @@ on:
   pull_request:
     branches:
       - main
-build:
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v2
-    - name: Run tests
-    run: |
-      npm ci,
-      npm run test.
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.5.1
+        with:
+          node-version: 14.18.1
+      - run: npm ci
+      - run: npm run test
