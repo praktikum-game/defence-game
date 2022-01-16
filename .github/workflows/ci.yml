@@ -21,6 +21,7 @@ jobs:
       - run: npm run lint
       - name: Запуск тестов
       - run: npm run test
-      - name: Запуск сборки
+      - name: Запуск сборки vendors
       - run: npm run build:prod:vendors
+      - name: Запуск сборки приложения
       - run: npm run build:prod
