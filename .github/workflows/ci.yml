@@ -15,8 +15,12 @@ jobs:
         uses: actions/setup-node@v2.5.1
         with:
           node-version: 14.18.1
+      - name: Установка зависимостей
       - run: npm ci
+      - name: Проверка линтерами
+      - run: npm run lint
+      - name: Запуск тестов
       - run: npm run test
+      - name: Запуск сборки
       - run: npm run build:prod:vendors
       - run: npm run build:prod
-      - run: npm run lint
