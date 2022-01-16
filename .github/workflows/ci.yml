@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - sprint_9/ci_gh_actions
   pull_request:
     branches:
       - main
@@ -18,3 +17,6 @@ jobs:
           node-version: 14.18.1
       - run: npm ci
       - run: npm run test
+      - run: npm run build:prod:vendors
+      - run: npm run build:prod
+      - run: npm run lint
