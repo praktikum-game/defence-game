@@ -7,6 +7,7 @@ import { configureStore } from './store';
 import { BrowserRouter } from 'react-router-dom';
 import { App } from 'components/App';
 import { STORAGE_LEADER_KEY } from 'consts';
+import { getHistory } from 'utilities/history';
 
 if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   window.addEventListener('load', () => {
@@ -26,6 +27,7 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
 const state = window.__PRELOADED_STATE__;
 delete window.__PRELOADED_STATE__;
 const store = configureStore(state);
+getHistory();
 
 if (window.Worker && window.Notification) {
   Notification.requestPermission().then((permission) => {
