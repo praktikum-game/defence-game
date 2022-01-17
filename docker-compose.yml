@@ -57,6 +57,3 @@ services:
 networks:
   innerNetwork:
     driver: bridge
-
-volumes:
-  pgdata: null
