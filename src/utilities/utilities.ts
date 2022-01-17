@@ -46,3 +46,5 @@ export function getFullStaticUri(relativePath: string) {
 export function normalizeAvatar(avatar: string | null): string {
   return avatar === null ? defaultAvatar : getFullStaticUri(avatar);
 }
+
+export const isServer = !(typeof window !== 'undefined' && window.document);
