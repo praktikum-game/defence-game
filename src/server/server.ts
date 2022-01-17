@@ -3,13 +3,15 @@ import express, { Express } from 'express';
 import compression from 'compression';
 import helmet from 'helmet';
 import xXssProtection from 'x-xss-protection';
+import https from 'https';
+import cookieParserMiddleware from 'cookie-parser';
+
 import { ssrHtmlRenderMiddleware } from './middlewares/ssr-html-render-middleware';
 import { sequelize } from './db/sequelize';
 import { router } from './router';
 import { readFileSync } from 'fs';
-import https from 'https';
-import cookieParserMiddleware from 'cookie-parser';
 import { addTestSamples } from './db/testSample';
+import { getUserMiddleware } from './middlewares/get-user-middleware';
 
 sequelize
   .authenticate()
@@ -97,6 +99,7 @@ app
   // Отключаем заголовок X-XSS-Protection, так как он вызывает много проблем и используем для защиты другие способы
   .use(xXssProtection())
   .use(express.static(resolve(__dirname)))
+  .use(getUserMiddleware())
   .use('/api/v1', router);
 
 app.get('/serviceWorker.js', (_0, res) => {
