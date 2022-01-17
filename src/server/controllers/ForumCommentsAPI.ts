@@ -10,6 +10,7 @@ export class ForumCommentsAPI {
         where: { forumThreadId: forumId },
         limit: Number(limit),
         offset: Number(offset),
+        include: { all: true },
       });
 
       response.status(HttpStatus.OK).json(comments);

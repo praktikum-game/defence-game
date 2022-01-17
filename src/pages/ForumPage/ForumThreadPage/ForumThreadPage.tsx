@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import block from 'bem-cn';
-import { nanoid } from 'nanoid';
 
 import { PageContainer } from '../../../components/PageContainer';
 import { MessageItem, messagesAPI } from '../../../api/forum-messages';
