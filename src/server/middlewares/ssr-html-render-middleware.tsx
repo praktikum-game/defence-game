@@ -1,6 +1,6 @@
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import React from 'react';
-import { Request, response, Response } from 'express';
+import { Request, Response } from 'express';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom/server';
 import { Store } from 'redux';
