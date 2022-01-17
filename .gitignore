@@ -9,3 +9,4 @@ src/game/assets/original
 src/server/assets.json
 src/server/vendors-assets.json
 postgresdata
+.env.prod

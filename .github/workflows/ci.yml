@@ -1,0 +1,27 @@
+name: APP-CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.5.1
+        with:
+          node-version: 14.18.1
+      - name: Установка зависимостей
+        run: npm ci
+      - name: Проверка линтерами
+        run: npm run lint
+      - name: Запуск тестов
+        run: npm run test
+      - name: Запуск сборки vendors
+        run: npm run build:prod:vendors
+      - name: Запуск сборки приложения
+        run: npm run build:prod
