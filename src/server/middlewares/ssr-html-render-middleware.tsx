@@ -48,10 +48,10 @@ const ssrHtmlRenderMiddleware = () => {
 
   return async (req: Request, res: Response) => {
     const store = configureStore();
-    try {
-      store.getState().user.data = response.locals.user;
-    } catch (e: unknown) {
+    if (res.locals.user === undefined) {
       store.getState().user.data = null;
+    } else {
+      store.getState().user.data = res.locals.user;
     }
 
     const rootJsx = (
