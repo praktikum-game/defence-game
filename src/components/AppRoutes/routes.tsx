@@ -84,19 +84,11 @@ export const routes: RouteObject[] = [
             children: [
               {
                 index: true,
-                element: (
-                  <RequireAuth>
-                    <ForumIndexPage />
-                  </RequireAuth>
-                ),
+                element: <ForumIndexPage />,
               },
               {
                 path: ':forumId',
-                element: (
-                  <RequireAuth>
-                    <ForumThreadPage />
-                  </RequireAuth>
-                ),
+                element: <ForumThreadPage />,
               },
             ],
           },
