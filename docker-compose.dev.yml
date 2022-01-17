@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  postgres:
+    env_file:
+      - .env
+  webapp:
+    env_file:
+      - .env
+  pgadmin:
+    env_file:
+      - .env
+  nginx:
+    env_file:
+      - .env

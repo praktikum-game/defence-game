@@ -12,8 +12,7 @@ services:
     networks:
       - innerNetwork
     env_file:
-      - .env
-  # Закомментил, чтобы каждый раз не собирать билд, но держать постгрес запущенным
+      - .env.prod
 
   webapp:
     container_name: webapp
@@ -21,7 +20,7 @@ services:
     build:
       context: .
     env_file:
-      - .env
+      - .env.prod
     command: ./utils/wait-for.sh postgres:5432 -- npm run start:prod
     environment:
       POSTGRES_HOST: 'postgres'
@@ -31,7 +30,7 @@ services:
     container_name: pgadmin
     image: dpage/pgadmin4:latest
     env_file:
-      - .env
+      - .env.prod
     environment:
       PGADMIN_LISTEN_PORT: 80
     ports:
@@ -51,7 +50,7 @@ services:
     networks:
       - innerNetwork
     env_file:
-      - .env
+      - .env.prod
     ports:
       - ${PORT:-443}:${PORT:-443}
 
@@ -60,4 +59,4 @@ networks:
     driver: bridge
 
 volumes:
-  pgdata:
+  pgdata: null
