@@ -1,9 +1,11 @@
 import express, { Router } from 'express';
 import { ForumCommentsAPI } from 'server/controllers/ForumCommentsAPI';
 import { CommentAttributes } from 'server/db/models/Comment';
+import { onlyAuthUserMiddleware } from 'server/middlewares/only-auth-user-middleware';
 import { validatorMiddleware } from 'server/middlewares/validator-middleware';
 
 const jsonParser = express.json();
+const onlyAuth = onlyAuthUserMiddleware();
 
 export const commentRoutes = (router: Router) => {
   router.get(
@@ -22,6 +24,7 @@ export const commentRoutes = (router: Router) => {
   router.post(
     `/comments`,
     [
+      onlyAuth,
       jsonParser,
       validatorMiddleware<CommentAttributes>([
         { key: 'content', validate: (value) => typeof value === 'string', required: true },
@@ -35,6 +38,7 @@ export const commentRoutes = (router: Router) => {
   router.patch(
     '/comments/:id',
     [
+      onlyAuth,
       jsonParser,
       validatorMiddleware<CommentAttributes>(
         [
@@ -54,6 +58,7 @@ export const commentRoutes = (router: Router) => {
   );
   router.delete(
     '/comments/:id',
+    onlyAuth,
     validatorMiddleware<CommentAttributes>(
       [{ key: 'id', validate: (value) => !isNaN(Number(value)), required: true }],
       'params',

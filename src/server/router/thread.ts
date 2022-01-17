@@ -1,11 +1,11 @@
 import express, { Router } from 'express';
 import { ForumThreadAPI } from 'server/controllers/ForumThreadAPI';
 import { ForumThreadAttributes } from 'server/db/models/ForumThread';
-import { authMiddleware } from 'server/middlewares/auth-middleware';
+import { onlyAuthUserMiddleware } from 'server/middlewares/only-auth-user-middleware';
 import { validatorMiddleware } from 'server/middlewares/validator-middleware';
 
 const jsonParser = express.json();
-const authenticate = authMiddleware();
+const onlyAuth = onlyAuthUserMiddleware();
 
 export const threadRoutes = (router: Router) => {
   router.get(
@@ -21,6 +21,7 @@ export const threadRoutes = (router: Router) => {
   );
   router.get(
     `/threads/:id`,
+    onlyAuth,
     validatorMiddleware<ForumThreadAttributes>(
       [{ key: 'id', validate: (value) => !isNaN(Number(value)), required: true }],
       'params',
@@ -31,7 +32,7 @@ export const threadRoutes = (router: Router) => {
     `/threads`,
     [
       jsonParser,
-      authenticate,
+      onlyAuth,
       validatorMiddleware<ForumThreadAttributes>([
         { key: 'subject', validate: (value) => typeof value === 'string', required: true },
         { key: 'content', validate: (value) => typeof value === 'string', required: true },
@@ -43,6 +44,7 @@ export const threadRoutes = (router: Router) => {
     '/threads/:id',
     [
       jsonParser,
+      onlyAuth,
       validatorMiddleware<ForumThreadAttributes>(
         [
           { key: 'subject', validate: (value) => typeof value === 'string', required: false },
@@ -60,6 +62,7 @@ export const threadRoutes = (router: Router) => {
   );
   router.delete(
     '/threads/:id',
+    onlyAuth,
     validatorMiddleware<ForumThreadAttributes>(
       [{ key: 'id', validate: (value) => !isNaN(Number(value)), required: true }],
       'params',
