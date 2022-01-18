@@ -2,7 +2,7 @@
 import { join, resolve } from 'path';
 import express, { Express } from 'express';
 import compression from 'compression';
-import helmet from 'helmet';
+// import helmet from 'helmet';
 import xXssProtection from 'x-xss-protection';
 import { ssrHtmlRenderMiddleware } from './middlewares/ssr-html-render-middleware';
 import { sequelize } from './db/sequelize';
