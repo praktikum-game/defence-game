@@ -22,7 +22,7 @@
   }
 
   h3 {
-    color: $error-page-accent-color;
+    color: var(--error-page-accent-color);
     font-size: 20px;
     font-weight: 500;
     margin-top: 40px;

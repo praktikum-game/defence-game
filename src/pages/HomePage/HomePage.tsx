@@ -16,8 +16,7 @@ import viruses from './static/viruses.png';
 import bankomat from './static/bankomat.png';
 
 import './homePage.css';
-
-
+import { ThemeSwitcher } from 'components/ThemeSwitcher';
 
 const b = block('home-page');
 const h = block('main-header');
@@ -28,6 +27,7 @@ export const HomePage = () => {
   useOAuth(OAUTH_REDIRECT_URL);
   return (
     <div className={b()}>
+      <ThemeSwitcher />
       <div className={h()}>
         <div className={h('wrapper')}>
           <div className={h('hobart')}>

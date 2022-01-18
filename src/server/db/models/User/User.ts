@@ -21,7 +21,8 @@ const User: ModelDefined<UserAttributes, UserCreationAttributes> = sequelize.def
   },
   { underscored: true },
 );
-
-User.belongsTo(SiteTheme, { as: 'site_theme', foreignKey: { allowNull: true } });
+SiteTheme.hasMany(User);
+User.belongsTo(SiteTheme, { foreignKey: { allowNull: true } });
+// worked User.belongsTo(SiteTheme, { as: 'site_theme', foreignKey: { allowNull: true } });
 
 export { User };

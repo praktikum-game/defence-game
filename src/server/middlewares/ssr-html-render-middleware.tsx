@@ -1,6 +1,6 @@
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import React from 'react';
-import { Request, response, Response } from 'express';
+import { Request, Response } from 'express';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom/server';
 import { Store } from 'redux';
@@ -10,6 +10,9 @@ import { configureStore } from '../../store';
 import { renderObject } from '../utilities/renderObject';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { App } from '../../components/App';
+import { userService } from 'server/db/services';
+import { HttpStatus } from 'server/http-statuses';
+import { getUserDataSsr } from 'server/utilities/getUserData';
 
 function getHtmlString(
   reactJsxString: string,
@@ -24,7 +27,7 @@ function getHtmlString(
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Doctors vs Viruses</title>
-        <link href={assets.mainAssets.main.css} rel="stylesheet" />
+        <link href={assets.mainAssets.main.css} rel="stylesheet" type="text/css" />
       </head>
       <body>
         <script
@@ -49,9 +52,15 @@ const ssrHtmlRenderMiddleware = () => {
   return async (req: Request, res: Response) => {
     const store = configureStore();
     try {
-      store.getState().user.data = response.locals.user;
+      const { data, status } = await getUserDataSsr(req.headers.cookie);
+      if (status === HttpStatus.OK) {
+        store.getState().user.data = data;
+      }
+
+      store.getState().theme.theme = await userService.getUserThemeName(data.id);
     } catch (e: unknown) {
       store.getState().user.data = null;
+      store.getState().theme.theme = 'light';
     }
 
     const rootJsx = (

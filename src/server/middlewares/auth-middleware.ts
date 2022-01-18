@@ -8,9 +8,11 @@ export const authMiddleware =
       const { data, status } = await getUserDataSsr(request.headers.cookie);
       if (status === HttpStatus.OK) {
         response.locals.user = data;
+
         next();
       }
     } catch (e: unknown) {
+      console.log('------------------- Not autore');
       return response.sendStatus(HttpStatus.Forbidden).send('Not authorize');
     }
   };
