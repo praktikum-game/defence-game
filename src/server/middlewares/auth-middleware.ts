@@ -12,7 +12,6 @@ export const authMiddleware =
         next();
       }
     } catch (e: unknown) {
-      console.log('------------------- Not autore');
       return response.sendStatus(HttpStatus.Forbidden).send('Not authorize');
     }
   };

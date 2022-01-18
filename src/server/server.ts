@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { join, resolve } from 'path';
 import express, { Express } from 'express';
 import compression from 'compression';
@@ -14,27 +15,21 @@ import { addTestSamples } from './db/testSample';
 sequelize
   .authenticate()
   .then(() => {
-    // eslint-disable-next-line no-console
     console.log('\x1b[32m', 'db test connection ok');
-    // eslint-disable-next-line no-console
     console.log('\x1b[0m');
     sequelize
       .sync()
       .then(() => {
-        // eslint-disable-next-line no-console
         console.log('Sequelize is synced');
         if (process.env.NODE_ENV !== 'production') {
           addTestSamples().then(() => {
-            // eslint-disable-next-line no-console
             console.log('Test samples added');
           });
         }
       })
-      // eslint-disable-next-line no-console
       .catch((e) => console.log(e));
   })
   .catch((e) => {
-    // eslint-disable-next-line no-console
     console.log(e);
     throw new Error('No connection to db');
   });
@@ -48,17 +43,13 @@ const startServer = (PORT: number) => {
       key: readFileSync(join(__dirname, 'certs', 'cert.key'), 'utf-8'),
     };
     https.createServer(options, app).listen(PORT, '0.0.0.0', () => {
-      // eslint-disable-next-line no-console
       console.log('\x1b[32m', `START HTTPS DEV SERVER ON PORT:${PORT}`);
-      // eslint-disable-next-line no-console
       console.log('\x1b[0m');
     });
   } else {
     // Если сервер в прод, то перед ним будет стоять nginx
     app.listen(PORT, () => {
-      // eslint-disable-next-line no-console
       console.log('\x1b[32m', `START PRODUCTION SERVER ON PORT: ${PORT}`);
-      // eslint-disable-next-line no-console
       console.log('\x1b[0m');
     });
   }
@@ -70,32 +61,20 @@ if (process.env.NODE_ENV === 'development') {
 
 app
   // Добавляем CSP + вагон разных предустановленных защит. Установленные настройки следующие:
-  /*
-    default-src 'self';
-    base-uri 'self';
-    block-all-mixed-content;
-    font-src 'self' https: data:;
-    frame-ancestors 'self';
-    img-src 'self' data:;
-    object-src 'none';
-    script-src 'self';
-    script-src-attr 'none';
-    style-src 'self' https: 'unsafe-inline';
+  // https://helmetjs.github.io/ -> helmet.contentSecurityPolicy(options)
 
-    upgrade-insecure-requests
-  */
-
-  .use(
-    helmet({
-      contentSecurityPolicy: {
-        useDefaults: false,
-        directives: {
-          defaultSrc: ["'self'", 'ya-praktikum.tech', 'fonts.googleapis.com', 'fonts.gstatic.com'],
-          scriptSrc: ["'self'", 'ya-praktikum.tech', 'fonts.googleapis.com'],
-        },
-      },
-    }),
-  )
+  /**  БЛОКИРУЕТ ИНЛАЙНОВЫЙ СТРО ПРИ SSR */
+  // .use(
+  //   helmet({
+  //     contentSecurityPolicy: {
+  //       useDefaults: false,
+  //       directives: {
+  //         defaultSrc: ["'self'", 'ya-praktikum.tech', 'fonts.googleapis.com', 'fonts.gstatic.com'],
+  //         scriptSrc: ["'self'", 'ya-praktikum.tech', 'fonts.googleapis.com'],
+  //       },
+  //     },
+  //   }),
+  // )
   // Отключаем заголовок X-XSS-Protection, так как он вызывает много проблем и используем для защиты другие способы
   .use(xXssProtection())
   .use(express.static(resolve(__dirname)))
