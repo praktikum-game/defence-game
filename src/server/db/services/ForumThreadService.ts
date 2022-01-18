@@ -18,7 +18,7 @@ class ForumThreadService extends BaseService<ForumThreadAttributes, ForumThreadC
     return ForumThread.findAll({
       offset: Number(offset),
       limit: Number(limit),
-      include: 'user',
+      include: 'User',
 
       attributes: {
         include: [

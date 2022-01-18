@@ -2,10 +2,12 @@ import express, { Router } from 'express';
 import { ForumThreadAPI } from 'server/controllers/ForumThreadAPI';
 import { ForumThreadAttributes } from 'server/db/models/ForumThread';
 import { authMiddleware } from 'server/middlewares/auth-middleware';
+import { checkUserInDbMiddleware } from 'server/middlewares/check-user-in-db-middleware';
 import { validatorMiddleware } from 'server/middlewares/validator-middleware';
 
 const jsonParser = express.json();
 const authenticate = authMiddleware();
+const autoAddUser = checkUserInDbMiddleware();
 
 export const threadRoutes = (router: Router) => {
   router.get(
@@ -32,6 +34,7 @@ export const threadRoutes = (router: Router) => {
     [
       jsonParser,
       authenticate,
+      autoAddUser,
       validatorMiddleware<ForumThreadAttributes>([
         { key: 'subject', validate: (value) => typeof value === 'string', required: true },
         { key: 'content', validate: (value) => typeof value === 'string', required: true },
@@ -47,7 +50,7 @@ export const threadRoutes = (router: Router) => {
         [
           { key: 'subject', validate: (value) => typeof value === 'string', required: false },
           { key: 'content', validate: (value) => typeof value === 'string', required: false },
-          { key: 'userId', validate: (value) => typeof value === 'number', required: false },
+          { key: 'UserId', validate: (value) => typeof value === 'number', required: false },
         ],
         'body',
       ),

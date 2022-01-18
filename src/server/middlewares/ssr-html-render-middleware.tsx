@@ -55,9 +55,8 @@ const ssrHtmlRenderMiddleware = () => {
       const { data, status } = await getUserDataSsr(req.headers.cookie);
       if (status === HttpStatus.OK) {
         store.getState().user.data = data;
+        store.getState().theme.theme = (await userService.getUserThemeName(data.id)) || 'light';
       }
-
-      store.getState().theme.theme = await userService.getUserThemeName(data.id);
     } catch (e: unknown) {
       store.getState().user.data = null;
       store.getState().theme.theme = 'light';

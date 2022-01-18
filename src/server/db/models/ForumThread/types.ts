@@ -6,7 +6,7 @@ export interface ForumThreadAttributes {
   content: string;
   subject: string;
 
-  userId: number;
+  UserId: number;
   comments?: Model<CommentAttributes, CommentCreationAttributes> | null;
 }
 
