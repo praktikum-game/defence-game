@@ -1,6 +1,6 @@
 import { BaseAPI } from 'api/BaseAPI';
 import { localBaseUrl } from 'api/consts';
-import { MessageModel } from './types';
+import { MessageModel, NewMessageModelResponse } from './types';
 
 class ForumMessagesAPI extends BaseAPI {
   constructor() {
@@ -16,7 +16,11 @@ class ForumMessagesAPI extends BaseAPI {
     forumThreadId: number,
     replyCommentId: number | null = null,
   ) {
-    return this.http.post('', { content, forumThreadId, replyCommentId });
+    return this.http.post<NewMessageModelResponse>('', {
+      content,
+      forumThreadId,
+      replyCommentId,
+    });
   }
 }
 

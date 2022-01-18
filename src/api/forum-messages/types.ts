@@ -16,3 +16,14 @@ export type MessageModel = {
     id: number;
   };
 };
+
+export type NewMessageModelResponse = {
+  ForumThreadId: number;
+  content: string;
+  createdAt: string;
+  forumThreadId: number;
+  id: number;
+  replyCommentId: null | number;
+  updatedAt: string;
+  userId: number;
+};

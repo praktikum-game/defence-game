@@ -23,7 +23,6 @@ export class ForumCommentsAPI {
   public static create = async (request: Request, response: Response) => {
     try {
       const userData: UserData = response.locals.user;
-      console.log(userData);
       const user = await userService.readById(userData.id);
       if (user === null) {
         await userService.create({
@@ -33,14 +32,12 @@ export class ForumCommentsAPI {
         });
       }
       const { body } = request;
-      console.log(body);
       const created = await commentService.create({
         ...body,
         ForumThreadId: body.forumThreadId,
         userId: userData.id,
       });
-      console.log(created);
-      response.json(JSON.stringify(created));
+      response.json(created);
     } catch (e: unknown) {
       console.log(e);
       response.sendStatus(HttpStatus.InternalServerError);
