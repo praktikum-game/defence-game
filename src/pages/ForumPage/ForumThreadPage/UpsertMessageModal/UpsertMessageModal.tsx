@@ -1,16 +1,14 @@
 import React, { useCallback, useState } from 'react';
-import { InputField } from 'components/InputField';
 import { Modal } from 'components/Modal';
 import { Button } from 'components/Button';
 import { UpsertMessageModalProps } from './types';
 import { TextArea, TextAreaCursorPosition } from 'components/TextArea';
-import { ForumThreadCreationModel } from 'api/forum-topics';
 import block from 'bem-cn';
 
 import { BaseEmoji } from 'emoji-mart';
 import { EmojiPanel } from 'components/EmojiPanel';
 
-import './upsert-thread-modal.css';
+import './UpsertMessageModal.css';
 
 const b = block('add-topic-modal');
 
@@ -20,13 +18,12 @@ export const UpsertMessageModal = ({ data, onChange, ...props }: UpsertMessageMo
     selectionEnd: 0,
   });
 
-  const handleSaveData = useCallback(() => props.onSaveData(), [props]);
-
   const handleCloseModal = () => props.onClose();
 
   const handleTextareaChange = useCallback(
-    (fieldName: string, value: string) =>
-      onChange(fieldName as keyof ForumThreadCreationModel, value),
+    (_0: string, value: string) => {
+      onChange(value);
+    },
     [onChange],
   );
 
@@ -37,12 +34,12 @@ export const UpsertMessageModal = ({ data, onChange, ...props }: UpsertMessageMo
   const handleEmojiSelect = useCallback(
     (emoji: BaseEmoji) => {
       const { selectionStart, selectionEnd } = textareaCursorPosition;
-      let val = data.content;
+      let val = data;
       val = val.substring(0, selectionStart) + emoji.native + val.substring(selectionEnd);
       setTextareaCursorPosition({ selectionStart, selectionEnd });
-      onChange('content', val);
+      onChange(val);
     },
-    [data.content, textareaCursorPosition, onChange],
+    [data, textareaCursorPosition, onChange],
   );
 
   return (
@@ -53,18 +50,14 @@ export const UpsertMessageModal = ({ data, onChange, ...props }: UpsertMessageMo
           label="Ваше сообщение"
           onSelect={handleTextareaSelect}
           onChange={handleTextareaChange}
-          value={data.content}
+          value={data}
         />
         <EmojiPanel onEmojiSelect={handleEmojiSelect} />
       </div>
 
       <div className={b('buttons')}>
-        <Button
-          text="Сохранить"
-          disabled={!data.content || !data.subject}
-          onClick={handleSaveData}
-        />
-        <Button text="Отмена" view="secondary" onClick={handleCloseModal} />
+        <Button text="Сохранить" disabled={!data} onClick={props.onSaveData} isSmall={true} />
+        <Button text="Отмена" view="secondary" isSmall={true} onClick={handleCloseModal} />
       </div>
     </Modal>
   );

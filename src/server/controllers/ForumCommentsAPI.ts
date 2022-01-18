@@ -39,6 +39,7 @@ export class ForumCommentsAPI {
       });
       response.json(created);
     } catch (e: unknown) {
+      // eslint-disable-next-line no-console
       console.log(e);
       response.sendStatus(HttpStatus.InternalServerError);
     }

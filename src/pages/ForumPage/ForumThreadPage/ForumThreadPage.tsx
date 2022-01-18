@@ -53,7 +53,11 @@ export const ForumThreadPage = () => {
     userName: 'Данных нет',
   });
   const [currentMessage, setCurrentMessage] = useState<string>('');
-  const [forumId, setForumId] = useState<number | undefined>(undefined);
+  const [modalMessage, setModalMessage] = useState<string>('');
+
+  const [forumId, setForumId] = useState<number | null>(null);
+  const [replyMessageId, setReplyMessageId] = useState<number | null>(null);
+  const [addModalIsVisible, setAddModalIsVisible] = useState(false);
 
   const history = getHistory();
   const { userData } = useAuthUser();
@@ -69,7 +73,8 @@ export const ForumThreadPage = () => {
   useEffect(() => {
     async function getData() {
       try {
-        if (forumId === undefined) {
+        if (forumId === null) {
+          // eslint-disable-next-line no-console
           console.log(`Couldn't get proper forumId`);
           return;
         }
@@ -77,6 +82,7 @@ export const ForumThreadPage = () => {
         setMessages(parseMessagesItem(data.data));
         setForumThread(parseThreadItem(data.data));
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.log(e);
         setMessages([]);
       }
@@ -99,64 +105,50 @@ export const ForumThreadPage = () => {
     setCurrentMessage(e.target.value);
   }, []);
 
-  const handleSendMessageClick = useCallback(
-    async (inputReplyId: number | null = null) => {
-      try {
-        const data = await messagesAPI.postNewMessage(currentMessage, forumThread.id, inputReplyId);
-        const { id, createdAt, replyCommentId, content } = data.data;
-
-        setMessages((prev) =>
-          [
-            ...prev,
-            {
-              id,
-              content,
-              createdAt: new Date(createdAt),
-              replyCommentId,
-              user: { id: userData!.id, avatar: userData!.avatar, name: userData!.login },
-            },
-          ].sort(
-            (left, right) => left.createdAt.getMilliseconds() - right.createdAt.getMilliseconds(),
-          ),
-        );
-        setCurrentMessage('');
-      } catch (e) {
-        console.log(e);
-      }
-    },
-    [currentMessage, userData, forumThread.id],
-  );
-
-  const handleReplyMessage = useCallback(
-    async (e: MouseEvent) => {
-      const { currentTarget } = e;
-      console.log(currentTarget);
-      await handleSendMessageClick(10);
-    },
-    [handleSendMessageClick],
-  );
-
-  const [replyId, setReplyId] = useState<number | null>(null);
-
-  const [addModalIsVisible, setAddModalIsVisible] = useState(false);
-
   const handleCloseAddModal = useCallback(() => {
-    setReplyId(null);
-    setCurrentMessage('');
+    setReplyMessageId(null);
+    setModalMessage('');
     setAddModalIsVisible(false);
   }, []);
 
-  const handleChangeField = useCallback((field: keyof ForumThreadCreationModel, value: string) => {
-    setRecordData((prev) => ({ ...prev, [field]: value }));
+  const handleSendMessageClick = useCallback(async () => {
+    try {
+      const data = await messagesAPI.postNewMessage(currentMessage, forumThread.id, replyMessageId);
+      const { id, createdAt, replyCommentId, content } = data.data;
+      setMessages((prev) => [
+        ...prev,
+        {
+          id,
+          content,
+          createdAt: new Date(createdAt),
+          replyCommentId,
+          user: { id: userData!.id, avatar: userData!.avatar, name: userData!.login },
+        },
+      ]);
+      handleCloseAddModal();
+      setCurrentMessage('');
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e);
+    }
+  }, [currentMessage, userData, forumThread.id, replyMessageId, handleCloseAddModal]);
+
+  const handleChangeField = useCallback((value: string) => {
+    setModalMessage(value);
+  }, []);
+
+  const handleReplyMessageClick = useCallback((replyId: number) => {
+    setReplyMessageId(replyId);
+    setAddModalIsVisible(true);
   }, []);
 
   return (
     <>
       <UpsertMessageModal
-        data={currentMessage}
+        data={modalMessage}
         visible={addModalIsVisible}
         onClose={handleCloseAddModal}
-        onSaveData={handleSaveData}
+        onSaveData={handleSendMessageClick}
         onChange={handleChangeField}
       />
 
@@ -178,7 +170,7 @@ export const ForumThreadPage = () => {
             <MessagesList.Message
               key={el.id}
               messageData={{ date: el.createdAt, text: el.content, user: el.user.name }}
-              replyClick={handleReplyMessage}
+              replyClick={() => handleReplyMessageClick(el.id)}
             />
           ))}
         </MessagesList>
