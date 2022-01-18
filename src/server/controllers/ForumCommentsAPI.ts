@@ -1,6 +1,7 @@
+import { UserData } from 'api/auth';
 import { Request, Response } from 'express';
 import { HttpStatus } from 'server/http-statuses';
-import { commentService } from '../db/services';
+import { commentService, userService } from '../db/services';
 
 export class ForumCommentsAPI {
   public static get = async (request: Request, response: Response) => {
@@ -21,10 +22,27 @@ export class ForumCommentsAPI {
 
   public static create = async (request: Request, response: Response) => {
     try {
+      const userData: UserData = response.locals.user;
+      console.log(userData);
+      const user = await userService.readById(userData.id);
+      if (user === null) {
+        await userService.create({
+          id: Number(userData.id),
+          name: userData.login,
+          avatar: userData.avatar,
+        });
+      }
       const { body } = request;
-      await commentService.create(body);
-      response.sendStatus(HttpStatus.Created);
+      console.log(body);
+      const created = await commentService.create({
+        ...body,
+        ForumThreadId: body.forumThreadId,
+        userId: userData.id,
+      });
+      console.log(created);
+      response.json(JSON.stringify(created));
     } catch (e: unknown) {
+      console.log(e);
       response.sendStatus(HttpStatus.InternalServerError);
     }
   };

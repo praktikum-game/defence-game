@@ -12,14 +12,11 @@ class ForumMessagesAPI extends BaseAPI {
   }
 
   public postNewMessage(
-    userId: number,
     content: string,
     forumThreadId: number,
     replyCommentId: number | null = null,
   ) {
-    return this.http.post('', {
-      params: { content, forumThreadId, userId, replyCommentId },
-    });
+    return this.http.post('', { content, forumThreadId, replyCommentId });
   }
 }
 

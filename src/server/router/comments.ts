@@ -28,7 +28,6 @@ export const commentRoutes = (router: Router) => {
       validatorMiddleware<CommentAttributes>([
         { key: 'content', validate: (value) => typeof value === 'string', required: true },
         { key: 'forumThreadId', validate: (value) => !isNaN(Number(value)), required: true },
-        { key: 'userId', validate: (value) => !isNaN(Number(value)), required: true },
         { key: 'replyCommentId', validate: (value) => !isNaN(Number(value)), required: false },
       ]),
     ],

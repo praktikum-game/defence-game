@@ -14,6 +14,7 @@ import { getHistory } from 'utilities/history';
 import { MessageModel } from 'api/forum-messages/types';
 import { ForumItem } from './types';
 import { useAuthUser } from 'hooks/useAuthUser';
+import { isServer } from 'utilities';
 
 const b = block('thread-page');
 
@@ -22,7 +23,6 @@ function parseMessagesItem(data: MessageModel[]) {
 
   for (const message of data) {
     const { content, createdAt, id, replyCommentId, user } = message;
-    console.log(createdAt);
     const { id: userId, avatar, name } = user;
     parsed.push({
       id,
@@ -54,19 +54,27 @@ export const ForumThreadPage = () => {
     userName: 'Данных нет',
   });
   const [currentMessage, setCurrentMessage] = useState<string>('');
+  const [forumId, setForumId] = useState<number | undefined>(undefined);
+
   const history = getHistory();
   const { userData } = useAuthUser();
 
-  let forumId: number;
-  const regexForumId = history.location.pathname.match(/\d+/g);
-  if (regexForumId !== null) {
-    forumId = Number(regexForumId[0]);
-  }
+  useEffect(() => {
+    const pathname = isServer ? history.location.pathname : location.pathname;
+    const regexForumId = pathname.match(/\d+/g);
+    if (regexForumId !== null) {
+      setForumId(Number(regexForumId[0]));
+    }
+  }, [setForumId, history.location.pathname]);
 
   useEffect(() => {
     async function getData() {
       try {
-        const data = await messagesAPI.fetchMessagesData(forumId, 0, 1000);
+        if (forumId === undefined) {
+          console.log(`Couldn't get proper forumId`);
+          return;
+        }
+        const data = await messagesAPI.fetchMessagesData(forumId, 0, 100);
         setMessages(parseMessagesItem(data.data));
         setForumThread(parseThreadItem(data.data));
       } catch (e) {
@@ -75,7 +83,7 @@ export const ForumThreadPage = () => {
       }
     }
     getData();
-  }, []);
+  }, [forumId]);
 
   const handleInputMessageText: React.ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
     setCurrentMessage(e.target.value);
@@ -84,22 +92,28 @@ export const ForumThreadPage = () => {
   const handleReplyMessage = useCallback(() => {}, []);
 
   const handleSendMessageClick = useCallback(
-    async (replyId: number | null = null) => {
-      const { commentId } = await messagesAPI.postNewMessage(userData!.id, currentMessage, forumThread.id, replyId);
+    async (inputReplyId: number | null = null) => {
+      const newMessage = await messagesAPI.postNewMessage(
+        currentMessage,
+        forumThread.id,
+        inputReplyId,
+      );
+      console.log(newMessage);
+      const { id, createdAt, replyCommentId, content } = newMessage;
 
-      setMessages((messagesNew) => [
-        ...messagesNew,
+      setMessages((prev) => [
+        ...prev,
         {
-          id: ,
-          content: currentMessage,
-          createdAt: new Date(Date.now()),
-          replyCommentId: replyId,
-          user: { id: userData!.id, avatar, name },
+          id,
+          content,
+          createdAt: new Date(createdAt),
+          replyCommentId,
+          user: { id: userData!.id, avatar: userData!.avatar, name: userData!.login },
         },
       ]);
       setCurrentMessage('');
     },
-    [currentMessage],
+    [currentMessage, userData, forumThread.id],
   );
 
   return (
@@ -134,7 +148,7 @@ export const ForumThreadPage = () => {
           <Button
             disabled={!currentMessage || !userData}
             text="Отправить"
-            onClick={handleSendMessageClick}
+            onClick={() => handleSendMessageClick()}
           />
         </div>
       </PageContainer>
