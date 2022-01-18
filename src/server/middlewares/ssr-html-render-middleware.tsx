@@ -1,6 +1,6 @@
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import React from 'react';
-import { Request, response, Response } from 'express';
+import { Request, Response } from 'express';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom/server';
 import { Store } from 'redux';
@@ -48,10 +48,10 @@ const ssrHtmlRenderMiddleware = () => {
 
   return async (req: Request, res: Response) => {
     const store = configureStore();
-    try {
-      store.getState().user.data = response.locals.user;
-    } catch (e: unknown) {
+    if (res.locals.user === undefined) {
       store.getState().user.data = null;
+    } else {
+      store.getState().user.data = res.locals.user;
     }
 
     const rootJsx = (
