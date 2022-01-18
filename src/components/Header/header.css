@@ -1,6 +1,6 @@
 .header {
   position: relative;
-  background-color: $primary-color;
+  background-color: var(--primary-color);
   max-height: 90px;
   height: 60px;
   border-radius: 15px 15px 0 0;

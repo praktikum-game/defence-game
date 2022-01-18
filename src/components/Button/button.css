@@ -7,26 +7,26 @@
   transition: transform 0.1s linear;
 
   &_primary {
-    background-color: $primary-background;
+    background-color: var(--primary-bg);
     color: #fff;
   }
 
   &_default {
-    background-color: $default-background;
+    background-color: var(--default-bg);
   }
 
   &_secondary {
-    border: 1px solid $primary-color;
-    background: $secondary-background;
-    color: $primary-color;
+    border: 1px solid var(--primary-color);
+    background: var(--secondary-bg);
+    color: var(--primary-color);
     display: flex;
     justify-content: center;
   }
 
   &_info {
-    border: 1px solid $info-btn-border-color;
+    border: 1px solid var(--info-btn-border-color);
     background: transparent;
-    color: $info-btn-border-color;
+    color: var(--info-btn-border-color);
     border-radius: 8px;
     padding: 10px 20px;
     width: auto;
@@ -39,7 +39,7 @@
   }
 
   &:disabled {
-    background-color: $disabled-background;
+    background-color: var(--disabled-bg);
     transform: none !important;
     translate: none !important;
     cursor: default !important;

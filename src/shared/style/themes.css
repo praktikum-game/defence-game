@@ -1,56 +1,50 @@
-/*
-'primary-background': '#6BC732;',
-'default-background': '#FF8A00',
-'secondary-background': '#ffffff',
-'info-btn-border-color': '#ffffff',
-'disabled-background': '#DEDEDE',
-'page-background-dark': '#004643',
-'page-background-light': '#01AD79',
-'main-page-header-bg': '#009A9D',
-
-'primary-color': '#6BC732',
-'secondary-color': '#004643',
-'error-text-color': '#ff2f2f',
-'input-label-color': '#999999',
-'input-label-color-dark': '#004643',
-'input-text-color': '#999999',
-'input-border-color': '#0198A4',
-'error-page-accent-color': '#fff501',
-'forum-thread-item-background-color': '#f5f5f5',
-*/
-
-$dark_bg: gray;
-$dark_page-header-bg: #641a1a;
-$dark_page-body-bg-dark: #000000;
-$dark_page-body-bg-light: #0a0252;
-$dark_error-page-accent-color: #000;
-$dark_text-color: #004643;
-$dark_text-color-contrast: #ffffff;
-
-$light_bg: green;
-$light_page-header-bg: #009a9d;
-$light_page-body-bg-dark: #004643;
-$light_page-body-bg-light: #01ad79;
-$light_error-page-accent-color: #fff501;
-$light_text-color: #004643;
-$light_text-color-contrast: #ffffff;
+@import './light-vars.css';
+@import './dark-vars.css';
 
 .light_theme {
-  --bg: $dark_bg;
   --page-header-bg: $light_page-header-bg;
   --page-body-bg-dark: $light_page-body-bg-dark;
   --page-body-bg-light: $light_page-body-bg-light;
   --error-page-accent-color: $light_error-page-accent-color;
   --text-color: $light_text-color;
   --text-color-contrast: $light_text-color-contrast;
+  --primary-color: $light_primary-color;
+  --secondary-color: $light_secondary-color;
+  --page-container-bg: $light_page-container-bg;
+  --primary-bg: $light_primary-bg;
+  --default-bg: $light_default-bg;
+  --secondary-bg: $light_secondary-bg;
+  --main-page-header-bg: $light_main-page-header-bg;
+  --forum-thread-item-bg-color: $light_forum-thread-item-bg-color;
+  --error-text-color: $light_error-text-color;
+  --disabled-bg: $light_disabled-bg;
+  --input-label-color: $light_input-label-color;
+  --input-label-color-dark: $light_input-label-color-dark;
+  --input-text-color: $light_input-text-color;
+  --input-border-color: $light_input-border-color;
+  --info-btn-border-color: $light_info-btn-border-color;
 }
 
 .dark_theme {
-  --bg: $light_bg;
   --page-header-bg: $dark_page-header-bg;
   --page-body-bg-dark: $dark_page-body-bg-dark;
   --page-body-bg-light: $dark_page-body-bg-light;
   --error-page-accent-color: $dark_error-page-accent-color;
   --text-color: $dark_text-color;
   --text-color-contrast: $dark_text-color-contrast;
+  --primary-color: $dark_primary-color;
+  --secondary-color: $dark_secondary-color;
+  --page-container-bg: $dark_page-container-bg;
+  --primary-bg: $dark_primary-bg;
+  --default-bg: $dark_default-bg;
+  --secondary-bg: $dark_secondary-bg;
+  --main-page-header-bg: $dark_main-page-header-bg;
+  --forum-thread-item-bg-color: $dark_forum-thread-item-bg-color;
+  --error-text-color: $dark_error-text-color;
+  --disabled-bg: $dark_disabled-bg;
+  --input-label-color: $dark_input-label-color;
+  --input-label-color-dark: $dark_input-label-color-dark;
+  --input-text-color: $dark_input-text-color;
+  --input-border-color: $dark_input-border-color;
+  --info-btn-border-color: $dark_info-btn-border-color;
 }

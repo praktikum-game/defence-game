@@ -2,7 +2,7 @@
   position: relative;
 
   &_fullscreen {
-    background: $page-background-dark;
+    background: var(----page-body-bg-dark);
   }
 
   &__game {
@@ -17,6 +17,6 @@
 
 .game-page {
   margin-top: 40px;
-  background: $main-page-header-bg;
-  border: 5px solid $main-page-header-bg;
+  background: var(--main-page-header-bg);
+  border: 5px solid var(--main-page-header-bg);
 }

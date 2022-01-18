@@ -20,9 +20,9 @@ body {
 }
 
 a {
-  color: $primary-color;
+  color: var(--primary-color);
 }
 
 .error-text {
-  color: $error-text-color;
+  color: varl(--error-text-color);
 }
