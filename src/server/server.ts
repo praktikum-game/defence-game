@@ -21,7 +21,7 @@ sequelize
     // eslint-disable-next-line no-console
     console.log('\x1b[0m');
     sequelize
-      .sync({ force: true })
+      .sync()
       .then(() => {
         // eslint-disable-next-line no-console
         console.log('Sequelize is synced');
@@ -83,8 +83,10 @@ app
     script-src 'self';
     script-src-attr 'none';
     style-src 'self' https: 'unsafe-inline';
+
     upgrade-insecure-requests
   */
+
   .use(
     helmet({
       contentSecurityPolicy: {

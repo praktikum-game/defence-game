@@ -2,12 +2,16 @@ module.exports = {
   plugins: [
     ['postcss-preset-env', {}],
     ['autoprefixer', { grid: true }],
-    [
-      'postcss-simple-vars',
-      {
-        // Options
-      },
-    ],
+    // [
+    //   'postcss-simple-vars',
+    //   {
+    //     variables: function () {
+    //       const hoho = require('./src/shared/style/vars');
+    //       console.log('--------------------vars', hoho);
+    //       return hoho;
+    //     },
+    //   },
+    // ],
     [
       'autoprefixer',
       {
@@ -18,6 +22,7 @@ module.exports = {
       'postcss-advanced-variables',
       {
         variables: {
+          c2: 'tomato',
           'primary-background': '#6BC732;',
           'default-background': '#FF8A00',
           'secondary-background': '#ffffff',

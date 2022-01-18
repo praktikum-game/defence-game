@@ -13,9 +13,11 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
     navigator.serviceWorker
       .register('./serviceWorker.js')
       .then((reg) => {
+        // eslint-disable-next-line no-console
         console.log(`Registration succeeded. Scope is ${reg.scope}`);
       })
       .catch((error) => {
+        // eslint-disable-next-line no-console
         console.log(`Registration failed with ${error}`);
       });
   });

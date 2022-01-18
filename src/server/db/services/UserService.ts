@@ -1,4 +1,5 @@
-import { User, UserAttributes, UserCreationAttributes } from '../models/User';
+import { UserAttributes } from 'shared/types/UserAttributes';
+import { User, UserCreationAttributes } from '../models/User';
 import { BaseService } from './BaseService';
 
 class UserService extends BaseService<UserAttributes, UserCreationAttributes> {
@@ -6,8 +7,17 @@ class UserService extends BaseService<UserAttributes, UserCreationAttributes> {
     super(User);
   }
 
-  findByPraktikumId(praktikumId: number) {
-    return this.readOne({ where: { praktikumId } });
+  findByPraktikumId(id: number) {
+    return this.readOne({ where: { id } });
+  }
+
+  getUserThemeName(id: number) {
+    return (
+      User.findByPk(id)
+        //@ts-ignore
+        .then((user) => user.getSiteTheme())
+        .then((siteTheme) => siteTheme.theme)
+    );
   }
 }
 
