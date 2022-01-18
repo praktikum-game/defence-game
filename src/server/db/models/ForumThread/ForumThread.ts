@@ -15,10 +15,7 @@ const ForumThread: ModelDefined<ForumThreadAttributes, ForumThreadCreationAttrib
     { underscored: true },
   );
 
-
-
-
-  User.hasMany(ForumThread, { foreignKey: { allowNull: false } });
+User.hasMany(ForumThread, { foreignKey: { allowNull: false } });
 ForumThread.belongsTo(User, { foreignKey: { allowNull: false } });
 
 export { ForumThread };
