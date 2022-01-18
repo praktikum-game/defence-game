@@ -7,6 +7,7 @@ export type ButtonOwnProps = {
   disabled?: boolean;
   view?: keyof ViewType;
   loading?: boolean;
+  isSmall?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export type ButtonProps = ButtonOwnProps;
