@@ -6,6 +6,7 @@ import { AppRoutes } from '../AppRoutes';
 import './App.css';
 import '../../utilities/common.css';
 import { AppState } from 'store';
+import { ThemeSwitcher } from 'components/ThemeSwitcher';
 
 export const App = () => {
   const theme = useSelector((state: AppState) => state.theme.theme);
@@ -13,6 +14,7 @@ export const App = () => {
   return (
     <div className={`App ${theme}_theme`}>
       <AppRoutes />
+      <ThemeSwitcher />
     </div>
   );
 };
