@@ -6,8 +6,8 @@ export type ForumThreadModel = {
   subject: string;
   createdAt: string;
   updatedAt: string;
-  userId: number;
-  user: UserDbModel;
+  UserId: number;
+  User: UserDbModel;
   messagesCount: number;
 };
 

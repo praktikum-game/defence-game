@@ -1,7 +1,7 @@
 import { UserData } from 'api/auth';
 import { Request, Response } from 'express';
 import { HttpStatus } from 'server/http-statuses';
-import { forumThreadService, userService } from '../db/services';
+import { forumThreadService } from '../db/services';
 
 export class ForumThreadAPI {
   public static getAll = async (request: Request, response: Response) => {
@@ -11,6 +11,8 @@ export class ForumThreadAPI {
       const data = await forumThreadService.getForumThreads(Number(offset), Number(limit));
       response.json(data);
     } catch (e: unknown) {
+      const error = e as Error;
+      console.log(error);
       response.sendStatus(HttpStatus.InternalServerError);
     }
   };
@@ -24,17 +26,12 @@ export class ForumThreadAPI {
   public static create = async (request: Request, response: Response) => {
     try {
       const userData: UserData = response.locals.user;
-      const user = await userService.readById(userData.id);
-      if (user === null) {
-        await userService.create({
-          id: Number(userData.id),
-          name: userData.login,
-          avatar: userData.avatar,
-        });
-      }
-      await forumThreadService.create({ ...request.body, userId: userData.id });
+
+      await forumThreadService.create({ ...request.body, UserId: userData.id });
       response.sendStatus(HttpStatus.Created);
     } catch (e: unknown) {
+      const error = e as Error;
+      console.log(error);
       response.sendStatus(HttpStatus.InternalServerError);
     }
   };

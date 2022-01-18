@@ -25,12 +25,4 @@ export const defaultNavigation: NavigationItem[] = [
     path: '/forum',
     name: 'Форум',
   },
-  {
-    path: '/500',
-    name: '500',
-  },
-  {
-    path: '/404',
-    name: '404',
-  },
 ];
