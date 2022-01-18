@@ -15,6 +15,7 @@ import { MessageModel } from 'api/forum-messages/types';
 import { ForumItem } from './types';
 import { useAuthUser } from 'hooks/useAuthUser';
 import { isServer } from 'utilities';
+import { UpsertMessageModal } from './UpsertMessageModal';
 
 const b = block('thread-page');
 
@@ -32,9 +33,7 @@ function parseMessagesItem(data: MessageModel[]) {
       user: { id: userId, avatar, name },
     });
   }
-  return parsed.sort(
-    (left, right) => left.createdAt.getMilliseconds() - right.createdAt.getMilliseconds(),
-  );
+  return parsed;
 }
 
 function parseThreadItem(data: MessageModel[]) {
@@ -74,7 +73,7 @@ export const ForumThreadPage = () => {
           console.log(`Couldn't get proper forumId`);
           return;
         }
-        const data = await messagesAPI.fetchMessagesData(forumId, 0, 100);
+        const data = await messagesAPI.fetchMessagesData(forumId, 0, 1000);
         setMessages(parseMessagesItem(data.data));
         setForumThread(parseThreadItem(data.data));
       } catch (e) {
@@ -83,41 +82,84 @@ export const ForumThreadPage = () => {
       }
     }
     getData();
-  }, [forumId]);
+  }, [forumId, setMessages, setForumThread]);
+
+  // useEffect(() => {
+  //   console.log('Sorted!!!!');
+  //   const newArray = [...messages];
+  //   console.log(newArray);
+  //   newArray.sort(
+  //     (left, right) => left.createdAt.getMilliseconds() - right.createdAt.getMilliseconds(),
+  //   );
+  //   console.log(newArray);
+  //   setMessages(newArray);
+  // }, [messages, setMessages]);
 
   const handleInputMessageText: React.ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
     setCurrentMessage(e.target.value);
   }, []);
 
-  const handleReplyMessage = useCallback(() => {}, []);
-
   const handleSendMessageClick = useCallback(
     async (inputReplyId: number | null = null) => {
-      const newMessage = await messagesAPI.postNewMessage(
-        currentMessage,
-        forumThread.id,
-        inputReplyId,
-      );
-      console.log(newMessage);
-      const { id, createdAt, replyCommentId, content } = newMessage;
+      try {
+        const data = await messagesAPI.postNewMessage(currentMessage, forumThread.id, inputReplyId);
+        const { id, createdAt, replyCommentId, content } = data.data;
 
-      setMessages((prev) => [
-        ...prev,
-        {
-          id,
-          content,
-          createdAt: new Date(createdAt),
-          replyCommentId,
-          user: { id: userData!.id, avatar: userData!.avatar, name: userData!.login },
-        },
-      ]);
-      setCurrentMessage('');
+        setMessages((prev) =>
+          [
+            ...prev,
+            {
+              id,
+              content,
+              createdAt: new Date(createdAt),
+              replyCommentId,
+              user: { id: userData!.id, avatar: userData!.avatar, name: userData!.login },
+            },
+          ].sort(
+            (left, right) => left.createdAt.getMilliseconds() - right.createdAt.getMilliseconds(),
+          ),
+        );
+        setCurrentMessage('');
+      } catch (e) {
+        console.log(e);
+      }
     },
     [currentMessage, userData, forumThread.id],
   );
 
+  const handleReplyMessage = useCallback(
+    async (e: MouseEvent) => {
+      const { currentTarget } = e;
+      console.log(currentTarget);
+      await handleSendMessageClick(10);
+    },
+    [handleSendMessageClick],
+  );
+
+  const [replyId, setReplyId] = useState<number | null>(null);
+
+  const [addModalIsVisible, setAddModalIsVisible] = useState(false);
+
+  const handleCloseAddModal = useCallback(() => {
+    setReplyId(null);
+    setCurrentMessage('');
+    setAddModalIsVisible(false);
+  }, []);
+
+  const handleChangeField = useCallback((field: keyof ForumThreadCreationModel, value: string) => {
+    setRecordData((prev) => ({ ...prev, [field]: value }));
+  }, []);
+
   return (
     <>
+      <UpsertMessageModal
+        data={currentMessage}
+        visible={addModalIsVisible}
+        onClose={handleCloseAddModal}
+        onSaveData={handleSaveData}
+        onChange={handleChangeField}
+      />
+
       <Header backButton={true}>
         <Title headingLevel={2} align="center">
           {forumThread.subject}
@@ -126,7 +168,7 @@ export const ForumThreadPage = () => {
       <PageContainer size="l">
         <MessagesList className={b('messages_list')}>
           <MessagesList.Message
-            message={{
+            messageData={{
               date: forumThread.createdAt,
               text: forumThread.content,
               user: forumThread.userName,
@@ -135,7 +177,8 @@ export const ForumThreadPage = () => {
           {messages.map((el) => (
             <MessagesList.Message
               key={el.id}
-              message={{ date: el.createdAt, text: el.content, user: el.user.name }}
+              messageData={{ date: el.createdAt, text: el.content, user: el.user.name }}
+              replyClick={handleReplyMessage}
             />
           ))}
         </MessagesList>
