@@ -99,7 +99,7 @@ app
   // Отключаем заголовок X-XSS-Protection, так как он вызывает много проблем и используем для защиты другие способы
   .use(xXssProtection())
   .use(express.static(resolve(__dirname)))
-  .use(getUserMiddleware())
+  .use(getUserMiddleware)
   .use('/api/v1', router);
 
 app.get('/serviceWorker.js', (_0, res) => {
