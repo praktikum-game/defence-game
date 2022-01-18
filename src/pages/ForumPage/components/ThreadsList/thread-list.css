@@ -1,4 +1,4 @@
 .thread-list-container {
-  background-color: $secondary-background;
+  background-color: var(--secondary-bg);
   padding: 30px 0 15px;
 }

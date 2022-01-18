@@ -57,7 +57,7 @@
   }
 
   .page-layout {
-    border-bottom: 18px solid $primary-background;
+    border-bottom: 18px solid var(--primary-bg);
     padding-bottom: 20px;
   }
 
@@ -106,7 +106,7 @@
   }
 
   &__button {
-    background-color: $default-background;
+    background-color: var(--default-bg);
     color: var(--text-color-contrast);
     font-size: 28px;
     border-radius: 100px;

@@ -1,5 +1,5 @@
 .page-container {
-  background: #fff;
+  background: var(--page-container-bg);
   border-radius: 0 0 15px 15px;
 
   &_s {

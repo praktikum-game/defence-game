@@ -16,11 +16,11 @@
   .input-field {
     &__input {
       text-align: right;
-      color: $input-text-color;
+      color: var(--input-text-color);
     }
 
     &__label {
-      color: $input-label-color-dark;
+      color: var(--input-label-color-dark);
     }
   }
 
