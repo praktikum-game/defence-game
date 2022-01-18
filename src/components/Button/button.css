@@ -1,5 +1,5 @@
 .button {
-  color: $text-color;
+  color: var(--text-color);
   border-radius: 10px;
   padding: 10px;
   border: none;
