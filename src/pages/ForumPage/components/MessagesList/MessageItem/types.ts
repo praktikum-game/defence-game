@@ -1,6 +1,8 @@
+import { MouseEventHandler } from 'react';
 import { MessageItem } from '../../../../../api/forum-messages';
 
 export type MessageItemProps = {
   className?: string;
-  message: MessageItem;
+  messageData: MessageItem;
+  replyClick?: MouseEventHandler<HTMLButtonElement>;
 };

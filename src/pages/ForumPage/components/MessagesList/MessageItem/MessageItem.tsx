@@ -6,14 +6,15 @@ import { getDateFormatter } from '../../../../../utilities';
 import { MessageItemProps } from './types';
 
 import './message-item.css';
+import { Button } from 'components/Button';
 
 const b = block('message-list-item');
 const bItem = block('item-content');
 
 const formatter = getDateFormatter();
 
-export const MessageItem = ({ className, message }: MessageItemProps) => {
-  const { date, user, text } = message;
+export const MessageItem = ({ className, messageData, replyClick }: MessageItemProps) => {
+  const { date, user, text } = messageData;
   return (
     <div className={b.mix(className)}>
       <div className={b('item-content')}>
@@ -29,6 +30,9 @@ export const MessageItem = ({ className, message }: MessageItemProps) => {
           <div>
             <p className={bItem('text')}>{text}</p>
           </div>
+          {replyClick !== undefined ? (
+            <Button text="Ответить" onClick={replyClick} isSmall={true}></Button>
+          ) : undefined}
         </div>
       </div>
     </div>
