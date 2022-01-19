@@ -1,23 +1,64 @@
-import { ModelDefined, DataTypes } from 'sequelize';
-import { sequelize } from '../../sequelize';
+import { DataTypes, Model, Sequelize, Association } from 'sequelize';
 import { ForumThread } from '../ForumThread';
 import { User } from '../User';
 
 import { CommentAttributes, CommentCreationAttributes } from './types';
 
-const Comment: ModelDefined<CommentAttributes, CommentCreationAttributes> = sequelize.define(
-  'Comment',
-  {
-    id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-    content: { type: DataTypes.TEXT, allowNull: false },
-  },
-  { underscored: true },
-);
+export class Comment
+  extends Model<CommentAttributes, CommentCreationAttributes>
+  implements CommentAttributes
+{
+  declare id: number;
 
-Comment.belongsTo(Comment, { as: 'reply_comment' });
-ForumThread.hasMany(Comment, { as: 'comments', foreignKey: { allowNull: false } });
+  declare content: string;
 
-Comment.belongsTo(ForumThread, { as: 'forum_thread', foreignKey: { allowNull: false } });
-Comment.belongsTo(User, { as: 'user', foreignKey: { allowNull: false } });
+  declare replyCommentId: number | null;
 
-export { Comment };
+  declare userId: number;
+
+  declare forumThreadId: number;
+
+  declare static associations: {
+    user: Association<Comment, User>;
+    forumThread: Association<Comment, ForumThread>;
+  };
+}
+
+export function initCommentModel(sequelize: Sequelize) {
+  Comment.init(
+    {
+      id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      content: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      replyCommentId: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: true,
+      },
+      userId: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+      },
+      forumThreadId: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+      },
+    },
+    {
+      sequelize,
+      underscored: true,
+      tableName: 'comments',
+    },
+  );
+}
+// Comment.belongsTo(Comment, { as: 'reply_comment' });
+// ForumThread.hasMany(Comment, { as: 'comments', foreignKey: { allowNull: false } });
+
+// Comment.belongsTo(ForumThread, { as: 'forum_thread', foreignKey: { allowNull: false } });
+// Comment.belongsTo(User, { as: 'user', foreignKey: { allowNull: false } });
+// export { Comment };

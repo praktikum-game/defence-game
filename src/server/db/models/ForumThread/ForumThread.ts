@@ -1,21 +1,50 @@
-import { ModelDefined, DataTypes } from 'sequelize';
-import { sequelize } from '../../sequelize';
+import { DataTypes, Model, Association, Sequelize } from 'sequelize';
 import { User } from '../User';
 
 import { ForumThreadAttributes, ForumThreadCreationAttributes } from './types';
 
-const ForumThread: ModelDefined<ForumThreadAttributes, ForumThreadCreationAttributes> =
-  sequelize.define(
-    'ForumThread',
+export class ForumThread
+  extends Model<ForumThreadAttributes, ForumThreadCreationAttributes>
+  implements ForumThreadAttributes
+{
+  declare id: number;
+
+  declare subject: string;
+
+  declare content: string;
+
+  declare userId: number;
+
+  declare static associations: {
+    user: Association<ForumThread, User>;
+  };
+}
+
+export function initForumThreadModel(sequelize: Sequelize) {
+  ForumThread.init(
     {
-      id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-      content: { type: DataTypes.TEXT, allowNull: false },
-      subject: { type: DataTypes.STRING, allowNull: false },
+      id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      subject: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      content: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      userId: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+      },
     },
-    { underscored: true },
+    {
+      sequelize,
+      underscored: true,
+      tableName: 'forum_threads',
+    },
   );
-
-User.hasMany(ForumThread, { foreignKey: { allowNull: false } });
-ForumThread.belongsTo(User, { foreignKey: { allowNull: false } });
-
-export { ForumThread };
+}
