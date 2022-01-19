@@ -2,8 +2,8 @@ import express, { Router } from 'express';
 import { ForumThreadAPI } from 'server/controllers/ForumThreadAPI';
 import { ForumThreadAttributes } from 'server/db/models/ForumThread';
 import { onlyAuthUserMiddleware } from 'server/middlewares/only-auth-user-middleware';
-import { validatorMiddleware } from 'server/middlewares/validator-middleware';
 import { checkUserInDbMiddleware } from 'server/middlewares/check-user-in-db-middleware';
+import { validatorMiddleware } from 'server/middlewares/validator-middleware';
 
 
 const jsonParser = express.json();
