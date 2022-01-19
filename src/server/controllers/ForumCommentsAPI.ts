@@ -6,16 +6,16 @@ import { commentService, userService } from '../db/services';
 export class ForumCommentsAPI {
   public static get = async (request: Request, response: Response) => {
     try {
-      const { offset, limit, forumId } = request.query;
+      const { forumId } = request.query;
+      console.log('test');
       const comments = await commentService.readAll({
         where: { forumThreadId: forumId },
-        limit: Number(limit),
-        offset: Number(offset),
         include: { all: true },
+        order: [['createdAt', 'ASC']],
       });
-
       response.status(HttpStatus.OK).json(comments);
     } catch (e: unknown) {
+      console.log(e);
       response.sendStatus(HttpStatus.InternalServerError);
     }
   };

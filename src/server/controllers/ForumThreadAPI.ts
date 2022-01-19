@@ -19,7 +19,7 @@ export class ForumThreadAPI {
 
   public static getById = async (request: Request, response: Response) => {
     const { id } = request.params;
-    const record = await forumThreadService.readById(Number(id));
+    const record = await forumThreadService.readById(Number(id), { include: { all: true } });
     response.status(HttpStatus.OK).json(record);
   };
 

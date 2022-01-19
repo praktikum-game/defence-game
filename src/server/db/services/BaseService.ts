@@ -19,8 +19,8 @@ export abstract class BaseService<T, D> {
     return this._model.findOne(options);
   }
 
-  readById(id: number) {
-    return this._model.findByPk(id);
+  readById(id: number, options?: FindOptions<T>) {
+    return this._model.findByPk(id, options);
   }
 
   create(data: D, options?: CreateOptions<T>) {

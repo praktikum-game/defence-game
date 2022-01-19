@@ -7,8 +7,8 @@ class ForumMessagesAPI extends BaseAPI {
     super('/comments', localBaseUrl);
   }
 
-  public fetchMessagesData(forumId: number, offset: number, limit: number = 10) {
-    return this.http.get<MessageModel[]>('', { params: { offset, limit, forumId } });
+  public fetchMessagesData(forumId: number) {
+    return this.http.get<MessageModel[]>('', { params: { forumId } });
   }
 
   public postNewMessage(

@@ -10,11 +10,7 @@ export const commentRoutes = (router: Router) => {
   router.get(
     `/comments`,
     validatorMiddleware<{ offset: number; limit: number; forumId: number }>(
-      [
-        { key: 'offset', validate: (value) => !isNaN(Number(value)), required: true },
-        { key: 'limit', validate: (value) => !isNaN(Number(value)), required: true },
-        { key: 'forumId', validate: (value) => !isNaN(Number(value)), required: true },
-      ],
+      [{ key: 'forumId', validate: (value) => !isNaN(Number(value)), required: true }],
       'query',
     ),
     ForumCommentsAPI.get,
