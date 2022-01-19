@@ -55,7 +55,8 @@ const ssrHtmlRenderMiddleware = () => {
     } else {
       store.getState().user.data = res.locals.user;
       try {
-        store.getState().theme.theme = await userService.getUserThemeName(res.locals.user.id);
+        store.getState().theme.theme =
+          (await userService.getUserThemeName(res.locals.user.id)) || 'light';
       } catch (e: unknown) {
         store.getState().theme.theme = 'light';
       }
