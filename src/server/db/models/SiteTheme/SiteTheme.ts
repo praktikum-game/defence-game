@@ -13,7 +13,10 @@ import {
 } from 'sequelize';
 import { User } from '../User';
 
-export class SiteTheme extends Model<SiteThemeAttributes, SiteThemeCreationAttributes> {
+export class SiteTheme
+  extends Model<SiteThemeAttributes, SiteThemeCreationAttributes>
+  implements SiteThemeAttributes
+{
   declare id: number;
 
   declare theme: string;
