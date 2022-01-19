@@ -20,7 +20,7 @@ export const Item = ({
   onRemoveClick,
   onEditClick,
 }: ThreadListItemProps): JSX.Element => {
-  const { id, messagesCount, content, subject, createdAt, updatedAt, user } = dataItem;
+  const { id, messagesCount, content, subject, createdAt, updatedAt, User } = dataItem;
 
   const handleEditClick = () => onEditClick(id);
 
@@ -39,7 +39,7 @@ export const Item = ({
           </Link>
           <p>{content}</p>
           <div>
-            Создана пользователем: {user.name} {formatter.format(new Date(createdAt))}
+            Создана пользователем: {User.name} {formatter.format(new Date(createdAt))}
           </div>
           <div>Последние изменения: {formatter.format(new Date(updatedAt))}</div>
         </div>

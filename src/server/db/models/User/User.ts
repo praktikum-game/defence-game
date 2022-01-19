@@ -8,7 +8,6 @@ import { UserAttributes } from 'shared/types/UserAttributes';
 const User: ModelDefined<UserAttributes, UserCreationAttributes> = sequelize.define(
   'User',
   {
-    // id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -18,10 +17,11 @@ const User: ModelDefined<UserAttributes, UserCreationAttributes> = sequelize.def
     },
     name: { type: DataTypes.STRING(255), allowNull: false },
     avatar: { type: DataTypes.TEXT, allowNull: true },
+    SiteThemeId: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 },
   },
   { underscored: true },
 );
-
-User.belongsTo(SiteTheme, { as: 'site_theme', foreignKey: { allowNull: true } });
+SiteTheme.hasMany(User);
+User.belongsTo(SiteTheme, { foreignKey: { allowNull: false } });
 
 export { User };

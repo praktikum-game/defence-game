@@ -5,7 +5,7 @@
   justify-content: space-between;
   border-top: #dcdcdc 1px solid;
   border-bottom: #dcdcdc 1px solid;
-  background-color: $forum-thread-item-background-color;
+  background-color: var(--forum-thread-item-bg-color);
   margin-bottom: 15px;
 
   &__item-content {

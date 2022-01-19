@@ -1,6 +1,12 @@
+import { Theme } from 'store/theme/types';
+
 export const backendStaticUrl = 'https://ya-praktikum.tech/api/v2/resources';
 export const LEADERBOARD_TEAM_NAME = 'defence-game';
 export const LEADERBOARD_EMPTY_USERNAME_PLACEHOLDER = '<unknown>';
+export const THEME_TYPES: Record<Theme, number> = {
+  dark: 2,
+  light: 1,
+};
 
 export enum InputNames {
   FIRST_NAME = 'first_name',

@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { HttpStatus } from 'server/http-statuses';
 import { userService } from '../db/services';
 
 export class UserAPI {
@@ -30,13 +31,20 @@ export class UserAPI {
   public static update = async (request: Request, response: Response) => {
     const { body, params } = request;
     const { praktikumId } = params;
-    if (!body.field || !body.value) {
-      return response.sendStatus(400);
+
+    if (Number(praktikumId) !== Number(response.locals.user.id)) {
+      return response.sendStatus(HttpStatus.Forbidden);
     }
+
+    if (!body.field || !body.value) {
+      return response.sendStatus(HttpStatus.BadRequest);
+    }
+
     try {
-      await userService.update({ praktikumId: Number(praktikumId) }, { [body.field]: body.value });
+      await userService.update({ id: Number(praktikumId) }, { [body.field]: body.value });
       response.sendStatus(204);
     } catch {
+      console.log('erro on call change theme api');
       return response.sendStatus(400);
     }
   };
@@ -44,7 +52,7 @@ export class UserAPI {
   public static delete = async (request: Request, response: Response) => {
     const { praktikumId } = request.params;
     try {
-      await userService.delete({ praktikumId: Number(praktikumId) });
+      await userService.delete({ id: Number(praktikumId) });
       response.sendStatus(204);
     } catch {
       return response.sendStatus(400);

@@ -17,19 +17,19 @@ export async function addTestSamples() {
     await userService.bulkCreate([
       {
         id: 123,
-        siteThemeId: lightTheme.getDataValue('id'),
         name: 'TestUser1',
         avatar: null,
+        SiteThemeId: 1,
       },
       {
         id: 2,
-        siteThemeId: darkTheme.getDataValue('id'),
         name: 'TestUser2',
+        SiteThemeId: 2,
       },
       {
         id: 3,
-        siteThemeId: darkTheme.getDataValue('id'),
         name: 'TestUser3',
+        SiteThemeId: 1,
       },
     ]);
   }
@@ -39,7 +39,7 @@ export async function addTestSamples() {
     await forumThreadService.create({
       content: 'ForumContent1',
       subject: 'ForumSubject1',
-      userId: user.getDataValue('id'),
+      UserId: user.getDataValue('id'),
     });
   }
   const forumThread = await forumThreadService.readOne();

@@ -1,0 +1,50 @@
+@import './light-vars.css';
+@import './dark-vars.css';
+
+.light_theme {
+  --page-header-bg: $light_page-header-bg;
+  --page-body-bg-dark: $light_page-body-bg-dark;
+  --page-body-bg-light: $light_page-body-bg-light;
+  --error-page-accent-color: $light_error-page-accent-color;
+  --text-color: $light_text-color;
+  --text-color-contrast: $light_text-color-contrast;
+  --primary-color: $light_primary-color;
+  --secondary-color: $light_secondary-color;
+  --page-container-bg: $light_page-container-bg;
+  --primary-bg: $light_primary-bg;
+  --default-bg: $light_default-bg;
+  --secondary-bg: $light_secondary-bg;
+  --main-page-header-bg: $light_main-page-header-bg;
+  --forum-thread-item-bg-color: $light_forum-thread-item-bg-color;
+  --error-text-color: $light_error-text-color;
+  --disabled-bg: $light_disabled-bg;
+  --input-label-color: $light_input-label-color;
+  --input-label-color-dark: $light_input-label-color-dark;
+  --input-text-color: $light_input-text-color;
+  --input-border-color: $light_input-border-color;
+  --info-btn-border-color: $light_info-btn-border-color;
+}
+
+.dark_theme {
+  --page-header-bg: $dark_page-header-bg;
+  --page-body-bg-dark: $dark_page-body-bg-dark;
+  --page-body-bg-light: $dark_page-body-bg-light;
+  --error-page-accent-color: $dark_error-page-accent-color;
+  --text-color: $dark_text-color;
+  --text-color-contrast: $dark_text-color-contrast;
+  --primary-color: $dark_primary-color;
+  --secondary-color: $dark_secondary-color;
+  --page-container-bg: $dark_page-container-bg;
+  --primary-bg: $dark_primary-bg;
+  --default-bg: $dark_default-bg;
+  --secondary-bg: $dark_secondary-bg;
+  --main-page-header-bg: $dark_main-page-header-bg;
+  --forum-thread-item-bg-color: $dark_forum-thread-item-bg-color;
+  --error-text-color: $dark_error-text-color;
+  --disabled-bg: $dark_disabled-bg;
+  --input-label-color: $dark_input-label-color;
+  --input-label-color-dark: $dark_input-label-color-dark;
+  --input-text-color: $dark_input-text-color;
+  --input-border-color: $dark_input-border-color;
+  --info-btn-border-color: $dark_info-btn-border-color;
+}

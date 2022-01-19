@@ -1,20 +1,21 @@
 import React from 'react';
 import block from 'bem-cn';
 import { Link } from 'react-router-dom';
+
 import { AppNavigation } from '../../components/AppNavigation';
 import { Button } from '../../components/Button';
-import './homePage.css';
 import { Logo } from '../../components/Logo';
 import hobart from './static/hobart.svg';
 import { Title } from '../../components/Title';
+import { useOAuth } from '../../hooks/useOAuth';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../store';
 
 import medic from './static/medic.png';
 import viruses from './static/viruses.png';
 import bankomat from './static/bankomat.png';
 
-import { useOAuth } from '../../hooks/useOAuth';
-import { useSelector } from 'react-redux';
-import { AppState } from '../../store';
+import './homePage.css';
 
 const b = block('home-page');
 const h = block('main-header');

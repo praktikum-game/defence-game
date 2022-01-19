@@ -7,10 +7,13 @@ import { ThunkExtraArgument } from './types';
 import { authAPI } from '../api/auth';
 import { leaderboardAPI } from '../api/leaderboard';
 import { usersAPI } from '../api/users';
+import { themeReducer } from './theme';
+import { usersDbAPI } from 'api/db-users';
 
 export const rootReducer = combineReducers({
   user: userReducer,
   leaderboard: leaderboardReducer,
+  theme: themeReducer,
 });
 
 export function configureStore(initialState = {}) {
@@ -19,6 +22,7 @@ export function configureStore(initialState = {}) {
       auth: authAPI,
       leaderboard: leaderboardAPI,
       users: usersAPI,
+      dbUsers: usersDbAPI,
     },
   };
 

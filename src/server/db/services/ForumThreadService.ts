@@ -18,29 +18,10 @@ class ForumThreadService extends BaseService<ForumThreadAttributes, ForumThreadC
     return ForumThread.findAll({
       offset: Number(offset),
       limit: Number(limit),
-      include: 'user',
+      include: 'User',
 
       attributes: {
         include: [
-          // Не знаю, как сделать подзапрос с несколькими полями
-          // [
-          //   literal(`(
-          //     SELECT avatar
-          //     FROM users 
-          //     WHERE 
-          //       users.id= "${ForumThread.name}".user_id
-          //   )`),
-          //   'userAvatar',
-          // ],
-          // [
-          //   literal(`(
-          //     SELECT name
-          //     FROM users 
-          //     WHERE 
-          //       users.id= "${ForumThread.name}".user_id
-          //   )`),
-          //   'userName',
-          // ],
           [
             literal(`(
                 SELECT COUNT(*)

@@ -1,20 +1,22 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppRoutes } from '../AppRoutes';
-import { getUserData } from '../../store/user/actions/action-creators';
 
 import './App.css';
 import '../../utilities/common.css';
+import { AppState } from 'store';
+import { ThemeSwitcher } from 'components/ThemeSwitcher';
+import { switchTheme } from 'store/theme/actions/action-creators';
 
 export const App = () => {
+  const theme = useSelector((state: AppState) => state.theme.theme);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getUserData());
-  }, [dispatch]);
+  const handleClick = useCallback(() => dispatch(switchTheme()), [dispatch]);
 
   return (
-    <div className="App">
+    <div className={`App ${theme}_theme`}>
       <AppRoutes />
+      <ThemeSwitcher theme={theme} onClick={handleClick} />
     </div>
   );
 };
