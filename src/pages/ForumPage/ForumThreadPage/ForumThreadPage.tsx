@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import block from 'bem-cn';
 
 import { PageContainer } from '../../../components/PageContainer';
-import { MessageItem, messagesAPI } from '../../../api/forum-messages';
+import { messagesAPI } from '../../../api/forum-messages';
 import { Header } from '../../../components/Header';
 import { Title } from '../../../components/Title';
 import { MessagesList } from '../components/MessagesList';
@@ -12,10 +12,11 @@ import { InputField } from '../../../components/InputField';
 import './forum-thread-page.css';
 import { getHistory } from 'utilities/history';
 import { MessageModel } from 'api/forum-messages/types';
-import { ForumItem } from './types';
+import { ForumItem, MessageItem } from './types';
 import { useAuthUser } from 'hooks/useAuthUser';
 import { isServer } from 'utilities';
 import { UpsertMessageModal } from './UpsertMessageModal';
+import { ForumThreadModel, forumTopicsAPI } from 'api/forum-topics';
 
 const b = block('thread-page');
 
@@ -36,21 +37,22 @@ function parseMessagesItem(data: MessageModel[]) {
   return parsed;
 }
 
-function parseThreadItem(data: MessageModel[]) {
-  const { subject, content, createdAt, userId, id } = data[0].forum_thread;
-  const userName = data.filter((el) => el.user.id === userId)[0].user.name;
-  return { subject, content, createdAt: new Date(createdAt), userId, id, userName };
+function parseThreadItem(data: ForumThreadModel) {
+  const { subject, content, createdAt, userId, id, user } = data;
+  return { subject, content, createdAt: new Date(createdAt), userId, id, userName: user.name };
 }
 
 export const ForumThreadPage = () => {
-  const [messages, setMessages] = useState<MessageItem[]>([]);
+  const [rootMessages, setRootMessages] = useState<MessageItem[]>([]);
+  const [replyMessages, setReplyMessages] = useState<{ [key in number]: MessageItem[] }>([]);
+
   const [forumThread, setForumThread] = useState<ForumItem>({
     id: 0,
-    subject: 'Данных нет',
-    content: 'Данных нет',
+    subject: '',
+    content: 'Данные загружаются. Пожалуйста, подождите',
     createdAt: new Date(Date.now()),
     userId: 0,
-    userName: 'Данных нет',
+    userName: '',
   });
   const [currentMessage, setCurrentMessage] = useState<string>('');
   const [modalMessage, setModalMessage] = useState<string>('');
@@ -78,28 +80,28 @@ export const ForumThreadPage = () => {
           console.log(`Couldn't get proper forumId`);
           return;
         }
-        const data = await messagesAPI.fetchMessagesData(forumId, 0, 1000);
-        setMessages(parseMessagesItem(data.data));
-        setForumThread(parseThreadItem(data.data));
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.log(e);
-        setMessages([]);
+        const data = await messagesAPI.fetchMessagesData(forumId);
+        const forumData = await forumTopicsAPI.fetchById(forumId);
+        const parsedMessages = parseMessagesItem(data.data);
+        const parsedRootMessages = parsedMessages.filter(
+          (message: MessageItem) => message.replyCommentId === null,
+        );
+        const defaultValue: { [key in number]: MessageItem[] } = {};
+        const newReplyMessages = parsedRootMessages.reduce((prev, rootMessage) => {
+          prev[rootMessage.id] = parsedMessages.filter(
+            (replyMessage: MessageItem) => rootMessage.id === replyMessage.replyCommentId,
+          );
+          return prev;
+        }, defaultValue);
+
+        setReplyMessages(newReplyMessages);
+        setRootMessages(parsedRootMessages);
+        setForumThread(parseThreadItem(forumData.data));
+      } finally {
       }
     }
     getData();
-  }, [forumId, setMessages, setForumThread]);
-
-  // useEffect(() => {
-  //   console.log('Sorted!!!!');
-  //   const newArray = [...messages];
-  //   console.log(newArray);
-  //   newArray.sort(
-  //     (left, right) => left.createdAt.getMilliseconds() - right.createdAt.getMilliseconds(),
-  //   );
-  //   console.log(newArray);
-  //   setMessages(newArray);
-  // }, [messages, setMessages]);
+  }, [forumId, setRootMessages, setForumThread, setReplyMessages]);
 
   const handleInputMessageText: React.ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
     setCurrentMessage(e.target.value);
@@ -111,27 +113,40 @@ export const ForumThreadPage = () => {
     setAddModalIsVisible(false);
   }, []);
 
-  const handleSendMessageClick = useCallback(async () => {
-    try {
-      const data = await messagesAPI.postNewMessage(currentMessage, forumThread.id, replyMessageId);
-      const { id, createdAt, replyCommentId, content } = data.data;
-      setMessages((prev) => [
-        ...prev,
-        {
+  const handleSendMessageClick = useCallback(
+    async (inputMessage: string) => {
+      try {
+        const data = await messagesAPI.postNewMessage(inputMessage, forumThread.id, replyMessageId);
+        const { id, createdAt, replyCommentId, content } = data.data;
+        const newMessage: MessageItem = {
           id,
           content,
           createdAt: new Date(createdAt),
           replyCommentId,
           user: { id: userData!.id, avatar: userData!.avatar, name: userData!.login },
-        },
-      ]);
-      handleCloseAddModal();
-      setCurrentMessage('');
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log(e);
-    }
-  }, [currentMessage, userData, forumThread.id, replyMessageId, handleCloseAddModal]);
+        };
+
+        if (replyCommentId === null) {
+          setReplyMessages((prev) => {
+            prev[id] = [];
+            return prev;
+          });
+          setRootMessages((prev) => [...prev, newMessage]);
+        } else {
+          setReplyMessages((prev) => {
+            prev[replyCommentId].push(newMessage);
+            return prev;
+          });
+        }
+        handleCloseAddModal();
+        setCurrentMessage('');
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log(e);
+      }
+    },
+    [userData, forumThread.id, replyMessageId, handleCloseAddModal],
+  );
 
   const handleChangeField = useCallback((value: string) => {
     setModalMessage(value);
@@ -148,7 +163,7 @@ export const ForumThreadPage = () => {
         data={modalMessage}
         visible={addModalIsVisible}
         onClose={handleCloseAddModal}
-        onSaveData={handleSendMessageClick}
+        onSaveData={() => handleSendMessageClick(modalMessage)}
         onChange={handleChangeField}
       />
 
@@ -162,17 +177,49 @@ export const ForumThreadPage = () => {
           <MessagesList.Message
             messageData={{
               date: forumThread.createdAt,
-              text: forumThread.content,
-              user: forumThread.userName,
+              content: forumThread.content,
+              userName: forumThread.userName,
+              userAvatar: null,
             }}
           />
-          {messages.map((el) => (
-            <MessagesList.Message
-              key={el.id}
-              messageData={{ date: el.createdAt, text: el.content, user: el.user.name }}
-              replyClick={() => handleReplyMessageClick(el.id)}
-            />
-          ))}
+          {rootMessages.map((el: MessageItem) => {
+            const currentReplies = replyMessages[el.id];
+            const rootMessage = (
+              <MessagesList.Message
+                key={JSON.stringify(el)}
+                messageData={{
+                  date: el.createdAt,
+                  content: el.content,
+                  userName: el.user.name,
+                  userAvatar: el.user.avatar,
+                }}
+                replyClick={() => handleReplyMessageClick(el.id)}
+              />
+            );
+            if (currentReplies.length > 0) {
+              const withReplies = currentReplies.map((replyMessage) => (
+                <MessagesList.Message
+                  // React ругается, что не уникальный key. Что может быть не так?
+                  // Не могу сделать уникальным
+                  key={JSON.stringify(replyMessage)}
+                  messageData={{
+                    date: replyMessage.createdAt,
+                    content: replyMessage.content,
+                    userName: replyMessage.user.name,
+                    userAvatar: replyMessage.user.avatar,
+                  }}
+                  isReply={true}
+                />
+              ));
+              return (
+                <>
+                  {rootMessage}
+                  {withReplies}
+                </>
+              );
+            }
+            return rootMessage;
+          })}
         </MessagesList>
         <div>
           <InputField
@@ -183,7 +230,7 @@ export const ForumThreadPage = () => {
           <Button
             disabled={!currentMessage || !userData}
             text="Отправить"
-            onClick={() => handleSendMessageClick()}
+            onClick={() => handleSendMessageClick(currentMessage)}
           />
         </div>
       </PageContainer>

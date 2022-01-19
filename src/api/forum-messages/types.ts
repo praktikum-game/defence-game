@@ -2,7 +2,7 @@ export type MessageModel = {
   content: string;
   createdAt: string;
   id: number;
-  replyCommentId: number;
+  replyCommentId: number | null;
   user: {
     avatar: string | null;
     name: string;

@@ -1,8 +1,8 @@
 import { MouseEventHandler } from 'react';
-import { MessageItem } from '../../../../../api/forum-messages';
 
 export type MessageItemProps = {
   className?: string;
-  messageData: MessageItem;
+  messageData: { date: Date; content: string; userName: string; userAvatar: string | null };
   replyClick?: MouseEventHandler<HTMLButtonElement>;
+  isReply?: boolean;
 };

@@ -1,2 +1,2 @@
 export { messagesAPI } from './ForumMessagesAPI';
-export { MessageItem } from './types';
+export { MessageModel } from './types';
