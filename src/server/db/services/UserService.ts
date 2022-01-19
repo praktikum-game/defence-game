@@ -15,7 +15,7 @@ class UserService extends BaseService<UserAttributes, UserCreationAttributes> {
   getUserThemeName(id: number): Promise<Theme | null> {
     return (
       User.findByPk(id)
-        //@ts-ignore
+        //@ts-expect-error
         .then((user) => user.getSiteTheme())
         .then((siteTheme) => siteTheme.theme)
         .catch(() => null)
