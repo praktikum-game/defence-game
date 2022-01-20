@@ -1,6 +1,7 @@
 import { resources } from '../GameResourses';
 import { SyringeBullet } from '../Bullets/SyringeBullet';
 import { Defender } from './Defender';
+import { FIELD_CELL_HEIGHT, FIELD_CELL_WIDTH } from 'game/consts';
 
 export class NurseDefender extends Defender {
   public static bullet = SyringeBullet;
@@ -16,8 +17,8 @@ export class NurseDefender extends Defender {
       bullet: NurseDefender.bullet,
       x,
       y,
-      width: 80,
-      height: 80,
+      width: FIELD_CELL_WIDTH,
+      height: FIELD_CELL_HEIGHT,
       imageUrl: NurseDefender.imageUrl,
       health: 100,
       damage: 9,

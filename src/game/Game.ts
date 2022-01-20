@@ -5,6 +5,7 @@ import { GameResources } from './GameResourses';
 import { AtackTimingType, EndGameCallback, LevelIndextype } from './types';
 import { DefendersPannel } from './DefendersPannel/index';
 import {
+  ASSETS_PATH,
   BANKOMAT_CURRENCY,
   CURRENCY_RISE_INTERVAL,
   CURRENCY_RISE_VALUE,
@@ -53,6 +54,8 @@ export class Game {
 
   private _topPannel: TopPannel;
 
+  private _background: HTMLImageElement;
+
   private _timefromLastAtack: number = 0;
 
   private _atackTiming: AtackTimingType[] = [];
@@ -78,21 +81,22 @@ export class Game {
     this._isRunning = false;
     this._currency = new GameCurrency(0, CURRENCY_RISE_VALUE, CURRENCY_RISE_INTERVAL);
 
-    this._defendersPannel = new DefendersPannel();
-    this._defendersPannel.init();
+    this._defendersPannel = new DefendersPannel(20, 200, 110, 300);
 
     TopPannel.pannelWidth = TOPPANNEL_CELL_WIDTH * TOPPANNEL_CELL_COUNT;
     TopPannel.pannelHeight = TOPPANNEL_CELL_HEIGHT * TOPPANNEL_ROWS_COUNT;
-    TopPannel.pannelX = DefendersPannel.pannelWidth;
+    TopPannel.pannelX = 200;
     TopPannel.pannelY = 0;
 
-    GameField.gameFieldWidth = FIELD_CELL_WIDTH * FIELD_COLS;
-    GameField.gameFieldHeight = FIELD_CELL_HEIGHT * FIELD_ROWS;
-    GameField.gameFieldX = DefendersPannel.pannelWidth;
-    GameField.gameFieldY = TopPannel.pannelHeight;
+    GameField.gameFieldX = 150; //DefendersPannel.pannelWidth;
+    GameField.gameFieldY = 200; //TopPannel.pannelHeight;
+    GameField.gameFieldWidth = FIELD_CELL_WIDTH * FIELD_COLS + GameField.gameFieldX;
+    GameField.gameFieldHeight = FIELD_CELL_HEIGHT * FIELD_ROWS + GameField.gameFieldY;
 
-    canvasEl.width = DefendersPannel.pannelWidth + GameField.gameFieldWidth - FIELD_CELL_WIDTH + 1;
-    canvasEl.height = TopPannel.pannelHeight + GameField.gameFieldHeight + 1;
+    canvasEl.width = 800; //DefendersPannel.pannelWidth + GameField.gameFieldWidth - FIELD_CELL_WIDTH + 1;
+    canvasEl.height = 600; //TopPannel.pannelHeight + GameField.gameFieldHeight + 1;
+    this._background = new Image();
+    this._background.src = ASSETS_PATH + '/game_background_4.png';
     this._canvasElement = canvasEl;
 
     this._onGameEnd = onGameEnd;
@@ -218,10 +222,10 @@ export class Game {
 
   private _checkArea = (x: number, y: number) => {
     if (
-      x > DefendersPannel.pannelX &&
-      x < DefendersPannel.pannelX + DefendersPannel.pannelWidth &&
-      y > DefendersPannel.pannelY &&
-      y < DefendersPannel.pannelY + DefendersPannel.pannelHeight
+      x > this._defendersPannel.x &&
+      x < this._defendersPannel.x + this._defendersPannel.width &&
+      y > this._defendersPannel.y &&
+      y < this._defendersPannel.y + this._defendersPannel.height
     ) {
       return 'DefendersPannel';
     }
@@ -321,7 +325,7 @@ export class Game {
   };
 
   private _checkActiveDefenders(currency: number) {
-    this._defendersPannel.grid?.pannelGrid.forEach((cell) => {
+    this._defendersPannel.grid?.gridItems.forEach((cell) => {
       if (cell.sprite && cell.sprite.type) {
         const { type: defender } = cell.sprite;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -334,11 +338,27 @@ export class Game {
         cell.sprite.redraw();
       }
     });
+    /// все забеляет
+    this._defendersPannel.draw(this._ctx);
   }
 
   private redraw(delay: number) {
     if (!this._isRunning) return;
 
+    this._ctx.clearRect(
+      GameField.gameFieldX,
+      GameField.gameFieldY,
+      GameField.gameFieldWidth,
+      GameField.gameFieldHeight,
+    );
+
+    this._ctx.drawImage(
+      this._background,
+      0,
+      0,
+      this._canvasElement.width,
+      this._canvasElement.height,
+    );
     this._checkNextAtack(delay);
     if (this._currency.autoRise(delay)) {
       this._putCurrency();
@@ -391,12 +411,6 @@ export class Game {
       }
     }
 
-    this._ctx.clearRect(
-      GameField.gameFieldX,
-      GameField.gameFieldY,
-      GameField.gameFieldWidth,
-      GameField.gameFieldHeight,
-    );
     this.enemies.forEach((enemy) => enemy.update(delay).draw(this._ctx));
 
     this.defenders.forEach((d) => {

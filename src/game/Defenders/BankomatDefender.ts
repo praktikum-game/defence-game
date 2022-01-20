@@ -1,3 +1,4 @@
+import { FIELD_CELL_HEIGHT, FIELD_CELL_WIDTH } from 'game/consts';
 import { resources } from '../GameResourses';
 import { Defender } from './Defender';
 
@@ -18,8 +19,8 @@ export class BankomatDefender extends Defender {
     super({
       x,
       y,
-      width: 80,
-      height: 80,
+      width: FIELD_CELL_WIDTH,
+      height: FIELD_CELL_HEIGHT,
       imageUrl: BankomatDefender.imageUrl,
       health: 50,
       damage: 25,

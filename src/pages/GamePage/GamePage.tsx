@@ -127,12 +127,7 @@ export const GamePage = () => {
             <Button text="Домой" view="secondary" onClick={handleRedirectToHomeClick} />
           </div>
         </Modal>
-        <canvas
-          className={b('game', { fullscreen: isFullscreen })}
-          ref={canvasRef}
-          height="200"
-          width="200"
-        ></canvas>
+        <canvas className={b('game', { fullscreen: isFullscreen })} ref={canvasRef}></canvas>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import { FIELD_CELL_HEIGHT, FIELD_CELL_WIDTH } from 'game/consts';
 import { BluePillBullet } from '../Bullets/BluePillBullet';
 import { resources } from '../GameResourses';
 import { Defender } from './Defender';
@@ -16,8 +17,8 @@ export class DoctorDefender extends Defender {
       bullet: DoctorDefender.bullet,
       x,
       y,
-      width: 80,
-      height: 80,
+      width: FIELD_CELL_WIDTH,
+      height: FIELD_CELL_HEIGHT,
       imageUrl: DoctorDefender.imageUrl,
       health: 250,
       damage: 50,

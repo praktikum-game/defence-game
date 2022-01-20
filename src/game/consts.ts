@@ -1,5 +1,5 @@
-export const FIELD_CELL_WIDTH = 80;
-export const FIELD_CELL_HEIGHT = 80;
+export const FIELD_CELL_WIDTH = 60;
+export const FIELD_CELL_HEIGHT = 60;
 export const FIELD_ROWS = 5;
 export const FIELD_COLS = 10;
 

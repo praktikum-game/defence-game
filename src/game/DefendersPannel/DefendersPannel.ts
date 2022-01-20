@@ -1,62 +1,61 @@
 import { Defender } from '../Defenders/Defender';
-import { Constructable } from '../interfaces';
-import {
-  DEFPANNEL_CELL_COUNT,
-  DEFPANNEL_CELL_HEIGHT,
-  DEFPANNEL_CELL_WIDTH,
-  DEFPANNEL_ROWS_COUNT,
-  TOPPANNEL_CELL_HEIGHT,
-  TOPPANNEL_ROWS_COUNT,
-} from '../consts';
+import { Constructable, Drawable } from '../interfaces';
+import { DEFPANNEL_CELL_HEIGHT, DEFPANNEL_CELL_WIDTH } from '../consts';
 import { Grid } from './Grid';
 import { levels } from '../Levels';
 import { Sprite } from './Sprite';
+import { BaseGameObject } from 'game/BaseGameObject';
 
-export class DefendersPannel {
-  public static pannelWidth = 0;
-
-  public static pannelHeight = 0;
-
-  public static pannelX = 0;
-
-  public static pannelY = 0;
-
+export class DefendersPannel extends BaseGameObject implements Drawable {
   private _grid: Grid | null = null;
 
-  public init() {
-    DefendersPannel.pannelWidth = DEFPANNEL_CELL_WIDTH * DEFPANNEL_CELL_COUNT;
-    DefendersPannel.pannelHeight = DEFPANNEL_CELL_HEIGHT * DEFPANNEL_ROWS_COUNT;
-    DefendersPannel.pannelX = 0;
-    DefendersPannel.pannelY = TOPPANNEL_CELL_HEIGHT * TOPPANNEL_ROWS_COUNT;
-
-    this._createGrid();
-  }
-
-  private _createGrid() {
+  constructor(x: number = 0, y: number = 0, width: number = 0, height: number = 0) {
+    super(x, y, width, height);
     this._grid = new Grid({
-      gridWidth: DefendersPannel.pannelWidth,
-      gridHeight: DefendersPannel.pannelHeight,
-      gridX: DefendersPannel.pannelX,
-      gridY: DefendersPannel.pannelY,
+      gridWidth: this.width - 10,
+      gridHeight: this.height - 10,
+      gridX: this.x + 10,
+      gridY: this.y + 10,
       cellWidth: DEFPANNEL_CELL_WIDTH,
-      cellHeight: DEFPANNEL_CELL_HEIGHT,
+      cellHeight: DEFPANNEL_CELL_HEIGHT + 10,
     });
   }
 
+  // public init() {
+  //   DefendersPannel.pannelWidth = DEFPANNEL_CELL_WIDTH * DEFPANNEL_CELL_COUNT;
+  //   DefendersPannel.pannelHeight = 5 * 60; //DEFPANNEL_CELL_HEIGHT * DEFPANNEL_ROWS_COUNT;
+  //   DefendersPannel.pannelX = 10;
+  //   DefendersPannel.pannelY = 200;
+
+  //   this._createGrid();
+  // }
+
+  // private _createGrid() {
+
+  // }
+
   public get grid() {
-    if (!this._grid) {
-      this._createGrid();
-    }
+    // if (!this._grid) {
+    //   this._createGrid();
+    // }
     return this._grid;
   }
 
   public draw = (ctx: CanvasRenderingContext2D) => {
+    ctx.clearRect(this.x, this.y, this.width, this.height);
+    ctx.fillStyle = 'rgba(255,99,71, 0.3)';
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+
     this._grid!.draw(ctx);
+    ctx.strokeStyle = 'white';
+
+    ctx.strokeRect(this.x, this.y, this.width, this.height);
+    ctx.restore();
   };
 
   public placeSprites = (ctx: CanvasRenderingContext2D, gameLvl: number) => {
     const levelDefenders: Constructable<Defender>[] = levels.getLevelDefenders(gameLvl);
-    this._grid!.pannelGrid.forEach((g, i) => {
+    this._grid!.gridItems.forEach((g, i) => {
       if (i < levelDefenders.length) {
         const lvlDefender = levelDefenders[i];
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -71,7 +70,7 @@ export class DefendersPannel {
   public onClick(x: number, y: number) {
     let result = null;
 
-    this._grid?.pannelGrid.forEach((cell) => {
+    this._grid?.gridItems.forEach((cell) => {
       // определяем, входят ли координаты клика в периметр текущей ячейки
       if (cell.x < x && cell.x + cell.width > x && cell.y < y && cell.y + cell.height > y) {
         if (cell.sprite && cell.sprite.isActive) result = cell.sprite.onClick();

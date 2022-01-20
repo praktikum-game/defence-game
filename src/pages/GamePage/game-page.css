@@ -2,10 +2,12 @@
   position: relative;
 
   &_fullscreen {
-    background: var(----page-body-bg-dark);
+    background: var(--page-body-bg-dark);
   }
 
   &__game {
+    box-shadow: 0 0 20px 10px tomato;
+    border-radius: 10px;
     &_fullscreen {
       position: absolute;
       left: 50%;
@@ -16,7 +18,7 @@
 }
 
 .game-page {
-  margin-top: 40px;
-  background: var(--main-page-header-bg);
-  border: 5px solid var(--main-page-header-bg);
+  margin-top: 80px;
+  /* background: var(--main-page-header-bg); */
+  /* border: 5px solid var(--main-page-header-bg); */
 }

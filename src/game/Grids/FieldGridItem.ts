@@ -8,6 +8,10 @@ export class FieldGridItem extends BaseGameObject implements Drawable {
   }
 
   draw(context: CanvasRenderingContext2D) {
+    // console.log('before clear');
+    // context.clearRect(this.x, this.y, this.width, this.height);
+    // console.log('after clear');
+
     context.strokeStyle = 'white';
     context.strokeRect(this.x, this.y, this.width, this.height);
   }
