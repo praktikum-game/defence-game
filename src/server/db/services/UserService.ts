@@ -3,7 +3,7 @@ import { Theme } from 'store/theme/types';
 import { User, UserCreationAttributes } from '../models/User';
 import { BaseService } from './BaseService';
 
-class UserService extends BaseService<UserAttributes, UserCreationAttributes> {
+class UserService extends BaseService<UserAttributes, UserCreationAttributes, User> {
   constructor() {
     super(User);
   }

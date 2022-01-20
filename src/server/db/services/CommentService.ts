@@ -1,7 +1,7 @@
 import { CommentAttributes, CommentCreationAttributes, Comment } from '../models/Comment';
 import { BaseService } from './BaseService';
 
-class CommentService extends BaseService<CommentAttributes, CommentCreationAttributes> {
+class CommentService extends BaseService<CommentAttributes, CommentCreationAttributes, Comment> {
   constructor() {
     super(Comment);
   }

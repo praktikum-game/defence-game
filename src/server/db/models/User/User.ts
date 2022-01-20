@@ -1,4 +1,11 @@
-import { DataTypes, Sequelize, Model, Association, HasManyCreateAssociationMixin } from 'sequelize';
+import {
+  DataTypes,
+  Sequelize,
+  Model,
+  Association,
+  HasManyCreateAssociationMixin,
+  BelongsToGetAssociationMixin,
+} from 'sequelize';
 
 import { UserCreationAttributes } from './types';
 import { SiteTheme } from '../SiteTheme';
@@ -16,6 +23,8 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   declare siteThemeId: number;
 
   declare createForumThread: HasManyCreateAssociationMixin<ForumThread>;
+
+  declare getSiteTheme: BelongsToGetAssociationMixin<SiteTheme>;
 
   declare static associations: {
     siteTheme: Association<User, SiteTheme>;
