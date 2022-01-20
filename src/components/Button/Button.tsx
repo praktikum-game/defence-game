@@ -17,10 +17,7 @@ export const Button = ({
   ...props
 }: ButtonProps) => (
   <button
-    className={b
-      .mix(viewTypes[view])
-      .mix(b({ small: isSmall }))
-      .mix(className)}
+    className={b({ small: isSmall }).mix(viewTypes[view]).mix(className)}
     disabled={loading || disabled}
     {...props}
   >

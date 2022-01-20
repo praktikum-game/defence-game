@@ -1,13 +1,12 @@
 import { UserData } from 'api/auth';
 import { Request, Response } from 'express';
 import { HttpStatus } from 'server/http-statuses';
-import { commentService, userService } from '../db/services';
+import { commentService } from '../db/services';
 
 export class ForumCommentsAPI {
   public static get = async (request: Request, response: Response) => {
     try {
       const { forumId } = request.query;
-      console.log('test');
       const comments = await commentService.readAll({
         where: { forumThreadId: forumId },
         include: { all: true },
@@ -15,7 +14,6 @@ export class ForumCommentsAPI {
       });
       response.status(HttpStatus.OK).json(comments);
     } catch (e: unknown) {
-      console.log(e);
       response.sendStatus(HttpStatus.InternalServerError);
     }
   };
@@ -23,14 +21,6 @@ export class ForumCommentsAPI {
   public static create = async (request: Request, response: Response) => {
     try {
       const userData: UserData = response.locals.user;
-      const user = await userService.readById(userData.id);
-      if (user === null) {
-        await userService.create({
-          id: Number(userData.id),
-          name: userData.login,
-          avatar: userData.avatar,
-        });
-      }
       const { body } = request;
       const created = await commentService.create({
         ...body,

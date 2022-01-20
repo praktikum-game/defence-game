@@ -5,9 +5,7 @@ import { onlyAuthUserMiddleware } from 'server/middlewares/only-auth-user-middle
 import { checkUserInDbMiddleware } from 'server/middlewares/check-user-in-db-middleware';
 import { validatorMiddleware } from 'server/middlewares/validator-middleware';
 
-
 const jsonParser = express.json();
-const autoAddUser = checkUserInDbMiddleware();
 
 export const threadRoutes = (router: Router) => {
   router.get(
@@ -35,7 +33,7 @@ export const threadRoutes = (router: Router) => {
     [
       jsonParser,
       onlyAuthUserMiddleware,
-      autoAddUser,
+      checkUserInDbMiddleware,
       validatorMiddleware<ForumThreadAttributes>([
         { key: 'subject', validate: (value) => typeof value === 'string', required: true },
         { key: 'content', validate: (value) => typeof value === 'string', required: true },

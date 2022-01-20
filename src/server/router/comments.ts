@@ -1,6 +1,7 @@
 import express, { Router } from 'express';
 import { ForumCommentsAPI } from 'server/controllers/ForumCommentsAPI';
 import { CommentAttributes } from 'server/db/models/Comment';
+import { checkUserInDbMiddleware } from 'server/middlewares/check-user-in-db-middleware';
 import { onlyAuthUserMiddleware } from 'server/middlewares/only-auth-user-middleware';
 import { validatorMiddleware } from 'server/middlewares/validator-middleware';
 
@@ -20,6 +21,7 @@ export const commentRoutes = (router: Router) => {
     `/comments`,
     [
       onlyAuthUserMiddleware,
+      checkUserInDbMiddleware,
       jsonParser,
       validatorMiddleware<CommentAttributes>([
         { key: 'content', validate: (value) => typeof value === 'string', required: true },
@@ -33,6 +35,7 @@ export const commentRoutes = (router: Router) => {
     '/comments/:id',
     [
       onlyAuthUserMiddleware,
+      checkUserInDbMiddleware,
       jsonParser,
       validatorMiddleware<CommentAttributes>(
         [
@@ -53,6 +56,7 @@ export const commentRoutes = (router: Router) => {
   router.delete(
     '/comments/:id',
     onlyAuthUserMiddleware,
+    checkUserInDbMiddleware,
     validatorMiddleware<CommentAttributes>(
       [{ key: 'id', validate: (value) => !isNaN(Number(value)), required: true }],
       'params',

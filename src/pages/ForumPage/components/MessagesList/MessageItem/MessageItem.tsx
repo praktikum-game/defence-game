@@ -29,7 +29,7 @@ export const MessageItem = ({ className, messageData, replyClick, isReply }: Mes
   }, [setAvatarSrc, userAvatar]);
 
   return (
-    <div className={b.mix(className, b({ reply: isReply }))}>
+    <div className={b({ reply: isReply }).mix(className)}>
       <div className={b('item-content')}>
         {avatarSrc === undefined ? (
           <Avatar className={bItem('avatar')} />
@@ -48,7 +48,7 @@ export const MessageItem = ({ className, messageData, replyClick, isReply }: Mes
             <p className={bItem('text')}>{content}</p>
           </div>
           {replyClick !== undefined ? (
-            <Button text="Ответить" onClick={replyClick} isSmall={true}></Button>
+            <Button text="Ответить в ветке" onClick={replyClick} isSmall={true}></Button>
           ) : undefined}
         </div>
       </div>

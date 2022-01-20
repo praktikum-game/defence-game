@@ -16,30 +16,15 @@ import { ForumItem, MessageItem } from './types';
 import { useAuthUser } from 'hooks/useAuthUser';
 import { isServer } from 'utilities';
 import { UpsertMessageModal } from './UpsertMessageModal';
-import { ForumThreadModel, forumTopicsAPI } from 'api/forum-topics';
+import { forumTopicsAPI } from 'api/forum-topics';
 
 const b = block('thread-page');
 
 function parseMessagesItem(data: MessageModel[]) {
-  const parsed: MessageItem[] = [];
-
   for (const message of data) {
-    const { content, createdAt, id, replyCommentId, user } = message;
-    const { id: userId, avatar, name } = user;
-    parsed.push({
-      id,
-      content,
-      createdAt: new Date(createdAt),
-      replyCommentId,
-      user: { id: userId, avatar, name },
-    });
+    delete message.forum_thread;
   }
-  return parsed;
-}
-
-function parseThreadItem(data: ForumThreadModel) {
-  const { subject, content, createdAt, userId, id, user } = data;
-  return { subject, content, createdAt: new Date(createdAt), userId, id, userName: user.name };
+  return data;
 }
 
 export const ForumThreadPage = () => {
@@ -49,10 +34,12 @@ export const ForumThreadPage = () => {
   const [forumThread, setForumThread] = useState<ForumItem>({
     id: 0,
     subject: '',
-    content: 'Данные загружаются. Пожалуйста, подождите',
-    createdAt: new Date(Date.now()),
-    userId: 0,
-    userName: '',
+    content: '',
+    createdAt: '',
+    UserId: 0,
+    User: { id: 0, name: '', SiteThemeId: 1, createdAt: '', updatedAt: '' },
+    messagesCount: 0,
+    updatedAt: '',
   });
   const [currentMessage, setCurrentMessage] = useState<string>('');
   const [modalMessage, setModalMessage] = useState<string>('');
@@ -96,7 +83,7 @@ export const ForumThreadPage = () => {
 
         setReplyMessages(newReplyMessages);
         setRootMessages(parsedRootMessages);
-        setForumThread(parseThreadItem(forumData.data));
+        setForumThread(forumData.data);
       } finally {
       }
     }
@@ -121,7 +108,7 @@ export const ForumThreadPage = () => {
         const newMessage: MessageItem = {
           id,
           content,
-          createdAt: new Date(createdAt),
+          createdAt: createdAt,
           replyCommentId,
           user: { id: userData!.id, avatar: userData!.avatar, name: userData!.login },
         };
@@ -174,14 +161,18 @@ export const ForumThreadPage = () => {
       </Header>
       <PageContainer size="l">
         <MessagesList className={b('messages_list')}>
-          <MessagesList.Message
-            messageData={{
-              date: forumThread.createdAt,
-              content: forumThread.content,
-              userName: forumThread.userName,
-              userAvatar: null,
-            }}
-          />
+          {forumThread.content !== '' ? (
+            <MessagesList.Message
+              messageData={{
+                date: forumThread.createdAt,
+                content: forumThread.content,
+                userName: forumThread.User.name,
+                userAvatar: null,
+              }}
+            />
+          ) : (
+            <Title headingLevel={4}>Данные загружаются. Пожалуйста подождите</Title>
+          )}
           {rootMessages.map((el: MessageItem) => {
             const currentReplies = replyMessages[el.id];
             const rootMessage = (

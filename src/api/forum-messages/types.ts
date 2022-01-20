@@ -1,3 +1,6 @@
+import { ForumThreadModel } from 'api/forum-topics';
+import { CommentAttributes } from 'server/db/models/Comment';
+
 export type MessageModel = {
   content: string;
   createdAt: string;
@@ -8,22 +11,7 @@ export type MessageModel = {
     name: string;
     id: number;
   };
-  forum_thread: {
-    subject: string;
-    content: string;
-    createdAt: string;
-    userId: number;
-    id: number;
-  };
+  forum_thread?: ForumThreadModel;
 };
 
-export type NewMessageModelResponse = {
-  ForumThreadId: number;
-  content: string;
-  createdAt: string;
-  forumThreadId: number;
-  id: number;
-  replyCommentId: null | number;
-  updatedAt: string;
-  userId: number;
-};
+export type NewMessageModelResponse = CommentAttributes;

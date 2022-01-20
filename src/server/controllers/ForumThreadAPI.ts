@@ -10,9 +10,9 @@ export class ForumThreadAPI {
 
       const data = await forumThreadService.getForumThreads(Number(offset), Number(limit));
       response.json(data);
-    } catch (e: unknown) {
-      const error = e as Error;
-      console.log(error);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e);
       response.sendStatus(HttpStatus.InternalServerError);
     }
   };
@@ -29,9 +29,9 @@ export class ForumThreadAPI {
 
       await forumThreadService.create({ ...request.body, UserId: userData.id });
       response.sendStatus(HttpStatus.Created);
-    } catch (e: unknown) {
-      const error = e as Error;
-      console.log(error);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e);
       response.sendStatus(HttpStatus.InternalServerError);
     }
   };

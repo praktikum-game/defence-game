@@ -1,12 +1,6 @@
 import { MessageModel } from 'api/forum-messages/types';
+import { ForumThreadModel } from 'api/forum-topics';
 
-export type MessageItem = Omit<MessageModel, 'createdAt' | 'forum_thread'> & { createdAt: Date };
+export type MessageItem = Omit<MessageModel, 'forum_thread'>;
 
-export type ForumItem = {
-  subject: string;
-  content: string;
-  createdAt: Date;
-  userName: string;
-  userId: number;
-  id: number;
-};
+export type ForumItem = ForumThreadModel;
