@@ -1,7 +1,7 @@
 import { SiteTheme, SiteThemeAttributes, SiteThemeCreationAttributes } from '../models/SiteTheme';
 import { BaseService } from './BaseService';
 
-class SiteThemeService extends BaseService<SiteThemeAttributes, SiteThemeCreationAttributes> {
+class SiteThemeService extends BaseService<SiteThemeAttributes, SiteThemeCreationAttributes, SiteTheme> {
   constructor() {
     super(SiteTheme);
   }

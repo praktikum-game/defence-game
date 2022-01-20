@@ -6,7 +6,7 @@ import {
 import { literal } from 'sequelize';
 import { BaseService } from './BaseService';
 
-class ForumThreadService extends BaseService<ForumThreadAttributes, ForumThreadCreationAttributes> {
+class ForumThreadService extends BaseService<ForumThreadAttributes, ForumThreadCreationAttributes, ForumThread> {
   constructor() {
     super(ForumThread);
   }
