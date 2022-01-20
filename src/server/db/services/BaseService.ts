@@ -1,6 +1,6 @@
-import { CreateOptions, FindOptions, Model, ModelStatic } from 'sequelize';
+import { Model, ModelStatic, FindOptions, CreateOptions } from 'sequelize';
 
-export abstract class BaseService<T, D, M extends Model<T,D>> {
+export abstract class BaseService<T, D, M extends Model<T, D>> {
   private _model: ModelStatic<M>;
 
   constructor(model: ModelStatic<M>) {
