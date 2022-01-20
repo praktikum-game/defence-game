@@ -66,7 +66,7 @@ export async function addTestSamples() {
       {
         content: 'TestComment1',
         replyCommentId: null,
-        userId: user.getDataValue('id'),
+        userId: user.id,
         forumThreadId: forumThread.id,
       },
       {
@@ -79,7 +79,6 @@ export async function addTestSamples() {
   }
 
   const commentTest = await commentService.readOne();
-
   if (commentTest && user && forumThread) {
     await commentService.bulkCreate([
       {
