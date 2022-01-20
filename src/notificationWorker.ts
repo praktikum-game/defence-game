@@ -34,7 +34,7 @@ class NotificationWorker {
   }
 
   set currentLeader(value: string | undefined) {
-    if (value !== undefined && value !== "undefined") {
+    if (value !== undefined && value !== 'undefined') {
       new Notification(`${this._message} ${this._currentLeader}`);
     }
 
@@ -68,8 +68,8 @@ class NotificationWorker {
 
   private async _getLeader(): Promise<string> {
     try {
-      const response = await leaderboardAPI.fetchLeaderboardData();
-      return response.data[0].username;
+      const response = await leaderboardAPI.getAllLeaderboard();
+      return response.data[0].data.username;
     } catch (e) {
       return '';
     }
