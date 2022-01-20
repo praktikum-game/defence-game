@@ -9,17 +9,14 @@ class UserService extends BaseService<UserAttributes, UserCreationAttributes, Us
   }
 
   findByPraktikumId(id: number) {
-    return this.readOne({ where: { id } });
+    return this.readById(id);
   }
 
-  getUserThemeName(id: number): Promise<Theme | null> {
-    return (
-      User.findByPk(id)
-        //@ts-expect-error
-        .then((user) => user.getSiteTheme())
-        .then((siteTheme) => siteTheme.theme)
-        .catch(() => null)
-    );
+  getUserThemeName(id: number) {
+    return this.readById(id)
+      .then((user) => user?.getSiteTheme())
+      .then((theme) => theme?.theme || null)
+      .catch(() => null);
   }
 }
 
