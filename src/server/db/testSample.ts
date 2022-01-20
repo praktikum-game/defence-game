@@ -1,21 +1,25 @@
-import { Model } from 'sequelize/types';
-import { SiteTheme, SiteThemeAttributes, SiteThemeCreationAttributes } from './models/SiteTheme';
-import { User } from './models/User';
+import { SiteTheme } from './models/SiteTheme';
+// import { User } from './models/User';
 import { siteThemeService } from './services';
 
 export async function addTestSamples() {
   // нормуль
-  const theme: SiteTheme | null = await SiteTheme.findByPk(1);
-  const users: User[] | undefined = await theme?.getUsers();
+  const theme = await SiteTheme.findByPk(1);
+  const users = await theme?.getUsers();
+
   console.log(users, theme?.id);
 
   // сервис возвращает уже другой тип (обобщенный) у которого нет нужных методов
-  const theme1: Model<SiteThemeAttributes, SiteThemeCreationAttributes> | null =
-    await siteThemeService.readById(1);
+  // const theme1: Model<SiteThemeAttributes, SiteThemeCreationAttributes> | null = await siteThemeService.readById(1);
+  const theme1 = await siteThemeService.readById(1);
 
-  const users1 = theme1?.getUser.... // нету
+  theme1?.getUsers();
 
-  console.log(theme1?.i)
+  // const users1 = theme1?.getUser.... // нету
+
+  // theme1.getDataValue('')
+
+  // console.log(theme1?.i)
 
 
 
