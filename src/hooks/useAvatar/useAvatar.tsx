@@ -7,7 +7,7 @@ export const useAvatar = () => {
 
   const getAvatar = useCallback(() => {
     if (userData !== null) {
-      return userData.avatar === '' ? undefined : userData.avatar;
+      return userData.avatar === '' ? null : userData.avatar;
     }
   }, [userData]);
 
