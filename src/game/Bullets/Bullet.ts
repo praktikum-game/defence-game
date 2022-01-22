@@ -1,4 +1,4 @@
-import { BaseGameObject } from '../BaseGameObject';
+import { BaseGameObject } from '../BaseGameObject/BaseGameObject';
 import { Drawable, Updateable } from '../interfaces';
 import { GameField } from '../Grids/GameField';
 import { GameResources } from '../GameResourses';

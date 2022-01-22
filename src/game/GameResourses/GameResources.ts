@@ -6,20 +6,24 @@ class GameResources {
   private _resourceCache: GameResoursesType = {};
 
   private _load = async (items: string[]) => {
-    if (items) {
-      Promise.all([
-        items.forEach((url) => {
-          setImage(url, this._resourceCache);
-        }),
-      ]);
+    for (const url of items) {
+      this._resourceCache[url] = await setImage(url);
     }
   };
 
   public load = async (items?: string[]) => {
-    await this._load(items!);
+    try {
+      await this._load(items!);
+    } catch (e: unknown) {
+      const error = e as Error;
+      console.log('error', error);
+      alert('errorr');
+    }
   };
 
-  public get = (url: string) => this._resourceCache[url];
+  public get = (resourceName: string) => {
+    return this._resourceCache[resourceName];
+  };
 }
 
 export const gameResourses = new GameResources();

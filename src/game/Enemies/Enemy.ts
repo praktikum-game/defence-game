@@ -7,7 +7,7 @@ import {
   FIELD_CELL_WIDTH,
 } from '../consts';
 import { GameResources } from '../GameResourses';
-import { BaseGameObject } from '../BaseGameObject';
+import { BaseGameObject } from '../BaseGameObject/BaseGameObject';
 import { Drawable, Updateable } from '../interfaces';
 import { EnemyInitType } from './types';
 

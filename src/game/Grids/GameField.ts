@@ -1,37 +1,35 @@
 import { FIELD_CELL_HEIGHT, FIELD_CELL_WIDTH } from '../consts';
 import { FieldGridItem } from './FieldGridItem';
 import { Drawable } from '../interfaces';
+import { BaseGameObject } from 'game/BaseGameObject/BaseGameObject';
+import { BaseGameObjectProps } from 'game/BaseGameObject/types';
 
-export class GameField implements Drawable {
-  public static gameFieldWidth = 0;
-
-  public static gameFieldHeight = 0;
-
-  public static gameFieldX = 0;
-
-  public static gameFieldY = 0;
-
-  private _gameGrid: Array<FieldGridItem>;
+export class GameField extends BaseGameObject implements Drawable {
+  private _gameGrid: Array<FieldGridItem> = [];
 
   public get gameGrid() {
     return this._gameGrid;
   }
 
-  constructor(
-    gameFieldWidth: number,
-    gameFieldHeight: number,
-    gameFieldX: number,
-    gameFieldY: number,
-  ) {
-    this._gameGrid = [];
-    for (let y = gameFieldY; y < gameFieldHeight; y += FIELD_CELL_HEIGHT) {
-      for (let x = gameFieldX; x < gameFieldWidth; x += FIELD_CELL_WIDTH) {
-        this._gameGrid.push(new FieldGridItem(x, y));
+  constructor(baseProps: BaseGameObjectProps) {
+    super(baseProps);
+
+    for (let y = this._y; y < this._height; y += FIELD_CELL_HEIGHT) {
+      for (let x = this._x; x < this._width; x += FIELD_CELL_WIDTH) {
+        this._gameGrid.push(
+          new FieldGridItem({
+            ctx: this._ctx,
+            x,
+            y,
+            width: FIELD_CELL_WIDTH,
+            height: FIELD_CELL_HEIGHT,
+          }),
+        );
       }
     }
   }
 
-  draw(cxt: CanvasRenderingContext2D) {
-    this.gameGrid.forEach((g) => g.draw(cxt));
+  draw() {
+    this.gameGrid.forEach((cell) => cell.draw());
   }
 }

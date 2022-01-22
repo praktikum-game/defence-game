@@ -10,7 +10,8 @@ import { configureStore } from '../../store';
 import { renderObject } from '../utilities/renderObject';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { App } from '../../components/App';
-import { userService } from 'server/db/services';
+// import { userService } from 'server/db/services';
+import { HttpStatus } from 'server/http-statuses';
 
 function getHtmlString(
   reactJsxString: string,
@@ -51,14 +52,14 @@ const ssrHtmlRenderMiddleware = () => {
     const store = configureStore();
     if (res.locals.user === undefined) {
       store.getState().user.data = null;
-      store.getState().theme.theme = 'light';
+      // store.getState().theme.theme = 'light';
     } else {
       store.getState().user.data = res.locals.user;
       try {
-        store.getState().theme.theme =
-          (await userService.getUserThemeName(res.locals.user.id)) || 'light';
+        // store.getState().theme.theme =
+        //   (await userService.getUserThemeName(res.locals.user.id)) || 'light';
       } catch (e: unknown) {
-        store.getState().theme.theme = 'light';
+       // store.getState().theme.theme = 'light';
       }
     }
 
@@ -73,7 +74,7 @@ const ssrHtmlRenderMiddleware = () => {
     );
 
     const reactHtml = renderToString(rootJsx);
-    res.status(200).send(getHtmlString(reactHtml, { vendorsAssets, mainAssets }, store));
+    res.status(HttpStatus.OK).send(getHtmlString(reactHtml, { vendorsAssets, mainAssets }, store));
   };
 };
 

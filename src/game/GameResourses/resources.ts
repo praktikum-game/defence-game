@@ -42,7 +42,7 @@ export const resources = {
       image: 'pink_virus.png',
     },
   },
-  toppannel: {
+  currencypanel: {
     money: {
       icon: 'money_icon.png',
     },

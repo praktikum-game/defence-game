@@ -1,4 +1,4 @@
-import { BaseGameObject } from './BaseGameObject';
+import { BaseGameObject } from './BaseGameObject/BaseGameObject';
 import { GameField } from './Grids/GameField';
 import { getRandomInt, getUrls } from './helpers';
 import { GameResources } from './GameResourses';
@@ -14,13 +14,9 @@ import {
   FIELD_CELL_WIDTH,
   FIELD_COLS,
   FIELD_ROWS,
-  TOPPANNEL_CELL_COUNT,
-  TOPPANNEL_CELL_HEIGHT,
-  TOPPANNEL_CELL_WIDTH,
-  TOPPANNEL_ROWS_COUNT,
 } from './consts';
 import { resources } from './GameResourses/resources';
-import { TopPannel } from './Grids/TopPannel';
+import { CurrencyPanel } from './Grids/CurrencyPanel';
 import { Defender } from './Defenders/Defender';
 import { Constructable } from './interfaces';
 import { levels } from './Levels';
@@ -52,7 +48,7 @@ export class Game {
 
   private _defendersPannel: DefendersPannel;
 
-  private _topPannel: TopPannel;
+  private _currencyPanel: CurrencyPanel;
 
   private _background: HTMLImageElement;
 
@@ -81,13 +77,6 @@ export class Game {
     this._isRunning = false;
     this._currency = new GameCurrency(0, CURRENCY_RISE_VALUE, CURRENCY_RISE_INTERVAL);
 
-    this._defendersPannel = new DefendersPannel(20, 200, 110, 300);
-
-    TopPannel.pannelWidth = TOPPANNEL_CELL_WIDTH * TOPPANNEL_CELL_COUNT;
-    TopPannel.pannelHeight = TOPPANNEL_CELL_HEIGHT * TOPPANNEL_ROWS_COUNT;
-    TopPannel.pannelX = 200;
-    TopPannel.pannelY = 0;
-
     GameField.gameFieldX = 150; //DefendersPannel.pannelWidth;
     GameField.gameFieldY = 200; //TopPannel.pannelHeight;
     GameField.gameFieldWidth = FIELD_CELL_WIDTH * FIELD_COLS + GameField.gameFieldX;
@@ -100,33 +89,45 @@ export class Game {
     this._canvasElement = canvasEl;
 
     this._onGameEnd = onGameEnd;
-    GameResources.load(getUrls(resources) as string[]);
+    const resourceUrls = getUrls(resources);
 
-    this._canvasElement.addEventListener('click', ({ offsetX, offsetY }: MouseEvent) =>
-      this._handleClick(offsetX, offsetY),
-    );
+    // гарантируем загрузку ресурсов (были проблемы с этим)
+    GameResources.load(resourceUrls).then(() => {
+      this._canvasElement.addEventListener('click', ({ offsetX, offsetY }: MouseEvent) =>
+        this._handleClick(offsetX, offsetY),
+      );
 
-    this._ctx = this._canvasElement.getContext('2d')!;
+      this._ctx = this._canvasElement.getContext('2d')!;
 
-    this._topPannel = new TopPannel(
-      TopPannel.pannelWidth,
-      TopPannel.pannelHeight,
-      TopPannel.pannelX,
-      TopPannel.pannelY,
-    );
+      this._defendersPannel = new DefendersPannel({
+        ctx: this._ctx,
+        x: 20,
+        y: 200,
+        width: 110,
+        height: 300,
+      });
 
-    this._topPannel.draw(this._ctx);
+      this._currencyPanel = new CurrencyPanel({
+        ctx: this._ctx,
+        x: 20,
+        y: 20,
+        width: 100,
+        height: 60,
+      });
 
-    this._defendersPannel.draw(this._ctx);
+      // this._currencyPanel.draw(this._ctx);
 
-    this._gameField = new GameField(
-      GameField.gameFieldWidth,
-      GameField.gameFieldHeight,
-      GameField.gameFieldX,
-      GameField.gameFieldY,
-    );
+      // this._defendersPannel.draw(this._ctx);
 
-    this._gameField.draw(this._ctx);
+      this._gameField = new GameField(
+        GameField.gameFieldWidth,
+        GameField.gameFieldHeight,
+        GameField.gameFieldX,
+        GameField.gameFieldY,
+      );
+
+      this._gameField.draw(this._ctx);
+    });
   }
 
   private _createEnemies = (items: Constructable<Enemy>[], coordsY: number[]) => {
@@ -150,7 +151,7 @@ export class Game {
 
     for (
       let i = GameField.gameFieldY;
-      i < GameField.gameFieldHeight + TopPannel.pannelHeight;
+      i < GameField.gameFieldHeight + GameField.gameFieldY;
       i += FIELD_CELL_HEIGHT
     ) {
       result.push(i);
@@ -194,7 +195,7 @@ export class Game {
     this._currency.reset(CURRENCY_START_VALUE);
     this._putCurrency();
 
-    this._defendersPannel.placeSprites(this._ctx, this._gameLevel);
+    // this._defendersPannel.placeSprites(this._ctx, this._gameLevel);
     this._createAtack();
 
     this.animation(performance.now());
@@ -209,10 +210,7 @@ export class Game {
         break;
 
       case 'DefendersPannel':
-        this._selectedDefender = this._defendersPannel.onClick(x, y)!;
-        break;
-
-      case 'TopPannel':
+        // this._selectedDefender = this._defendersPannel.onClick(x, y)!;
         break;
 
       default:
@@ -229,14 +227,7 @@ export class Game {
     ) {
       return 'DefendersPannel';
     }
-    if (
-      x > TopPannel.pannelX &&
-      x < TopPannel.pannelX + TopPannel.pannelWidth &&
-      y > TopPannel.pannelY &&
-      y < TopPannel.pannelY + TopPannel.pannelHeight
-    ) {
-      return 'TopPannel';
-    }
+
     if (
       x > GameField.gameFieldX &&
       x < GameField.gameFieldX + GameField.gameFieldWidth &&
@@ -269,12 +260,8 @@ export class Game {
   }
 
   private _putCurrency = () => {
-    this._topPannel.pannelGrid[0].clear(this._ctx);
-    this._topPannel.pannelGrid[0].draw(
-      this._ctx,
-      this._currency.value.toString(),
-      GameResources.get(resources.toppannel.money.icon),
-    );
+    this._currencyPanel.text = this._currency.value.toString() || '0';
+    this._currencyPanel.draw(this._ctx);
   };
 
   private _spentMoney = (value: number) => {
@@ -325,21 +312,21 @@ export class Game {
   };
 
   private _checkActiveDefenders(currency: number) {
-    this._defendersPannel.grid?.gridItems.forEach((cell) => {
-      if (cell.sprite && cell.sprite.type) {
-        const { type: defender } = cell.sprite;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const defenderCost = (<any>defender).cost;
-        if (currency >= defenderCost) {
-          cell.sprite.isActive = true;
-        } else {
-          cell.sprite.isActive = false;
-        }
-        cell.sprite.redraw();
-      }
-    });
-    /// все забеляет
-    this._defendersPannel.draw(this._ctx);
+    // this._defendersPannel.grid?.gridItems.forEach((cell) => {
+    //   if (cell.sprite && cell.sprite.type) {
+    //     const { type: defender } = cell.sprite;
+    //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    //     const defenderCost = (<any>defender).cost;
+    //     if (currency >= defenderCost) {
+    //       cell.sprite.isActive = true;
+    //     } else {
+    //       cell.sprite.isActive = false;
+    //     }
+    //     cell.sprite.redraw();
+    //   }
+    // });
+    // /// все забеляет
+    // this._defendersPannel.draw(this._ctx);
   }
 
   private redraw(delay: number) {
@@ -359,6 +346,8 @@ export class Game {
       this._canvasElement.width,
       this._canvasElement.height,
     );
+    this._defendersPannel.draw(this._ctx);
+    this._currencyPanel.draw(this._ctx);
     this._checkNextAtack(delay);
     if (this._currency.autoRise(delay)) {
       this._putCurrency();

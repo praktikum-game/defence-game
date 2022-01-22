@@ -5,6 +5,7 @@ import { BaseService } from './BaseService';
 
 class UserService extends BaseService<UserAttributes, UserCreationAttributes> {
   constructor() {
+    //@ts-ignore
     super(User);
   }
 

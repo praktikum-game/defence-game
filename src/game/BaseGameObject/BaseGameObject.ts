@@ -1,6 +1,9 @@
 import { nanoid } from 'nanoid';
+import { BaseGameObjectProps } from './types';
 
 export class BaseGameObject {
+  protected _ctx: CanvasRenderingContext2D;
+
   protected _x: number;
 
   protected _y: number;
@@ -11,7 +14,9 @@ export class BaseGameObject {
 
   protected _uuid: string;
 
-  constructor(x: number, y: number, width: number, height: number) {
+  constructor(props: BaseGameObjectProps) {
+    const { ctx, x, y, width, height } = props;
+    this._ctx = ctx;
     this._x = x;
     this._y = y;
     this._width = width;

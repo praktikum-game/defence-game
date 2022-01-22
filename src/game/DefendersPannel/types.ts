@@ -1,8 +1,9 @@
 export type GridInitType = {
-  gridWidth: number;
-  gridHeight: number;
-  gridX: number;
-  gridY: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+
   cellWidth: number;
   cellHeight: number;
   cellBorderColor?: string;

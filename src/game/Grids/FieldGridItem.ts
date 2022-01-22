@@ -1,18 +1,19 @@
-import { BaseGameObject } from '../BaseGameObject';
-import { FIELD_CELL_HEIGHT, FIELD_CELL_WIDTH } from '../consts';
+import { BaseGameObject } from '../BaseGameObject/BaseGameObject';
+import { BaseGameObjectProps } from '../BaseGameObject/types';
 import { Drawable } from '../interfaces';
 
 export class FieldGridItem extends BaseGameObject implements Drawable {
-  constructor(x: number, y: number) {
-    super(x, y, FIELD_CELL_WIDTH, FIELD_CELL_HEIGHT);
+  
+  constructor(baseProps: BaseGameObjectProps) {
+    super(baseProps);
   }
 
-  draw(context: CanvasRenderingContext2D) {
+  draw() {
     // console.log('before clear');
     // context.clearRect(this.x, this.y, this.width, this.height);
     // console.log('after clear');
 
-    context.strokeStyle = 'white';
-    context.strokeRect(this.x, this.y, this.width, this.height);
+    this._ctx.strokeStyle = 'white';
+    this._ctx.strokeRect(this.x, this.y, this.width, this.height);
   }
 }

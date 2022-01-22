@@ -10,7 +10,7 @@ import {
 } from '../consts';
 import { GameField } from '../Grids/GameField';
 import { Constructable } from '../interfaces';
-import { BaseGameObject } from '../BaseGameObject';
+import { BaseGameObject } from '../BaseGameObject/BaseGameObject';
 import { DefenderInitType } from './types';
 
 export abstract class Defender extends BaseGameObject {
