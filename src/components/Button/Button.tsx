@@ -13,10 +13,11 @@ export const Button = ({
   view = 'primary',
   loading = false,
   className,
+  isSmall = false,
   ...props
 }: ButtonProps) => (
   <button
-    className={b.mix(viewTypes[view]).mix(className)}
+    className={b({ small: isSmall }).mix(viewTypes[view]).mix(className)}
     disabled={loading || disabled}
     {...props}
   >

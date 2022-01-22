@@ -1,7 +1,7 @@
 export type TextAreaProps = {
   name: string;
   label: string;
-  onSelect: (posiion: TextAreaCursorPosition) => void;
+  onSelect: (position: TextAreaCursorPosition) => void;
   onChange: (fieldName: string, value: string) => void;
   value?: string;
   className?: string;

@@ -50,6 +50,12 @@
     transform: translateY(3px);
   }
 
+  &_small {
+    border-radius: 5px;
+    padding: 5px;
+    width: 140px;
+  }
+
   &__link {
     text-decoration: none;
   }

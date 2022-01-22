@@ -1,3 +1,4 @@
+import { UserData } from 'api/auth';
 import { Request, Response } from 'express';
 import { HttpStatus } from 'server/http-statuses';
 import { commentService } from '../db/services';
@@ -5,13 +6,12 @@ import { commentService } from '../db/services';
 export class ForumCommentsAPI {
   public static get = async (request: Request, response: Response) => {
     try {
-      const { offset, limit, forumId } = request.query;
+      const { forumId } = request.query;
       const comments = await commentService.readAll({
         where: { forumThreadId: forumId },
-        limit: Number(limit),
-        offset: Number(offset),
+        include: { all: true },
+        order: [['createdAt', 'ASC']],
       });
-
       response.status(HttpStatus.OK).json(comments);
     } catch (e: unknown) {
       response.sendStatus(HttpStatus.InternalServerError);
@@ -20,10 +20,17 @@ export class ForumCommentsAPI {
 
   public static create = async (request: Request, response: Response) => {
     try {
+      const userData: UserData = response.locals.user;
       const { body } = request;
-      await commentService.create(body);
-      response.sendStatus(HttpStatus.Created);
+      const created = await commentService.create({
+        ...body,
+        ForumThreadId: body.forumThreadId,
+        userId: userData.id,
+      });
+      response.json(created);
     } catch (e: unknown) {
+      // eslint-disable-next-line no-console
+      console.log(e);
       response.sendStatus(HttpStatus.InternalServerError);
     }
   };

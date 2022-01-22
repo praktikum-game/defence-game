@@ -1,6 +1,7 @@
 import express, { Router } from 'express';
 import { ForumCommentsAPI } from 'server/controllers/ForumCommentsAPI';
 import { CommentAttributes } from 'server/db/models/Comment';
+import { checkUserInDbMiddleware } from 'server/middlewares/check-user-in-db-middleware';
 import { onlyAuthUserMiddleware } from 'server/middlewares/only-auth-user-middleware';
 import { validatorMiddleware } from 'server/middlewares/validator-middleware';
 
@@ -10,11 +11,7 @@ export const commentRoutes = (router: Router) => {
   router.get(
     `/comments`,
     validatorMiddleware<{ offset: number; limit: number; forumId: number }>(
-      [
-        { key: 'offset', validate: (value) => !isNaN(Number(value)), required: true },
-        { key: 'limit', validate: (value) => !isNaN(Number(value)), required: true },
-        { key: 'forumId', validate: (value) => !isNaN(Number(value)), required: true },
-      ],
+      [{ key: 'forumId', validate: (value) => !isNaN(Number(value)), required: true }],
       'query',
     ),
     ForumCommentsAPI.get,
@@ -24,11 +21,11 @@ export const commentRoutes = (router: Router) => {
     `/comments`,
     [
       onlyAuthUserMiddleware,
+      checkUserInDbMiddleware,
       jsonParser,
       validatorMiddleware<CommentAttributes>([
         { key: 'content', validate: (value) => typeof value === 'string', required: true },
         { key: 'forumThreadId', validate: (value) => !isNaN(Number(value)), required: true },
-        { key: 'userId', validate: (value) => !isNaN(Number(value)), required: true },
         { key: 'replyCommentId', validate: (value) => !isNaN(Number(value)), required: false },
       ]),
     ],
@@ -38,6 +35,7 @@ export const commentRoutes = (router: Router) => {
     '/comments/:id',
     [
       onlyAuthUserMiddleware,
+      checkUserInDbMiddleware,
       jsonParser,
       validatorMiddleware<CommentAttributes>(
         [
@@ -58,6 +56,7 @@ export const commentRoutes = (router: Router) => {
   router.delete(
     '/comments/:id',
     onlyAuthUserMiddleware,
+    checkUserInDbMiddleware,
     validatorMiddleware<CommentAttributes>(
       [{ key: 'id', validate: (value) => !isNaN(Number(value)), required: true }],
       'params',

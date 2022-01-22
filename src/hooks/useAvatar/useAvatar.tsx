@@ -5,9 +5,9 @@ import { AppState } from '../../store';
 export const useAvatar = () => {
   const userData = useSelector((state: AppState) => state.user.data);
 
-  const getAvatar = useCallback((): string | undefined => {
+  const getAvatar = useCallback(() => {
     if (userData !== null) {
-      return userData.avatar === '' ? undefined : userData.avatar;
+      return userData.avatar === '' ? null : userData.avatar;
     }
   }, [userData]);
 

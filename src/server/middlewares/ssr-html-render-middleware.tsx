@@ -11,6 +11,7 @@ import { renderObject } from '../utilities/renderObject';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { App } from '../../components/App';
 import { userService } from 'server/db/services';
+import { getHistory } from 'utilities/history';
 
 function getHtmlString(
   reactJsxString: string,
@@ -61,6 +62,7 @@ const ssrHtmlRenderMiddleware = () => {
         store.getState().theme.theme = 'light';
       }
     }
+    getHistory([req.url]);
 
     const rootJsx = (
       <Provider store={store}>

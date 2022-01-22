@@ -1,1 +1,1 @@
-export type { ThreadListItemData, ThreadListItemProps } from './types';
+export type { ThreadListItemProps } from './types';

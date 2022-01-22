@@ -2,8 +2,7 @@ import { UserData } from 'api/auth';
 import { Request, Response, NextFunction } from 'express';
 import { userService } from 'server/db/services';
 
-export const checkUserInDbMiddleware =
-  () => async (request: Request, response: Response, next: NextFunction) => {
+export const checkUserInDbMiddleware = async (request: Request, response: Response, next: NextFunction) => {
     try {
       if (response.locals.user) {
         const userData: UserData = response.locals.user;
@@ -13,6 +12,7 @@ export const checkUserInDbMiddleware =
             id: Number(userData.id),
             name: userData.login,
             avatar: userData.avatar,
+            SiteThemeId: 1
           });
         }
       }

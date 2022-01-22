@@ -5,4 +5,5 @@ export {
   getDateFormatter,
   getFullStaticUri,
   normalizeAvatar,
+  isServer,
 } from './utilities';

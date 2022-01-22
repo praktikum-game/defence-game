@@ -4,7 +4,6 @@ import { checkUserInDbMiddleware } from 'server/middlewares/check-user-in-db-mid
 import { UserAPI } from '../controllers/UserAPI';
 
 const jsonParser = express.json();
-const autoAddUser = checkUserInDbMiddleware();
 
 export const userRoutes = (router: Router) => {
   router.get(`/user`, UserAPI.getAll);
@@ -14,7 +13,7 @@ export const userRoutes = (router: Router) => {
     `/user/:praktikumId`,
     onlyAuthUserMiddleware,
     jsonParser,
-    autoAddUser,
+    checkUserInDbMiddleware,
     UserAPI.update,
   );
   router.delete(`/user/:praktikumId`, onlyAuthUserMiddleware, UserAPI.delete);

@@ -6,6 +6,9 @@ export interface CommentAttributes {
   replyCommentId: number | null;
   userId: number;
   forumThreadId: number;
+  updatedAt: string;
+  createdAt: string;
 }
 
-export interface CommentCreationAttributes extends Optional<CommentAttributes, 'id'> {}
+export interface CommentCreationAttributes
+  extends Optional<CommentAttributes, 'id' | 'createdAt' | 'updatedAt'> {}
