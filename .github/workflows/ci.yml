@@ -18,7 +18,7 @@ jobs:
       - name: Установка зависимостей
         run: npm ci
       - name: Запуск тайпчекинга
-        run: num run ts
+        run: npm run ts
       - name: Проверка линтерами
         run: npm run lint
       - name: Запуск тестов
