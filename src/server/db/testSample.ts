@@ -15,8 +15,7 @@ export async function addTestSamples() {
   const darkTheme = await siteThemeService.readById(2);
 
   try {
-    // const user = await userService.readById(1)
-    await lightTheme?.createUser({ name: 'hoho', id: 1235, siteThemeId: 1, avatar: null });
+    await lightTheme?.createUser({ name: 'MegaPups', id: 1235, siteThemeId: 1, avatar: null });
   } catch (e: unknown) {
     const error = e as Error;
     console.log(error);
@@ -33,7 +32,7 @@ export async function addTestSamples() {
   if (darkTheme && lightTheme) {
     await userService.bulkCreate([
       {
-        id: 123,
+        id: 1233,
         name: 'TestUser1',
         avatar: null,
         siteThemeId: 1,
@@ -66,13 +65,13 @@ export async function addTestSamples() {
       {
         content: 'TestComment1',
         replyCommentId: null,
-        userId: user.getDataValue('id'),
+        userId: user.id,
         forumThreadId: forumThread.id,
       },
       {
         content: 'TestComment2',
         replyCommentId: null,
-        userId: user.getDataValue('id'),
+        userId: user.id,
         forumThreadId: forumThread.id,
       },
     ]);
@@ -85,9 +84,11 @@ export async function addTestSamples() {
       {
         content: 'TestComment3',
         replyCommentId: commentTest.getDataValue('id'),
-        userId: user.getDataValue('id'),
-        forumThreadId: forumThread.getDataValue('id'),
+        userId: user.id,
+        forumThreadId: forumThread.id
       },
     ]);
   }
+
+  console.log(await user?.getSiteTheme());
 }
