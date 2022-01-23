@@ -36,8 +36,8 @@ export const ForumThreadPage = () => {
     subject: '',
     content: '',
     createdAt: '',
-    UserId: 0,
-    User: { id: 0, name: '', SiteThemeId: 1, createdAt: '', updatedAt: '' },
+    userId: 0,
+    user: { id: 0, name: '', siteThemeId: 1, createdAt: '', updatedAt: '' },
     messagesCount: 0,
     updatedAt: '',
   });
@@ -166,7 +166,7 @@ export const ForumThreadPage = () => {
               messageData={{
                 date: forumThread.createdAt,
                 content: forumThread.content,
-                userName: forumThread.User.name,
+                userName: forumThread.user.name,
                 userAvatar: null,
               }}
             />

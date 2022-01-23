@@ -12,10 +12,16 @@ class UserService extends BaseService<UserAttributes, UserCreationAttributes, Us
     return this.readById(id);
   }
 
-  getUserThemeName(id: number) {
+  getUserThemeName(id: number): Promise<Theme | null> {
     return this.readById(id)
       .then((user) => user?.getSiteTheme())
-      .then((theme) => theme?.theme || null)
+      .then((data) => {
+        if (data?.theme) {
+          const t = data.theme as Theme;
+          return t;
+        }
+        return null;
+      })
       .catch(() => null);
   }
 }

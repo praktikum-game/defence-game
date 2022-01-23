@@ -50,7 +50,7 @@ export const threadRoutes = (router: Router) => {
         [
           { key: 'subject', validate: (value) => typeof value === 'string', required: false },
           { key: 'content', validate: (value) => typeof value === 'string', required: false },
-          { key: 'UserId', validate: (value) => typeof value === 'number', required: false },
+          { key: 'userId', validate: (value) => typeof value === 'number', required: false },
         ],
         'body',
       ),

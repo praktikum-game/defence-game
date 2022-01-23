@@ -95,7 +95,7 @@ export const ForumIndexPage = () => {
             <ThreadsList.Item
               key={el.id}
               dataItem={el}
-              isAuthor={userData ? userData.id === el.UserId : false}
+              isAuthor={userData ? userData.id === el.userId : false}
               onEditClick={handleTopicEditClick}
               onRemoveClick={handleTopicRemoveClick}
             />

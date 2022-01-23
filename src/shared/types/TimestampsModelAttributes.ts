@@ -1,4 +1,4 @@
-export type UpdateModelAttributes = {
+export type TimestampsModelAttributes = {
   createdAt: string;
   updatedAt: string;
 };

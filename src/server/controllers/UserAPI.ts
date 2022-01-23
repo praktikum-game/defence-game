@@ -44,7 +44,6 @@ export class UserAPI {
       await userService.update({ id: Number(praktikumId) }, { [body.field]: body.value });
       response.sendStatus(204);
     } catch {
-      console.log('erro on call change theme api');
       return response.sendStatus(400);
     }
   };

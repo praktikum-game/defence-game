@@ -12,13 +12,10 @@ class ForumThreadService extends BaseService<ForumThreadAttributes, ForumThreadC
   }
 
   public getForumThreads(offset: number = 0, limit: number = 10) {
-    /**
-     *  Укажите, если знаете, как сделать более оптимально
-     */
     return ForumThread.findAll({
       offset: Number(offset),
       limit: Number(limit),
-      include: 'User',
+      include: 'user',
 
       attributes: {
         include: [

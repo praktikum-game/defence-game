@@ -1,5 +1,6 @@
 import { ForumThreadModel } from 'api/forum-topics';
 import { CommentAttributes } from 'server/db/models/Comment';
+import { TimestampsModelAttributes } from 'shared/types/TimestampsModelAttributes';
 
 export type MessageModel = {
   content: string;
@@ -14,4 +15,4 @@ export type MessageModel = {
   forum_thread?: ForumThreadModel;
 };
 
-export type NewMessageModelResponse = CommentAttributes;
+export type NewMessageModelResponse = CommentAttributes & TimestampsModelAttributes;
