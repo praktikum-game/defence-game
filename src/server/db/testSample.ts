@@ -15,7 +15,6 @@ export async function addTestSamples() {
   const darkTheme = await siteThemeService.readById(2);
 
   try {
-    // const user = await userService.readById(1)
     await lightTheme?.createUser({ name: 'hoho', id: 1235, siteThemeId: 1, avatar: null });
   } catch (e: unknown) {
     const error = e as Error;
@@ -72,7 +71,7 @@ export async function addTestSamples() {
       {
         content: 'TestComment2',
         replyCommentId: null,
-        userId: user.getDataValue('id'),
+        userId: user.id,
         forumThreadId: forumThread.id,
       },
     ]);
@@ -83,9 +82,9 @@ export async function addTestSamples() {
     await commentService.bulkCreate([
       {
         content: 'TestComment3',
-        replyCommentId: commentTest.getDataValue('id'),
-        userId: user.getDataValue('id'),
-        forumThreadId: forumThread.getDataValue('id'),
+        replyCommentId: commentTest.id,
+        userId: user.id,
+        forumThreadId: forumThread.id,
       },
     ]);
   }
