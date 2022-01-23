@@ -26,8 +26,7 @@ export class ForumThreadAPI {
   public static create = async (request: Request, response: Response) => {
     try {
       const userData: UserData = response.locals.user;
-
-      await forumThreadService.create({ ...request.body, UserId: userData.id });
+      await forumThreadService.create({ ...request.body, userId: userData.id });
       response.sendStatus(HttpStatus.Created);
     } catch (e) {
       // eslint-disable-next-line no-console

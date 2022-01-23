@@ -1,4 +1,4 @@
-import { LeaderboardItem } from '../../../api/leaderboard/types';
+import { LeaderboardUser } from '../../../api/leaderboard/types';
 import {
   LB_PENDING_FETCH_LIST_DATA,
   LB_FAILED_FETCH_LIST_DATA,
@@ -11,7 +11,7 @@ export interface LeaderboardPendingFetchList {
 }
 export interface LeaderboardSuccessFetchList {
   type: typeof LB_SUCCESS_FETCH_LIST_DATA;
-  payload: LeaderboardItem[];
+  payload: LeaderboardUser[];
 }
 export interface LeaderboardFaliedFetchList {
   type: typeof LB_FAILED_FETCH_LIST_DATA;

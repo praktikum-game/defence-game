@@ -43,7 +43,7 @@ sequelize
     console.log('\x1b[32m', 'db test connection ok');
     console.log('\x1b[0m');
     sequelize
-      .sync()
+      .sync({ force: true })
       .then(() => {
         console.log('Sequelize is synced');
         if (process.env.NODE_ENV !== 'production') {

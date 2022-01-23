@@ -56,9 +56,3 @@ export function initCommentModel(sequelize: Sequelize) {
     },
   );
 }
-// Comment.belongsTo(Comment, { as: 'reply_comment' });
-// ForumThread.hasMany(Comment, { as: 'comments', foreignKey: { allowNull: false } });
-
-// Comment.belongsTo(ForumThread, { as: 'forum_thread', foreignKey: { allowNull: false } });
-// Comment.belongsTo(User, { as: 'user', foreignKey: { allowNull: false } });
-// export { Comment };
