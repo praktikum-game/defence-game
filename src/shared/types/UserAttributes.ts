@@ -3,5 +3,5 @@ export interface UserAttributes {
   name: string;
   avatar?: string | null;
 
-  SiteThemeId: number;
+  siteThemeId: number;
 }

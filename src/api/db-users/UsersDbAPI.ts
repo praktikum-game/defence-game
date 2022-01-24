@@ -14,7 +14,7 @@ class UsersDbAPI extends BaseAPI {
   }
 
   public setUserTheme(userId: number, theme: Theme) {
-    return this.http.patch(`/${userId}`, { field: 'SiteThemeId', value: THEME_TYPES[theme] });
+    return this.http.patch(`/${userId}`, { field: 'siteThemeId', value: THEME_TYPES[theme] });
   }
 }
 

@@ -13,6 +13,29 @@ import { router } from './router';
 import { readFileSync } from 'fs';
 import { addTestSamples } from './db/testSample';
 import { getUserMiddleware } from './middlewares/get-user-middleware';
+import { initCommentModel, Comment } from './db/models/Comment/Comment';
+import { initForumThreadModel, ForumThread } from './db/models/ForumThread/ForumThread';
+import { initUserModel, User } from './db/models/User/User';
+import { initSiteThemeModel, SiteTheme } from './db/models/SiteTheme/SiteTheme';
+
+initCommentModel(sequelize);
+initForumThreadModel(sequelize);
+initUserModel(sequelize);
+initSiteThemeModel(sequelize);
+
+SiteTheme.hasMany(User, { as: 'users' });
+User.belongsTo(SiteTheme, { as: 'siteTheme' });
+
+User.hasMany(ForumThread, { as: 'forumThreads' });
+User.hasMany(Comment, { as: 'comments' });
+
+ForumThread.belongsTo(User, { as: 'user' });
+ForumThread.hasMany(Comment, { as: 'comments' });
+
+Comment.belongsTo(User, { as: 'user' });
+Comment.belongsTo(ForumThread, { as: 'forumThread' });
+
+Comment.belongsTo(Comment, { as: 'replyComment' });
 
 sequelize
   .authenticate()
@@ -20,7 +43,7 @@ sequelize
     console.log('\x1b[32m', 'db test connection ok');
     console.log('\x1b[0m');
     sequelize
-      .sync()
+      .sync({ force: true })
       .then(() => {
         console.log('Sequelize is synced');
         if (process.env.NODE_ENV !== 'production') {

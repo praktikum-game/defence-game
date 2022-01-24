@@ -1,4 +1,4 @@
-import { UpdateModelAttributes } from 'shared/types/UpdateModelAttributes';
+import { TimestampsModelAttributes } from 'shared/types/TimestampsModelAttributes';
 import { UserAttributes } from 'shared/types/UserAttributes';
 
-export type UserDbModel = UserAttributes & UpdateModelAttributes;
+export type UserDbModel = UserAttributes & TimestampsModelAttributes;

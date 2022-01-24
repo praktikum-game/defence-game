@@ -1,11 +1,11 @@
 import { ActionCreator } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { LeaderboardItem } from '../../api/leaderboard/types';
+import { LeaderboardUser } from '../../api/leaderboard/types';
 import { AppState, ThunkExtraArgument } from '../types';
 import { LeaderboardActions } from './actions/action-creators-types';
 
 export type LeaderboardState = {
-  usersList: LeaderboardItem[];
+  usersList: LeaderboardUser[];
   loading: boolean;
 };
 export type LeaderboardThunkDispatch = ThunkDispatch<

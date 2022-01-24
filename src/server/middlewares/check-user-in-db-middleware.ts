@@ -12,7 +12,7 @@ export const checkUserInDbMiddleware = async (request: Request, response: Respon
             id: Number(userData.id),
             name: userData.login,
             avatar: userData.avatar,
-            SiteThemeId: 1
+            siteThemeId: 1
           });
         }
       }

@@ -1,17 +1,12 @@
-export type LeaderboardItem = {
-  id: string;
-  username: string;
-  login: string;
-  score: number;
-};
+import { LeaderboardUser } from "api/leaderboard/types";
 
 export type LeaderboardTableColumn = {
   title: string;
-  dataId: keyof LeaderboardItem;
+  dataId: keyof LeaderboardUser;
 };
 
 export type LeaderboardTableProps = {
   columns: Array<LeaderboardTableColumn>;
-  data: Array<LeaderboardItem>;
+  data: Array<LeaderboardUser>;
   className?: string;
 };

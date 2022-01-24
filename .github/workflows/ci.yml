@@ -17,6 +17,8 @@ jobs:
           node-version: 14.18.1
       - name: Установка зависимостей
         run: npm ci
+      - name: Запуск тайпчекинга
+        run: npm run ts
       - name: Проверка линтерами
         run: npm run lint
       - name: Запуск тестов

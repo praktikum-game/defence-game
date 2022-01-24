@@ -3,23 +3,26 @@ import { Theme } from 'store/theme/types';
 import { User, UserCreationAttributes } from '../models/User';
 import { BaseService } from './BaseService';
 
-class UserService extends BaseService<UserAttributes, UserCreationAttributes> {
+class UserService extends BaseService<UserAttributes, UserCreationAttributes, User> {
   constructor() {
     super(User);
   }
 
   findByPraktikumId(id: number) {
-    return this.readOne({ where: { id } });
+    return this.readById(id);
   }
 
   getUserThemeName(id: number): Promise<Theme | null> {
-    return (
-      User.findByPk(id)
-        //@ts-expect-error
-        .then((user) => user.getSiteTheme())
-        .then((siteTheme) => siteTheme.theme)
-        .catch(() => null)
-    );
+    return this.readById(id)
+      .then((user) => user?.getSiteTheme())
+      .then((data) => {
+        if (data?.theme) {
+          const t = data.theme as Theme;
+          return t;
+        }
+        return null;
+      })
+      .catch(() => null);
   }
 }
 

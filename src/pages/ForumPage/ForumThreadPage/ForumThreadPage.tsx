@@ -27,6 +27,8 @@ function parseMessagesItem(data: MessageModel[]) {
   return data;
 }
 
+// TODO: разбить на более мелкие сущности https://github.com/praktikum-game/defence-game/pull/71#discussion_r790254698
+
 export const ForumThreadPage = () => {
   const [rootMessages, setRootMessages] = useState<MessageItem[]>([]);
   const [replyMessages, setReplyMessages] = useState<{ [key in number]: MessageItem[] }>([]);
@@ -36,8 +38,8 @@ export const ForumThreadPage = () => {
     subject: '',
     content: '',
     createdAt: '',
-    UserId: 0,
-    User: { id: 0, name: '', SiteThemeId: 1, createdAt: '', updatedAt: '' },
+    userId: 0,
+    user: { id: 0, name: '', siteThemeId: 1, createdAt: '', updatedAt: '' },
     messagesCount: 0,
     updatedAt: '',
   });
@@ -166,7 +168,7 @@ export const ForumThreadPage = () => {
               messageData={{
                 date: forumThread.createdAt,
                 content: forumThread.content,
-                userName: forumThread.User.name,
+                userName: forumThread.user.name,
                 userAvatar: null,
               }}
             />
