@@ -1,0 +1,1 @@
+export { RatingIcon } from './RatingIcon';

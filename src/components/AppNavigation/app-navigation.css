@@ -1,0 +1,53 @@
+.app-navigation {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  background-color: tomato;
+  height: 4rem;
+  box-shadow: 0px 0px 5px 1px gray;
+
+  &__navigation-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+  }
+}
+
+.navigation-item {
+  height: 100%;
+  width: 100%;
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    justify-content: space-evenly;
+    height: 100%;
+    transition: background-color 0.5s ease-out;
+
+    &_active {
+      background-color: white;
+    }
+
+    &:hover {
+      transition: background-color 0.5s ease;
+      background-color: yellow;
+    }
+  }
+
+  &__text {
+    visibility: collapse;
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+  }
+
+  &:hover &__text {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  }
+}

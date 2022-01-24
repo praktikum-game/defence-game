@@ -2,7 +2,6 @@ import React from 'react';
 import block from 'bem-cn';
 import { Link } from 'react-router-dom';
 
-import { AppNavigation } from '../../components/AppNavigation';
 import { Button } from '../../components/Button';
 import { Logo } from '../../components/Logo';
 import hobart from './static/hobart.svg';
@@ -15,7 +14,7 @@ import medic from './static/medic.png';
 import viruses from './static/viruses.png';
 import bankomat from './static/bankomat.png';
 
-import './homePage.css';
+import './home-page.css';
 
 const b = block('home-page');
 const h = block('main-header');
@@ -87,10 +86,8 @@ export const HomePage = () => {
         <Link className="button__link" to="/game">
           <Button className={b('button')} text="Начать игру" />
         </Link>
-        <div className="main-footer">
-          <AppNavigation />
-        </div>
       </div>
+      
     </div>
   );
 };

@@ -7,6 +7,7 @@ import '../../utilities/common.css';
 import { AppState } from 'store';
 import { ThemeSwitcher } from 'components/ThemeSwitcher';
 import { switchTheme } from 'store/theme/actions/action-creators';
+import { AppNavigation } from 'components/AppNavigation';
 
 export const App = () => {
   const theme = useSelector((state: AppState) => state.theme.theme);
@@ -17,6 +18,7 @@ export const App = () => {
     <div className={`App ${theme}_theme`}>
       <AppRoutes />
       <ThemeSwitcher theme={theme} onClick={handleClick} />
+      <AppNavigation />
     </div>
   );
 };

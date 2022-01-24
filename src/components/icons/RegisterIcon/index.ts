@@ -1,0 +1,1 @@
+export { RegisterIcon } from './RegisterIcon';
