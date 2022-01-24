@@ -27,6 +27,8 @@ function parseMessagesItem(data: MessageModel[]) {
   return data;
 }
 
+// TODO: разбить на более мелкие сущности https://github.com/praktikum-game/defence-game/pull/71#discussion_r790254698
+
 export const ForumThreadPage = () => {
   const [rootMessages, setRootMessages] = useState<MessageItem[]>([]);
   const [replyMessages, setReplyMessages] = useState<{ [key in number]: MessageItem[] }>([]);
