@@ -1,4 +1,5 @@
 .home-page {
+  margin-bottom: 3rem;
   .main-header {
     /* stylelint-disable-next-line value-list-comma-space-after */
     background: url('./static/bg.png') no-repeat bottom right / 50%,
@@ -113,17 +114,5 @@
     padding: 20px 100px;
     width: auto;
     margin-top: 100px;
-  }
-
-  .main-footer {
-    margin-top: 60px;
-
-    a {
-      color: var(--text-color-contrast);
-    }
-
-    .app-navigation ul li {
-      margin: 0 20px;
-    }
   }
 }

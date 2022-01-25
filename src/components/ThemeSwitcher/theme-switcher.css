@@ -2,7 +2,7 @@
 
 .theme-switcher {
   position: fixed;
-  bottom: 10px;
+  top: 10px;
   right: 10px;
   border-radius: 100%;
   border: 1px gray solid;
