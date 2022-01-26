@@ -10,14 +10,16 @@ export class TopPannelItem extends BaseGameObject implements Drawable {
   draw(context: CanvasRenderingContext2D, text?: string, image?: HTMLImageElement) {
     context.strokeStyle = '#e8d9d1';
     if (text) {
+      let drawTextXPos = this.x;
       context.fillStyle = '#e8d9d1';
       context.fillRect(this.x, this.y, this.width, this.height);
       if (image) {
         context.drawImage(image, this.x, this.y, this.width, this.height);
+        drawTextXPos += 45;
       }
       context.fillStyle = '#553e0e';
       context.font = 'bold 18px Inter';
-      context.fillText(text, this.x + 45, this.height / 2 + 10);
+      context.fillText(text, drawTextXPos, this.height / 2 + 10);
     }
     context.strokeRect(this.x, this.y, this.width, this.height);
   }

@@ -27,6 +27,7 @@ import { Enemy } from './Enemies/Enemy';
 import { GameCurrency } from './GameCurrency';
 import { BankomatDefender } from './Defenders/BankomatDefender';
 import { Bullet } from './Bullets/Bullet';
+import { gameStore } from './GameStore';
 
 export class Game {
   private _gameLevel: number = 1;
@@ -179,6 +180,9 @@ export class Game {
   };
 
   public run(gameLevel: LevelIndextype = 0) {
+    if (gameLevel === 0) {
+      gameStore.reset();
+    }
     if (gameLevel === +1) {
       this._gameLevel += gameLevel;
     } else if (gameLevel !== 0) {
@@ -259,6 +263,7 @@ export class Game {
           this._defenders.push(defender);
           defender.draw(this._ctx);
           this._spentMoney(defender.cost);
+          gameStore.addScoreValue(10);
         }
       }
     });
@@ -271,6 +276,7 @@ export class Game {
       this._currency.value.toString(),
       GameResources.get(resources.toppannel.money.icon),
     );
+    this._topPannel.pannelGrid[1].draw(this._ctx, `Очки: ${gameStore.getValue('score')}`);
   };
 
   private _spentMoney = (value: number) => {
@@ -294,14 +300,14 @@ export class Game {
     this._enemies = [];
     this._defenders = [];
     this._isRunning = false;
-    this._onGameEnd('lose');
+    this._onGameEnd('lose', gameStore.getValue('score'));
   }
 
   private win() {
     this._enemies = [];
     this._defenders = [];
     this._isRunning = false;
-    this._onGameEnd('win');
+    this._onGameEnd('win', gameStore.getValue('score'));
   }
 
   private _checkNextAtack = (delay: number) => {
@@ -383,7 +389,9 @@ export class Game {
           if (this.checkBulletCollision(bullet, enemy)) {
             enemy.setDamage(defender.damage);
             defender.bullets = defender.bullets.filter((b) => b.uuid !== bullet.uuid);
+            gameStore.addScoreValue(defender.damage);
             if (enemy.health < 0) {
+              gameStore.addScoreValue(10);
               this._enemies = this.enemies.filter((e) => e.uuid !== enemy.uuid);
             }
           }
@@ -403,6 +411,7 @@ export class Game {
       if (d instanceof BankomatDefender) {
         if (d.isGetMoney(delay)) {
           this._getMoney(BANKOMAT_CURRENCY);
+          gameStore.addScoreValue(1);
         }
       } else {
         d.update(delay);
@@ -424,7 +433,8 @@ export class Game {
     if (
       bullet.x + bullet.width > enemy.x &&
       bullet.y >= enemy.y &&
-      bullet.y <= enemy.y + enemy.height
+      bullet.y <= enemy.y + enemy.height &&
+      bullet.x + bullet.width < GameField.gameFieldWidth
     ) {
       return true;
     }
