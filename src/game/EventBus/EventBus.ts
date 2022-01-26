@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Eventfull } from './types';
+import { EventFull } from './types';
 
-export class EventBus implements Eventfull {
+export class EventBus implements EventFull {
   private _listeners: Record<string, Function[]>;
 
   constructor() {
