@@ -9,14 +9,20 @@ import { Title } from '../../components/Title';
 import block from 'bem-cn';
 
 import './game-page.css';
+import { leaderboardAPI } from 'api/leaderboard';
+import { useSelector } from 'react-redux';
+import { AppState } from 'store';
 
 const b = block('game-container');
 
 export const GamePage = () => {
+  const user = useSelector((state: AppState) => state.user.data);
+
   const navigate = useNavigate();
   const [infoModalIsVisible, setInfoModalIsVisible] = useState(true);
   const [loseModalIsVisible, setLoseModalIsVisible] = useState(false);
   const [winModalIsVisible, setWinModalIsVisible] = useState(false);
+  const [gameScore, setGameScore] = useState(0);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const gameRef = useRef<Game | null>(null);
@@ -24,20 +30,30 @@ export const GamePage = () => {
 
   const { isFullscreen, toggleFullscreen } = useFullscreen(gameContainerElementRef);
 
-  const handleGameEnd = useCallback((status: EndGameStatus) => {
-    switch (status) {
-      case 'lose':
-        setLoseModalIsVisible(true);
-        break;
+  const handleGameEnd = useCallback(
+    (status: EndGameStatus, score: number) => {
+      switch (status) {
+        case 'lose':
+          setGameScore(score);
+          setLoseModalIsVisible(true);
+          break;
 
-      case 'win':
-        setWinModalIsVisible(true);
-        break;
+        case 'win':
+          setGameScore(score);
+          setWinModalIsVisible(true);
+          break;
 
-      default:
-        break;
-    }
-  }, []);
+        default:
+          break;
+      }
+      if (user) {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        const { id, login, display_name } = user;
+        leaderboardAPI.upsertUserToLeaderboard({ id, login, username: display_name, score });
+      }
+    },
+    [user],
+  );
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -96,7 +112,7 @@ export const GamePage = () => {
 
         <Modal visible={loseModalIsVisible}>
           <Title headingLevel={3} className="modal__title">
-            К сожалению, Вы проиграли. Повторить?
+            К сожалению, Вы проиграли (очки: {gameScore}). Повторить?
           </Title>
           <div className="modal__buttons">
             <Button
@@ -113,7 +129,7 @@ export const GamePage = () => {
 
         <Modal visible={winModalIsVisible}>
           <Title headingLevel={3} className="modal__title">
-            Ура, победа!
+            Ура, победа (очки: {gameScore})!
           </Title>
           <div className="modal__buttons">
             <Button

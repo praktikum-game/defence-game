@@ -4,7 +4,7 @@ import { Enemy } from './Enemies/Enemy';
 import { Constructable } from './interfaces';
 
 export type EndGameStatus = 'win' | 'lose';
-export type EndGameCallback = (typeEnd: EndGameStatus) => void;
+export type EndGameCallback = (typeEnd: EndGameStatus, score: number) => void;
 
 export type AtackTimingType = {
   timeout: number;
