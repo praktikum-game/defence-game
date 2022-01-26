@@ -5,21 +5,7 @@
   top: 10px;
   right: 10px;
   border-radius: 100%;
-  border: 1px gray solid;
   height: 50px;
   width: 50px;
-  box-shadow: 0px 0px 10px 5px red;
-  background-color: white;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  transition: background-image 0.5s;
-  -webkit-transition: background-image 0.5s;
-  -moz-transition: background-image 0.5s;
-  &_light {
-    background-image: url('./assets/dark_mode_black_24dp.svg');
-  }
-  &_dark {
-    background-image: url('./assets/light_mode_black_24dp.svg');
-  }
+  box-shadow: 0px 0px 10px 5px var(--page-body-bg-dark);
 }

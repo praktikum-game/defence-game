@@ -1,0 +1,19 @@
+.dg-icon {
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  border-radius: 100%;
+  &_light {
+    background-color: white;
+    path {
+      fill: black;
+    }
+  }
+
+  &_dark {
+    background-color: black;
+    path {
+      fill: white;
+    }
+  }
+}
