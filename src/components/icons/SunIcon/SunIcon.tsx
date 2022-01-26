@@ -1,6 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { IconProps } from '../types';
+import block from 'bem-cn';
 
-export const SunIcon = () => {
+import '../icons.css';
+
+const b = block('dg-icon');
+
+export const SunIcon = ({ theme }: IconProps) => {
   return (
     <svg
       aria-hidden="true"
@@ -9,7 +15,7 @@ export const SunIcon = () => {
       data-icon="sun"
       width={30}
       height={30}
-    //   class="svg-inline--fa fa-sun"
+      className={b({ [theme]: true })}
       role="img"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
