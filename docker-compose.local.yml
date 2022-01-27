@@ -13,5 +13,8 @@ services:
   nginx:
     build:
       dockerfile: Dockerfile.local
+    volumes:
+      - ./certs/cert.crt:/etc/ssl/cert.crt
+      - ./certs/cert.key:/etc/ssl/key.key
     env_file:
       - .env
