@@ -11,5 +11,7 @@ services:
     env_file:
       - .env
   nginx:
+    build:
+      dockerfile: Dockerfile.local
     env_file:
       - .env
