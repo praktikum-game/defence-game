@@ -4,14 +4,15 @@ import block from 'bem-cn';
 import { ThemeSwitcherProps } from './types';
 
 import './theme-switcher.css';
+import { SunIcon } from 'components/icons/SunIcon';
+import { MoonIcon } from 'components/icons/MoonIcon';
 
 const b = block('theme-switcher');
 
 export const ThemeSwitcher = ({ theme, onClick, ...props }: ThemeSwitcherProps) => {
   return (
-    <button
-      className={b({ dark: theme === 'dark', light: theme === 'light' }).mix(props.className)}
-      onClick={onClick}
-    ></button>
+    <span className={b({ [theme]: true }).mix(props.className)} onClick={onClick}>
+      {theme === 'light' ? <SunIcon theme={theme} /> : <MoonIcon theme={theme} />}
+    </span>
   );
 };

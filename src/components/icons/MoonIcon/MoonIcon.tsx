@@ -1,14 +1,22 @@
 import React from 'react';
 
-export const MoonIcon = () => {
+import { IconProps } from '../types';
+import block from 'bem-cn';
+
+import '../icons.css';
+
+const b = block('dg-icon');
+
+
+
+export const MoonIcon = ({ theme }: IconProps) => {
   return (
     <svg
       aria-hidden="true"
       focusable="false"
       data-prefix="fas"
       data-icon="moon"
-      //   class="svg-inline--fa fa-moon"
-
+      className={b({ [theme]: true })}
       width={30}
       height={30}
       role="img"
