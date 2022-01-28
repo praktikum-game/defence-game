@@ -45,8 +45,8 @@ services:
     build:
       context: ./nginx
     volumes:
-      - ./certs/cert.crt:/etc/ssl/cert.crt
-      - ./certs/cert.key:/etc/ssl/key.key
+      - "/etc/letsencrypt:/etc/letsencrypt"
+      - "/var/lib/letsencrypt:/var/lib/letsencrypt"
     networks:
       - innerNetwork
     env_file:
