@@ -37,8 +37,8 @@ function getHtmlString(
           }}
         />
         <div id="root" dangerouslySetInnerHTML={{ __html: reactJsxString }} />
-        <script src={`/vendors/${assets.vendorsAssets.vendors.js}`}></script>
-        <script src={assets.mainAssets.main.js}></script>
+        <script nonce={nonce} src={`/vendors/${assets.vendorsAssets.vendors.js}`}></script>
+        <script nonce={nonce} src={assets.mainAssets.main.js}></script>
       </body>
     </html>,
   );
