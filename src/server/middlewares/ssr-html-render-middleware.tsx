@@ -17,6 +17,7 @@ function getHtmlString(
   reactJsxString: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   assets: { vendorsAssets: any; mainAssets: any },
+  nonce: string,
   store?: Store,
 ) {
   const html = renderToStaticMarkup(
@@ -30,6 +31,7 @@ function getHtmlString(
       </head>
       <body>
         <script
+          nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: `window.__PRELOADED_STATE__ = ${renderObject(store?.getState())}`,
           }}
@@ -73,9 +75,10 @@ const ssrHtmlRenderMiddleware = () => {
         </StaticRouter>
       </Provider>
     );
-
     const reactHtml = renderToString(rootJsx);
-    res.status(200).send(getHtmlString(reactHtml, { vendorsAssets, mainAssets }, store));
+    res
+      .status(200)
+      .send(getHtmlString(reactHtml, { vendorsAssets, mainAssets }, res.locals.nonce, store));
   };
 };
 
