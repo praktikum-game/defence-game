@@ -179,7 +179,7 @@ export const ForumThreadPage = () => {
             const currentReplies = replyMessages[el.id];
             const rootMessage = (
               <MessagesList.Message
-                key={JSON.stringify(el)}
+                key={`root_${el.id}`}
                 messageData={{
                   date: el.createdAt,
                   content: el.content,
@@ -194,7 +194,7 @@ export const ForumThreadPage = () => {
                 <MessagesList.Message
                   // React ругается, что не уникальный key. Что может быть не так?
                   // Не могу сделать уникальным
-                  key={JSON.stringify(replyMessage)}
+                  key={`reply_${replyMessage.id}`}
                   messageData={{
                     date: replyMessage.createdAt,
                     content: replyMessage.content,
