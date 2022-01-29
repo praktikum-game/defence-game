@@ -6,15 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import { getUserData } from 'store/user/actions/action-creators';
 import { AxiosError } from 'axios';
 
-export const useOAuth = (redirectUri: string) => {
+export const useOAuth = (redirectUri: string, clientId: string) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const startOAuth = useCallback(async () => {
-    const { data } = await oauthApi.getServiceId(redirectUri);
-    const link = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${data.service_id}&redirect_uri=${redirectUri}`;
+    const link = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
     window.location.href = link;
-  }, [redirectUri]);
+  }, [redirectUri, clientId]);
 
   useEffect(() => {
     async function checkOAuthUser() {

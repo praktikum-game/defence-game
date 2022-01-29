@@ -48,6 +48,7 @@ export const clientConfig: Configuration = {
 
     new DefinePlugin({
       OAUTH_REDIRECT_URL: JSON.stringify(process.env.OAUTH_REDIRECT_URL),
+      OAUTH_CLIENT_ID: JSON.stringify(process.env.OAUTH_CLIENT_ID),
     }),
 
     !IS_DEV &&
