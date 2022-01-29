@@ -186,7 +186,7 @@ export const ForumThreadPage = () => {
                   userName: el.user.name,
                   userAvatar: el.user.avatar,
                 }}
-                replyClick={() => handleReplyMessageClick(el.id)}
+                replyClick={userData === null ? undefined : () => handleReplyMessageClick(el.id)}
               />
             );
             if (currentReplies.length > 0) {
@@ -216,7 +216,10 @@ export const ForumThreadPage = () => {
         </MessagesList>
         <div>
           <InputField
-            placeholder="Введите сообщение..."
+            disabled={userData === null}
+            placeholder={
+              userData === null ? 'Авторизуйтесь, чтобы написать' : 'Введите сообщение...'
+            }
             value={currentMessage}
             onInput={handleInputMessageText}
           />

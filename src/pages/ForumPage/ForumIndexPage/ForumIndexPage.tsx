@@ -83,6 +83,7 @@ export const ForumIndexPage = () => {
           Темы для обсуждений
         </Title>
         <Button
+          disabled={userData === null}
           text="Создать новую тему"
           view="secondary"
           className="create-new-theme-button"
