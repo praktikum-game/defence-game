@@ -12,6 +12,7 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { App } from '../../components/App';
 import { userService } from 'server/db/services';
 import { getHistory } from 'utilities/history';
+import favicon from '../../shared/images/favicon.png';
 
 function getHtmlString(
   reactJsxString: string,
@@ -26,6 +27,7 @@ function getHtmlString(
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Doctors vs Viruses</title>
+        <link rel="icon" type="image/png" href={favicon} />
         <link href={assets.mainAssets.main.css} rel="stylesheet" type="text/css" />
       </head>
       <body>
