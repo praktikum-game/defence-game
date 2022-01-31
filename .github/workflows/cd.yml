@@ -30,7 +30,7 @@ jobs:
         run: ssh staging 'cd defence-game && docker-compose down'
 
       - name: Pull new changes
-        run: ssh staging 'cd defence-game && git pull'
+        run: ssh staging 'cd defence-game && git checkout main && git pull origin'
 
       - name: Start the docker-container
         if: ${{ always() }}
