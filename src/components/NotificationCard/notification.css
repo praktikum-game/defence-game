@@ -1,0 +1,11 @@
+.notification-card {
+  background-color: var(--error-page-accent-color);
+  padding: 10px;
+  transition: all 0.5s;
+  margin-bottom: 10px;
+  border: gray 1px solid;
+  border-radius: 5px;
+  &__title {
+    font-weight: bold;
+  }
+}

@@ -9,11 +9,13 @@ import { leaderboardAPI } from '../api/leaderboard';
 import { usersAPI } from '../api/users';
 import { themeReducer } from './theme';
 import { usersDbAPI } from 'api/db-users';
+import { notificationReducer } from './notification';
 
 export const rootReducer = combineReducers({
   user: userReducer,
   leaderboard: leaderboardReducer,
   theme: themeReducer,
+  notifications: notificationReducer,
 });
 
 export function configureStore(initialState = {}) {
