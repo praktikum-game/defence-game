@@ -86,11 +86,11 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app
+  .use(express.static(resolve(__dirname)))
   .use(setLocalsNonceMiddleware)
   .use(setCspPolicyMiddleware)
   // Отключаем заголовок X-XSS-Protection, так как он вызывает много проблем и используем для защиты другие способы
   .use(xXssProtection())
-  .use(express.static(resolve(__dirname)))
   .use(getUserMiddleware)
   .use('/api/v1', router);
 
