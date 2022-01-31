@@ -1,2 +1,2 @@
 export { useFormInput } from './useFormInput';
-export { FormInputHookResult, FormOutputObject, FormInputObject } from './types';
+export { FormInputHookResult, FormOutputObject } from './types';

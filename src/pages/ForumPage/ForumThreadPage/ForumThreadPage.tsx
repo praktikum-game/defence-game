@@ -92,8 +92,8 @@ export const ForumThreadPage = () => {
     getData();
   }, [forumId, setRootMessages, setForumThread, setReplyMessages]);
 
-  const handleInputMessageText: React.ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
-    setCurrentMessage(e.target.value);
+  const handleInputMessageText = useCallback((value: string) => {
+    setCurrentMessage(value);
   }, []);
 
   const handleCloseAddModal = useCallback(() => {
@@ -218,7 +218,9 @@ export const ForumThreadPage = () => {
           <InputField
             placeholder="Введите сообщение..."
             value={currentMessage}
-            onInput={handleInputMessageText}
+            type="text"
+            errors={[]}
+            onTextChange={handleInputMessageText}
           />
           <Button
             disabled={!currentMessage || !userData}

@@ -1,10 +1,4 @@
-import { ValidationResult } from '../../utilities/validators';
-
-export type FormInputObject = {
-  validationResult: ValidationResult;
-};
-
-export type FormOutputObject = FormInputObject & { value: string };
+export type FormOutputObject = { value: string; messages: Array<string> };
 
 export type FormInputHookResult = [
   FormOutputObject,

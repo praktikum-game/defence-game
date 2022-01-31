@@ -21,58 +21,35 @@ import { InputNames } from '../../consts';
 import { useFormInput } from '../../hooks/useFormInput/useFormInput';
 import { RegisterRequest } from '../../api/auth';
 import { userRegister } from '../../store/user/actions/action-creators';
+import { showNotificationWithTimeout } from 'store/notification/actions/action-creators';
 
 import './registerPage.css';
 
-export const RegisterPage = (): JSX.Element => {
+export const RegisterPage = () => {
   const dispatch = useDispatch();
 
-  const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
+  const [{ value: loginValue, messages: loginErrors }, setLoginValue] =
     useFormInput(loginValidator);
 
-  const [{ value: phoneValue, validationResult: phoneValidationResult }, setPhoneValue] =
+  const [{ value: phoneValue, messages: phoneErrors }, setPhoneValue] =
     useFormInput(phoneValidator);
 
-  const [
-    { value: firstNameValue, validationResult: firstNameValidationResult },
-    setFirstNameValue,
-  ] = useFormInput(nameValidator);
+  const [{ value: firstNameValue, messages: firstNameErrors }, setFirstNameValue] =
+    useFormInput(nameValidator);
 
-  const [
-    { value: secondNameValue, validationResult: secondNameValidationResult },
-    setSecondNameValue,
-  ] = useFormInput(nameValidator);
+  const [{ value: secondNameValue, messages: secondNameErrors }, setSecondNameValue] =
+    useFormInput(nameValidator);
 
-  const [{ value: emailValue, validationResult: emailValidationResult }, setEmailValue] =
+  const [{ value: emailValue, messages: emailErrors }, setEmailValue] =
     useFormInput(emailValidator);
 
-  const [{ value: passwordValue, validationResult: passwordValidationResult }, setPasswordValue] =
+  const [{ value: passwordValue, messages: passwordErrors }, setPasswordValue] =
     useFormInput(passwordValidator);
 
-  const [
-    { value: repeatPasswordValue, validationResult: repeatPasswordValidationResult },
-    setRepeatPasswordValue,
-  ] = useFormInput(passwordValidator);
+  const [{ value: repeatPasswordValue, messages: repeatPasswordErrors }, setRepeatPasswordValue] =
+    useFormInput(passwordValidator);
 
-  const resetInputValues = useCallback(() => {
-    setLoginValue('');
-    setPhoneValue('');
-    setFirstNameValue('');
-    setSecondNameValue('');
-    setEmailValue('');
-    setPasswordValue('');
-    setRepeatPasswordValue('');
-  }, [
-    setLoginValue,
-    setPhoneValue,
-    setFirstNameValue,
-    setSecondNameValue,
-    setEmailValue,
-    setPasswordValue,
-    setRepeatPasswordValue,
-  ]);
-
-  const registerCallback = useCallback(
+  const handleUserRegisterFormSubmit = useCallback(
     async (data: FormData) => {
       const registerData: RegisterRequest = {
         first_name: String(data.get('first_name')),
@@ -83,9 +60,36 @@ export const RegisterPage = (): JSX.Element => {
         phone: String(data.get('phone')),
       };
 
-      dispatch(userRegister(registerData));
+      try {
+        dispatch(userRegister(registerData));
+
+        setLoginValue('');
+        setPhoneValue('');
+        setFirstNameValue('');
+        setSecondNameValue('');
+        setEmailValue('');
+        setPasswordValue('');
+        setRepeatPasswordValue('');
+      } catch (e: unknown) {
+        dispatch(
+          showNotificationWithTimeout({
+            text: 'Проверьте правильность заполнения полей',
+            title: 'Не удалось',
+            type: 'warning',
+          }),
+        );
+      }
     },
-    [dispatch],
+    [
+      dispatch,
+      setLoginValue,
+      setPhoneValue,
+      setFirstNameValue,
+      setEmailValue,
+      setRepeatPasswordValue,
+      setPasswordValue,
+      setSecondNameValue,
+    ],
   );
 
   return (
@@ -96,55 +100,42 @@ export const RegisterPage = (): JSX.Element => {
         </Title>
       </Header>
       <PageContainer size="s">
-        <Form
-          className="register-page__form"
-          validationResults={[
-            loginValidationResult,
-            emailValidationResult,
-            phoneValidationResult,
-            firstNameValidationResult,
-            secondNameValidationResult,
-            passwordValidationResult,
-            repeatPasswordValidationResult,
-          ]}
-          controllerCallback={registerCallback}
-          resetValuesCallback={resetInputValues}
-        >
+        <Form className="register-page__form" onFormSubmit={handleUserRegisterFormSubmit}>
           <InputField
             view="labeled"
             value={loginValue}
             name={InputNames.LOGIN}
             label="Логин"
-            errorText={loginValidationResult.message}
-            isValid={loginValidationResult.valid}
-            valueChangeCallback={setLoginValue}
+            type="text"
+            errors={loginErrors}
+            onTextChange={setLoginValue}
           />
           <InputField
             view="labeled"
             value={phoneValue}
             name="phone"
+            type="tel"
             label="Телефон"
-            errorText={phoneValidationResult.message}
-            isValid={phoneValidationResult.valid}
-            valueChangeCallback={setPhoneValue}
+            errors={phoneErrors}
+            onTextChange={setPhoneValue}
           />
           <InputField
             view="labeled"
             value={firstNameValue}
             name="first_name"
             label="Имя"
-            errorText={firstNameValidationResult.message}
-            isValid={firstNameValidationResult.valid}
-            valueChangeCallback={setFirstNameValue}
+            type="text"
+            errors={firstNameErrors}
+            onTextChange={setFirstNameValue}
           />
           <InputField
             view="labeled"
             value={secondNameValue}
             name="second_name"
             label="Фамилия"
-            errorText={secondNameValidationResult.message}
-            isValid={secondNameValidationResult.valid}
-            valueChangeCallback={setSecondNameValue}
+            errors={secondNameErrors}
+            type="text"
+            onTextChange={setSecondNameValue}
           />
           <InputField
             view="labeled"
@@ -152,9 +143,8 @@ export const RegisterPage = (): JSX.Element => {
             name={InputNames.EMAIL}
             label="Email"
             type="email"
-            errorText={emailValidationResult.message}
-            isValid={emailValidationResult.valid}
-            valueChangeCallback={setEmailValue}
+            errors={emailErrors}
+            onTextChange={setEmailValue}
           />
           <InputField
             view="labeled"
@@ -162,9 +152,8 @@ export const RegisterPage = (): JSX.Element => {
             name={InputNames.PASSWORD}
             label="Пароль"
             type="password"
-            errorText={passwordValidationResult.message}
-            isValid={passwordValidationResult.valid}
-            valueChangeCallback={setPasswordValue}
+            errors={passwordErrors}
+            onTextChange={setPasswordValue}
           />
           <InputField
             view="labeled"
@@ -172,9 +161,8 @@ export const RegisterPage = (): JSX.Element => {
             name={InputNames.REPEAT_PASSWORD}
             label="Пароль (еще раз)"
             type="password"
-            errorText={repeatPasswordValidationResult.message}
-            isValid={repeatPasswordValidationResult.valid}
-            valueChangeCallback={bindArgsFromN(setRepeatPasswordValue, 2, passwordValue)}
+            errors={repeatPasswordErrors}
+            onTextChange={bindArgsFromN(setRepeatPasswordValue, 2, passwordValue)}
           />
           <Footer className="register-page__footer">
             <Button
@@ -182,13 +170,20 @@ export const RegisterPage = (): JSX.Element => {
               type="submit"
               disabled={
                 !(
-                  loginValidationResult.valid &&
-                  emailValidationResult.valid &&
-                  phoneValidationResult.valid &&
-                  firstNameValidationResult.valid &&
-                  secondNameValidationResult.valid &&
-                  passwordValidationResult.valid &&
-                  repeatPasswordValidationResult.valid
+                  loginErrors.length < 1 &&
+                  loginValue.length > 0 &&
+                  emailErrors.length < 1 &&
+                  emailValue.length > 0 &&
+                  phoneErrors.length < 1 &&
+                  phoneValue.length > 0 &&
+                  firstNameErrors.length < 1 &&
+                  firstNameValue.length > 0 &&
+                  secondNameErrors.length < 1 &&
+                  secondNameValue.length > 0 &&
+                  passwordErrors.length < 1 &&
+                  passwordValue.length > 0 &&
+                  repeatPasswordErrors.length < 1 &&
+                  repeatPasswordValue.length > 0
                 )
               }
               className="center-horizontal"

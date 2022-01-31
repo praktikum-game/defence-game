@@ -3,6 +3,7 @@ import { authAPI } from '../api/auth';
 import { leaderboardAPI } from '../api/leaderboard';
 import { usersAPI } from '../api/users';
 import { LeaderboardState } from './leaderboard';
+import { NotificationState } from './notification/types';
 import { ThemeState } from './theme/types';
 import { UserState } from './user';
 
@@ -19,4 +20,5 @@ export interface AppState {
   user: UserState;
   leaderboard: LeaderboardState;
   theme: ThemeState;
+  notifications:NotificationState
 }

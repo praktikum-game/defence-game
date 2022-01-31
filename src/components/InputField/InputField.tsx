@@ -8,29 +8,29 @@ import './input-field.css';
 const b = block('input-field');
 
 export const InputField = ({
+  name = 'TextField',
+  label = name,
   flex = true,
   type = 'text',
   disabled = false,
-  isValid = true,
-  errorText = null,
-  view = 'default',
+  autoComplete = 'off',
+  view = 'labeled',
   ...props
 }: InputFieldProps) => {
-  const { valueChangeCallback, ...otherProps } = props;
-  const { id, name } = otherProps;
+  const { onTextChange, id, errors, value: fieldValue, ...otherProps } = props;
 
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  const handleTextChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.target;
-    if (valueChangeCallback !== undefined) {
-      valueChangeCallback(sanitizeHtml(value));
+    if (onTextChange) {
+      onTextChange(sanitizeHtml(value));
     }
   };
 
   return (
     <div className={b({ [view]: true, flex })}>
-      {props.label && (
+      {view === 'labeled' && (
         <label htmlFor={id ?? name} className={b('label')}>
-          {props.label}
+          <strong>{label}</strong>
         </label>
       )}
       <input
@@ -38,10 +38,13 @@ export const InputField = ({
         className={b('input')}
         type={type}
         disabled={disabled}
+        name={name}
+        autoComplete={autoComplete}
+        onChange={handleTextChange}
+        value={fieldValue}
         {...otherProps}
-        onChange={handleChange}
       />
-      {!isValid && <span className={b('error-text')}>{errorText}</span>}
+      {errors && errors.length > 0 && <span className={b('error-text')}>{errors[0]}</span>}
     </div>
   );
 };

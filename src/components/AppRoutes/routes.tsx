@@ -1,7 +1,6 @@
 import React from 'react';
 import type { RouteObject } from 'react-router-dom';
-import { ProfilePage } from '../../pages/ProfilePage';
-import { ProfileEditPage } from '../../pages/ProfileEditPage';
+import { ProfileEditPage } from '../../pages/ProfilePage';
 import { LoginPage } from '../../pages/LoginPage';
 import { HomePage } from '../../pages/HomePage';
 import { RegisterPage } from '../../pages/RegisterPage';
@@ -30,18 +29,18 @@ export const routes: RouteObject[] = [
             path: '/profile',
             element: (
               <RequireAuth>
-                <ProfilePage />
-              </RequireAuth>
-            ),
-          },
-          {
-            path: '/profile-edit',
-            element: (
-              <RequireAuth>
                 <ProfileEditPage />
               </RequireAuth>
             ),
           },
+          // {
+          //   path: '/profile-edit',
+          //   element: (
+          //     <RequireAuth>
+          //       <ProfileEditPage />
+          //     </RequireAuth>
+          //   ),
+          // },
           {
             path: '/password-edit',
             element: (

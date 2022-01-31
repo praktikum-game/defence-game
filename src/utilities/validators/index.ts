@@ -1,5 +1,4 @@
 export {
-  ValidationResult,
   InnerValidationFunction,
   ValidateItemParams,
   ValidateFunction,

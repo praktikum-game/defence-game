@@ -1,7 +1,7 @@
-import { ValidateFunction, ValidationResult, ValidatorItem, ValidateItemParams } from './types';
+import { ValidateFunction, ValidatorItem, ValidateItemParams } from './types';
 
-const valid = (): ValidationResult => ({ valid: true, message: null });
-const invalid = (message: string | null): ValidationResult => ({ valid: false, message });
+const valid = (): null => null;
+const invalid = (message: string): string => message;
 
 export const required: ValidateFunction =
   () =>
@@ -30,20 +30,21 @@ export const regExpCheck: ValidateFunction<RegExp> =
     return valid();
   };
 
-export const validate = (validators: Array<ValidatorItem>, value: string): ValidationResult => {
+export const validate = (validators: Array<ValidatorItem>, value: string): Array<string> => {
+  const messages: Array<string> = [];
   if (validators && validators.length > 0) {
     for (const { checkFunction, message } of validators) {
-      const checkResult: ValidationResult = checkFunction({ value, message });
-      if (!checkResult.valid) {
-        return checkResult;
+      const resultMessage = checkFunction({ value, message });
+      if (resultMessage) {
+        messages.push(resultMessage);
       }
     }
   }
-  return { valid: true, message: null };
+  return messages;
 };
 
-export function loginValidator(value: string): ValidationResult {
-  const loginPattern = /^(?!\d+)[A-Za-z-_0-9]{3,20}$/;
+export function loginValidator(value: string): Array<string> {
+  const loginPattern = /^(?!\d+)[A-Za-z-_.0-9]{3,20}$/;
 
   const validators: ValidatorItem[] = [
     {
@@ -62,7 +63,7 @@ export function loginValidator(value: string): ValidationResult {
   return validate(validators, value);
 }
 
-export function passwordValidator(value: string, lastValue?: string): ValidationResult {
+export function passwordValidator(value: string, lastValue?: string): Array<string> {
   const passwordPattern = /^(?=\D*\d)(?=.*[A-Z]).{8,40}$/;
 
   const validators: ValidatorItem[] = [
@@ -82,13 +83,13 @@ export function passwordValidator(value: string, lastValue?: string): Validation
   ];
 
   if (lastValue !== undefined && value !== lastValue) {
-    return invalid('Пароль должен совпадать с предыдущим');
+    return [invalid('Пароль должен совпадать с предыдущим')];
   }
 
   return validate(validators, value);
 }
 
-export function emailValidator(value: string): ValidationResult {
+export function emailValidator(value: string): Array<string> {
   const emailPattern = /^[A-Za-z0-9-]+@[A-Za-z0-9]+\.[a-z]+$/;
 
   const validators: ValidatorItem[] = [
@@ -104,7 +105,7 @@ export function emailValidator(value: string): ValidationResult {
   return validate(validators, value);
 }
 
-export function phoneValidator(value: string): ValidationResult {
+export function phoneValidator(value: string): Array<string> {
   const phonePattern = /^[+]{0,1}[0-9]{10,15}$/;
 
   const validators: ValidatorItem[] = [
@@ -122,7 +123,7 @@ export function phoneValidator(value: string): ValidationResult {
   return validate(validators, value);
 }
 
-export function nameValidator(value: string): ValidationResult {
+export function nameValidator(value: string): Array<string> {
   const namePattern = /^[A-ZА-ЯЁ][A-Za-zА-Яа-яёЁ-]*$/;
 
   const validators: ValidatorItem[] = [
@@ -139,7 +140,26 @@ export function nameValidator(value: string): ValidationResult {
   return validate(validators, value);
 }
 
-export function avatarValidator(value: string): ValidationResult {
+export function displayNameValidator(value: string): Array<string> {
+  const displayNamePattern = /^(?!\d+)[A-Za-zА-Яа-я-_.0-9]{3,20}$/;
+
+  // const namePattern = /[A-Za-zА-Яа-яёЁ-_.]*$/;
+
+  const validators: ValidatorItem[] = [
+    {
+      checkFunction: (params: ValidateItemParams) => required()({ ...params }),
+      message: 'Никнейм не может быть пустым',
+    },
+    {
+      checkFunction: (params: ValidateItemParams) => regExpCheck(displayNamePattern)({ ...params }),
+      message:
+        'Никнейм должно начинаться с заглавной буквы и содержать только кириллицу и/или латиницу',
+    },
+  ];
+  return validate(validators, value);
+}
+
+export function avatarValidator(value: string): Array<string> {
   const validators: ValidatorItem[] = [
     {
       checkFunction: (params: ValidateItemParams) => required()({ ...params }),

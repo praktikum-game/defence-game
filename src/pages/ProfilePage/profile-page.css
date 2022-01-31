@@ -1,4 +1,8 @@
 .profile-page {
+  &__page-container {
+    padding-top: 90px;
+  }
+
   &__form {
     margin-top: 20px;
   }
@@ -10,22 +14,8 @@
   }
 
   &__button {
+    width: 162px;
     margin: 20px 10px;
-  }
-
-  .input-field {
-    &__input {
-      text-align: right;
-      color: var(--input-text-color);
-    }
-
-    &__label {
-      color: var(--input-label-color-dark);
-    }
-  }
-
-  &__page-container {
-    padding-top: 90px;
   }
 
   .header {

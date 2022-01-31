@@ -14,50 +14,60 @@ import './loginPage.css';
 import { useFormInput } from '../../hooks/useFormInput/useFormInput';
 import { useOAuth } from '../../hooks/useOAuth';
 import { useAuthUser } from '../../hooks/useAuthUser';
+import { useDispatch } from 'react-redux';
+import { showNotificationWithTimeout } from 'store/notification/actions/action-creators';
 
 export const LoginPage = (): JSX.Element => {
+  const dispatch = useDispatch();
   const { executeAuth } = useAuthUser();
   const startOAuth = useOAuth(OAUTH_REDIRECT_URL);
 
-  const [{ value: loginValue, validationResult: loginValidationResult }, setLoginValue] =
+  const [{ value: loginValue, messages: loginErrorMessages }, setLoginValue] =
     useFormInput(loginValidator);
 
-  const [{ value: passwordValue, validationResult: passwordValidationResult }, setPasswordValue] =
+  const [{ value: passwordValue, messages: passwordErrorMessages }, setPasswordValue] =
     useFormInput(passwordValidator);
 
-  const resetInputValues = useCallback(() => {
-    setLoginValue('');
-    setPasswordValue('');
-  }, [setLoginValue, setPasswordValue]);
-
-  const handleSubmitClick = useCallback(
+  const handleFormSubmit = useCallback(
     async (data: FormData) => {
-      executeAuth({ login: String(data.get('login')), password: String(data.get('password')) });
+      try {
+        await executeAuth({
+          login: String(data.get('login')),
+          password: String(data.get('password')),
+        });
+      } catch (e: unknown) {
+        dispatch(
+          showNotificationWithTimeout({
+            title: 'Ошибка входв',
+            text: 'Не удалость войти. Проверьте ввод логина/пароля',
+            type: 'warning',
+          }),
+        );
+      } finally {
+        setPasswordValue('');
+      }
     },
-    [executeAuth],
+    [executeAuth, setPasswordValue, dispatch],
   );
 
   return (
     <div className="login-page">
+      
       <Header size="s">
         <Title headingLevel={2} align="center">
           Входи, защитник
         </Title>
       </Header>
       <PageContainer size="s">
-        <Form
-          validationResults={[loginValidationResult, passwordValidationResult]}
-          controllerCallback={handleSubmitClick}
-          resetValuesCallback={resetInputValues}
-        >
+        <Form onFormSubmit={handleFormSubmit}>
           <InputField
             view="labeled"
             value={loginValue}
             name={InputNames.LOGIN}
             label="Логин"
-            errorText={loginValidationResult.message}
-            isValid={loginValidationResult.valid}
-            valueChangeCallback={setLoginValue}
+            errors={loginErrorMessages}
+            type="text"
+            onTextChange={setLoginValue}
           />
           <InputField
             view="labeled"
@@ -65,16 +75,22 @@ export const LoginPage = (): JSX.Element => {
             name={InputNames.PASSWORD}
             label="Пароль"
             type="password"
-            errorText={passwordValidationResult.message}
-            isValid={passwordValidationResult.valid}
-            valueChangeCallback={setPasswordValue}
+            errors={passwordErrorMessages}
+            onTextChange={setPasswordValue}
           />
 
           <Footer className="login-page__footer">
             <Button
               text="Авторизоваться"
               type="submit"
-              disabled={!(loginValidationResult.valid && passwordValidationResult.valid)}
+              disabled={
+                !(
+                  loginErrorMessages.length < 1 &&
+                  passwordErrorMessages.length < 1 &&
+                  loginValue.length > 0 &&
+                  passwordValue.length > 0
+                )
+              }
               className="center-horizontal"
             />
             <Button onClick={startOAuth} text="Войти через Яндекс"></Button>
