@@ -179,14 +179,14 @@ export const ForumThreadPage = () => {
             const currentReplies = replyMessages[el.id];
             const rootMessage = (
               <MessagesList.Message
-                key={JSON.stringify(el)}
+                key={`root_${el.id}`}
                 messageData={{
                   date: el.createdAt,
                   content: el.content,
                   userName: el.user.name,
                   userAvatar: el.user.avatar,
                 }}
-                replyClick={() => handleReplyMessageClick(el.id)}
+                replyClick={userData === null ? undefined : () => handleReplyMessageClick(el.id)}
               />
             );
             if (currentReplies.length > 0) {
@@ -194,7 +194,7 @@ export const ForumThreadPage = () => {
                 <MessagesList.Message
                   // React ругается, что не уникальный key. Что может быть не так?
                   // Не могу сделать уникальным
-                  key={JSON.stringify(replyMessage)}
+                  key={`reply_${replyMessage.id}`}
                   messageData={{
                     date: replyMessage.createdAt,
                     content: replyMessage.content,
@@ -216,7 +216,10 @@ export const ForumThreadPage = () => {
         </MessagesList>
         <div>
           <InputField
-            placeholder="Введите сообщение..."
+            disabled={userData === null}
+            placeholder={
+              userData === null ? 'Авторизуйтесь, чтобы написать' : 'Введите сообщение...'
+            }
             value={currentMessage}
             onInput={handleInputMessageText}
           />

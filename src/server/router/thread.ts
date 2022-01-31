@@ -21,7 +21,6 @@ export const threadRoutes = (router: Router) => {
   );
   router.get(
     `/threads/:id`,
-    onlyAuthUserMiddleware,
     validatorMiddleware<ForumThreadAttributes>(
       [{ key: 'id', validate: (value) => !isNaN(Number(value)), required: true }],
       'params',
