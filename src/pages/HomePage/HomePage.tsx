@@ -22,7 +22,7 @@ const c = block('card');
 
 export const HomePage = () => {
   const user = useSelector((state: AppState) => state.user.data);
-  useOAuth(OAUTH_REDIRECT_URL);
+  useOAuth(OAUTH_REDIRECT_URL, OAUTH_CLIENT_ID);
   return (
     <div className={b()}>
       <div className={h()}>
@@ -87,7 +87,6 @@ export const HomePage = () => {
           <Button className={b('button')} text="Начать игру" />
         </Link>
       </div>
-      
     </div>
   );
 };

@@ -12,11 +12,13 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { App } from '../../components/App';
 import { userService } from 'server/db/services';
 import { getHistory } from 'utilities/history';
+import favicon from '../../shared/images/favicon.png';
 
 function getHtmlString(
   reactJsxString: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   assets: { vendorsAssets: any; mainAssets: any },
+  nonce: string,
   store?: Store,
 ) {
   const html = renderToStaticMarkup(
@@ -26,17 +28,19 @@ function getHtmlString(
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Doctors vs Viruses</title>
+        <link rel="icon" type="image/png" href={favicon} />
         <link href={assets.mainAssets.main.css} rel="stylesheet" type="text/css" />
       </head>
       <body>
         <script
+          nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: `window.__PRELOADED_STATE__ = ${renderObject(store?.getState())}`,
           }}
         />
         <div id="root" dangerouslySetInnerHTML={{ __html: reactJsxString }} />
-        <script src={`/vendors/${assets.vendorsAssets.vendors.js}`}></script>
-        <script src={assets.mainAssets.main.js}></script>
+        <script nonce={nonce} src={`/vendors/${assets.vendorsAssets.vendors.js}`}></script>
+        <script nonce={nonce} src={assets.mainAssets.main.js}></script>
       </body>
     </html>,
   );
@@ -73,9 +77,10 @@ const ssrHtmlRenderMiddleware = () => {
         </StaticRouter>
       </Provider>
     );
-
     const reactHtml = renderToString(rootJsx);
-    res.status(200).send(getHtmlString(reactHtml, { vendorsAssets, mainAssets }, store));
+    res
+      .status(200)
+      .send(getHtmlString(reactHtml, { vendorsAssets, mainAssets }, res.locals.nonce, store));
   };
 };
 

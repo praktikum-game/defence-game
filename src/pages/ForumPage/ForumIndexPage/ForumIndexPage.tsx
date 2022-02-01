@@ -83,6 +83,7 @@ export const ForumIndexPage = () => {
           Темы для обсуждений
         </Title>
         <Button
+          disabled={userData === null}
           text="Создать новую тему"
           view="secondary"
           className="create-new-theme-button"
@@ -91,15 +92,21 @@ export const ForumIndexPage = () => {
       </Header>
       <PageContainer size="l">
         <ThreadsList>
-          {topicsList.map((el) => (
-            <ThreadsList.Item
-              key={el.id}
-              dataItem={el}
-              isAuthor={userData ? userData.id === el.userId : false}
-              onEditClick={handleTopicEditClick}
-              onRemoveClick={handleTopicRemoveClick}
-            />
-          ))}
+          {topicsList.length === 0 ? (
+            <Title headingLevel={2} align="center">
+              Темы для обсуждения еще не созданы. Хотите быть первым?
+            </Title>
+          ) : (
+            topicsList.map((el) => (
+              <ThreadsList.Item
+                key={el.id}
+                dataItem={el}
+                isAuthor={userData ? userData.id === el.userId : false}
+                onEditClick={handleTopicEditClick}
+                onRemoveClick={handleTopicRemoveClick}
+              />
+            ))
+          )}
         </ThreadsList>
       </PageContainer>
     </>

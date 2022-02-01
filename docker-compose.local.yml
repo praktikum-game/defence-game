@@ -1,20 +1,10 @@
 version: "3.9"
 
 services:
-  postgres:
-    env_file:
-      - .env
-  webapp:
-    env_file:
-      - .env
-  pgadmin:
-    env_file:
-      - .env
   nginx:
     build:
       dockerfile: Dockerfile.local
     volumes:
       - ./certs/cert.crt:/etc/ssl/cert.crt
       - ./certs/cert.key:/etc/ssl/key.key
-    env_file:
-      - .env
+

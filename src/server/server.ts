@@ -2,7 +2,6 @@
 import { join, resolve } from 'path';
 import express, { Express } from 'express';
 import compression from 'compression';
-// import helmet from 'helmet';
 import xXssProtection from 'x-xss-protection';
 import https from 'https';
 import cookieParserMiddleware from 'cookie-parser';
@@ -17,6 +16,8 @@ import { initCommentModel, Comment } from './db/models/Comment/Comment';
 import { initForumThreadModel, ForumThread } from './db/models/ForumThread/ForumThread';
 import { initUserModel, User } from './db/models/User/User';
 import { initSiteThemeModel, SiteTheme } from './db/models/SiteTheme/SiteTheme';
+import { setLocalsNonceMiddleware } from './middlewares/set-locals-nonce-middleware';
+import { setCspPolicyMiddleware } from './middlewares/set-csp-policy-middleware';
 
 initCommentModel(sequelize);
 initForumThreadModel(sequelize);
@@ -85,24 +86,11 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app
-  // Добавляем CSP + вагон разных предустановленных защит. Установленные настройки следующие:
-  // https://helmetjs.github.io/ -> helmet.contentSecurityPolicy(options)
-
-  /**  БЛОКИРУЕТ ИНЛАЙНОВЫЙ СТРО ПРИ SSR */
-  // .use(
-  //   helmet({
-  //     contentSecurityPolicy: {
-  //       useDefaults: false,
-  //       directives: {
-  //         defaultSrc: ["'self'", 'ya-praktikum.tech', 'fonts.googleapis.com', 'fonts.gstatic.com'],
-  //         scriptSrc: ["'self'", 'ya-praktikum.tech', 'fonts.googleapis.com'],
-  //       },
-  //     },
-  //   }),
-  // )
+  .use(express.static(resolve(__dirname)))
+  .use(setLocalsNonceMiddleware)
+  .use(setCspPolicyMiddleware)
   // Отключаем заголовок X-XSS-Protection, так как он вызывает много проблем и используем для защиты другие способы
   .use(xXssProtection())
-  .use(express.static(resolve(__dirname)))
   .use(getUserMiddleware)
   .use('/api/v1', router);
 

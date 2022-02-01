@@ -20,7 +20,7 @@ import { showNotificationWithTimeout } from 'store/notification/actions/action-c
 export const LoginPage = (): JSX.Element => {
   const dispatch = useDispatch();
   const { executeAuth } = useAuthUser();
-  const startOAuth = useOAuth(OAUTH_REDIRECT_URL);
+  const startOAuth = useOAuth(OAUTH_REDIRECT_URL, OAUTH_CLIENT_ID);
 
   const [{ value: loginValue, messages: loginErrorMessages }, setLoginValue] =
     useFormInput(loginValidator);
