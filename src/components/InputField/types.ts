@@ -1,15 +1,17 @@
-import { InputHTMLAttributes } from 'react';
-
 export type InputFieldOwnProps = {
   name?: string;
   id?: string;
+  type?: 'text' | 'number' | 'password' | 'file' | 'email' | 'tel' | 'checkbox';
   label?: string;
   flex?: boolean;
-  isValid?: boolean;
-  errorText?: string | null;
   disabled?: boolean;
   view?: 'default' | 'labeled';
-  valueChangeCallback?: (value: string, lastValue?: string) => void;
-} & InputHTMLAttributes<HTMLInputElement>;
+  errors?: Array<string>;
+  value?: string | number;
+  accept?: string;
+  placeholder?: string;
+  autoComplete?: 'on' | 'off';
+  onTextChange?: (value: string, lastValue?: string) => void;
+};
 
 export type InputFieldProps = InputFieldOwnProps;

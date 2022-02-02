@@ -8,8 +8,8 @@ export const useAuthUser = () => {
 
   const userData = useSelector((state: AppState) => state.user.data);
 
-  const executeAuth = (data: LoginRequest) => {
-    dispatch(userAuth(data));
+  const executeAuth = async (data: LoginRequest) => {
+    return dispatch(userAuth(data));
   };
 
   return { executeAuth, userData };

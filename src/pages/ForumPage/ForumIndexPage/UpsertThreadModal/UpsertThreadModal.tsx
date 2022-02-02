@@ -50,10 +50,10 @@ export const UpsertThreadModal = ({ data, onChange, ...props }: UpsertThreadModa
   return (
     <Modal visible={props.visible}>
       <InputField
-        valueChangeCallback={handleInputChange}
+        onTextChange={handleInputChange}
         label="Тема"
+        type="text"
         name="subject"
-        autoComplete="off"
         value={data.subject}
       />
       <div className={b('message')}>

@@ -45,9 +45,13 @@ export const userAuth: UserActionCreator =
   (loginData: LoginRequest) =>
   async (dispatch: UserThunkDispatch, _1, { api }) => {
     dispatch(userStartFetch());
+
     await api.auth.login(loginData);
     const userData = await api.auth.userRead();
     dispatch(userSuccessFetch(userData.data));
+
+    dispatch(userFailedFetch());
+
     dispatch(userEndFetch());
   };
 

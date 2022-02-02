@@ -36,7 +36,8 @@
     min-height: 62px;
 
     .input-field__input {
-      text-align: left;
+      text-align: center;
+      color: var(--input-text-color);
       height: 25px;
     }
 
@@ -44,6 +45,13 @@
       position: relative;
       bottom: auto;
       font-size: 12px;
+      color: var(--input-label-color-dark);
+    }
+
+    .input-field__input:disabled {
+      text-align: right;
+      color: var(--input-text-color);
+      height: 25px;
     }
   }
 }

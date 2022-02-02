@@ -19,7 +19,7 @@ export const defaultNavigation: NavigationItem[] = [
     icon: <HomeIcon />,
   },
   {
-    path: '/profile',
+    path: '/profile?type=view',
     name: 'Профиль',
     showFor: {
       signed: true,

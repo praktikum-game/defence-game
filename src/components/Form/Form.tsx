@@ -5,42 +5,20 @@ import './form.css';
 
 const b = block('form');
 
-export const Form = ({
-  children,
-  validationResults = [],
-  className,
-  isResetForm = true,
-  controllerCallback = () => Promise.resolve(),
-  resetValuesCallback = () => {},
-  setSubmitResult = () => {},
-  ...props
-}: FormProps) => {
-  const submitHandler = useCallback(
+export const Form = ({ children, className, onFormSubmit }: FormProps) => {
+  const handleFormSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const form = e.currentTarget;
 
-      for (const result of validationResults) {
-        if (!result.valid) {
-          return;
-        }
-      }
-
       const formData = new FormData(form);
-      controllerCallback(formData).then((result) => {
-        if (typeof result === 'boolean') {
-          setSubmitResult(result);
-        }
-        if (isResetForm) {
-          resetValuesCallback();
-        }
-      });
+      onFormSubmit(formData);
     },
-    [validationResults, isResetForm, controllerCallback, resetValuesCallback, setSubmitResult],
+    [onFormSubmit],
   );
 
   return (
-    <form className={b.mix(className)} {...props} onSubmit={submitHandler}>
+    <form className={b.mix(className)} onSubmit={handleFormSubmit}>
       {children}
     </form>
   );
