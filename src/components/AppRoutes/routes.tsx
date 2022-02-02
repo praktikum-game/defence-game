@@ -33,14 +33,6 @@ export const routes: RouteObject[] = [
               </RequireAuth>
             ),
           },
-          // {
-          //   path: '/profile-edit',
-          //   element: (
-          //     <RequireAuth>
-          //       <ProfileEditPage />
-          //     </RequireAuth>
-          //   ),
-          // },
           {
             path: '/password-edit',
             element: (

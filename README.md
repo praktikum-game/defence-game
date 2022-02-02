@@ -1,7 +1,6 @@
 # Игра [Защитники] (техническое название)
 
 [![APP-CI](https://github.com/praktikum-game/defence-game/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/praktikum-game/defence-game/actions/workflows/ci.yml)
-
 [![APP-CD](https://github.com/praktikum-game/defence-game/actions/workflows/cd.yml/badge.svg?branch=main)](https://github.com/praktikum-game/defence-game/actions/workflows/cd.yml)
 
 ## Memory Leaks
