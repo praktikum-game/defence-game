@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes } from 'react';
+import { MouseEventHandler } from 'react';
 import { ViewType } from '../../utilities/types';
 
 export type ButtonOwnProps = {
@@ -8,6 +8,8 @@ export type ButtonOwnProps = {
   view?: keyof ViewType;
   loading?: boolean;
   isSmall?: boolean;
-} & ButtonHTMLAttributes<HTMLButtonElement>;
+  type?: 'submit' | 'button';
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+};
 
 export type ButtonProps = ButtonOwnProps;
