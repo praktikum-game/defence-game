@@ -52,7 +52,6 @@ export const LoginPage = (): JSX.Element => {
 
   return (
     <div className="login-page">
-      
       <Header size="s">
         <Title headingLevel={2} align="center">
           Входи, защитник
@@ -93,7 +92,7 @@ export const LoginPage = (): JSX.Element => {
               }
               className="center-horizontal"
             />
-            <Button onClick={startOAuth} text="Войти через Яндекс"></Button>
+            <Button type="button" onClick={startOAuth} text="Войти через Яндекс"></Button>
 
             <Link className="footer__link" to="/register">
               Нет аккаунта?

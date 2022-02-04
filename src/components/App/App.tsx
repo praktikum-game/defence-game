@@ -8,7 +8,7 @@ import { AppState } from 'store';
 import { ThemeSwitcher } from 'components/ThemeSwitcher';
 import { switchTheme } from 'store/theme/actions/action-creators';
 import { AppNavigation } from '../AppNavigation';
-import { NotificationsPanel } from '../NotificationsPanel';
+import { NotificationsPanel } from 'components/NotificationsPanel';
 
 export const App = () => {
   const theme = useSelector((state: AppState) => state.theme.theme);

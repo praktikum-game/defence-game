@@ -14,11 +14,13 @@ export const Button = ({
   loading = false,
   className,
   isSmall = false,
+  type = 'button',
   ...props
 }: ButtonProps) => (
   <button
     className={b({ small: isSmall }).mix(viewTypes[view]).mix(className)}
     disabled={loading || disabled}
+    type={type}
     {...props}
   >
     {loading ? 'Загрузка...' : text}
