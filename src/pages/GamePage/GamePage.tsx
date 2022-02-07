@@ -9,7 +9,7 @@ import { Title } from '../../components/Title';
 import block from 'bem-cn';
 
 import './game-page.css';
-import { leaderboardAPI } from 'api/leaderboard';
+import { localLeaderboardAPI } from 'api/leaderboard';
 import { useSelector } from 'react-redux';
 import { AppState } from 'store';
 
@@ -49,7 +49,7 @@ export const GamePage = () => {
       if (user) {
         // eslint-disable-next-line @typescript-eslint/naming-convention
         const { id, login, display_name } = user;
-        leaderboardAPI.upsertUserToLeaderboard({ id, login, username: display_name, score });
+        localLeaderboardAPI.upsertUserToLeaderboard({ id, login, username: display_name, score });
       }
     },
     [user],

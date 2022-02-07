@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { Footer } from '../../components/Footer';
@@ -27,6 +27,7 @@ import './registerPage.css';
 
 export const RegisterPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [{ value: loginValue, messages: loginErrors }, setLoginValue] =
     useFormInput(loginValidator);
@@ -62,7 +63,14 @@ export const RegisterPage = () => {
 
       try {
         dispatch(userRegister(registerData));
-
+        dispatch(
+          showNotificationWithTimeout({
+            text: 'Пользователь зарегестрирован',
+            title: 'Не удалось',
+            type: 'success',
+          }),
+        );
+        navigate('/', { replace: true });
         setLoginValue('');
         setPhoneValue('');
         setFirstNameValue('');

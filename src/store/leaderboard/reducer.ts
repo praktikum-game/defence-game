@@ -14,6 +14,7 @@ export function reducer(state = initialState, actions?: LeaderboardActions): Lea
       return { ...state, usersList: actions.payload };
     case 'LB_FINISH_FETCH_LIST_DATA':
       return { ...state, loading: false };
+
     default:
       return state;
   }

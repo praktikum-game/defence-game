@@ -1,2 +1,2 @@
-export { authAPI } from './AuthAPI';
+export { praktikumAuthApi, localAuthApi } from './AuthAPI';
 export { LoginRequest, RegisterRequest, UserData } from './types';

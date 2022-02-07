@@ -1,10 +1,11 @@
+import { localBaseUrl, praktikumBaseUrl } from 'api/consts';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { BaseAPI } from '../BaseAPI';
 import { LoginRequest, RegisterRequest, UserData } from './types';
 
 class AuthAPI extends BaseAPI {
-  constructor() {
-    super('/auth');
+  constructor(baseUrl: string) {
+    super('/auth', baseUrl);
   }
 
   login(data: LoginRequest) {
@@ -15,8 +16,8 @@ class AuthAPI extends BaseAPI {
     return this.http.post('/signup', data);
   }
 
-  logout() {
-    return this.http.post('/logout');
+  logout(options: AxiosRequestConfig | undefined = undefined) {
+    return this.http.post('/logout', undefined, options);
   }
 
   userRead(options: AxiosRequestConfig | undefined = undefined): Promise<AxiosResponse<UserData>> {
@@ -24,4 +25,5 @@ class AuthAPI extends BaseAPI {
   }
 }
 
-export const authAPI = new AuthAPI();
+export const localAuthApi = new AuthAPI(localBaseUrl);
+export const praktikumAuthApi = new AuthAPI(praktikumBaseUrl);
