@@ -1,11 +1,26 @@
 /* eslint-disable no-console */
 import { commentService, forumThreadService, siteThemeService, userService } from './services';
 
-export async function addTestSamples() {
+async function dbIsAlreadyInit() {
   const existedThemes = await siteThemeService.readAll();
   if (existedThemes.length !== 0) {
     // eslint-disable-next-line no-console
     console.log('Data exits. No need to add');
+    return true;
+  }
+  return false;
+}
+
+export async function initThemes() {
+  const isInit = await dbIsAlreadyInit();
+  if (isInit === false) {
+    await siteThemeService.bulkCreate([{ theme: 'light' }, { theme: 'dark' }]);
+  }
+}
+
+export async function addTestSamples() {
+  const isInit = await dbIsAlreadyInit();
+  if (isInit === true) {
     return;
   }
 

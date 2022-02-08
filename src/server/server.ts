@@ -10,7 +10,7 @@ import { ssrHtmlRenderMiddleware } from './middlewares/ssr-html-render-middlewar
 import { sequelize } from './db/sequelize';
 import { router } from './router';
 import { readFileSync } from 'fs';
-import { addTestSamples } from './db/testSample';
+import { addTestSamples, initThemes } from './db/testSample';
 import { getUserMiddleware } from './middlewares/get-user-middleware';
 import { initCommentModel, Comment } from './db/models/Comment/Comment';
 import { initForumThreadModel, ForumThread } from './db/models/ForumThread/ForumThread';
@@ -49,8 +49,10 @@ sequelize
         console.log('Sequelize is synced');
         if (process.env.NODE_ENV !== 'production') {
           addTestSamples().then(() => {
-            console.log('Test samples added');
+            console.info('Test samples added');
           });
+        } else {
+          initThemes().then(() => console.info('Themes added'));
         }
       })
       .catch((e) => console.log(e));
