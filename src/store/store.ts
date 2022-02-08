@@ -4,8 +4,8 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { userReducer } from './user';
 import { leaderboardReducer } from './leaderboard';
 import { ThunkExtraArgument } from './types';
-import { authAPI } from '../api/auth';
-import { leaderboardAPI } from '../api/leaderboard';
+import { localAuthApi } from '../api/auth';
+import { localLeaderboardAPI } from '../api/leaderboard';
 import { usersAPI } from '../api/users';
 import { themeReducer } from './theme';
 import { usersDbAPI } from 'api/db-users';
@@ -21,8 +21,8 @@ export const rootReducer = combineReducers({
 export function configureStore(initialState = {}) {
   const thunkExtraArgument: ThunkExtraArgument = {
     api: {
-      auth: authAPI,
-      leaderboard: leaderboardAPI,
+      auth: localAuthApi,
+      leaderboard: localLeaderboardAPI,
       users: usersAPI,
       dbUsers: usersDbAPI,
     },

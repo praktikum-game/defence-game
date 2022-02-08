@@ -4,7 +4,6 @@ import { ThreadsList } from '../components/ThreadsList';
 import { Title } from '../../../components/Title';
 import { Button } from '../../../components/Button';
 
-import './forum-index-page.css';
 import { PageContainer } from '../../../components/PageContainer';
 import { forumTopicsAPI } from 'api/forum-topics/ForumTopicsAPI';
 import { ForumThreadModel } from 'api/forum-topics';
@@ -12,6 +11,8 @@ import { UpsertThreadModal } from './UpsertThreadModal/UpsertThreadModal';
 import { AppState } from 'store';
 import { useSelector } from 'react-redux';
 import { ForumThreadCreationModel } from 'api/forum-topics/types';
+
+import './forum-index-page.css';
 
 const defaultValue: ForumThreadCreationModel = { content: '', subject: '' };
 export const ForumIndexPage = () => {

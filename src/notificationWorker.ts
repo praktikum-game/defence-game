@@ -1,4 +1,4 @@
-import { leaderboardAPI } from './api/leaderboard';
+import { localLeaderboardAPI } from './api/leaderboard';
 
 class NotificationWorker {
   private _timeID: number;
@@ -68,7 +68,7 @@ class NotificationWorker {
 
   private async _getLeader(): Promise<string> {
     try {
-      const response = await leaderboardAPI.getAllLeaderboard();
+      const response = await localLeaderboardAPI.getAllLeaderboard();
       return response.data[0].data.username;
     } catch (e) {
       return '';

@@ -1,4 +1,5 @@
 import { LEADERBOARD_EMPTY_USERNAME_PLACEHOLDER } from 'consts';
+import { showNotificationWithTimeout } from 'store/notification/actions/action-creators';
 import { LeaderboardUser } from '../../../api/leaderboard';
 import { LeadboardActionCreator, LeaderboardThunkDispatch } from '../types';
 import {
@@ -46,6 +47,13 @@ export const fetchLeaderboardListData: LeadboardActionCreator =
         dispatch(leaderboardSuccesFetchList(sortedData));
       }
     } catch (e) {
+      dispatch(
+        showNotificationWithTimeout({
+          type: 'error',
+          title: 'Не удалось получить данные',
+          text: 'Возможно вы не авторизованы',
+        }),
+      );
       dispatch(leaderboardFailedFetchList());
     } finally {
       dispatch(leaderboardFinisFetchList());

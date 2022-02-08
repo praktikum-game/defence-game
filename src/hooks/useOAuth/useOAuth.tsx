@@ -1,10 +1,10 @@
 import { useEffect, useCallback } from 'react';
 
-import { oauthApi } from 'api/oauth';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getUserData } from 'store/user/actions/action-creators';
 import { AxiosError } from 'axios';
+import { localOauthApi } from 'api/oauth/OAuthAPI';
 
 export const useOAuth = (redirectUri: string, clientId: string) => {
   const dispatch = useDispatch();
@@ -21,11 +21,11 @@ export const useOAuth = (redirectUri: string, clientId: string) => {
       let oauthCode = searchParams.get('code');
       if (oauthCode !== null) {
         try {
-          const { status } = await oauthApi.oauth({
+          const { status } = await localOauthApi.oauth({
             code: oauthCode,
             redirect_uri: redirectUri,
           });
-          if (status === 200) {
+          if (status === 200 || status === 202) {
             dispatch(getUserData());
           }
         } catch (e: unknown) {

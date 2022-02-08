@@ -1,11 +1,12 @@
+import { localBaseUrl } from 'api/consts';
 import { AxiosResponse } from 'axios';
 import { UserData } from '../auth';
 import { BaseAPI } from '../BaseAPI';
 import { ProfilePasswordUpdateRequest, ProfileUpdateRequest } from './types';
 
 class UsersAPI extends BaseAPI {
-  constructor() {
-    super('/user');
+  constructor(baseUrl: string) {
+    super('/user', baseUrl);
   }
 
   updateProfile(data: ProfileUpdateRequest): Promise<AxiosResponse<UserData>> {
@@ -25,4 +26,4 @@ class UsersAPI extends BaseAPI {
   }
 }
 
-export const usersAPI = new UsersAPI();
+export const usersAPI = new UsersAPI(localBaseUrl);

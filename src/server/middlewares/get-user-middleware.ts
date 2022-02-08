@@ -1,5 +1,5 @@
+import { praktikumAuthApi } from 'api/auth';
 import { Request, Response, NextFunction } from 'express';
-import { getUserDataSsr } from 'server/utilities/getUserData';
 import { HttpStatus } from '../http-statuses';
 
 export const getUserMiddleware = async (
@@ -9,7 +9,9 @@ export const getUserMiddleware = async (
 ) => {
   response.locals.user = undefined;
   try {
-    const { data, status } = await getUserDataSsr(request.headers.cookie);
+    const { data, status } = await praktikumAuthApi.userRead({
+      headers: { cookie: request.headers.cookie! },
+    });
     if (status === HttpStatus.OK) {
       response.locals.user = data;
     }

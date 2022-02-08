@@ -1,9 +1,10 @@
 import { BaseAPI } from 'api/BaseAPI';
+import { localBaseUrl, praktikumBaseUrl } from 'api/consts';
 import { OAuthRequest, OAuthServiceId } from './types';
 
 class OAuthAPI extends BaseAPI {
-  constructor() {
-    super('/oauth/yandex');
+  constructor(baseUrl: string) {
+    super('/oauth/yandex', baseUrl);
   }
 
   getServiceId(redirectUri: string) {
@@ -15,4 +16,5 @@ class OAuthAPI extends BaseAPI {
   }
 }
 
-export const oauthApi = new OAuthAPI();
+export const localOauthApi = new OAuthAPI(localBaseUrl);
+export const praktikumOauthApi = new OAuthAPI(praktikumBaseUrl);
