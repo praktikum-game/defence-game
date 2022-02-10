@@ -216,6 +216,7 @@ export const ForumThreadPage = () => {
         </MessagesList>
         <div>
           <InputField
+            label=''
             disabled={userData === null}
             placeholder={
               userData === null ? 'Авторизуйтесь, чтобы написать' : 'Введите сообщение...'
